@@ -3075,9 +3075,9 @@
                                               "id": "Cp1T",
                                               "name": "T",
                                               "fill": "#FFFFFF",
-                                              "content": "1",
+                                              "content": "Típica",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 11,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3101,9 +3101,9 @@
                                               "id": "Cp2T",
                                               "name": "T",
                                               "fill": "$text-secondary",
-                                              "content": "2",
+                                              "content": "Atípica",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 11,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3127,9 +3127,9 @@
                                               "id": "Cp3T",
                                               "name": "T",
                                               "fill": "$text-secondary",
-                                              "content": "3",
+                                              "content": "Não anginosa",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 11,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3153,9 +3153,9 @@
                                               "id": "Cp4T",
                                               "name": "T",
                                               "fill": "$text-secondary",
-                                              "content": "4",
+                                              "content": "Assintomática",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 11,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3334,9 +3334,9 @@
                                               "id": "Slope1T",
                                               "name": "T",
                                               "fill": "#FFFFFF",
-                                              "content": "1",
+                                              "content": "Subida",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 12,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3360,9 +3360,9 @@
                                               "id": "Slope2T",
                                               "name": "T",
                                               "fill": "$text-secondary",
-                                              "content": "2",
+                                              "content": "Plano",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 12,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3386,9 +3386,9 @@
                                               "id": "Slope3T",
                                               "name": "T",
                                               "fill": "$text-secondary",
-                                              "content": "3",
+                                              "content": "Descida",
                                               "fontFamily": "$font-body",
-                                              "fontSize": 13,
+                                              "fontSize": 12,
                                               "fontWeight": "600"
                                             }
                                           ]
@@ -3582,22 +3582,142 @@
                                   }
                                 },
                                 {
-                                  "id": "CaField",
-                                  "type": "ref",
-                                  "ref": "vBiN9",
-                                  "name": "Vasos principais coloridos",
+                                  "type": "frame",
+                                  "id": "iAkyK",
+                                  "name": "thal",
                                   "width": "fill_container",
-                                  "descendants": {
-                                    "nS5Cp": {
-                                      "content": "Vasos principais coloridos"
+                                  "layout": "vertical",
+                                  "gap": 8,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "O6fUjx",
+                                      "name": "FieldLabel",
+                                      "fill": "$text-secondary",
+                                      "content": "Vasos principais coloridos",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
                                     },
-                                    "dTIak": {
-                                      "content": "0"
-                                    },
-                                    "wiXAT": {
-                                      "content": "0–3"
+                                    {
+                                      "type": "frame",
+                                      "id": "ivRHG",
+                                      "name": "Track",
+                                      "width": "fill_container",
+                                      "fill": "$surface-muted",
+                                      "cornerRadius": 10,
+                                      "stroke": "$border-strong",
+                                      "strokeWidth": 1,
+                                      "gap": 4,
+                                      "padding": 4,
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "Th7lM",
+                                          "name": "Opt3",
+                                          "width": "fill_container",
+                                          "fill": "$primary",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "OZZXK",
+                                              "name": "T",
+                                              "fill": "#FFFFFF",
+                                              "content": "0",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "F42Zp",
+                                          "name": "Opt6",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "P8pv3X",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "1",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "okIlQ",
+                                          "name": "Opt7",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "VlSMo",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "2",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "l0lpm",
+                                          "name": "Opt7",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "lh2Q0",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "3",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        }
+                                      ]
                                     }
-                                  }
+                                  ]
                                 }
                               ]
                             }
