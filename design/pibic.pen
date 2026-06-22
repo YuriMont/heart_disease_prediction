@@ -2173,7 +2173,7 @@
       "name": "Screen 2 - Formulario",
       "clip": true,
       "width": 1440,
-      "height": 1024,
+      "height": "fill_container(1300)",
       "fill": "$bg-app",
       "children": [
         {
@@ -2476,202 +2476,6 @@
                     },
                     {
                       "type": "frame",
-                      "id": "VtRSZ",
-                      "name": "Histórico Clínico",
-                      "width": "fill_container",
-                      "fill": "$surface",
-                      "cornerRadius": 18,
-                      "stroke": "$card-border",
-                      "strokeWidth": 1,
-                      "effect": {
-                        "type": "shadow",
-                        "shadowType": "outer",
-                        "color": "#0E1B2E0F",
-                        "offset": {
-                          "x": 0,
-                          "y": 6
-                        },
-                        "blur": 18,
-                        "spread": -6
-                      },
-                      "layout": "vertical",
-                      "gap": 18,
-                      "padding": 24,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "fNBfv",
-                          "name": "Head",
-                          "width": "fill_container",
-                          "gap": 12,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "G39nMh",
-                              "name": "Badge",
-                              "width": 40,
-                              "height": 40,
-                              "fill": "$primary-soft",
-                              "cornerRadius": 10,
-                              "justifyContent": "center",
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "icon",
-                                  "id": "w0Icfx",
-                                  "name": "Ico",
-                                  "width": 20,
-                                  "height": 20,
-                                  "icon": "clipboard-plus",
-                                  "library": "lucide",
-                                  "fill": "$primary"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "P03Sqq",
-                              "name": "T",
-                              "layout": "vertical",
-                              "gap": 2,
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "ep1eo",
-                                  "name": "Title",
-                                  "fill": "$text-primary",
-                                  "content": "Histórico Clínico",
-                                  "fontFamily": "$font-heading",
-                                  "fontSize": 16,
-                                  "fontWeight": "700"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "v0r7En",
-                                  "name": "Sub",
-                                  "fill": "$text-secondary",
-                                  "content": "Condições e antecedentes relevantes",
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 12,
-                                  "fontWeight": "normal"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "UHckP",
-                          "name": "Grid",
-                          "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 16,
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "TTb2T",
-                              "name": "Row",
-                              "width": "fill_container",
-                              "gap": 16,
-                              "children": [
-                                {
-                                  "id": "raCiU",
-                                  "type": "ref",
-                                  "ref": "B0qqb",
-                                  "name": "Hipertensão",
-                                  "width": "fill_container",
-                                  "descendants": {
-                                    "t0LQV": {
-                                      "content": "Hipertensão"
-                                    },
-                                    "Ra9cx": {
-                                      "content": "Sim"
-                                    },
-                                    "bAsBS": {
-                                      "content": "Não"
-                                    }
-                                  }
-                                },
-                                {
-                                  "id": "Xlkvx",
-                                  "type": "ref",
-                                  "ref": "B0qqb",
-                                  "name": "Diabetes",
-                                  "width": "fill_container",
-                                  "descendants": {
-                                    "t0LQV": {
-                                      "content": "Diabetes"
-                                    },
-                                    "yDrAR": {
-                                      "fill": "#00000000"
-                                    },
-                                    "Ra9cx": {
-                                      "content": "Sim",
-                                      "fill": "$text-secondary"
-                                    },
-                                    "Tsch4": {
-                                      "fill": "$primary"
-                                    },
-                                    "bAsBS": {
-                                      "content": "Não",
-                                      "fill": "#FFFFFF"
-                                    }
-                                  }
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "BiDhB",
-                              "name": "Row",
-                              "width": "fill_container",
-                              "gap": 16,
-                              "children": [
-                                {
-                                  "id": "q66uH4",
-                                  "type": "ref",
-                                  "ref": "B0qqb",
-                                  "name": "Tabagismo",
-                                  "width": "fill_container",
-                                  "descendants": {
-                                    "t0LQV": {
-                                      "content": "Tabagismo"
-                                    },
-                                    "Ra9cx": {
-                                      "content": "Sim"
-                                    },
-                                    "bAsBS": {
-                                      "content": "Não"
-                                    }
-                                  }
-                                },
-                                {
-                                  "id": "fIHHa",
-                                  "type": "ref",
-                                  "ref": "B0qqb",
-                                  "name": "Histórico familiar de DCV",
-                                  "width": "fill_container",
-                                  "descendants": {
-                                    "t0LQV": {
-                                      "content": "Histórico familiar de DCV"
-                                    },
-                                    "Ra9cx": {
-                                      "content": "Sim"
-                                    },
-                                    "bAsBS": {
-                                      "content": "Não"
-                                    }
-                                  }
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
                       "id": "XfmSl",
                       "name": "Dados Biométricos",
                       "width": "fill_container",
@@ -2766,7 +2570,7 @@
                           "children": [
                             {
                               "type": "frame",
-                              "id": "Nk3H8",
+                              "id": "BioRow1",
                               "name": "Row",
                               "width": "fill_container",
                               "gap": 16,
@@ -2806,30 +2610,12 @@
                                       "content": "bpm"
                                     }
                                   }
-                                },
-                                {
-                                  "id": "QOd0S",
-                                  "type": "ref",
-                                  "ref": "vBiN9",
-                                  "name": "IMC",
-                                  "width": "fill_container",
-                                  "descendants": {
-                                    "nS5Cp": {
-                                      "content": "IMC"
-                                    },
-                                    "dTIak": {
-                                      "content": "28,6"
-                                    },
-                                    "wiXAT": {
-                                      "content": "kg/m²"
-                                    }
-                                  }
                                 }
                               ]
                             },
                             {
                               "type": "frame",
-                              "id": "EarJy",
+                              "id": "BioRow2",
                               "name": "Row",
                               "width": "fill_container",
                               "gap": 16,
@@ -2851,31 +2637,686 @@
                                       "content": "mg/dL"
                                     }
                                   }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "CardioExams",
+                      "name": "Exames Cardíacos",
+                      "width": "fill_container",
+                      "fill": "$surface",
+                      "cornerRadius": 18,
+                      "stroke": "$card-border",
+                      "strokeWidth": 1,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0E1B2E0F",
+                        "offset": {
+                          "x": 0,
+                          "y": 6
+                        },
+                        "blur": 18,
+                        "spread": -6
+                      },
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "CardioHead",
+                          "name": "Head",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "CardioBadge",
+                              "name": "Badge",
+                              "width": 40,
+                              "height": 40,
+                              "fill": "$primary-soft",
+                              "cornerRadius": 10,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "CardioIco",
+                                  "name": "Ico",
+                                  "width": 20,
+                                  "height": 20,
+                                  "icon": "heart-pulse",
+                                  "library": "lucide",
+                                  "fill": "$primary"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "CardioTitleWrap",
+                              "name": "T",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "CardioTitle",
+                                  "name": "Title",
+                                  "fill": "$text-primary",
+                                  "content": "Exames Cardíacos",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 16,
+                                  "fontWeight": "700"
                                 },
                                 {
-                                  "id": "heJKJ",
+                                  "type": "text",
+                                  "id": "CardioSub",
+                                  "name": "Sub",
+                                  "fill": "$text-secondary",
+                                  "content": "Resultados de testes clínicos específicos",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "CardioGrid",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "CardioRow1",
+                              "name": "Row",
+                              "width": "fill_container",
+                              "gap": 16,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "CpField",
+                                  "name": "cp",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 8,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "CpLabel",
+                                      "name": "FieldLabel",
+                                      "fill": "$text-secondary",
+                                      "content": "Tipo de dor no peito (cp)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "CpTrack",
+                                      "name": "Track",
+                                      "width": "fill_container",
+                                      "fill": "$surface-muted",
+                                      "cornerRadius": 10,
+                                      "stroke": "$border-strong",
+                                      "strokeWidth": 1,
+                                      "gap": 4,
+                                      "padding": 4,
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "Cp1",
+                                          "name": "Opt1",
+                                          "width": "fill_container",
+                                          "fill": "$primary",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Cp1T",
+                                              "name": "T",
+                                              "fill": "#FFFFFF",
+                                              "content": "1",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Cp2",
+                                          "name": "Opt2",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Cp2T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "2",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Cp3",
+                                          "name": "Opt3",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Cp3T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "3",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Cp4",
+                                          "name": "Opt4",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Cp4T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "4",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "RestecgField",
+                                  "name": "restecg",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 8,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "RestecgLabel",
+                                      "name": "FieldLabel",
+                                      "fill": "$text-secondary",
+                                      "content": "Eletrocardiograma (restecg)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "RestecgTrack",
+                                      "name": "Track",
+                                      "width": "fill_container",
+                                      "fill": "$surface-muted",
+                                      "cornerRadius": 10,
+                                      "stroke": "$border-strong",
+                                      "strokeWidth": 1,
+                                      "gap": 4,
+                                      "padding": 4,
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "Restecg0",
+                                          "name": "Opt0",
+                                          "width": "fill_container",
+                                          "fill": "$primary",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Restecg0T",
+                                              "name": "T",
+                                              "fill": "#FFFFFF",
+                                              "content": "Normal",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Restecg1",
+                                          "name": "Opt1",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Restecg1T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "Anormal",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Restecg2",
+                                          "name": "Opt2",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Restecg2T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "Hipertrofia",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "CardioRow2",
+                              "name": "Row",
+                              "width": "fill_container",
+                              "gap": 16,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "SlopeField",
+                                  "name": "slope",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 8,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "SlopeLabel",
+                                      "name": "FieldLabel",
+                                      "fill": "$text-secondary",
+                                      "content": "Inclinação do segmento ST (slope)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "SlopeTrack",
+                                      "name": "Track",
+                                      "width": "fill_container",
+                                      "fill": "$surface-muted",
+                                      "cornerRadius": 10,
+                                      "stroke": "$border-strong",
+                                      "strokeWidth": 1,
+                                      "gap": 4,
+                                      "padding": 4,
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "Slope1",
+                                          "name": "Opt1",
+                                          "width": "fill_container",
+                                          "fill": "$primary",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Slope1T",
+                                              "name": "T",
+                                              "fill": "#FFFFFF",
+                                              "content": "1",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Slope2",
+                                          "name": "Opt2",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Slope2T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "2",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Slope3",
+                                          "name": "Opt3",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Slope3T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "3",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 13,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ThalField",
+                                  "name": "thal",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 8,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "ThalLabel",
+                                      "name": "FieldLabel",
+                                      "fill": "$text-secondary",
+                                      "content": "Talassemia (thal)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "ThalTrack",
+                                      "name": "Track",
+                                      "width": "fill_container",
+                                      "fill": "$surface-muted",
+                                      "cornerRadius": 10,
+                                      "stroke": "$border-strong",
+                                      "strokeWidth": 1,
+                                      "gap": 4,
+                                      "padding": 4,
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "Thal3",
+                                          "name": "Opt3",
+                                          "width": "fill_container",
+                                          "fill": "$primary",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Thal3T",
+                                              "name": "T",
+                                              "fill": "#FFFFFF",
+                                              "content": "Normal",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Thal6",
+                                          "name": "Opt6",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Thal6T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "Fixo",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Thal7",
+                                          "name": "Opt7",
+                                          "width": "fill_container",
+                                          "fill": "#00000000",
+                                          "cornerRadius": 7,
+                                          "padding": [
+                                            9,
+                                            0
+                                          ],
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Thal7T",
+                                              "name": "T",
+                                              "fill": "$text-secondary",
+                                              "content": "Reversível",
+                                              "fontFamily": "$font-body",
+                                              "fontSize": 12,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "CardioRow3",
+                              "name": "Row",
+                              "width": "fill_container",
+                              "gap": 16,
+                              "children": [
+                                {
+                                  "id": "FbsSeg",
                                   "type": "ref",
-                                  "ref": "vBiN9",
-                                  "name": "Glicose",
+                                  "ref": "B0qqb",
+                                  "name": "Glicemia em jejum",
                                   "width": "fill_container",
                                   "descendants": {
-                                    "nS5Cp": {
-                                      "content": "Glicose"
+                                    "t0LQV": {
+                                      "content": "Glicemia em jejum > 120 (fbs)"
                                     },
-                                    "dTIak": {
-                                      "content": "118"
+                                    "Ra9cx": {
+                                      "content": "Sim"
                                     },
-                                    "wiXAT": {
-                                      "content": "mg/dL"
+                                    "bAsBS": {
+                                      "content": "Não"
                                     }
                                   }
                                 },
                                 {
-                                  "type": "frame",
-                                  "id": "zqHvh",
-                                  "name": "Spacer",
+                                  "id": "ExangSeg",
+                                  "type": "ref",
+                                  "ref": "B0qqb",
+                                  "name": "Angina induzida por exercício",
                                   "width": "fill_container",
-                                  "height": "fit_content(0)"
+                                  "descendants": {
+                                    "t0LQV": {
+                                      "content": "Angina induzida por exercício (exang)"
+                                    },
+                                    "Ra9cx": {
+                                      "content": "Sim"
+                                    },
+                                    "bAsBS": {
+                                      "content": "Não"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "CardioRow4",
+                              "name": "Row",
+                              "width": "fill_container",
+                              "gap": 16,
+                              "children": [
+                                {
+                                  "id": "OldpeakField",
+                                  "type": "ref",
+                                  "ref": "vBiN9",
+                                  "name": "Depressão do segmento ST",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "nS5Cp": {
+                                      "content": "Depressão do segmento ST (oldpeak)"
+                                    },
+                                    "dTIak": {
+                                      "content": "1.5"
+                                    },
+                                    "wiXAT": {
+                                      "content": "mm"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "CaField",
+                                  "type": "ref",
+                                  "ref": "vBiN9",
+                                  "name": "Vasos principais coloridos",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "nS5Cp": {
+                                      "content": "Vasos principais coloridos (ca)"
+                                    },
+                                    "dTIak": {
+                                      "content": "0"
+                                    },
+                                    "wiXAT": {
+                                      "content": "0–3"
+                                    }
+                                  }
                                 }
                               ]
                             }
@@ -3155,14 +3596,14 @@
                           "children": [
                             {
                               "type": "frame",
-                              "id": "jvma8",
-                              "name": "Pressão arterial",
+                              "id": "GuideAge",
+                              "name": "Idade",
                               "width": "fill_container",
                               "gap": 12,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "zsv3h",
+                                  "id": "GuideAgeBadge",
                                   "name": "Badge",
                                   "width": 32,
                                   "height": 32,
@@ -3173,7 +3614,202 @@
                                   "children": [
                                     {
                                       "type": "icon",
-                                      "id": "u0ar7D",
+                                      "id": "GuideAgeIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "calendar",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideAgeT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideAgeN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Idade (age)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideAgeD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Idade do paciente em anos. Fator de risco independente — risco aumenta com a idade.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideSex",
+                              "name": "Sexo",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideSexBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideSexIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "user",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideSexT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideSexN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Sexo (sex)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideSexD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "1 = masculino, 0 = feminino. Homens apresentam maior risco cardiovascular precoce.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideCp",
+                              "name": "cp",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideCpBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideCpIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "heart-pulse",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideCpT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideCpN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Tipo de dor no peito (cp)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideCpD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "1 = angina típica, 2 = angina atípica, 3 = dor não anginosa, 4 = assintomático.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideTrestbps",
+                              "name": "Pressão arterial",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideTrestbpsBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideTrestbpsIco",
                                       "name": "Ico",
                                       "width": 16,
                                       "height": 16,
@@ -3185,7 +3821,7 @@
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "PZx4J",
+                                  "id": "GuideTrestbpsT",
                                   "name": "T",
                                   "width": "fill_container",
                                   "layout": "vertical",
@@ -3193,22 +3829,22 @@
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "U7GMy",
+                                      "id": "GuideTrestbpsN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Pressão arterial",
+                                      "content": "Pressão arterial (trestbps)",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
                                     },
                                     {
                                       "type": "text",
-                                      "id": "KINQk",
+                                      "id": "GuideTrestbpsD",
                                       "name": "D",
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Valores ≥ 140/90 mmHg indicam hipertensão, principal fator de risco modificável.",
+                                      "content": "Pressão arterial em repouso (mm Hg). Valores ≥ 140/90 indicam hipertensão.",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -3220,79 +3856,14 @@
                             },
                             {
                               "type": "frame",
-                              "id": "T2fYHh",
-                              "name": "IMC",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "zMk6d",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "x4yJkU",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "scale",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "fNRcE",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "qZyLL",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "IMC",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "a5kGMI",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Índice de massa corporal; acima de 30 kg/m² caracteriza obesidade.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "I1e6Kd",
+                              "id": "GuideChol",
                               "name": "Colesterol",
                               "width": "fill_container",
                               "gap": 12,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "i3US1a",
+                                  "id": "GuideCholBadge",
                                   "name": "Badge",
                                   "width": 32,
                                   "height": 32,
@@ -3303,7 +3874,7 @@
                                   "children": [
                                     {
                                       "type": "icon",
-                                      "id": "sOOqH",
+                                      "id": "GuideCholIco",
                                       "name": "Ico",
                                       "width": 16,
                                       "height": 16,
@@ -3315,7 +3886,7 @@
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "yjo8O",
+                                  "id": "GuideCholT",
                                   "name": "T",
                                   "width": "fill_container",
                                   "layout": "vertical",
@@ -3323,22 +3894,22 @@
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "V7KUI",
+                                      "id": "GuideCholN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Colesterol",
+                                      "content": "Colesterol total (chol)",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
                                     },
                                     {
                                       "type": "text",
-                                      "id": "z3yJC",
+                                      "id": "GuideCholD",
                                       "name": "D",
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "LDL elevado favorece o acúmulo de placas nas artérias.",
+                                      "content": "Colesterol total em mg/dl. LDL elevado favorece acúmulo de placas nas artérias.",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -3350,14 +3921,14 @@
                             },
                             {
                               "type": "frame",
-                              "id": "IUNw3",
-                              "name": "Glicose",
+                              "id": "GuideFbs",
+                              "name": "Glicemia",
                               "width": "fill_container",
                               "gap": 12,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "F3scHB",
+                                  "id": "GuideFbsBadge",
                                   "name": "Badge",
                                   "width": 32,
                                   "height": 32,
@@ -3368,7 +3939,7 @@
                                   "children": [
                                     {
                                       "type": "icon",
-                                      "id": "Si5y1",
+                                      "id": "GuideFbsIco",
                                       "name": "Ico",
                                       "width": 16,
                                       "height": 16,
@@ -3380,7 +3951,7 @@
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "nsT3n",
+                                  "id": "GuideFbsT",
                                   "name": "T",
                                   "width": "fill_container",
                                   "layout": "vertical",
@@ -3388,22 +3959,22 @@
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "KqZor",
+                                      "id": "GuideFbsN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Glicose",
+                                      "content": "Glicemia em jejum (fbs)",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
                                     },
                                     {
                                       "type": "text",
-                                      "id": "nq52x",
+                                      "id": "GuideFbsD",
                                       "name": "D",
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Glicemia alta sugere diabetes, que acelera lesões vasculares.",
+                                      "content": "1 = glicemia > 120 mg/dl, 0 = normal. Glicemia alta sugere diabetes, que acelera lesões vasculares.",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -3415,14 +3986,14 @@
                             },
                             {
                               "type": "frame",
-                              "id": "V40RKI",
-                              "name": "Tabagismo",
+                              "id": "GuideRestecg",
+                              "name": "ECG",
                               "width": "fill_container",
                               "gap": 12,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "ZkEjP",
+                                  "id": "GuideRestecgBadge",
                                   "name": "Badge",
                                   "width": 32,
                                   "height": 32,
@@ -3433,11 +4004,11 @@
                                   "children": [
                                     {
                                       "type": "icon",
-                                      "id": "hyzT8",
+                                      "id": "GuideRestecgIco",
                                       "name": "Ico",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "cigarette",
+                                      "icon": "heart-pulse",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -3445,7 +4016,7 @@
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "EQizc",
+                                  "id": "GuideRestecgT",
                                   "name": "T",
                                   "width": "fill_container",
                                   "layout": "vertical",
@@ -3453,22 +4024,22 @@
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "Af6jl",
+                                      "id": "GuideRestecgN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Tabagismo",
+                                      "content": "Eletrocardiograma (restecg)",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
                                     },
                                     {
                                       "type": "text",
-                                      "id": "JHxG5",
+                                      "id": "GuideRestecgD",
                                       "name": "D",
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Fumar reduz a oxigenação e danifica a parede dos vasos.",
+                                      "content": "0 = normal, 1 = anormalidade da onda ST-T, 2 = hipertrofia ventricular esquerda.",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -3480,14 +4051,14 @@
                             },
                             {
                               "type": "frame",
-                              "id": "lWtcU",
-                              "name": "Histórico familiar",
+                              "id": "GuideThalach",
+                              "name": "FC max",
                               "width": "fill_container",
                               "gap": 12,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "aPPnn",
+                                  "id": "GuideThalachBadge",
                                   "name": "Badge",
                                   "width": 32,
                                   "height": 32,
@@ -3498,7 +4069,332 @@
                                   "children": [
                                     {
                                       "type": "icon",
-                                      "id": "h2TpCq",
+                                      "id": "GuideThalachIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "activity",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideThalachT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideThalachN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "FC máxima (thalach)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideThalachD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Frequência cardíaca máxima atingida no teste de esforço. Valores baixos podem indicar doença.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideExang",
+                              "name": "Angina",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideExangBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideExangIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "alert-triangle",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideExangT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideExangN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Angina induzida (exang)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideExangD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "1 = angina induzida por exercício, 0 = sem angina. Indica isquemia miocárdica.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideOldpeak",
+                              "name": "ST",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideOldpeakBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideOldpeakIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "trending-down",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideOldpeakT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideOldpeakN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Depressão ST (oldpeak)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideOldpeakD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Depressão do segmento ST induzida pelo exercício (mm). Valores altos indicam isquemia.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideSlope",
+                              "name": "Slope",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideSlopeBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideSlopeIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "trending-up",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideSlopeT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideSlopeN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Inclinação ST (slope)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideSlopeD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "1 = subida, 2 = plano, 3 = descida. Inclinação descendente está associada a maior risco.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideCa",
+                              "name": "Vasos",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideCaBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideCaIco",
+                                      "name": "Ico",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "git-branch",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "GuideCaT",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 3,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GuideCaN",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Vasos coloridos (ca)",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GuideCaD",
+                                      "name": "D",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Nº de vasos principais coloridos por fluoroscopia (0–3). Mais vasos = maior gravidade.",
+                                      "lineHeight": 1.45,
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GuideThal",
+                              "name": "Talassemia",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "GuideThalBadge",
+                                  "name": "Badge",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$surface-muted",
+                                  "cornerRadius": 9,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "GuideThalIco",
                                       "name": "Ico",
                                       "width": 16,
                                       "height": 16,
@@ -3510,7 +4406,7 @@
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "S9iZT",
+                                  "id": "GuideThalT",
                                   "name": "T",
                                   "width": "fill_container",
                                   "layout": "vertical",
@@ -3518,22 +4414,22 @@
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "Kyequ",
+                                      "id": "GuideThalN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Histórico familiar",
+                                      "content": "Talassemia (thal)",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
                                     },
                                     {
                                       "type": "text",
-                                      "id": "mRptD",
+                                      "id": "GuideThalD",
                                       "name": "D",
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Antecedentes de DCV aumentam a predisposição genética.",
+                                      "content": "3 = normal, 6 = defeito fixo, 7 = defeito reversível. Anomalias indicam doença cardíaca.",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
