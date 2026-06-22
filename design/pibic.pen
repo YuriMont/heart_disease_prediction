@@ -329,7 +329,7 @@
               "fill": "#9FB6D4",
               "textGrowth": "fixed-width",
               "width": "fill_container",
-              "content": "CardioNet v3.2 · XGBoost",
+              "content": "Ensemble · padrão da API",
               "fontFamily": "$font-body",
               "fontSize": 11,
               "fontWeight": "normal"
@@ -1357,7 +1357,7 @@
                                   "id": "xeTRv",
                                   "name": "L",
                                   "fill": "$text-primary",
-                                  "content": "Hipertensão",
+                                  "content": "Pressão elevada",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "500"
@@ -1418,7 +1418,7 @@
                                   "id": "PH4yD",
                                   "name": "L",
                                   "fill": "$text-primary",
-                                  "content": "Colesterol elevado",
+                                  "content": "Colesterol alto",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "500"
@@ -1479,7 +1479,7 @@
                                   "id": "u7v2A",
                                   "name": "L",
                                   "fill": "$text-primary",
-                                  "content": "Tabagismo",
+                                  "content": "Dor no peito (cp)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "500"
@@ -1540,7 +1540,7 @@
                                   "id": "UsHb5",
                                   "name": "L",
                                   "fill": "$text-primary",
-                                  "content": "Sedentarismo",
+                                  "content": "Angina ao esforço",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "500"
@@ -1601,7 +1601,7 @@
                                   "id": "EpWQQ",
                                   "name": "L",
                                   "fill": "$text-primary",
-                                  "content": "Diabetes",
+                                  "content": "Glicemia alta",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "500"
@@ -1662,7 +1662,7 @@
                                   "id": "NO2kU",
                                   "name": "L",
                                   "fill": "$text-primary",
-                                  "content": "Histórico familiar",
+                                  "content": "ECG alterado",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "500"
@@ -1797,7 +1797,7 @@
                               "id": "DHdpl",
                               "name": "Title",
                               "fill": "#FFFFFF",
-                              "content": "Modelo de IA — CardioNet v3.2",
+                              "content": "Modelo de IA — Ensemble",
                               "fontFamily": "$font-heading",
                               "fontSize": 17,
                               "fontWeight": "700"
@@ -1818,7 +1818,7 @@
                                   "id": "Dx1GR",
                                   "name": "B",
                                   "fill": "#FFFFFF",
-                                  "content": "XGBoost Ensemble",
+                                  "content": "Ensemble",
                                   "fontFamily": "$font-body",
                                   "fontSize": 11,
                                   "fontWeight": "600"
@@ -1834,7 +1834,7 @@
                           "fill": "#C8D8F0",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Modelo de aprendizagem de máquina treinado com 48.500 registros clínicos para estimar a probabilidade de doença cardiovascular a partir de fatores demográficos, históricos e biométricos.",
+                          "content": "Modelo ensemble (votação entre KNN, SVM e Random Forest) treinado no dataset Heart Disease para estimar a probabilidade de doença cardíaca a partir de 13 indicadores clínicos do paciente.",
                           "lineHeight": 1.45,
                           "fontFamily": "$font-body",
                           "fontSize": 13,
@@ -2173,7 +2173,7 @@
       "name": "Screen 2 - Formulario",
       "clip": true,
       "width": 1440,
-      "height": "fill_container(1300)",
+      "height": "fill_container(1177)",
       "fill": "$bg-app",
       "children": [
         {
@@ -2333,6 +2333,179 @@
                   "children": [
                     {
                       "type": "frame",
+                      "id": "gJZ72",
+                      "name": "Stepper",
+                      "width": "fill_container",
+                      "fill": "$surface",
+                      "cornerRadius": 18,
+                      "stroke": "$card-border",
+                      "strokeWidth": 1,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0E1B2E0F",
+                        "offset": {
+                          "x": 0,
+                          "y": 6
+                        },
+                        "blur": 18,
+                        "spread": -6
+                      },
+                      "gap": 14,
+                      "padding": [
+                        18,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "zKji4",
+                          "name": "Step 1",
+                          "gap": 10,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "L2atE",
+                              "name": "Num",
+                              "width": 28,
+                              "height": 28,
+                              "fill": "$primary",
+                              "cornerRadius": 14,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "LU6jd",
+                                  "name": "N",
+                                  "fill": "#FFFFFF",
+                                  "content": "1",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 13,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "h8scMA",
+                              "name": "L",
+                              "fill": "$text-primary",
+                              "content": "Dados do paciente",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 1,
+                          "id": "FsjG9",
+                          "name": "Conn",
+                          "fill": "$primary",
+                          "width": "fill_container",
+                          "height": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "eyXyh",
+                          "name": "Step 2",
+                          "gap": 10,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "E62qEN",
+                              "name": "Num",
+                              "width": 28,
+                              "height": 28,
+                              "fill": "$primary",
+                              "cornerRadius": 14,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "DxcQ5",
+                                  "name": "N",
+                                  "fill": "#FFFFFF",
+                                  "content": "2",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 13,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "CuRKG",
+                              "name": "L",
+                              "fill": "$text-primary",
+                              "content": "Medições clínicas",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 1,
+                          "id": "IfWsn",
+                          "name": "Conn",
+                          "fill": "$primary",
+                          "width": "fill_container",
+                          "height": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "CUGsZ",
+                          "name": "Step 3",
+                          "gap": 10,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "nRWpa",
+                              "name": "Num",
+                              "width": 28,
+                              "height": 28,
+                              "fill": "$primary",
+                              "cornerRadius": 14,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "giqa8",
+                                  "name": "N",
+                                  "fill": "#FFFFFF",
+                                  "content": "3",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 13,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "U8kWu",
+                              "name": "L",
+                              "fill": "$text-primary",
+                              "content": "Exames cardíacos",
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
                       "id": "hAvEH",
                       "name": "Dados Demográficos",
                       "width": "fill_container",
@@ -2390,6 +2563,7 @@
                               "type": "frame",
                               "id": "qOpS4",
                               "name": "T",
+                              "width": "fill_container",
                               "layout": "vertical",
                               "gap": 2,
                               "children": [
@@ -2412,6 +2586,41 @@
                                   "fontFamily": "$font-body",
                                   "fontSize": 12,
                                   "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "yXXyw",
+                              "name": "Done",
+                              "fill": "$risk-low-soft",
+                              "cornerRadius": 20,
+                              "gap": 6,
+                              "padding": [
+                                5,
+                                11
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "lD758",
+                                  "name": "Ico",
+                                  "width": 13,
+                                  "height": 13,
+                                  "icon": "check",
+                                  "library": "lucide",
+                                  "fill": "$risk-low"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "r5DxbN",
+                                  "name": "T",
+                                  "fill": "$risk-low",
+                                  "content": "Completo",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
                                 }
                               ]
                             }
@@ -2443,7 +2652,7 @@
                                       "content": "Idade"
                                     },
                                     "dTIak": {
-                                      "content": "58"
+                                      "content": "54"
                                     },
                                     "wiXAT": {
                                       "content": "anos"
@@ -2533,6 +2742,7 @@
                               "type": "frame",
                               "id": "xH9H5",
                               "name": "T",
+                              "width": "fill_container",
                               "layout": "vertical",
                               "gap": 2,
                               "children": [
@@ -2555,6 +2765,41 @@
                                   "fontFamily": "$font-body",
                                   "fontSize": 12,
                                   "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "SFgD6",
+                              "name": "Done",
+                              "fill": "$risk-low-soft",
+                              "cornerRadius": 20,
+                              "gap": 6,
+                              "padding": [
+                                5,
+                                11
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "RyWmY",
+                                  "name": "Ico",
+                                  "width": 13,
+                                  "height": 13,
+                                  "icon": "check",
+                                  "library": "lucide",
+                                  "fill": "$risk-low"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "U2Ib0B",
+                                  "name": "T",
+                                  "fill": "$risk-low",
+                                  "content": "Completo",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
                                 }
                               ]
                             }
@@ -2583,10 +2828,10 @@
                                   "width": "fill_container",
                                   "descendants": {
                                     "nS5Cp": {
-                                      "content": "Pressão arterial"
+                                      "content": "Pressão em repouso"
                                     },
                                     "dTIak": {
-                                      "content": "138 / 88"
+                                      "content": "130"
                                     },
                                     "wiXAT": {
                                       "content": "mmHg"
@@ -2601,10 +2846,10 @@
                                   "width": "fill_container",
                                   "descendants": {
                                     "nS5Cp": {
-                                      "content": "Frequência cardíaca"
+                                      "content": "Freq. cardíaca máx."
                                     },
                                     "dTIak": {
-                                      "content": "82"
+                                      "content": "150"
                                     },
                                     "wiXAT": {
                                       "content": "bpm"
@@ -2631,7 +2876,7 @@
                                       "content": "Colesterol total"
                                     },
                                     "dTIak": {
-                                      "content": "224"
+                                      "content": "250"
                                     },
                                     "wiXAT": {
                                       "content": "mg/dL"
@@ -2703,6 +2948,7 @@
                               "type": "frame",
                               "id": "CardioTitleWrap",
                               "name": "T",
+                              "width": "fill_container",
                               "layout": "vertical",
                               "gap": 2,
                               "children": [
@@ -2725,6 +2971,41 @@
                                   "fontFamily": "$font-body",
                                   "fontSize": 12,
                                   "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "e4umZ",
+                              "name": "Done",
+                              "fill": "$risk-low-soft",
+                              "cornerRadius": 20,
+                              "gap": 6,
+                              "padding": [
+                                5,
+                                11
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "ClGCV",
+                                  "name": "Ico",
+                                  "width": 13,
+                                  "height": 13,
+                                  "icon": "check",
+                                  "library": "lucide",
+                                  "fill": "$risk-low"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "wPNED",
+                                  "name": "T",
+                                  "fill": "$risk-low",
+                                  "content": "Completo",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
                                 }
                               ]
                             }
@@ -2758,7 +3039,7 @@
                                       "id": "CpLabel",
                                       "name": "FieldLabel",
                                       "fill": "$text-secondary",
-                                      "content": "Tipo de dor no peito (cp)",
+                                      "content": "Tipo de dor no peito",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -2896,7 +3177,7 @@
                                       "id": "RestecgLabel",
                                       "name": "FieldLabel",
                                       "fill": "$text-secondary",
-                                      "content": "Eletrocardiograma (restecg)",
+                                      "content": "Eletrocardiograma em repouso",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -3017,7 +3298,7 @@
                                       "id": "SlopeLabel",
                                       "name": "FieldLabel",
                                       "fill": "$text-secondary",
-                                      "content": "Inclinação do segmento ST (slope)",
+                                      "content": "Inclinação do segmento ST",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -3129,7 +3410,7 @@
                                       "id": "ThalLabel",
                                       "name": "FieldLabel",
                                       "fill": "$text-secondary",
-                                      "content": "Talassemia (thal)",
+                                      "content": "Talassemia",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -3245,7 +3526,7 @@
                                   "width": "fill_container",
                                   "descendants": {
                                     "t0LQV": {
-                                      "content": "Glicemia em jejum > 120 (fbs)"
+                                      "content": "Glicemia em jejum > 120 mg/dl"
                                     },
                                     "Ra9cx": {
                                       "content": "Sim"
@@ -3263,7 +3544,7 @@
                                   "width": "fill_container",
                                   "descendants": {
                                     "t0LQV": {
-                                      "content": "Angina induzida por exercício (exang)"
+                                      "content": "Angina induzida por exercício"
                                     },
                                     "Ra9cx": {
                                       "content": "Sim"
@@ -3290,7 +3571,7 @@
                                   "width": "fill_container",
                                   "descendants": {
                                     "nS5Cp": {
-                                      "content": "Depressão do segmento ST (oldpeak)"
+                                      "content": "Depressão do segmento ST"
                                     },
                                     "dTIak": {
                                       "content": "1.5"
@@ -3308,7 +3589,7 @@
                                   "width": "fill_container",
                                   "descendants": {
                                     "nS5Cp": {
-                                      "content": "Vasos principais coloridos (ca)"
+                                      "content": "Vasos principais coloridos"
                                     },
                                     "dTIak": {
                                       "content": "0"
@@ -3410,52 +3691,6 @@
                                   "fontWeight": "600"
                                 }
                               ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "v3bgsT",
-                              "name": "PredictBtn",
-                              "fill": "$primary",
-                              "cornerRadius": 12,
-                              "effect": {
-                                "type": "shadow",
-                                "shadowType": "outer",
-                                "color": "#1E63E966",
-                                "offset": {
-                                  "x": 0,
-                                  "y": 6
-                                },
-                                "blur": 16,
-                                "spread": -4
-                              },
-                              "gap": 9,
-                              "padding": [
-                                13,
-                                26
-                              ],
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "icon",
-                                  "id": "A9CUm",
-                                  "name": "Ico",
-                                  "width": 18,
-                                  "height": 18,
-                                  "icon": "sparkles",
-                                  "library": "lucide",
-                                  "fill": "#FFFFFF"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "tUm1S",
-                                  "name": "T",
-                                  "fill": "#FFFFFF",
-                                  "content": "Executar Predição",
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 14,
-                                  "fontWeight": "600"
-                                }
-                              ]
                             }
                           ]
                         }
@@ -3472,6 +3707,488 @@
                   "layout": "vertical",
                   "gap": 16,
                   "children": [
+                    {
+                      "type": "frame",
+                      "id": "S1yYD",
+                      "name": "ControlPanel",
+                      "width": "fill_container",
+                      "fill": "$surface",
+                      "cornerRadius": 18,
+                      "stroke": "$card-border",
+                      "strokeWidth": 1,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0E1B2E0F",
+                        "offset": {
+                          "x": 0,
+                          "y": 6
+                        },
+                        "blur": 18,
+                        "spread": -6
+                      },
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 22,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ISSF0",
+                          "name": "Head",
+                          "width": "fill_container",
+                          "gap": 11,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "ES8x1",
+                              "name": "Badge",
+                              "width": 38,
+                              "height": 38,
+                              "fill": {
+                                "type": "gradient",
+                                "gradientType": "linear",
+                                "enabled": true,
+                                "rotation": 135,
+                                "size": {
+                                  "height": 1
+                                },
+                                "colors": [
+                                  {
+                                    "color": "$primary",
+                                    "position": 0
+                                  },
+                                  {
+                                    "color": "$accent-teal",
+                                    "position": 1
+                                  }
+                                ]
+                              },
+                              "cornerRadius": 10,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "a80CXy",
+                                  "name": "Ico",
+                                  "width": 19,
+                                  "height": 19,
+                                  "icon": "cpu",
+                                  "library": "lucide",
+                                  "fill": "#FFFFFF"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "v4zKe",
+                              "name": "T",
+                              "layout": "vertical",
+                              "gap": 1,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "f1P5ix",
+                                  "name": "Title",
+                                  "fill": "$text-primary",
+                                  "content": "Modelo de IA",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 15,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "qd0RX",
+                                  "name": "Sub",
+                                  "fill": "$text-secondary",
+                                  "content": "Algoritmo de previsão",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "lNlv8",
+                          "name": "ModelList",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "g7U2R",
+                              "name": "Ensemble",
+                              "width": "fill_container",
+                              "fill": "$primary-soft",
+                              "cornerRadius": 12,
+                              "stroke": "$primary",
+                              "strokeWidth": 1,
+                              "gap": 10,
+                              "padding": [
+                                11,
+                                13
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "yk8zZ",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "W5ERF",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Ensemble",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "OiNoB",
+                                      "name": "D",
+                                      "fill": "$text-muted",
+                                      "content": "Votação dos 3 · padrão",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "k0AcZH",
+                                  "name": "Radio",
+                                  "width": 18,
+                                  "height": 18,
+                                  "icon": "circle-check-big",
+                                  "library": "lucide",
+                                  "fill": "$primary"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "SwQ0P",
+                              "name": "Random Forest",
+                              "width": "fill_container",
+                              "fill": "$surface-muted",
+                              "cornerRadius": 12,
+                              "stroke": "$card-border",
+                              "strokeWidth": 1,
+                              "gap": 10,
+                              "padding": [
+                                11,
+                                13
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "xp6Gm",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "mLw3a",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "Random Forest",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "AJXET",
+                                      "name": "D",
+                                      "fill": "$text-muted",
+                                      "content": "Floresta aleatória",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "ZrtTV",
+                                  "name": "Radio",
+                                  "width": 18,
+                                  "height": 18,
+                                  "icon": "circle",
+                                  "library": "lucide",
+                                  "fill": "$text-muted"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "wdG75",
+                              "name": "SVM",
+                              "width": "fill_container",
+                              "fill": "$surface-muted",
+                              "cornerRadius": 12,
+                              "stroke": "$card-border",
+                              "strokeWidth": 1,
+                              "gap": 10,
+                              "padding": [
+                                11,
+                                13
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "hbAfi",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "KXfiK",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "SVM",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "JxvFr",
+                                      "name": "D",
+                                      "fill": "$text-muted",
+                                      "content": "Vetores de suporte",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "AVLS3",
+                                  "name": "Radio",
+                                  "width": 18,
+                                  "height": 18,
+                                  "icon": "circle",
+                                  "library": "lucide",
+                                  "fill": "$text-muted"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "LJyF5",
+                              "name": "KNN",
+                              "width": "fill_container",
+                              "fill": "$surface-muted",
+                              "cornerRadius": 12,
+                              "stroke": "$card-border",
+                              "strokeWidth": 1,
+                              "gap": 10,
+                              "padding": [
+                                11,
+                                13
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "VtEav",
+                                  "name": "T",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "szVVd",
+                                      "name": "N",
+                                      "fill": "$text-primary",
+                                      "content": "KNN",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "hReXX",
+                                      "name": "D",
+                                      "fill": "$text-muted",
+                                      "content": "K-vizinhos",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "iJlK3",
+                                  "name": "Radio",
+                                  "width": 18,
+                                  "height": 18,
+                                  "icon": "circle",
+                                  "library": "lucide",
+                                  "fill": "$text-muted"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "vytau",
+                          "name": "Div",
+                          "fill": "$card-border",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "c0ODOh",
+                          "name": "Progress",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 9,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "iUl5c",
+                              "name": "Row",
+                              "width": "fill_container",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "gNp8u",
+                                  "name": "K",
+                                  "fill": "$text-secondary",
+                                  "content": "Campos preenchidos",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "G9TWpZ",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "13 / 13",
+                                  "fontFamily": "$font-heading",
+                                  "fontSize": 13,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "tPtA1",
+                              "name": "Track",
+                              "width": "fill_container",
+                              "height": 8,
+                              "fill": "$surface-muted",
+                              "cornerRadius": 4,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "rw6ZS",
+                                  "name": "Fill",
+                                  "width": "fill_container",
+                                  "height": 8,
+                                  "fill": {
+                                    "type": "gradient",
+                                    "gradientType": "linear",
+                                    "enabled": true,
+                                    "rotation": 135,
+                                    "size": {
+                                      "height": 1
+                                    },
+                                    "colors": [
+                                      {
+                                        "color": "$primary",
+                                        "position": 0
+                                      },
+                                      {
+                                        "color": "$accent-teal",
+                                        "position": 1
+                                      }
+                                    ]
+                                  },
+                                  "cornerRadius": 4
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Jz6eY",
+                          "name": "PredictBtn",
+                          "width": "fill_container",
+                          "fill": "$primary",
+                          "cornerRadius": 12,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#1E63E966",
+                            "offset": {
+                              "x": 0,
+                              "y": 6
+                            },
+                            "blur": 16,
+                            "spread": -4
+                          },
+                          "gap": 9,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "skIvW",
+                              "name": "Ico",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "sparkles",
+                              "library": "lucide",
+                              "fill": "#FFFFFF"
+                            },
+                            {
+                              "type": "text",
+                              "id": "d9OE6",
+                              "name": "T",
+                              "fill": "#FFFFFF",
+                              "content": "Executar Predição",
+                              "fontFamily": "$font-body",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
                     {
                       "type": "frame",
                       "id": "zgjEr",
@@ -3540,7 +4257,7 @@
                                   "name": "Ico",
                                   "width": 19,
                                   "height": 19,
-                                  "icon": "book-open-text",
+                                  "icon": "list-checks",
                                   "library": "lucide",
                                   "fill": "#FFFFFF"
                                 }
@@ -3558,7 +4275,7 @@
                                   "id": "g8oXY",
                                   "name": "Title",
                                   "fill": "$text-primary",
-                                  "content": "Guia das Variáveis",
+                                  "content": "Legenda dos exames",
                                   "fontFamily": "$font-heading",
                                   "fontSize": 15,
                                   "fontWeight": "700"
@@ -3568,7 +4285,7 @@
                                   "id": "BAkSR",
                                   "name": "Sub",
                                   "fill": "$text-secondary",
-                                  "content": "Entenda cada dado clínico",
+                                  "content": "Significado dos códigos",
                                   "fontFamily": "$font-body",
                                   "fontSize": 12,
                                   "fontWeight": "normal"
@@ -3594,136 +4311,6 @@
                           "layout": "vertical",
                           "gap": 18,
                           "children": [
-                            {
-                              "type": "frame",
-                              "id": "GuideAge",
-                              "name": "Idade",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideAgeBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideAgeIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "calendar",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideAgeT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideAgeN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Idade (age)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideAgeD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Idade do paciente em anos. Fator de risco independente — risco aumenta com a idade.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideSex",
-                              "name": "Sexo",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideSexBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideSexIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "user",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideSexT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideSexN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Sexo (sex)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideSexD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "1 = masculino, 0 = feminino. Homens apresentam maior risco cardiovascular precoce.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
                             {
                               "type": "frame",
                               "id": "GuideCp",
@@ -3767,7 +4354,7 @@
                                       "id": "GuideCpN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Tipo de dor no peito (cp)",
+                                      "content": "Tipo de dor no peito",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -3779,202 +4366,7 @@
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "1 = angina típica, 2 = angina atípica, 3 = dor não anginosa, 4 = assintomático.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideTrestbps",
-                              "name": "Pressão arterial",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideTrestbpsBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideTrestbpsIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "activity",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideTrestbpsT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideTrestbpsN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Pressão arterial (trestbps)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideTrestbpsD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Pressão arterial em repouso (mm Hg). Valores ≥ 140/90 indicam hipertensão.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideChol",
-                              "name": "Colesterol",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideCholBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideCholIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "droplet",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideCholT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideCholN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Colesterol total (chol)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideCholD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Colesterol total em mg/dl. LDL elevado favorece acúmulo de placas nas artérias.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideFbs",
-                              "name": "Glicemia",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideFbsBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideFbsIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "candy",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideFbsT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideFbsN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Glicemia em jejum (fbs)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideFbsD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "1 = glicemia > 120 mg/dl, 0 = normal. Glicemia alta sugere diabetes, que acelera lesões vasculares.",
+                                      "content": "Típica, atípica, não anginosa ou assintomática",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -4027,7 +4419,7 @@
                                       "id": "GuideRestecgN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Eletrocardiograma (restecg)",
+                                      "content": "Eletrocardiograma",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -4039,202 +4431,7 @@
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "0 = normal, 1 = anormalidade da onda ST-T, 2 = hipertrofia ventricular esquerda.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideThalach",
-                              "name": "FC max",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideThalachBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideThalachIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "activity",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideThalachT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideThalachN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "FC máxima (thalach)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideThalachD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Frequência cardíaca máxima atingida no teste de esforço. Valores baixos podem indicar doença.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideExang",
-                              "name": "Angina",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideExangBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideExangIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "alert-triangle",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideExangT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideExangN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Angina induzida (exang)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideExangD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "1 = angina induzida por exercício, 0 = sem angina. Indica isquemia miocárdica.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideOldpeak",
-                              "name": "ST",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideOldpeakBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideOldpeakIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "trending-down",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideOldpeakT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideOldpeakN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Depressão ST (oldpeak)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideOldpeakD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Depressão do segmento ST induzida pelo exercício (mm). Valores altos indicam isquemia.",
+                                      "content": "Normal, ST-T ou hipertrofia",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -4287,7 +4484,7 @@
                                       "id": "GuideSlopeN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Inclinação ST (slope)",
+                                      "content": "Inclinação ST",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -4299,72 +4496,7 @@
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "1 = subida, 2 = plano, 3 = descida. Inclinação descendente está associada a maior risco.",
-                                      "lineHeight": 1.45,
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "GuideCa",
-                              "name": "Vasos",
-                              "width": "fill_container",
-                              "gap": 12,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "GuideCaBadge",
-                                  "name": "Badge",
-                                  "width": 32,
-                                  "height": 32,
-                                  "fill": "$surface-muted",
-                                  "cornerRadius": 9,
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "icon",
-                                      "id": "GuideCaIco",
-                                      "name": "Ico",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "git-branch",
-                                      "library": "lucide",
-                                      "fill": "$primary"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "GuideCaT",
-                                  "name": "T",
-                                  "width": "fill_container",
-                                  "layout": "vertical",
-                                  "gap": 3,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "GuideCaN",
-                                      "name": "N",
-                                      "fill": "$text-primary",
-                                      "content": "Vasos coloridos (ca)",
-                                      "fontFamily": "$font-body",
-                                      "fontSize": 13,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "GuideCaD",
-                                      "name": "D",
-                                      "fill": "$text-secondary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Nº de vasos principais coloridos por fluoroscopia (0–3). Mais vasos = maior gravidade.",
+                                      "content": "Subida, plano ou descida",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -4417,7 +4549,7 @@
                                       "id": "GuideThalN",
                                       "name": "N",
                                       "fill": "$text-primary",
-                                      "content": "Talassemia (thal)",
+                                      "content": "Talassemia",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -4429,7 +4561,7 @@
                                       "fill": "$text-secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "3 = normal, 6 = defeito fixo, 7 = defeito reversível. Anomalias indicam doença cardíaca.",
+                                      "content": "Normal, fixo ou reversível",
                                       "lineHeight": 1.45,
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
@@ -4893,7 +5025,7 @@
                               "id": "W91gc",
                               "name": "Heading",
                               "fill": "$text-primary",
-                              "content": "Alto Risco Cardiovascular",
+                              "content": "Possível Doença Cardíaca",
                               "fontFamily": "$font-heading",
                               "fontSize": 28,
                               "fontWeight": "700"
@@ -4905,7 +5037,7 @@
                               "fill": "$text-secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "O modelo estima 87% de probabilidade de evento cardiovascular nos próximos 10 anos. Recomenda-se acompanhamento médico e intervenção sobre os fatores de risco modificáveis.",
+                              "content": "O modelo Ensemble estima 87% de probabilidade de doença cardíaca (probabilidade_doenca = 0,87). Resultado: \"Possível doença cardíaca\". Recomenda-se avaliação médica complementar.",
                               "lineHeight": 1.5,
                               "fontFamily": "$font-body",
                               "fontSize": 14,
@@ -4975,7 +5107,7 @@
                                           "id": "q3GaJ",
                                           "name": "K",
                                           "fill": "$text-muted",
-                                          "content": "Faixa",
+                                          "content": "Resultado",
                                           "fontFamily": "$font-body",
                                           "fontSize": 11,
                                           "fontWeight": "normal"
@@ -4985,7 +5117,7 @@
                                           "id": "E5hlbn",
                                           "name": "V",
                                           "fill": "$text-primary",
-                                          "content": "Percentil 92",
+                                          "content": "Possível doença",
                                           "fontFamily": "$font-body",
                                           "fontSize": 13,
                                           "fontWeight": "700"
@@ -5097,7 +5229,7 @@
                                           "name": "Ico",
                                           "width": 16,
                                           "height": 16,
-                                          "icon": "calendar-clock",
+                                          "icon": "cpu",
                                           "library": "lucide",
                                           "fill": "$primary"
                                         }
@@ -5115,7 +5247,7 @@
                                           "id": "xrtoa",
                                           "name": "K",
                                           "fill": "$text-muted",
-                                          "content": "Horizonte",
+                                          "content": "Modelo",
                                           "fontFamily": "$font-body",
                                           "fontSize": 11,
                                           "fontWeight": "normal"
@@ -5125,7 +5257,7 @@
                                           "id": "bG1Pb",
                                           "name": "V",
                                           "fill": "$text-primary",
-                                          "content": "10 anos",
+                                          "content": "Ensemble",
                                           "fontFamily": "$font-body",
                                           "fontSize": 13,
                                           "fontWeight": "700"
@@ -5283,7 +5415,7 @@
                                       "fill": "$text-primary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Pressão arterial 138/88",
+                                      "content": "Pressão em repouso 130",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "500"
@@ -5351,7 +5483,7 @@
                                       "fill": "$text-primary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Tabagismo ativo",
+                                      "content": "Dor no peito: típica",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "500"
@@ -5419,7 +5551,7 @@
                                       "fill": "$text-primary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Colesterol 224 mg/dL",
+                                      "content": "Colesterol 250 mg/dL",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "500"
@@ -5487,7 +5619,7 @@
                                       "fill": "$text-primary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Idade 58 anos",
+                                      "content": "Idade 54 anos",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "500"
@@ -5555,7 +5687,7 @@
                                       "fill": "$text-primary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "IMC 28,6 kg/m²",
+                                      "content": "Inclinação ST: subida",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "500"
@@ -5623,7 +5755,7 @@
                                       "fill": "$text-primary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Glicose 118 mg/dL",
+                                      "content": "Talassemia: normal",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "500"
@@ -5735,7 +5867,7 @@
                                       "id": "AbsfP",
                                       "name": "Sub",
                                       "fill": "$text-secondary",
-                                      "content": "Peso global no modelo CardioNet",
+                                      "content": "Peso global no modelo Ensemble",
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
                                       "fontWeight": "normal"
@@ -6010,7 +6142,7 @@
                                           "id": "mTAy6",
                                           "name": "L",
                                           "fill": "$text-primary",
-                                          "content": "Tabagismo",
+                                          "content": "Dor no peito",
                                           "fontFamily": "$font-body",
                                           "fontSize": 13,
                                           "fontWeight": "500"
@@ -6089,7 +6221,7 @@
                                           "id": "B2Kkyq",
                                           "name": "L",
                                           "fill": "$text-primary",
-                                          "content": "IMC",
+                                          "content": "Freq. máxima",
                                           "fontFamily": "$font-body",
                                           "fontSize": 13,
                                           "fontWeight": "500"
@@ -6168,7 +6300,7 @@
                                           "id": "EckR0",
                                           "name": "L",
                                           "fill": "$text-primary",
-                                          "content": "Glicose",
+                                          "content": "Vasos coloridos",
                                           "fontFamily": "$font-body",
                                           "fontSize": 13,
                                           "fontWeight": "500"
@@ -6346,7 +6478,7 @@
                                   "id": "qOHOu",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "58 anos",
+                                  "content": "54 anos",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6420,7 +6552,7 @@
                                   "id": "WMUZl",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Pressão arterial",
+                                  "content": "Dor no peito",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6430,7 +6562,7 @@
                                   "id": "Kawrl",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "138 / 88 mmHg",
+                                  "content": "Tipo 1",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6462,7 +6594,7 @@
                                   "id": "SuVeZ",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Frequência cardíaca",
+                                  "content": "Pressão em repouso",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6472,7 +6604,7 @@
                                   "id": "VQ9kx",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "82 bpm",
+                                  "content": "130 mmHg",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6504,7 +6636,7 @@
                                   "id": "wIfFX",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "IMC",
+                                  "content": "Colesterol (chol)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6514,7 +6646,7 @@
                                   "id": "Kfm2j",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "28,6 kg/m²",
+                                  "content": "250 mg/dL",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6546,7 +6678,7 @@
                                   "id": "f3plSS",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Colesterol",
+                                  "content": "Glicemia em jejum",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6556,7 +6688,7 @@
                                   "id": "OIPsE",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "224 mg/dL",
+                                  "content": "Sim",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6588,7 +6720,7 @@
                                   "id": "FEPSa",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Glicose",
+                                  "content": "ECG em repouso",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6598,7 +6730,7 @@
                                   "id": "w84Le",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "118 mg/dL",
+                                  "content": "Normal (0)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6630,7 +6762,7 @@
                                   "id": "pZHoH",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Hipertensão",
+                                  "content": "Freq. cardíaca máx.",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6640,7 +6772,7 @@
                                   "id": "X6mHr",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "Sim",
+                                  "content": "150 bpm",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6672,7 +6804,7 @@
                                   "id": "weKRJ",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Diabetes",
+                                  "content": "Angina por exercício",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6682,7 +6814,7 @@
                                   "id": "z8QVK",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "Não",
+                                  "content": "Sim",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6714,7 +6846,7 @@
                                   "id": "tS6kL",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Tabagismo",
+                                  "content": "Depressão ST",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6724,7 +6856,7 @@
                                   "id": "Q46bc0",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "Sim",
+                                  "content": "1,5 mm",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6756,7 +6888,7 @@
                                   "id": "H8AkC",
                                   "name": "K",
                                   "fill": "$text-secondary",
-                                  "content": "Histórico familiar",
+                                  "content": "Inclinação ST",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -6766,7 +6898,91 @@
                                   "id": "mcNj5",
                                   "name": "V",
                                   "fill": "$text-primary",
-                                  "content": "Sim",
+                                  "content": "Tipo 1",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "yIwBw",
+                              "name": "Div",
+                              "fill": "$card-border",
+                              "width": "fill_container",
+                              "height": 1
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Yimpn",
+                              "name": "Vasos coloridos",
+                              "width": "fill_container",
+                              "padding": [
+                                10,
+                                0
+                              ],
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "R3inQG",
+                                  "name": "K",
+                                  "fill": "$text-secondary",
+                                  "content": "Vasos coloridos",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "jvPcX",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "0",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "e9U4t",
+                              "name": "Div",
+                              "fill": "$card-border",
+                              "width": "fill_container",
+                              "height": 1
+                            },
+                            {
+                              "type": "frame",
+                              "id": "AadtC",
+                              "name": "Talassemia",
+                              "width": "fill_container",
+                              "padding": [
+                                10,
+                                0
+                              ],
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ad57s",
+                                  "name": "K",
+                                  "fill": "$text-secondary",
+                                  "content": "Talassemia",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "g8SIo",
+                                  "name": "V",
+                                  "fill": "$text-primary",
+                                  "content": "3 (Normal)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "700"
@@ -6988,7 +7204,7 @@
                                   "fill": "#E4EDFB",
                                   "textGrowth": "fixed-width",
                                   "width": "fill_container",
-                                  "content": "Plano de cessação do tabagismo",
+                                  "content": "Repetir ECG e teste de esforço",
                                   "lineHeight": 1.4,
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
@@ -7119,7 +7335,7 @@
       "name": "Screen 4 - Modelos de IA",
       "clip": true,
       "width": 1440,
-      "height": 1024,
+      "height": 1186,
       "fill": "$bg-app",
       "children": [
         {
@@ -7147,7 +7363,7 @@
           "name": "Main",
           "clip": true,
           "width": "fill_container",
-          "height": "fill_container",
+          "height": 1194,
           "layout": "vertical",
           "gap": 24,
           "padding": [
@@ -7399,7 +7615,7 @@
                                   "type": "text",
                                   "id": "Gs9V8",
                                   "fill": "#FFFFFF",
-                                  "content": "CardioNet v3.2",
+                                  "content": "Modelo Ensemble",
                                   "fontFamily": "$font-heading",
                                   "fontSize": 18,
                                   "fontWeight": "700"
@@ -7441,7 +7657,7 @@
                                       "type": "text",
                                       "id": "aZsil",
                                       "fill": "#FFFFFF",
-                                      "content": "XGBoost Ensemble",
+                                      "content": "Votação · KNN+SVM+RF",
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
                                       "fontWeight": "600"
@@ -7456,7 +7672,7 @@
                               "fill": "#C8D8F0",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Modelo de aprendizagem de máquina treinado com 48.500 registros clínicos para estimar a probabilidade de doença cardiovascular a partir de fatores demográficos, históricos e biométricos.",
+                              "content": "Combina KNN, SVM e Random Forest por votação para estimar a probabilidade de doença cardíaca a partir de 13 indicadores clínicos. É o modelo padrão da API (?modelo=ensemble).",
                               "lineHeight": 1.4,
                               "fontFamily": "$font-body",
                               "fontSize": 12,
@@ -7661,7 +7877,7 @@
                                   "type": "text",
                                   "id": "rU1Hn",
                                   "fill": "$text-primary",
-                                  "content": "Histórico de Versões",
+                                  "content": "Modelos Disponíveis",
                                   "fontFamily": "$font-heading",
                                   "fontSize": 17,
                                   "fontWeight": "700"
@@ -7670,7 +7886,7 @@
                                   "type": "text",
                                   "id": "BNVjx",
                                   "fill": "$text-secondary",
-                                  "content": "Todas as versões do modelo disponíveis",
+                                  "content": "Servidos pela API · GET /modelos",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -7705,7 +7921,7 @@
                                   "type": "text",
                                   "id": "JR3g0",
                                   "fill": "$text-secondary",
-                                  "content": "Todas as versões",
+                                  "content": "4 modelos",
                                   "fontFamily": "$font-body",
                                   "fontSize": 12,
                                   "fontWeight": "500"
@@ -7731,7 +7947,7 @@
                               "type": "text",
                               "id": "g4u9w",
                               "fill": "$text-muted",
-                              "content": "Versão",
+                              "content": "Modelo",
                               "fontFamily": "$font-body",
                               "fontSize": 12,
                               "fontWeight": "600"
@@ -7740,7 +7956,7 @@
                               "type": "text",
                               "id": "U9Nep7",
                               "fill": "$text-muted",
-                              "content": "Tipo",
+                              "content": "Algoritmo",
                               "fontFamily": "$font-body",
                               "fontSize": 12,
                               "fontWeight": "600"
@@ -7767,7 +7983,7 @@
                               "type": "text",
                               "id": "BBBhp",
                               "fill": "$text-muted",
-                              "content": "Data",
+                              "content": "id (API)",
                               "fontFamily": "$font-body",
                               "fontSize": 12,
                               "fontWeight": "600"
@@ -7811,7 +8027,7 @@
                                   "type": "text",
                                   "id": "GJlY0",
                                   "fill": "$text-primary",
-                                  "content": "v3.2",
+                                  "content": "Ensemble",
                                   "fontFamily": "$font-body",
                                   "fontSize": 14,
                                   "fontWeight": "600"
@@ -7820,7 +8036,7 @@
                                   "type": "text",
                                   "id": "U0bLV4",
                                   "fill": "$text-secondary",
-                                  "content": "XGBoost Ensemble",
+                                  "content": "Votação (KNN+SVM+RF)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -7847,7 +8063,7 @@
                                   "type": "text",
                                   "id": "ZxBbW",
                                   "fill": "$text-secondary",
-                                  "content": "12/06/2026",
+                                  "content": "ensemble",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -7895,7 +8111,7 @@
                                   "type": "text",
                                   "id": "Y6Pt41",
                                   "fill": "$text-primary",
-                                  "content": "v3.1",
+                                  "content": "Random Forest",
                                   "fontFamily": "$font-body",
                                   "fontSize": 14,
                                   "fontWeight": "600"
@@ -7904,7 +8120,7 @@
                                   "type": "text",
                                   "id": "E07rQ",
                                   "fill": "$text-secondary",
-                                  "content": "Random Forest",
+                                  "content": "Floresta aleatória",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -7931,7 +8147,7 @@
                                   "type": "text",
                                   "id": "qhpyg",
                                   "fill": "$text-secondary",
-                                  "content": "28/05/2026",
+                                  "content": "random_forest",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -7950,7 +8166,7 @@
                                       "type": "text",
                                       "id": "IuxV6",
                                       "fill": "$text-secondary",
-                                      "content": "Arquivado",
+                                      "content": "Disponível",
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
                                       "fontWeight": "600"
@@ -7979,7 +8195,7 @@
                                   "type": "text",
                                   "id": "zSxVs",
                                   "fill": "$text-primary",
-                                  "content": "v3.0",
+                                  "content": "SVM",
                                   "fontFamily": "$font-body",
                                   "fontSize": 14,
                                   "fontWeight": "600"
@@ -7988,7 +8204,7 @@
                                   "type": "text",
                                   "id": "o979mU",
                                   "fill": "$text-secondary",
-                                  "content": "Neural Network",
+                                  "content": "Vetores de suporte",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -8015,7 +8231,7 @@
                                   "type": "text",
                                   "id": "Ylrtx",
                                   "fill": "$text-secondary",
-                                  "content": "15/04/2026",
+                                  "content": "svm",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -8034,7 +8250,7 @@
                                       "type": "text",
                                       "id": "ozCmO",
                                       "fill": "$text-secondary",
-                                      "content": "Arquivado",
+                                      "content": "Disponível",
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
                                       "fontWeight": "600"
@@ -8063,7 +8279,7 @@
                                   "type": "text",
                                   "id": "EK9o4",
                                   "fill": "$text-primary",
-                                  "content": "v2.5",
+                                  "content": "KNN",
                                   "fontFamily": "$font-body",
                                   "fontSize": 14,
                                   "fontWeight": "600"
@@ -8072,7 +8288,7 @@
                                   "type": "text",
                                   "id": "viCYv",
                                   "fill": "$text-secondary",
-                                  "content": "Logistic Regression",
+                                  "content": "K-vizinhos (k-NN)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -8099,7 +8315,7 @@
                                   "type": "text",
                                   "id": "t8IxBO",
                                   "fill": "$text-secondary",
-                                  "content": "01/03/2026",
+                                  "content": "knn",
                                   "fontFamily": "$font-body",
                                   "fontSize": 13,
                                   "fontWeight": "normal"
@@ -8118,7 +8334,7 @@
                                       "type": "text",
                                       "id": "q8nwYp",
                                       "fill": "$text-secondary",
-                                      "content": "Arquivado",
+                                      "content": "Disponível",
                                       "fontFamily": "$font-body",
                                       "fontSize": 12,
                                       "fontWeight": "600"
@@ -8486,7 +8702,7 @@
                                   "type": "text",
                                   "id": "jnsKM",
                                   "fill": "$text-secondary",
-                                  "content": "Dados utilizados pelo modelo",
+                                  "content": "13 indicadores clínicos (Paciente)",
                                   "fontFamily": "$font-body",
                                   "fontSize": 12,
                                   "fontWeight": "normal"
@@ -8532,7 +8748,7 @@
                                       "id": "Y6jPOe",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "activity",
+                                      "icon": "user",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -8549,7 +8765,7 @@
                                       "type": "text",
                                       "id": "LbWgl",
                                       "fill": "$text-primary",
-                                      "content": "Pressão arterial",
+                                      "content": "Idade",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8558,7 +8774,7 @@
                                       "type": "text",
                                       "id": "pnLZw",
                                       "fill": "$text-muted",
-                                      "content": "Numérico contínuo",
+                                      "content": "age · 1–120",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8589,7 +8805,7 @@
                                       "id": "tagGM",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "scale",
+                                      "icon": "users",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -8606,7 +8822,7 @@
                                       "type": "text",
                                       "id": "X6dtEG",
                                       "fill": "$text-primary",
-                                      "content": "IMC",
+                                      "content": "Sexo",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8615,7 +8831,7 @@
                                       "type": "text",
                                       "id": "p02yWZ",
                                       "fill": "$text-muted",
-                                      "content": "Numérico contínuo",
+                                      "content": "sex · 0/1",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8646,7 +8862,7 @@
                                       "id": "xAwaP",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "droplet",
+                                      "icon": "heart-pulse",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -8663,7 +8879,7 @@
                                       "type": "text",
                                       "id": "SooTj",
                                       "fill": "$text-primary",
-                                      "content": "Colesterol",
+                                      "content": "Dor no peito",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8672,7 +8888,7 @@
                                       "type": "text",
                                       "id": "rhwmI",
                                       "fill": "$text-muted",
-                                      "content": "Numérico contínuo",
+                                      "content": "cp · 1–4",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8703,7 +8919,7 @@
                                       "id": "yAcPY",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "candy",
+                                      "icon": "activity",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -8720,7 +8936,7 @@
                                       "type": "text",
                                       "id": "siSQg",
                                       "fill": "$text-primary",
-                                      "content": "Glicose",
+                                      "content": "Pressão em repouso",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8729,7 +8945,7 @@
                                       "type": "text",
                                       "id": "gytik",
                                       "fill": "$text-muted",
-                                      "content": "Numérico contínuo",
+                                      "content": "trestbps · mmHg",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8760,7 +8976,7 @@
                                       "id": "tpcdW",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "user",
+                                      "icon": "droplet",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -8777,7 +8993,7 @@
                                       "type": "text",
                                       "id": "MUaWy",
                                       "fill": "$text-primary",
-                                      "content": "Idade",
+                                      "content": "Colesterol",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8786,7 +9002,7 @@
                                       "type": "text",
                                       "id": "iPoUT",
                                       "fill": "$text-muted",
-                                      "content": "Numérico inteiro",
+                                      "content": "chol · mg/dL",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8817,7 +9033,7 @@
                                       "id": "gXQoR",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "heart-pulse",
+                                      "icon": "candy",
                                       "library": "lucide",
                                       "fill": "$primary"
                                     }
@@ -8834,7 +9050,7 @@
                                       "type": "text",
                                       "id": "TbgX6",
                                       "fill": "$text-primary",
-                                      "content": "Frequência cardíaca",
+                                      "content": "Glicemia em jejum",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8843,7 +9059,7 @@
                                       "type": "text",
                                       "id": "JDKqj",
                                       "fill": "$text-muted",
-                                      "content": "Numérico inteiro",
+                                      "content": "fbs · 0/1",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8864,7 +9080,7 @@
                                   "id": "wQUpa",
                                   "width": 32,
                                   "height": 32,
-                                  "fill": "$risk-high-soft",
+                                  "fill": "$primary-soft",
                                   "cornerRadius": 8,
                                   "justifyContent": "center",
                                   "alignItems": "center",
@@ -8874,9 +9090,9 @@
                                       "id": "tqZ8W",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "cigarette",
+                                      "icon": "activity",
                                       "library": "lucide",
-                                      "fill": "$risk-high"
+                                      "fill": "$primary"
                                     }
                                   ]
                                 },
@@ -8891,7 +9107,7 @@
                                       "type": "text",
                                       "id": "iBIg0",
                                       "fill": "$text-primary",
-                                      "content": "Tabagismo",
+                                      "content": "ECG em repouso",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8900,7 +9116,7 @@
                                       "type": "text",
                                       "id": "c24YJ",
                                       "fill": "$text-muted",
-                                      "content": "Binário (Sim/Não)",
+                                      "content": "restecg · 0–2",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
@@ -8921,7 +9137,7 @@
                                   "id": "UjZmp",
                                   "width": 32,
                                   "height": 32,
-                                  "fill": "$risk-high-soft",
+                                  "fill": "$primary-soft",
                                   "cornerRadius": 8,
                                   "justifyContent": "center",
                                   "alignItems": "center",
@@ -8931,9 +9147,9 @@
                                       "id": "MJ5p6",
                                       "width": 16,
                                       "height": 16,
-                                      "icon": "dna",
+                                      "icon": "heart-pulse",
                                       "library": "lucide",
-                                      "fill": "$risk-high"
+                                      "fill": "$primary"
                                     }
                                   ]
                                 },
@@ -8948,7 +9164,7 @@
                                       "type": "text",
                                       "id": "Ibpa5",
                                       "fill": "$text-primary",
-                                      "content": "Histórico familiar",
+                                      "content": "Freq. máxima",
                                       "fontFamily": "$font-body",
                                       "fontSize": 13,
                                       "fontWeight": "600"
@@ -8957,7 +9173,297 @@
                                       "type": "text",
                                       "id": "mvvc7",
                                       "fill": "$text-muted",
-                                      "content": "Binário (Sim/Não)",
+                                      "content": "thalach · bpm",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "weiil",
+                              "name": "exang",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ZKUac",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$primary-soft",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "PEbVD",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "zap",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "WDUdm",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "sEWXT",
+                                      "fill": "$text-primary",
+                                      "content": "Angina por exercício",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "LdSNr",
+                                      "fill": "$text-muted",
+                                      "content": "exang · 0/1",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "nnaDw",
+                              "name": "oldpeak",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "C43r6l",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$primary-soft",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "H53AOL",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "trending-down",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "QRlOr",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "cBJUm",
+                                      "fill": "$text-primary",
+                                      "content": "Depressão ST",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "U6rZA",
+                                      "fill": "$text-muted",
+                                      "content": "oldpeak · mm",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "KtttG",
+                              "name": "slope",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "hohlJ",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$primary-soft",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "shO3O",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "move-up-right",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "xUE2y",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "MCRQk",
+                                      "fill": "$text-primary",
+                                      "content": "Inclinação ST",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "qTC1z",
+                                      "fill": "$text-muted",
+                                      "content": "slope · 1–3",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "tOw9Q",
+                              "name": "ca",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "BlpWi",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$primary-soft",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "p9CXkF",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "git-branch",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "c70MM",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "OeedV",
+                                      "fill": "$text-primary",
+                                      "content": "Vasos coloridos",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "T5lA06",
+                                      "fill": "$text-muted",
+                                      "content": "ca · 0–3",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Sax1C",
+                              "name": "thal",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "pK2wi",
+                                  "width": 32,
+                                  "height": 32,
+                                  "fill": "$primary-soft",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon",
+                                      "id": "ffdRf",
+                                      "width": 16,
+                                      "height": 16,
+                                      "icon": "dna",
+                                      "library": "lucide",
+                                      "fill": "$primary"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "eJSIO",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": 1,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "hWefg",
+                                      "fill": "$text-primary",
+                                      "content": "Talassemia",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "eYgEX",
+                                      "fill": "$text-muted",
+                                      "content": "thal · 3/6/7",
                                       "fontFamily": "$font-body",
                                       "fontSize": 11,
                                       "fontWeight": "normal"
