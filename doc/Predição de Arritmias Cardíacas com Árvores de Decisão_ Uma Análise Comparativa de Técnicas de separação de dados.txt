@@ -1,0 +1,430 @@
+Capítulo 1
+
+Predição de Arritmias Cardíacas com Árvores de Decisão: Uma Análise Comparativa de
+Técnicas de separação de dados
+
+Abstract:
+The growing prevalence of cardiovascular diseases represents one of the main
+global public health concerns, with impacts that go beyond the clinical sphere
+and significantly affect social and economic contexts. In this scenario, the
+application of Artificial Intelligence (AI) has emerged as a promising strategy
+in supporting the early detection of these conditions. This study aims to
+analyze and compare the performance of a Decision tree model, implemented
+with different data mining techniques, in the task of diagnosing cardiac
+arrhythmias. The MIT-BIH Arrhythmia database, which contains
+electrocardiogram (ECG) records from various patients, was used to train and
+evaluate the model. The analysis was conducted using holdout validation (with
+two and three partitions) and k-fold cross-validation techniques to ensure
+greater robustness of the results. Performance metrics included ROC curve,
+accuracy, precision, recall, and F1-score. The results demonstrated high
+performance across all approaches, with the three-partition holdout method
+showing consistent superiority in all evaluated metrics. These findings
+highlight the potential of data mining techniques applied to machine learning
+as complementary tools in clinical decision support, contributing to faster and
+more accurate diagnoses in the treatment of cardiac arrhythmias.
+Key-words: Decision tree; Artificial Intelligence; Cardiac arrhythmia.
+Resumo:
+A crescente prevalência das doenças cardiovasculares representa uma das
+principais preocupações de saúde pública mundial, com impactos que
+ultrapassam o campo clínico e afetam significativamente os contextos social e
+econômico. Nesse cenário, a aplicação de Inteligência Artificial (IA) tem se
+destacado como uma estratégia promissora no apoio à detecção precoce
+dessas enfermidades. Este estudo tem como objetivo analisar e comparar o
+desempenho de um modelo de Árvore de decisão, implementado com diferentes
+técnicas de mineração de dados, na tarefa de diagnóstico de arritmias
+cardíacas. Utilizou-se o banco de dados MIT-BIH Arrhythmia, composto por
+registros de eletrocardiogramas (ECG) de diversos pacientes, para treinar e
+avaliar o modelo. A análise foi conduzida com as técnicas de validação
+holdout (com duas e três partições) e validação cruzada k-fold, visando
+garantir maior robustez nos resultados. As métricas utilizadas para
+mensuração de desempenho incluíram curva ROC, acurácia, precisão, recall e
+F1-score. Os resultados evidenciaram elevado desempenho em todas as
+abordagens testadas, com destaque para o método holdout com três partições,
+que apresentou superioridade consistente em todas as métricas avaliadas. Tais
+achados ressaltam o potencial das técnicas de mineração de dados aplicadas
+ao aprendizado de máquina como ferramentas complementares no suporte à
+decisão clínica, contribuindo para diagnósticos mais rápidos e precisos no
+tratamento de arritmias cardíacas.
+Palavras-chave: Árvore de decisão; Inteligência Artificial; Arritmia cardíaca.
+
+INTRODUÇÃO
+No panorama contemporâneo, as doenças cardiovasculares são a principal causa de morte
+prematura no mundo e sua incidência continua em crescimento, o que evidencia a urgência
+por estratégias eficazes de prevenção, diagnóstico e tratamento. Segundo a Estatística
+Cardiovascular – Brasil 2023, seus impactos vão além do indivíduo, afetando a produtividade
+e a economia nacional (Oliveira et al., 2024).​
+​
+
+As arritmias cardíacas constituem parcela expressiva desse cenário. A Sociedade
+
+Brasileira de Arritmias Cardíacas aponta que mais de 20 milhões de brasileiros convivem com
+essa condição, responsável por mais de 320 mil mortes súbitas por ano só no Brasil
+(SOBRAC, [s.d.]), o que revela a urgência de meios para mitigar o impacto dessa patologia. O
+diagnóstico dessa condição é comumente realizado por meio do eletrocardiograma (ECG),
+exame que registra a atividade elétrica do coração, e se destaca por ser a ferramenta mais
+acessível e de baixo custo para o diagnóstico dessas alterações (Verma, 2022).​
+​
+
+Contudo, a análise manual de ECGs, especialmente em registros longos, é exaustiva e
+
+sujeita a falhas, mesmo para profissionais experientes, problemática que vem sendo a
+implementação da Inteligência artificial (IA) (Gupta et al., 2024). Nesse contexto, técnicas de
+machine learning, como as Árvores de decisão, surgem como alternativas promissoras para a
+detecção automatizada de arritmias, devido à sua capacidade de modelar dados complexos e
+sua interpretação intuitiva (Géron, 2019). Diante disso, destaca-se a importância de adaptar
+os métodos de construção dos modelos para maximizar sua eficácia.
+​
+
+Visando contribuir com o avanço da integração entre inteligência artificial e saúde,
+
+este trabalho propõe uma análise comparativa entre dois métodos de separação de dados:
+método holdout com duas partições e houldout com três partições na implementação do
+algoritmo de Árvore de decisão. O principal objetivo é avaliar o impacto de cada uma dessas
+técnicas na performance do modelo na predição de arritmias cardíacas.
+Para alcançar esse objetivo, propõe-se, de forma mais específica: (i) implementar um
+modelo de Árvore de Decisão aplicado à base MIT-BIH Arrhythmia; (ii) comparar seu
+desempenho com diferentes técnicas de mineração de dados; (iii) analisar curvas AUC-ROC e
+matrizes de confusão; (iv) Avaliar as métricas: acurácia, precisão, recall e F1-score. Com isso,
+pretende-se contribuir para o avanço de soluções computacionais voltadas ao suporte
+diagnóstico de arritmias, reforçando o uso da inteligência artificial em contextos clínicos.
+Dando continuidade à estrutura do estudo, este artigo está organizado da seguinte
+forma: a Seção 2 apresenta os fundamentos teóricos sobre arritmias cardíacas e técnicas de
+
+aprendizado de máquina; a Seção 3 descreve a metodologia utilizada; a Seção 4 expõe os
+resultados e a análise comparativa; e a Seção 5 apresenta as considerações finais.
+REFERENCIAL TEÓRICO
+As doenças cardiovasculares representam um grave problema de saúde pública, com
+implicações diretas no desenvolvimento econômico e social. Seus impactos atingem a
+produtividade, o bem-estar e a qualidade de vida, exigindo tratamentos prolongados e
+onerando os sistemas de saúde (Marinho, 2024).​
+​
+
+Entre suas manifestações mais relevantes estão as arritmias cardíacas, distúrbios no
+
+ritmo natural do coração provocados por alterações nos estímulos elétricos que regulam os
+batimentos. Muitas vezes assintomáticas, essas alterações podem preceder eventos graves,
+sendo fundamentais para a tomada de decisão clínica (SOBRAC, [s.d.])
+As arritmias podem se apresentar de maneiras variadas, indo desde batimentos
+acelerados (taquicardias) até ritmos mais lentos (bradicardias), ou ainda de forma irregular,
+como ocorre na fibrilação. Essas alterações no ritmo do coração podem ser provocadas por
+múltiplos fatores, como herança genética, tensão emocional, enfermidades cardíacas
+pré-existentes, consumo de substâncias estimulantes ou reações adversas a medicamentos
+(SOBRAC, [s.d.]). Embora muitas vezes não representem perigo, determinadas arritmias
+podem oferecer risco à vida, sendo necessário um diagnóstico preciso e acompanhamento
+médico especializado. Por isso, a detecção precoce e o tratamento adequado são essenciais
+para evitar complicações e promover o bem-estar cardiovascular.​
+​
+
+A possibilidade de prever arritmias precisamente representa um avanço relevante na
+
+medicina diagnóstica. A IA tem desempenhado papel central nesse processo, permitindo
+reduzir o tempo de análise, antecipar intervenções e melhorar a acurácia dos diagnósticos
+(Nagavelli et al., 2022).​
+​
+
+O eletrocardiograma (ECG), nesse cenário, continua sendo uma ferramenta
+
+diagnóstica essencial. Ao registrar a atividade elétrica do coração, fornece dados valiosos para
+a identificação de diversas anomalias, especialmente as arritmias (Gupta et al., 2024). Com
+efeito, a integralização dos algoritmos propostos neste artigo, visa potencializar o avanço já
+proporcionado por essa ferramenta.
+Entre os algoritmos de Inteligência Artificial, as Árvores de decisão destacam-se pela
+simplicidade, eficiência e interpretabilidade. Baseados em aprendizado supervisionado, esses
+modelos utilizam dados rotulados para identificar padrões e realizar classificações. Para
+garantir um desempenho confiável, a etapa de validação é essencial durante sua construção.
+
+Técnicas como a validação cruzada e o método holdout, abordado neste trabalho, contribuem
+para o controle da generalização do modelo, ajudando a mitigar problemas como o overfitting
+e underfitting (Géron, 2019).​
+​
+
+Realizar a comparação entre distintos métodos de mineração de dados dos algoritmos
+
+de aprendizado de máquina é fundamental para analisar seu desempenho e adequação na
+identificação de doenças cardiovasculares. Indicadores como acurácia, precisão, sensibilidade,
+especificidade e a área sob a curva ROC (AUC) são frequentemente utilizados para medir a
+eficiência dos modelos.
+METODOLOGIA
+Conforme a classificação proposta por Wazlawick (2021), esta pesquisa é classificada como
+empírica de abordagem quantitativa, aplicada ao propor uma solução prática na área da saúde
+por meio de algoritmos de aprendizado de máquina. Possui caráter exploratório, ao investigar
+os efeitos de diferentes técnicas de validação e interpretação de resultados. Denominada de
+design, ao propor o desenvolvimento de uma aplicação, cuja análise baseia-se em métricas
+estatísticas de desempenho dos modelos treinados. Os procedimentos técnicos são
+experimentais e de natureza primária, com manipulação direta dos dados e implementação
+própria dos algoritmos, também de acordo com os critérios metodológicos definidos por
+Wazlawick (2021). Os métodos aplicados neste trabalho se inspiram na metodologia
+implementada por Monteiro (2024), cujo objetivo é treinar um algoritmo de machine learning
+para a previsão de doenças cardiovasculares.
+OBTENÇÃO DOS DADOS DE TREINAMENTO
+Para o treinamento dos modelos, foi utilizada a base de dados MIT-BIH Arrhythmia1,
+composta por 48 eletrocardiogramas digitalizados de pacientes reais. Os registros foram
+coletados entre 1975 e 1979 no Laboratório de Arritmia do Hospital Beth Israel, com o
+objetivo de representar tanto os casos comuns observados na prática clínica quanto eventos
+raros de arritmia.
+Cada ECG possui, em média, 30 minutos de duração. Considerando uma frequência
+de amostragem de 360 Hz, cada batimento foi segmentado em janelas de 360 amostras,
+correspondendo a aproximadamente um segundo de sinal. Dessa forma, para cada batimento,
+foram extraídas 360 amostras consecutivas, resultando em um volume total de
+aproximadamente 648.000 amostras por ECG. Ao final do processo, foram obtidas cerca de
+1
+
+Disponível em: https://physionet.org/content/mitdb/1.0.0/
+
+86.400 instâncias rotuladas, organizadas em 1.800 segmentos, cada um contendo 360
+amostras temporais.
+As anotações dos batimentos estão organizadas em cinco classes principais,
+identificadas pelas letras N, S, V, F e Q. A classe N representa batimentos normais ou quase
+normais, e as demais indicam alguma irregularidade nos batimentos.
+PREPARAÇÃO DOS DADOS
+Os dados foram submetidos a um pré-processamento, para torná-los compatíveis com a
+aplicação dos modelos de aprendizado de máquina. Para isso, utilizou-se a biblioteca WFDB
+na extração dos sinais fisiológicos brutos. Posteriormente, os sinais e seus respectivos rótulos
+foram organizados e convertidos em estruturas do tipo DataFrame, por meio da biblioteca
+Pandas. Apenas as instâncias com rótulos válidos foram consideradas, a fim de garantir a
+veracidade do conjunto de dados utilizado nos experimentos.​
+Para simplificar o problema de classificação, os rótulos originais foram binarizados:
+batimentos normais receberam o rótulo ‘N’, enquanto os demais foram agrupados sob o rótulo
+‘X’, representando batimentos anormais. Essa abordagem busca tornar a classificação mais
+objetiva, facilitando a diferenciação entre padrões saudáveis e patológicos. O método adotado
+é similar ao empregado em estudos anteriores, como o de Pokharel et al. (2024), que obteve
+resultados satisfatórios na distinção entre fibrilação atrial e batimentos normais, utilizando a
+mesma base de dados do presente estudo.
+As plotagens geradas com a biblioteca Matplotlib, oferecem um exemplo visual. A
+Figura 1 apresenta um exemplo visual de batimento cardíaco típico da classe anormal (classe
+'X'), enquanto a Figura 2 exibe um batimento cardíaco típico da classe normal (classe 'N').
+Figura 1 - Sinal cardíaco anormal (X)
+
+Fonte: Elaborado pelos autores, 2025.
+
+Figura 2 - Sinal cardíaco normal (N)
+
+Fonte: Elaborado pelos autores, 2025.
+
+CONSTRUÇÃO E AVALIAÇÃO DO MODELO
+A construção da Árvore de decisão foi realizada utilizando dois critérios de impureza: Índice
+de Gini e Entropia. Além disso, foram empregadas duas estratégias para a definição dos
+
+limiares de divisão: best e random. A seleção dos hiperparâmetros foi conduzida por meio da
+técnica GridSearchCV, que avalia sistematicamente diferentes combinações de parâmetros e
+seleciona aquela que apresenta o melhor desempenho com base nas métricas de validação.
+Sendo selecionados os hiperparâmetros random e Índice de Gini em ambas implementações, o
+que sugere que a divisão dos dados não afetou a definição dos parâmetros.
+A fim de avaliar a performance do modelo de Árvore de decisão proposto,
+adotaram-se diferentes estratégias de separação de dados, conforme orientações de Géron
+(2019) e Harrison (2020). Inicialmente, os dados foram divididos em duas partes: 80% para
+treinamento e 20% para teste, seguindo o método de validação holdout de duas partições.
+Adicionalmente, foi utilizado a técnica validação holdout de três partições. Nesta,
+aplicou-se primeiramente a partição holdout 80/20. Em seguida, o subconjunto de treinamento
+(80% dos dados) foi novamente particionado, sendo 80% destinados ao treinamento efetivo e
+20% à validação interna, totalizando aproximadamente 64% dos dados para treino, 16% para
+validação e 20% para teste. A técnica de três partições permite realizar ajustes no modelo com
+base em validação interna, preservando ao mesmo tempo, uma amostra independente para
+avaliação final, conforme recomendado por Géron (2019) e Harrison (2020).
+Em ambos os modelos, a validação cruzada k-fold (k = 5) foi utilizada com objetivo de
+proporcionar maior estabilidade nas estimativas de desempenho. Nessa técnica, os dados são
+divididos em cinco subconjuntos (folds), e cinco iterações são realizadas, nas quais, a cada
+vez, um fold é utilizado para teste e os demais para treinamento. A média das métricas obtidas
+ao final das iterações representa a performance do modelo de forma mais robusta e menos
+suscetível à variabilidade da amostragem. Técnica também aplicada em outros trabalhos
+similares que obtiveram desempenho satisfatório, como Pokharel et al. (2024).
+Por fim, foram geradas as matrizes de confusão, a partir das quais se calcularam as
+métricas de desempenho: acurácia, precisão, recall e F1-score. Ademais, construiu-se a curva
+ROC-AUC, permitindo uma análise mais abrangente da capacidade de discriminação dos
+modelos e uma comparação mais precisa entre os desempenhos obtidos.
+RESULTADOS E DISCUSSÕES
+A avaliação do modelo constitui uma etapa fundamental para assegurar a qualidade da
+implementação. Para esse fim, são utilizadas métricas de desempenho que fornecem uma
+visão quantitativa da eficácia do modelo, além de permitirem a identificação e análise de
+possíveis falhas (Géron, 2019). Neste artigo, a análise é crucial para avaliar a capacidade do
+algoritmo de distinguir corretamente entre casos em contextos clínicos. Para tanto, os
+
+resultados desta pesquisa expõem o desempenho dos modelos implementados com base em
+diversas métricas.
+Antes de detalhar as métricas específicas avaliou-se o desempenho geral para isso, foi
+utilizada a Área Sob a Curva ROC (AUC-ROC) como métrica de referência. As figuras 3 e 4
+apresentam as curvas ROC para cada modelo em relação ao método holdout utilizado.
+Figura 3 – Área sob a curva de ROC do modelo com holdout de 2 partições (AUC = 0.63).
+
+Fonte: Elaborado pelo autor, 2025.
+
+Figura 4 – Área sob a curva de ROC do modelo com holdout de 3 partições (AUC = 0.64).
+
+Fonte: Elaborado pelo autor, 2025.
+
+Observa-se que ambos os métodos de mineração de dados, apresentam curvas ROC
+com AUC-ROC significativamente acima de 0,5 logo um desempenho satisfatório. De acordo
+com Harisson (2020) para modelos com AUC-ROC igual a 0,5, que se constituem na linha
+diagonal que vai do ponto (0,0) ao ponto (1,1), lhes é conferido o desempenho de um
+classificador aleatório. Para os casos acima, observa-se resultados satisfatórios, no entanto, é
+importante destacar que as curvas variam em inclinação e formato, sugerindo diferenças na
+capacidade de discriminação entre os modelos.
+A fim de aprofundar a investigação, foi feita a análise das matrizes de confusão,
+fundamental para entender o desempenho detalhado do modelo de aprendizagem
+
+supervisionada de Árvore de decisão com os diferentes métodos de separação de dados
+aplicados, uma vez que fornece informações cruciais sobre a sensibilidade, especificidade,
+acertos e erros em cada classe (HARISSON, 2020). Essa abordagem permite identificar
+desequilíbrios na classificação de casos positivos e negativos. As Tabelas 1 e 2 apresentam as
+matrizes de confusão do modelo em relação ao método holdout utilizado.
+Tabela 1 – Matriz de confusão do modelo de
+Árvore de decisão com holdout de 2 partições.
+Classe Predita
+(Falsa)
+
+Classe Predita
+(Verdadeira)
+
+Classe Real
+(Falsa)
+
+6557
+
+2430
+
+Classe Real
+(Verdadeira)
+
+2305
+
+2575
+
+Tabela 2 – Matriz de confusão do modelo de
+Árvore de decisão com holdout de 3 partições.
+Classe Predita
+(Falsa)
+
+Classe Predita
+(Verdadeira)
+
+Classe Real
+(Falsa)
+
+8246
+
+2988
+
+Classe Real
+(Verdadeira)
+
+2811
+
+3289
+
+Fonte: Elaborado pelo autor, 2025.
+
+Fonte: Elaborado pelo autor, 2025.
+
+Ao examinar as matrizes de confusão, não se nota uma discrepância significativa nas
+informações fornecidas. No entanto, é importante ressaltar que o método de holdout de três
+partições teve um desempenho superior em relação ao de duas partições, especialmente na
+habilidade de reduzir falsos positivos e falsos negativos.
+Com a finalidade de avaliar o modelo em relação aos métodos de separação de dados,
+foram calculadas as métricas: acurácia, precisão, recall e F1-scores, para o modelo Árvore de
+decisão proposto em relação a cada condição. Os resultados estão resumidos nas Tabelas 3 e 4
+com duas e três partições holdout, respectivamente.
+Tabela 3 – Desempenho do modelo com holdout
+de 2 partições.
+Métrica
+Acurácia
+Recall
+Precisão
+F1-Score
+
+Valor(%)
+65,85
+65,85
+66,06
+65,95
+
+Fonte: Elaborado pelo autor, 2025.
+
+Tabela 4 – Desempenho do modelo com holdout de
+3 partições.
+Métrica
+Acurácia
+Recall
+Precisão
+F1-Score
+
+Valor(%)
+66,55
+66,55
+66,77
+66,65
+
+Fonte: Elaborado pelo autor, 2025.
+
+Conforme os resultados obtidos pelas métricas de desempenho, o modelo
+implementado com o método holdout de três partições apresentou desempenho superior em
+todos os critérios analisados. Embora as métricas numéricas indiquem diferença entre os
+modelos, a matriz de confusão proporcionou uma visualização mais clara da capacidade de
+generalização de cada um. Dessa forma, a abordagem de três partições demonstrou-se mais
+equilibrada e eficiente, destacando-se em relação às demais em termos de performance geral.
+
+CONSIDERAÇÕES FINAIS
+A integração de técnicas de machine learning em contextos clínicos, sobretudo para a
+previsão de arritmias, destaca a importância da tecnologia para o avanço da área da saúde. Do
+ponto de vista técnico, este estudo contribui ao demonstrar, de forma prática, a influência das
+estratégias de separação de dados na performance de classificadores baseados em Árvore de
+decisão,
+
+especialmente no contexto de sinais
+
+fisiológicos complexos como
+
+os
+
+eletrocardiogramas.
+Além da aplicação do modelo citado, torna-se fundamental examinar outras técnicas
+de aprendizado de máquina e suas respectivas contribuições no campo da saúde. Abordagens
+mais avançadas, como redes neurais profundas, máquinas de vetor de suporte (SVM) e
+métodos de ensemble mais elaborados, têm o potencial de proporcionar ganhos adicionais em
+termos de exatidão e robustez dos resultados.
+Da mesma forma, empregar diferentes conjuntos de dados, especialmente aqueles que
+contenham informações mais diversificadas ou específicas de determinados segmentos
+populacionais, pode gerar percepções significativas e favorecer uma melhor capacidade de
+generalização dos modelos desenvolvidos. Ademais, a integração de múltiplas fontes de
+informação, incluindo dados genômicos, históricos clínicos detalhados e aspectos
+relacionados ao estilo de vida dos pacientes, pode fortalecer de maneira expressiva a eficácia
+preditiva dos algoritmos utilizados.
+Além do avanço metodológico, destaca-se o efeito social desta pesquisa: ao aprimorar
+a acurácia na detecção de arritmias cardíacas por meio de técnicas automatizadas e acessíveis,
+como as Árvores de decisão, amplia-se o potencial de diagnósticos mais rápidos e assertivos
+em ambientes clínicos. Tal contribuição é especialmente relevante em contextos com
+limitações de recursos humanos ou infraestrutura, promovendo maior acesso ao diagnóstico
+precoce e, consequentemente, à prevenção de complicações graves. Assim, a inteligência
+artificial aplicada à saúde não apenas otimiza processos, mas também pode salvar vidas e
+reduzir os impactos socioeconômicos das doenças cardiovasculares.
+REFERÊNCIAS
+GÉRON, Aurélien. Mãos à obra: aprendizado de máquina com Scikit-Learn &
+TensorFlow. Rio de Janeiro: Alta Books, 2019.
+GUPTA, Shyla; et al. Computer-Interpreted Electrocardiograms: Impact on Cardiology
+Practice. International Journal of Cardiovascular Sciences, [s.l.], v. 37, e20240079, jun.
+2024.
+
+HARRISON, Matt. Machine learning: guia de referência rápida trabalhando com dados
+estruturados em Python. São Paulo: Novatec, 2020.
+MARINHO, Fátima. O impacto das doenças cardiovasculares nas perdas econômicas.
+Arquivos Brasileiros de Cardiologia, [s.l.], v. 121, n. 3, e20240175, maio. 2024.
+MONTEIRO, Yuri; et al. Avaliação da eficácia de uma Árvore de Decisão na detecção de
+doenças cardiovasculares. In: CONGRESSO SERTANEJO DE COMPUTAÇÃO, 6., 2024,
+Patos. Anais [...]. São Paulo: Pimenta Cultural, 2025. (no prelo)
+NAGAVELLI, Umarani; et al. Machine learning technology-based heart disease detection
+models. Journal of Healthcare Engineering, [s.l.], v. 2022, 7351061, fev. 2022.
+OLIVEIRA, Gláucia; et al. Estatística Cardiovascular – Brasil 2023: dados clínicos,
+estruturais e socioeconômicos. Arquivos Brasileiros de Cardiologia. [s.l.], v. 121, n. 2,
+e20240079, mar 2024.
+SOBRAC – SOCIEDADE BRASILEIRA DE ARRITMIAS CARDÍACAS. A vida de um
+portador de arritmia cardíaca. [s.d.]. Disponível em:
+https://sobrac.org/publico-geral/sdrfvesfvs/. Acesso em: 8 abr. 2025.
+VERMA, S. Development of interpretable machine learning models to detect arrhythmia
+based on ECG data. arXiv preprint arXiv:2205.02803, v.2, maio 2022. Disponível em:
+https://arxiv.org/abs/2205.02803. Acesso em: 18 abr. 2025.
+POKHAREL, A. et al. Electrocardiogram (ECG) based cardiac arrhythmia detection and
+classification using machine learning algorithms. arXiv preprint arXiv:2412.05583, v.2, dec
+2024. Disponível em: https://arxiv.org/abs/2412.05583. Acesso em: 18 abr. 2025.
+WAZLAWICK, Raul. Metodologia de Pesquisa para Ciência da Computação. 3° ed. Rio
+de Janeiro: LTC, 2021.
+
+

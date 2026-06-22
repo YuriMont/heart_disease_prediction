@@ -1,0 +1,745 @@
+ESTUDO E APLICAÇÃO DE TÉCNICAS DE MINERAÇÃO DE DADOS E
+APRENDIZAGEM DE MÁQUINA PARA AUXILIAR NO DIAGNÓSTICO PRECOCE
+DE DOENÇAS CARDIOVASCULARES
+Yuri dos Santos Monteiro1
+Jannayna Domingues Barros Filgueira2
+
+RESUMO: A crescente incidência de doenças cardiovasculares constitui uma
+preocupação global de ordem socioeconômica, com impactos que transcendem
+fronteiras geográficas. Nesse contexto, as Inteligências Artificiais (IA) emergem
+como ferramentas promissoras para apoiar clínicas, instituições de saúde e
+profissionais na identificação precoce destas patologias. Este estudo avaliou o
+desempenho dos modelos de aprendizado de máquina: Árvore de Decisão (AD),
+Floresta Aleatória (FA) e K-Nearest Neighbors (KNN), no diagnóstico precoce de
+doenças cardiovasculares, utilizando a linguagem Python, com a biblioteca
+Scikit-learn para a implementação dos algoritmos, Pandas para a manipulação de
+bases de dados, e Matplotlib para a visualização gráfica dos resultados. As bases de
+dados cardiológicas do UCI Machine Learning Repository e do Kaggle foram
+utilizadas para treinar e validar os algoritmos, os modelos foram avaliados com base
+nas métricas: acurácia, precisão, recall, F1-score e curva ROC. Os resultados
+indicam que ambos os modelos apresentaram alto desempenho, evidenciando seu
+potencial para auxiliar na tomada de decisões clínicas no diagnóstico de
+enfermidades cardiovasculares.
+Palavras-chave: Doenças Cardiovasculares. Aprendizagem de Máquina. Árvore de
+Decisão. Floresta Aleatória. K-Nearest Neighbors.
+INTRODUÇÃO
+O excesso de incidência de doenças cardiovasculares representa um
+problema que ultrapassa fronteiras geográficas, afetando diversos quadros
+socioeconômicos. De acordo com Roth et al. (2020), esse fenômeno se dá por
+vários
+
+fatores
+
+tais
+
+quais:
+
+o
+
+envelhecimento
+
+populacional,
+
+mudanças nos
+
+1
+Estudante de Graduação em Ciência da Computação; Universidade Estadual da Paraíba; Patos, PB; LAIA – Laboratório
+de Aplicações em Inteligência Artificial; E-mail: yuri.monteiro@aluno.uepb.edu.br.
+2
+
+Professora Doutora Adjunta do curso de Ciência da Computação; Universidade Estadual da Paraíba; Patos, PB; LAIA –
+Laboratório de Aplicações em Inteligência Artificial; E-mail: jannayna@servidor.uepb.edu.br.
+
+comportamentos individuais e uma interação complexa de fatores de risco, como
+obesidade, sedentarismo e tabagismo.
+Ademais, as patologias cardiovasculares não afetam somente a saúde física
+dos seres humanos, mas também interferem sobretudo na qualidade de vida e na
+economia das sociedades. Gastos com tratamento, morbidade e mortalidade
+prematura impactam negativamente os sistemas de saúde e no capital financeiro de
+uma nação (Tsao et al., 2023). Logo, adotar meios preventivos e melhorias nos
+mecanismos de diagnóstico são de suma importância para conter
+
+essas
+
+adversidades.
+Antecipar a detecção e o tratamento das enfermidades cardiovasculares é
+crucial para reduzir os óbitos e elevar a qualidade de vida dos pacientes. Nesse
+contexto, a avaliação de dados médicos utilizando técnicas avançadas de machine
+learning pode oferecer insights valiosos que não são facilmente detectados por
+métodos convencionais (Santos, 2022). A habilidade de reconhecer padrões
+discretos e relações entre diversos fatores de risco possibilita um diagnóstico mais
+acurado e individualizado, orientando para intervenções clínicas mais eficientes.
+As enfermidades cardiovasculares representam a principal causa de
+mortalidade global, sendo responsáveis por cerca de 17,9 milhões de falecimentos
+anuais, segundo a Organização Mundial da Saúde (OMS, 2023). Esse crescimento
+na prevalência de doenças cardíacas exige abordagens inovadoras e eficazes para
+diagnóstico e manejo clínico, destacando a relevância da implementação de
+tecnologias para otimizar os resultados clínicos e reduzir a mortalidade associada a
+essas condições.
+Nesse contexto, as Inteligências Artificiais (IA) despontam como uma
+ferramenta promissora para auxiliar clínicas, instituições e profissionais da saúde na
+detecção precoce e na gestão de doenças cardiovasculares (Ali et al., 2021). A
+aplicação de algoritmos de machine learning e análise de dados possibilita que as
+IAs examinem grandes volumes de dados clínicos de forma rápida e precisa,
+reconhecendo padrões complexos e fornecendo informações relevantes para
+embasar decisões (Harrison, 2019).
+Com base nesse cenário, o presente estudo visa avaliar a eficácia dos
+algoritmos de machine learning, como a Árvore de Decisão, Floresta Aleatória e
+K-Nearest
+
+Neighbors
+
+(KNN),
+
+na
+
+assistência
+
+ao
+
+diagnóstico
+
+de
+
+doenças
+
+cardiovasculares. O foco desta pesquisa é comparar o desempenho desses
+
+algoritmos em dois cenários: na identificação dessas doenças em um contexto geral
+e em um contexto específico, conforme orientado por Géron (2019) por meio de
+métricas como a Área Sob a Curva ROC (Receiver Operating Characteristic),
+acurácia, precisão, recall e F1-score.
+Além disso, este estudo explora a aplicabilidade desses algoritmos em
+sistemas de suporte à decisão clínica, analisando seu potencial para ajudar as
+equipes médicas. O uso dessas abordagens representa um avanço considerável no
+campo da saúde digital, demonstrando o impacto positivo da integração entre
+inteligência artificial e análise de dados para otimizar o diagnóstico realizado pelos
+profissionais de saúde.
+ESTADO DA ARTE
+Nos últimos anos, observou-se um crescimento preocupante na incidência
+global de enfermidades cardíacas, o que representa um desafio substancial para os
+sistemas de saúde em nível mundial (Roth et al., 2020). Esse cenário tem gerado
+inquietações tanto no meio acadêmico quanto na prática clínica, ressaltando a
+necessidade de respostas imediatas e abrangentes. Nesse contexto, os avanços
+tecnológicos recentes, sobretudo na área de machine learning, oferecem soluções
+promissoras para aprimorar tanto o diagnóstico quanto o tratamento dessas doenças
+cardiovasculares.
+Doenças cardíacas, como infarto do miocárdio, insuficiência cardíaca e
+arritmias, são responsáveis por altas taxas de mortalidade e morbidade em escala
+global (Tsao et al., 2023). De acordo com a Organização Mundial da Saúde (OMS),
+essas patologias representam a principal causa de morte mundial, sendo
+responsáveis por cerca de 31% de todos os óbitos globais. A prevenção e o
+diagnóstico precoce são fundamentais para reduzir o impacto dessas doenças,
+destacando a necessidade de abordagens inovadoras e eficazes.
+Pesquisas recentes têm evidenciado o grande potencial dos algoritmos de
+machine learning (Nery et al., 2023). Esses algoritmos conseguem processar
+grandes volumes de dados clínicos, como históricos médicos, resultados de exames
+laboratoriais e imagens diagnósticas, identificando padrões e correlações que
+podem não ser facilmente percebidos pelos profissionais de saúde (Santos, 2022).
+Dessa forma, esses modelos são capazes de prever com maior precisão o risco de
+
+um paciente desenvolver uma doença cardiovascular, possibilitando intervenções
+preventivas mais eficazes.
+Em comparação com os métodos tradicionais, os modelos de machine
+learning têm mostrado uma precisão superior na previsão de riscos cardiovasculares
+(Ali et al., 2021). Esses modelos são capazes de analisar simultaneamente vários
+fatores de risco e ajustar suas previsões conforme novos dados são incorporados.
+Ademais, o uso de aprendizado de máquina na cardiologia tem impulsionado o
+desenvolvimento de sistemas de suporte à decisão clínica (Santos, 2022).
+Doenças cardiovasculares
+As enfermidades cardiovasculares são a principal causa de mortalidade
+global, superando qualquer outra condição (Tsao et al., 2023). Segundo a OPAS
+(Organização Pan-Americana da Saúde), em 2016, estima-se que 17,9 milhões de
+pessoas faleceram devido a doenças cardiovasculares, o que corresponde a 31% de
+todas as mortes registradas mundialmente. Ataques cardíacos e acidentes
+vasculares cerebrais (AVCs) representam cerca de 85% desses óbitos, evidenciando
+a importância do monitoramento e tratamento adequados para essas condições
+específicas.
+A distribuição das mortes por doenças cardiovasculares é desigual, afetando
+predominantemente países de baixa e média renda. Mais de três quartos desses
+óbitos ocorrem nessas regiões, onde o acesso restrito a cuidados de saúde de
+qualidade, prevenção e tratamentos eficazes agrava o quadro (Roth et al., 2020). A
+alta incidência dessas fatalidades em nações menos desenvolvidas ressalta a
+urgência de políticas de saúde pública que não apenas foquem em tratamentos, mas
+também priorizem a prevenção e a educação em saúde cardiovascular.
+Adicionalmente, das 17 milhões de mortes prematuras causadas por doenças
+crônicas não transmissíveis, 82% ocorrem em países de baixa e média renda, sendo
+37% dessas mortes atribuídas a doenças cardiovasculares (Roth et al., 2020). Esse
+dado enfatiza a vulnerabilidade dessas populações e a necessidade urgente de
+intervenções direcionadas que possam reduzir os fatores de risco relacionados.
+As doenças cardiovasculares englobam uma variedade de patologias que
+afetam o coração e os vasos sanguíneos (Ali et al., 2021). Dentre elas, destaca-se a
+doença coronariana, que afeta os vasos sanguíneos que fornecem sangue ao
+
+músculo cardíaco e pode levar a ataques cardíacos devido ao bloqueio do fluxo
+sanguíneo. A doença cerebrovascular compromete os vasos que irrigam o cérebro,
+sendo uma causa comum de AVCs. Por sua vez, a doença arterial periférica impacta
+os vasos sanguíneos que transportam sangue para os membros superiores e
+inferiores, resultando em dor e outras complicações (Santos, 2022).
+Outras condições incluem a doença cardíaca reumática, que resulta de lesões
+ao músculo cardíaco e às válvulas causadas pela febre reumática, uma complicação
+de infecções estreptocócicas não tratadas corretamente. A cardiopatia congênita
+envolve malformações estruturais do coração presentes desde o nascimento,
+frequentemente necessitando de intervenções médicas ou cirúrgicas imediatas (Nery
+et al., 2023).
+Ataques cardíacos e AVCs são frequentemente eventos graves provocados
+por bloqueios que comprometem o fluxo sanguíneo adequado para o coração ou o
+cérebro. Esses bloqueios são comumente causados pelo acúmulo de placas de
+gordura nas paredes internas dos vasos sanguíneos (Roth et al., 2020). No caso dos
+AVCs, podem ocorrer além dos bloqueios, hemorragias nos vasos cerebrais ou a
+formação de coágulos que interrompem o fluxo sanguíneo. Diversos fatores de risco
+estão associados a esses eventos, como tabagismo, dietas inadequadas,
+obesidade, falta de atividade física, consumo excessivo de álcool, hipertensão,
+diabetes e níveis elevados de lipídios no sangue (Tsao et al., 2023).
+Aprendizagem de máquina
+A aprendizagem de máquina é uma área da inteligência artificial que se
+concentra no desenvolvimento de algoritmos e modelos que permitem que os
+sistemas computacionais aprendam e façam previsões ou tomem decisões com
+base em dados (Géron, 2019). Ao contrário dos métodos tradicionais de
+programação, nos quais instruções específicas são programadas para cada tarefa, a
+aprendizagem de máquina capacita os computadores a identificar padrões e inferir
+regras a partir de conjuntos de dados extensos. Esse processo é realizado por meio
+de várias técnicas, como redes neurais, árvores de decisão e regressão, que são
+treinadas e ajustadas para otimizar sua precisão e eficácia em tarefas específicas.
+Existem
+
+três principais grupos de algoritmos de machine learning:
+
+aprendizado supervisionado, aprendizado não supervisionado e aprendizado por
+
+reforço, cada um com características e aplicações específicas (Harrison, 2019). No
+entanto, este estudo se concentrará apenas nos algoritmos de aprendizado
+supervisionado.
+O aprendizado supervisionado é uma abordagem amplamente utilizada em
+machine learning, onde o modelo é treinado com um conjunto de dados rotulados,
+ou seja, dados com respostas corretas associadas (Izbicki, 2020). Durante o
+treinamento, o algoritmo usa essas entradas e saídas conhecidas para aprender
+uma função que mapeia as entradas para as saídas corretas. Após o treinamento, o
+modelo pode fazer previsões ou classificar novos dados não rotulados com base no
+conhecimento adquirido (Géron, 2019). Alguns exemplos de algoritmos de
+aprendizado supervisionado são: Árvore de Decisão, Floresta Aleatória e K-Nearest
+Neighbors.
+Modelos de Árvore de Decisão (AD) são estruturas hierárquicas utilizadas no
+aprendizado supervisionado, em que cada nó representa uma decisão baseada em
+um atributo dos dados. Esses modelos são eficazes para problemas de classificação
+e regressão, proporcionando interpretações claras das decisões feitas pelo modelo.
+Por outro lado, a Floresta Aleatória (FA) é uma técnica que combina várias
+árvores de decisão durante o treinamento para melhorar a precisão e a robustez do
+modelo. Cada árvore na floresta é treinada de forma independente com uma
+amostra aleatória dos dados e um subconjunto aleatório dos atributos, o que reduz a
+tendência ao overfitting e aumenta a capacidade de generalização do modelo para
+novos dados.
+O K-Nearest Neighbor (KNN) é um algoritmo de aprendizado supervisionado
+usado para classificação e regressão. Fundamentado na proximidade entre objetos
+no espaço de características (Harrison, 2019). Durante a etapa de previsão, o KNN
+seleciona os "k" vizinhos mais próximos de um novo dado e estabelece sua classe
+ou valor por meio da votação desses vizinhos.
+MATERIAL E MÉTODOS
+Os dados deste estudo foram obtidos por meio de uma pesquisa empírica de
+natureza quantitativa. A abordagem sistemática e objetiva na coleta e análise de
+dados numéricos caracteriza a pesquisa como quantitativa, possibilitando uma
+avaliação mensurável dos algoritmos utilizados no diagnóstico de doenças
+
+cardíacas. Foram analisados os modelos Árvore de Decisão, Floresta Aleatória e
+KNN,
+
+seguindo
+
+as
+
+orientações
+
+de Géron (2019). Esses modelos foram
+
+desenvolvidos utilizando a linguagem de programação Python e as bibliotecas
+pandas, scikit-learn e matplotlib.
+Bases de dados
+Para realizar essa comparação, foram empregados dois conjuntos de dados
+diferentes, um específico para prever o Acidente Vascular Cerebral (AVC) e outro
+abrangendo condições para prever doenças cardiovasculares de forma geral.
+Inicialmente, utilizou-se o conjunto de dados proveniente do UCI Machine
+Learning Repository, originalmente coletado de registros de doenças cardíacas em
+Cleveland, Hungria, Suíça e VA Long Beach. Foi selecionado um dos subconjuntos,
+o banco de dados da Doença Cardíaca de Cleveland, que inclui 14 atributos
+comumente utilizados em estudos de aprendizado de máquina para prever a
+ocorrência de AVC em pacientes, como idade, gênero, pressão arterial e resultados
+de exames eletrocardiográficos. As informações clínicas foram obtidas por meio de
+exames médicos realizados em 303 pacientes suspeitos de terem problemas
+cardíacos.
+Posteriormente, os dados da plataforma Kaggle foram utilizados, provenientes
+de pesquisas telefônicas anuais feitas entre 1984 a 2022, que coletam informações
+sobre a saúde dos residentes dos EUA realizadas pelo Sistema de Vigilância de
+Fatores de Risco Comportamentais (BRFSS). Essa base de dados contém 39
+variáveis preditoras, como Índice de Massa Corporal (IMC), consumo de álcool,
+idade, raça e tempo de sono, juntamente com uma variável de classificação,
+totalizando 319795 instâncias.
+Manipulação dos dados
+Os dados foram obtidos tanto do UCI Machine Learning Repository quanto da
+plataforma Kaggle. Os arquivos CSV foram importados e transformados em Data
+Frames utilizando a biblioteca pandas do Python para facilitar a manipulação e
+análise dos dados.
+
+Após a carga inicial, foi realizada uma etapa de limpeza dos dados. Isso
+incluiu a identificação e tratamento de valores ausentes usando métodos nativos do
+pandas. Para atributos numéricos, os valores faltantes foram substituídos pela
+mediana dos valores existentes, uma abordagem que ajuda a manter a distribuição
+dos dados. Para atributos categóricos, optou-se pelo preenchimento com os valores
+mais frequentes, preservando a frequência dos valores mais comuns conforme as
+orientações de (Nery et al., 2023).
+Para melhorar a performance dos algoritmos de aprendizado de máquina,
+alguns dados foram normalizados. A normalização foi essencial para garantir que
+todos os atributos numéricos estejam na mesma escala (Santos, 2022). Neste
+trabalho, utilizou-se a técnica de normalização min-max, que reescala os valores
+para o intervalo de 0 a 1, utilizando funcionalidades disponíveis na biblioteca
+scikit-learn. Por fim, os dados foram divididos em conjuntos de treinamento e teste
+usando o scikit-learn em uma proporção 80\20.
+Avaliação dos modelos
+A avaliação do desempenho dos modelos foi baseada na pesquisa de Santos
+(2022). Foram analisadas a área sob a curva ROC e a representação e interpretação
+das matrizes de confusão. Além disso, os modelos foram avaliados utilizando
+métricas de desempenho, como acurácia, precisão, recall e F1-score derivadas da
+matriz de confusão.
+A acurácia é uma métrica essencial na avaliação de desempenho em
+machine learning. Ela indica a proporção de previsões corretas em relação ao total
+de previsões feitas pelo modelo. Quanto maior a acurácia, maior a confiabilidade do
+modelo (Izbicki, 2020).
+A acurácia é uma medida que avalia a proporção de previsões corretas em
+relação ao total de previsões feitas pelo modelo. Ela demonstra a precisão das
+previsões, mostrando a habilidade do modelo em evitar erros (Harrison, 2019).
+O Recall, também chamado de sensibilidade, é uma medida que avalia a
+proporção de verdadeiros positivos em relação ao total de casos positivos reais. Ela
+avalia a capacidade do modelo em identificar corretamente os casos positivos
+(Géron, 2019)
+
+O F1-Score é uma métrica que combina a precisão e o recall em um único
+valor, proporcionando uma medida equilibrada entre essas duas métricas e levando
+em conta tanto os falsos positivos quanto os falsos negativos (Santos, 2022).
+Esses métodos de avaliação foram selecionados devido à sua importância na
+avaliação da capacidade dos modelos de distinguir entre as classes, minimizando
+erros de classificação e aumentando a confiabilidade dos resultados.
+RESULTADOS E DISCUSSÃO
+Nesta seção, são apresentados os resultados da análise das métricas de
+performance dos três modelos de machine learning: Árvore de Decisão, Floresta
+Aleatória
+
+e
+
+KNN.
+
+Esses
+
+modelos
+
+foram utilizados para prever doenças
+
+cardiovasculares de forma geral e também para prever acidentes vasculares
+cerebrais (AVC). O objetivo da avaliação é determinar qual modelo é mais adequado
+para auxiliar em decisões clínicas, levando em consideração a importância da
+precisão e confiabilidade no diagnóstico precoce.
+Desempenho dos Modelos na Previsão Geral de Doenças Cardiovasculares.
+Primeiramente, é relevante avaliar o desempenho geral dos modelos em
+todas as condições cardiovasculares. Para isso, foi utilizada a Área Sob a Curva
+ROC (AUC-ROC) como métrica de referência. As figuras 1, 2 e 3 apresentam as
+curvas ROC para cada modelo.
+
+Figura 1 - Área sob a curva de ROC da
+Árvore de Decisão (AUC = 0.82).
+
+Figura 2 - Área sob a curva de ROC da
+Floresta Aleatória (AUC = 0.79).
+
+Figura 3 - Área sob a curva de ROC do KNN (AUC = 0.68).
+
+A curva ROC de um classificador puramente aleatório é representada pela
+linha pontilhada, enquanto um classificador ideal é caracterizado por estar o mais
+distante possível dessa linha, preferencialmente na direção do canto superior
+esquerdo. A qualidade de um classificador é avaliada pela Área Sob a Curva ROC
+(AUC), que deve ser próxima de 1 para indicar uma capacidade de discriminação
+perfeita. Por outro lado, um classificador puramente aleatório tem uma AUC de 0,5
+(Géron, 2019). Assim, os modelos mostraram eficácia, com destaque para a Árvore
+de Decisão que teve o melhor desempenho.
+Para avaliar a eficácia dos modelos de machine learning com base em suas
+métricas, é fundamental analisar a matriz de confusão. Essa matriz fornece uma
+visão detalhada dos acertos e erros em cada classe de saída, sendo essencial para
+o cálculo das métricas de desempenho escolhidas. As Tabelas 1, 2 e 3 exibem as
+matrizes de confusão de cada modelo.
+
+Tabela 1 - Matriz de confusão da Árvore de
+Decisão.
+
+Valor
+Real
+
+Tabela 2: Matriz de confusão da Floresta
+Aleatória.
+
+Valor Previsto
+
+Valor Previsto
+
+Não
+
+Sim
+
+Não
+
+Sim
+
+Não
+
+57909
+
+458
+
+Não
+
+57189
+
+1178
+
+Sim
+
+5164
+
+428
+
+Sim
+
+4943
+
+649
+
+Valor
+Real
+
+Tabela 3: Matriz de confusão do KNN
+Valor Previsto
+Não
+
+Sim
+
+Valor
+Real
+
+Não
+
+57001
+
+1366
+
+Sim
+
+5044
+
+548
+
+Ao examinar as matrizes de confusão, não se nota uma discrepância
+significativa nas informações fornecidas. No entanto, é importante ressaltar que a
+Árvore de Decisão teve um desempenho superior em relação à Floresta Aleatória e
+ao KNN, especialmente na habilidade de evitar determinados tipos de erros.
+Os resultados da avaliação indicaram que, apesar dos achados sobre o
+desempenho da Floresta Aleatória serem altos no estudo de (Nery et al., 2023)
+devido à sua natureza de conjunto, o modelo de Árvore de Decisão mostrou-se mais
+eficiente em termos de precisão nesse contexto.
+O desempenho do modelo de Árvore de Decisão foi superior na redução de
+erros de classificação em categorias críticas, ao contrário da Floresta Aleatória e do
+KNN, que apresentaram taxas de confusão mais elevadas. Esses resultados
+sugerem que a simplicidade da Árvore de Decisão pode trazer benefícios em certos
+cenários, especialmente quando a generalização excessiva dos dados pode
+comprometer a precisão do modelo. Para uma análise mais detalhada, a Tabela 4
+fornece informações sobre as métricas de desempenho dos modelos.
+Tabela 4 - Métricas de desempenho dos modelos na previsão geral de Doenças
+Cardiovasculares.
+
+Modelo
+
+Acurácia
+
+Precisão
+
+Recall
+
+F1-Score
+
+AD
+
+0.91
+
+0.88
+
+0.91
+
+0.88
+
+FA
+
+0.90
+
+0.87
+
+0.90
+
+0.88
+
+KNN
+
+0.89
+
+0.86
+
+0.89
+
+0.87
+
+Após a avaliação das métricas dos modelos, é possível notar que a sequência
+de desempenho segue o padrão a seguir: Árvore de Decisão, Floresta Aleatória e
+KNN, não somente em relação à acurácia, mas também em relação às demais
+métricas, como precisão, recall e F1-score. Após a análise das métricas dos
+modelos, é evidente que a Árvore de Decisão se destaca na detecção precoce de
+doenças cardiovasculares de forma geral.
+
+Desempenho dos Modelos na Previsão de AVC.
+Após analisar o desempenho global desses modelos na previsão de doenças
+cardiovasculares, é essencial agora avaliá-los em cenários mais específicos para
+validar sua eficácia clínica. Nesta parte, o foco está na avaliação desses modelos na
+previsão de Acidente Vascular Cerebral (AVC). Inicialmente, foi conduzido um estudo
+da Área Sob a Curva ROC (AUC-ROC). As imagens 4, 5 e 6 mostram as curvas
+ROC de cada modelo, evidenciando suas habilidades únicas na previsão de eventos
+cerebrovasculares.
+
+Figura 4 - Área sob a curva de ROC da
+Árvore de Decisão (AUC = 0.76).
+
+Figura 5: Área sob a curva de ROC da
+Floresta Aleatória (AUC = 0.95).
+
+Figura 6: Área sob a curva de ROC do KNN (AUC = 0.85).
+
+Os resultados dos testes foram consistentes, todos com uma AUC acima de
+0.5, sendo a Floresta Aleatória a que se destacou com melhor desempenho. É
+essencial analisar as matrizes de confusão e suas métricas para uma avaliação
+abrangente da capacidade preditiva dos modelos em relação aos AVCs. As Tabelas
+5, 6 e 7 contêm as matrizes de confusão de cada modelo neste contexto específico,
+fornecendo insights valiosos para a validação clínica e aprimoramento dos
+
+algoritmos.
+Tabela 5 - Matriz de confusão da Árvore de
+Decisão.
+
+Valor
+Real
+
+Tabela 6 - Matriz de confusão da Floresta
+Aleatória.
+
+Valor Previsto
+
+Valor Previsto
+
+Não
+
+Sim
+
+Não
+
+Sim
+
+Não
+
+23
+
+6
+
+Não
+
+25
+
+4
+
+Sim
+
+9
+
+23
+
+Sim
+
+5
+
+27
+
+Valor
+Real
+
+Tabela 7 - Matriz de confusão do KNN.
+Valor Previsto
+
+Valor
+Real
+
+Não
+
+Sim
+
+Não
+
+24
+
+5
+
+Sim
+
+9
+
+23
+
+A avaliação das matrizes de confusão não apontou diferenças significativas
+nas informações entre os modelos. No entanto, é possível observar que a Floresta
+Aleatória se destacou ao vencer o KNN e a Árvore de Decisão, especialmente em
+sua capacidade de reduzir falsos positivos e falsos negativos.
+Os resultados da avaliação indicaram que, apesar das expectativas iniciais
+em relação ao desempenho da Árvore de Decisão com base em seu desempenho
+geral, o modelo de Floresta Aleatória demonstrou ser mais eficiente em termos de
+precisão em situações específicas conforme evidenciado por (Nery et al., 2023).
+A eficácia da Floresta Aleatória em aprimorar a generalização dos resultados
+foi comprovada. Esse método consegue equilibrar o trade-off entre viés e variância
+ao considerar múltiplas árvores, resultando em maior clareza em diversos cenários.
+Para uma análise mais aprofundada, as métricas de desempenho dos modelos
+estão disponíveis na Tabela 5.
+Tabela 5: Métricas de desempenho dos modelos na previsão de AVC.
+
+Modelo
+
+Acurácia
+
+Precisão
+
+Recall
+
+F1-Score
+
+AD
+
+0.75
+
+0.79
+
+0.71
+
+0.75
+
+FA
+
+0.85
+
+0.87
+
+0.84
+
+0.85
+
+KNN
+
+0.77
+
+0.82
+
+0.71
+
+0.77
+
+A avaliação das métricas indica que a sequência de eficácia dos modelos é
+constante, com a Floresta Aleatória em primeiro lugar, seguida pelo KNN e, por fim,
+a Árvore de Decisão. Isso é válido não apenas para a precisão, mas também para
+outras métricas como recall e F1-score. A Floresta Aleatória se destaca de forma
+significativa na detecção de doenças cardíacas em um contexto mais específico,
+mostrando superioridade em todas as formas de avaliação do desempenho dos
+algoritmos.
+A análise comparativa das métricas de desempenho dos modelos de
+aprendizado de máquina utilizados na previsão de doenças cardiovasculares e
+acidente vascular cerebral revelou insights significativos. Enquanto a Árvore de
+Decisão se destacou na previsão geral de doenças cardiovasculares, apresentando
+maior acurácia e capacidade de evitar erros, a Floresta Aleatória demonstrou um
+desempenho superior na análise específica de AVC, com uma AUC-ROC mais alta,
+mostrando sua eficácia em minimizar falsos positivos e falsos negativos, conforme
+evidenciado pela matriz de confusão das métricas. Essas diferenças de
+desempenho destacam a importância de escolher o modelo mais adequado para
+diferentes cenários clínicos.
+Em resumo, a Floresta Aleatória se destacou como o melhor modelo para
+prever AVC, enquanto a Árvore de Decisão mostrou maior eficácia na previsão de
+doenças cardiovasculares em um contexto amplo. A análise minuciosa das métricas
+de desempenho, como acurácia, precisão, recall e F1-score, proporcionou uma
+compreensão abrangente das capacidades preditivas de cada modelo. A
+interpretação das matrizes de confusão foi essencial para identificar os pontos fortes
+e fracos de cada abordagem. Esses resultados evidenciam que os modelos de
+aprendizado de máquina têm o potencial de contribuir para o diagnóstico precoce e
+confiável de doenças cardiovasculares.
+​
+
+​
+
+​
+
+​
+
+CONCLUSÕES
+A utilização de algoritmos de machine learning na previsão de doenças
+cardíacas e AVC ressalta a importância dessas tecnologias na assistência às
+
+decisões médicas. Os modelos examinados, como Árvore de Decisão, Floresta
+Aleatória e KNN, apresentaram habilidades significativas no diagnóstico precoce.
+Especificamente, a Floresta Aleatória se destacou na previsão de AVC, enquanto a
+Árvore de Decisão teve um desempenho mais consistente na previsão geral de
+doenças cardíacas. Essas disparidades realçam a necessidade de selecionar o
+algoritmo apropriado para cada cenário clínico específico, otimizando a eficácia das
+ferramentas de apoio à tomada de decisão médica.
+Para além da exploração dos modelos mencionados, é crucial analisar outros
+algoritmos de aprendizado de máquina e suas possíveis contribuições para a área
+da saúde. Métodos avançados como redes neurais profundas, máquinas de vetores
+de suporte (SVM) e algoritmos de ensemble mais sofisticados podem trazer
+melhorias adicionais em termos de precisão e confiabilidade. Adicionalmente, a
+utilização de diferentes bases de dados, contendo informações mais variadas ou
+específicas de subgrupos populacionais, pode oferecer insights valiosos e ampliar a
+generalização dos modelos. A combinação de diversas fontes de dados, incluindo
+dados genéticos, históricos médicos detalhados e informações sobre o estilo de
+vida, também pode aprimorar consideravelmente a capacidade preditiva dos
+algoritmos.
+Assim, a constante evolução e avaliação de algoritmos de machine learning,
+juntamente com o uso de extensas bases de dados clínicas, têm o potencial de
+transformar a prática médica. Essas novidades podem não só aprimorar a acurácia
+diagnóstica, como também oferecer uma medicina mais individualizada e preventiva,
+resultando em melhorias significativas para os pacientes.
+REFERÊNCIAS
+ALI, Md Mamun et al. Heart disease prediction using supervised machine learning
+algorithms: Performance analysis and comparison. Computers in Biology and
+Medicine, v. 136, p. 104672, 2021.
+GÉRON, Aurélien. Mãos à obra: aprendizado de máquina com Scikit-Learn &
+TensorFlow. Alta Books, 2019.
+HARRISON, Matt. Machine learning pocket reference: working with structured
+data in python. O'Reilly Media, 2019.
+
+IZBICKI, Rafael; DOS SANTOS, Tiago Mendonça. Aprendizado de máquina: uma
+abordagem estatística. Rafael Izbicki, 2020.
+ROTH, Gregory A. et al. Global burden of cardiovascular diseases and risk factors,
+1990–2019: update from the GBD 2019 study. Journal of the American college of
+cardiology, v. 76, n. 25, p. 2982-3021, 2020.
+NERY, Barbara. et al. COMPARAÇÃO DE MODELOS DE MACHINE LEARNING
+PARA DIAGNÓSTICO DE DOENÇAS CARDIOVASCULARES: UM ESTUDO
+SOBRE ACIDENTE VASCULAR CEREBRAL, ARRITMIA CARDÍACA E DOENÇA
+ARTERIAL
+CORONARIANA.
+Revistaft,
+2023.
+Disponível
+em:
+https://revistaft.com.br/comparacao-de-modelos-de-machine-learning-para-diagnosti
+co-de-doencas-cardiovasculares-um-estudo-sobre-acidente-vascular-cerebral-arritmi
+a-cardiaca-e-doenca-arterial-coronariana/. Acesso em: 12 abr. 2024.
+SANTOS, Bruno Bruno Silva dos. Uma análise exploratória de dados e o uso de
+aprendizado de máquina para classificação de doenças cardiovasculares.
+2022. Trabalho de Conclusão de Curso. Universidade Federal do Rio Grande do
+Norte.
+TSAO, Connie W. et al. Heart disease and stroke statistics—2023 update: a report
+from the American Heart Association. Circulation, v. 147, n. 8, p. e93-e621, 2023.
+
+
