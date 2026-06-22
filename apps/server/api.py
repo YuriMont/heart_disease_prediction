@@ -1,4 +1,4 @@
-"""Ponto de entrada da API (como o 'server.js' / 'index.js' de um projeto Express).
+"""Ponto de entrada da API (como o 'js' / 'index.js' de um projeto Express).
 
 Aqui a gente só faz duas coisas:
     1. cria a aplicação (app)
@@ -15,7 +15,8 @@ Depois abra no navegador:  http://127.0.0.1:8000/scalar
 
 from fastapi import FastAPI
 
-from rotas import paginas, previsao
+from rotas import paginas
+from rotas import previsao
 
 # Cria a aplicação. O título e a descrição aparecem na documentação.
 app = FastAPI(

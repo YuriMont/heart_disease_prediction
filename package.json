@@ -1,0 +1,16 @@
+{
+  "name": "pibic",
+  "private": true,
+  "scripts": {
+    "dev:web": "cd apps/web && npm run dev",
+    "dev:api": "cd apps/server && uv run uvicorn api:app --reload",
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\""
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}

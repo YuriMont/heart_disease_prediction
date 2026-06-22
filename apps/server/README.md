@@ -15,7 +15,7 @@ tem comentários explicando o que faz.
 server/
 ├── README.md              # este guia
 ├── pyproject.toml         # lista das bibliotecas que o projeto usa
-├── api.py                 # cria o app e conecta as rotas (como o server.js do Express)
+├── api.py                 # cria o app e conecta as rotas (como o js do Express)
 ├── servico.py             # lógica de previsão (carrega os modelos e prevê)
 ├── esquemas.py            # formato dos dados de entrada (validação - Pydantic)
 ├── treinar.py             # script que treina os modelos e gera os .pkl

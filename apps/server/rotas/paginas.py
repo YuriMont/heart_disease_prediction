@@ -6,7 +6,7 @@ Equivale a um 'routes/home.js' no Express.
 from fastapi import APIRouter
 from scalar_fastapi import get_scalar_api_reference
 
-import servico
+import servico as servico
 
 router = APIRouter(tags=["geral"])
 

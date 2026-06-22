@@ -6,7 +6,7 @@ Aqui criamos um APIRouter e penduramos nele as rotas /modelos e /prever.
 
 from fastapi import APIRouter, HTTPException
 
-import servico
+import servico as servico
 from esquemas import Paciente
 
 # O APIRouter é o "Router" do FastAPI. As rotas definidas aqui só passam a
