@@ -13,18 +13,35 @@ COMO RODAR (no terminal, dentro da pasta 'server'):
 Depois abra no navegador:  http://127.0.0.1:8000/scalar
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-from rotas import paginas
-from rotas import previsao
+from database import criar_tabelas
+from rotas import dashboard, modelos, paginas, pacientes, previsao, relatorios, resultado
 
-# Cria a aplicação. O título e a descrição aparecem na documentação.
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Cria as tabelas do banco na inicialização."""
+    criar_tabelas()
+    yield
+
+
 app = FastAPI(
     title="API de Predição de Doença Cardíaca",
     description="Recebe os dados de um paciente e prevê o risco de doença cardíaca.",
-    version="1.0.0",
+    version="2.0.0",
+    lifespan=lifespan,
 )
 
-# Conecta cada arquivo de rotas ao app (equivale ao app.use(...) do Express).
+# Rotas originais
 app.include_router(paginas.router)
 app.include_router(previsao.router)
+
+# Rotas novas
+app.include_router(dashboard.router)
+app.include_router(pacientes.router)
+app.include_router(resultado.router)
+app.include_router(modelos.router)
+app.include_router(relatorios.router)

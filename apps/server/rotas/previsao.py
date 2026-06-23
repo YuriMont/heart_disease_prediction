@@ -14,15 +14,6 @@ from esquemas import Paciente
 router = APIRouter(tags=["previsão"])
 
 
-@router.get("/modelos")
-def listar_modelos():
-    """Lista quais modelos podem ser usados na previsão."""
-    return {
-        "modelos_disponiveis": list(servico.MODELOS.keys()),
-        "padrao": servico.MODELO_PADRAO,
-    }
-
-
 @router.post("/prever")
 def prever(paciente: Paciente, modelo: str = servico.MODELO_PADRAO):
     """Recebe um paciente e devolve a previsão de doença cardíaca.

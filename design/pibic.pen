@@ -8125,7 +8125,7 @@
                           "name": "TableBody",
                           "width": "fill_container",
                           "layout": "vertical",
-                          "gap": 2,
+                          "gap": 8,
                           "children": [
                             {
                               "type": "frame",
