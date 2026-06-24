@@ -12,17 +12,24 @@ from sklearn.metrics import (
 )
 
 
-def avaliar(y_verdadeiro, y_previsto, nome="Modelo"):
+def avaliar(y_verdadeiro, y_previsto, y_probabilidade=None, nome="Modelo"):
     """Calcula e imprime as principais métricas. Devolve um dicionário com elas."""
     print(f"\n--- Avaliação: {nome} ---")
     print(classification_report(y_verdadeiro, y_previsto))
 
     metricas = {
-        "acuracia": accuracy_score(y_verdadeiro, y_previsto),
-        "recall": recall_score(y_verdadeiro, y_previsto),
-        "precisao": precision_score(y_verdadeiro, y_previsto),
-        "f1": f1_score(y_verdadeiro, y_previsto),
+        "acuracia": float(accuracy_score(y_verdadeiro, y_previsto)),
+        "recall": float(recall_score(y_verdadeiro, y_previsto)),
+        "precisao": float(precision_score(y_verdadeiro, y_previsto)),
+        "f1_score": float(f1_score(y_verdadeiro, y_previsto)),
     }
+
+    if y_probabilidade is not None:
+        fpr, tpr, _ = roc_curve(y_verdadeiro, y_probabilidade)
+        metricas["auc_roc"] = float(auc(fpr, tpr))
+    else:
+        metricas["auc_roc"] = 0.0
+
     for nome_metrica, valor in metricas.items():
         print(f"  {nome_metrica:10s}: {valor:.4f}")
 

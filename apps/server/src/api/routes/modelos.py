@@ -1,47 +1,25 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
+from database.database import get_db
+from models.metrica import ModelMetrica
 from schemas.dashboard import ModeloInfo, ModeloMetricas
 from services import prediction_service as servico
 
 router = APIRouter(prefix="/modelos", tags=["modelos"])
-
-# Métricas mockadas (em produção viriam de um banco de métricas)
-METRICAS = {
-    "ensemble": ModeloMetricas(
-        nome="Ensemble",
-        acuracia=0.942,
-        auc_roc=0.96,
-        sensibilidade=0.918,
-        atualizacao="12/06/2026",
-    ),
-    "random_forest": ModeloMetricas(
-        nome="Random Forest",
-        acuracia=0.921,
-        auc_roc=0.94,
-        sensibilidade=0.895,
-        atualizacao="12/06/2026",
-    ),
-    "svm": ModeloMetricas(
-        nome="SVM",
-        acuracia=0.898,
-        auc_roc=0.92,
-        sensibilidade=0.872,
-        atualizacao="12/06/2026",
-    ),
-    "knn": ModeloMetricas(
-        nome="KNN",
-        acuracia=0.885,
-        auc_roc=0.90,
-        sensibilidade=0.860,
-        atualizacao="12/06/2026",
-    ),
-}
 
 DESCRICOES = {
     "ensemble": "Votação dos 3 modelos",
     "random_forest": "Floresta aleatória",
     "svm": "Vetores de suporte",
     "knn": "K-vizinhos mais próximos",
+}
+
+NOMES_MODELOS = {
+    "ensemble": "Ensemble",
+    "random_forest": "Random Forest",
+    "svm": "SVM",
+    "knn": "KNN",
 }
 
 
@@ -59,17 +37,28 @@ def listar_modelos():
 
 
 @router.get("/{nome_modelo}/metricas", response_model=ModeloMetricas)
-def obter_metricas(nome_modelo: str):
+def obter_metricas(nome_modelo: str, db: Session = Depends(get_db)):
     """Métricas de desempenho de um modelo."""
     if nome_modelo not in servico.MODELOS:
         raise HTTPException(
             status_code=404,
             detail=f"Modelo '{nome_modelo}' não encontrado.",
         )
-    metricas = METRICAS.get(nome_modelo)
-    if not metricas:
+
+    metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == nome_modelo).first()
+
+    if not metrica_db:
         raise HTTPException(
             status_code=404,
-            detail=f"Métricas do modelo '{nome_modelo}' não disponíveis.",
+            detail=f"Métricas do modelo '{nome_modelo}' não disponíveis. Execute o treino primeiro.",
         )
-    return metricas
+
+    return ModeloMetricas(
+        nome=NOMES_MODELOS.get(nome_modelo, nome_modelo),
+        acuracia=metrica_db.acuracia,
+        precisao=metrica_db.precisao,
+        recall=metrica_db.recall,
+        f1_score=metrica_db.f1_score,
+        auc_roc=metrica_db.auc_roc,
+        atualizacao=metrica_db.atualizado_em.strftime("%d/%m/%Y %H:%M"),
+    )

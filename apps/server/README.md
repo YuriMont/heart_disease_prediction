@@ -1,11 +1,7 @@
 # Server — Predição de Doença Cardíaca 🫀
 
-API simples, em Python, que usa **machine learning** para prever se um paciente
-tem risco de doença cardíaca, a partir de dados clínicos (idade, pressão,
-colesterol, exames...).
-
-Este projeto foi pensado para **iniciantes**: cada arquivo cuida de uma parte e
-tem comentários explicando o que faz.
+API em Python com **machine learning** para prever risco de doença cardíaca
+a partir de dados clínicos (idade, pressão, colesterol, exames...).
 
 ---
 
@@ -13,148 +9,263 @@ tem comentários explicando o que faz.
 
 ```
 server/
-├── README.md              # este guia
-├── pyproject.toml         # lista das bibliotecas que o projeto usa
-├── api.py                 # cria o app e conecta as rotas (como o js do Express)
-├── servico.py             # lógica de previsão (carrega os modelos e prevê)
-├── esquemas.py            # formato dos dados de entrada (validação - Pydantic)
-├── treinar.py             # script que treina os modelos e gera os .pkl
+├── README.md
+├── pyproject.toml
 │
-├── rotas/                 # arquivos de rotas (como a pasta routes/ do Express)
-│   ├── paginas.py         # rotas /  e  /scalar
-│   └── previsao.py        # rotas /modelos  e  /prever
-│
-├── ml/                    # o "miolo" de machine learning
-│   ├── dados.py           # baixa e prepara os dados
-│   ├── modelos.py         # define os modelos (KNN, SVM, Random Forest, Ensemble)
-│   └── avaliacao.py       # mede se o modelo está acertando
-│
-├── artefatos/             # modelos já treinados (.pkl) — a API lê daqui
-│   ├── knn.pkl
-│   ├── svm.pkl
-│   ├── random_forest.pkl
-│   ├── ensemble.pkl
-│   ├── scaler.pkl
-│   └── feature_names.pkl
+├── src/
+│   ├── api/                        # FastAPI
+│   │   ├── app/
+│   │   │   └── app.py             # cria o app e conecta as rotas
+│   │   └── routes/
+│   │       ├── __init__.py
+│   │       ├── dashboard.py       # rotas do dashboard
+│   │       ├── modelos.py         # GET /modelos, GET /modelos/{id}/metricas
+│   │       ├── pacientes.py       # CRUD de pacientes
+│   │       ├── paginas.py         # rotas de páginas
+│   │       ├── previsao.py        # POST /prever
+│   │       ├── relatorios.py      # CRUD de relatórios
+│   │       └── resultado.py       # rotas de resultado
+│   │
+│   ├── database/
+│   │   ├── __init__.py
+│   │   └── database.py           # configuração do SQLAlchemy + SQLite
+│   │
+│   ├── machine_learning/          # "miolo" de ML
+│   │   ├── __init__.py
+│   │   ├── avaliacao.py           # métricas (accuracy, recall, precision, f1, AUC-ROC)
+│   │   ├── dados.py               # baixa e prepara os dados
+│   │   └── modelos.py             # define KNN, SVM, Random Forest, Ensemble
+│   │
+│   ├── models/                    # modelos ORM (banco de dados)
+│   │   ├── __init__.py
+│   │   ├── avaliacao.py           # tabela avaliacoes
+│   │   ├── metrica.py             # tabela model_metricas (métricas dos modelos)
+│   │   ├── paciente.py            # tabela pacientes
+│   │   └── relatorio.py           # tabela relatorios
+│   │
+│   ├── schemas/                   # schemas Pydantic (validação)
+│   │   ├── __init__.py
+│   │   ├── dashboard.py
+│   │   ├── paciente.py
+│   │   └── relatorio.py
+│   │
+│   ├── services/                  # lógica de negócio
+│   │   ├── __init__.py
+│   │   ├── prediction_service.py  # carrega modelos e faz previsão
+│   │   └── train_models.py        # treina modelos e salva métricas no banco
+│   │
+│   └── artifacts/                 # modelos treinados (.pkl)
+│       ├── knn.pkl
+│       ├── svm.pkl
+│       ├── random_forest.pkl
+│       ├── ensemble.pkl
+│       ├── scaler.pkl
+│       └── feature_names.pkl
 │
 ├── exemplos/
-│   └── paciente.json      # um exemplo de dados para testar a API
+│   └── paciente.json
 │
-└── notebooks/             # cadernos Jupyter usados na pesquisa/exploração
+└── notebooks/
 ```
 
 ---
 
-## ✅ O que você precisa instalar
+## ✅ Pré-requisitos
 
-Apenas o **uv**, um gerenciador de Python que cuida de tudo (instala o Python
-certo e as bibliotecas automaticamente).
-
-- Windows (PowerShell):
-  ```powershell
-  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-  ```
-- Mais informações: https://docs.astral.sh/uv/
-
-> Não precisa instalar Python nem criar ambiente virtual na mão — o `uv` faz isso.
-
----
-
-## ▶️ Como rodar a API (passo a passo)
-
-1. Abra o terminal **dentro da pasta `server`**.
-2. Rode:
-   ```bash
-   uv run uvicorn api:app --reload
-   ```
-   Na primeira vez o `uv` baixa as bibliotecas (demora um pouquinho).
-3. Quando aparecer `Application startup complete`, abra no navegador:
-
-   👉 **http://127.0.0.1:8000/scalar**
-
-Essa página é gerada automaticamente. Nela você clica em **POST /prever**,
-já vem um exemplo preenchido, e é só executar para ver a resposta.
-
-### Páginas de documentação disponíveis
-
-A API gera, sozinha, três interfaces para você ler e testar tudo:
-
-| Endereço   | Interface | Observação                         |
-|------------|-----------|------------------------------------|
-| `/scalar`  | Scalar    | mais moderna (alternativa ao Swagger) |
-| `/docs`    | Swagger   | a padrão do FastAPI                |
-| `/redoc`   | ReDoc     | só leitura, sem botão de testar    |
-
----
-
-## 🔮 Testando pelo terminal (opcional)
-
-Com a API rodando, em outro terminal:
+Apenas o **uv** (gerenciador de Python):
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/prever" ^
-     -H "Content-Type: application/json" ^
-     -d @exemplos/paciente.json
+# Linux/macOS
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-Resposta parecida com:
+Mais informações: https://docs.astral.sh/uv/
 
+---
+
+## ▶️ Como rodar o backend
+
+### 1. Instalar dependências
+
+```bash
+cd apps/server
+uv sync
+```
+
+### 2. Treinar os modelos (primeira vez ou ao re-treinar)
+
+```bash
+uv run python -m services.train_models
+```
+
+Isso:
+- Baixa os dados do dataset Heart Disease
+- Treina os 4 modelos (KNN, SVM, Random Forest, Ensemble)
+- Salva os modelos em `src/artifacts/*.pkl`
+- Salva as métricas (accuracy, precision, recall, f1, AUC-ROC) no banco `cardiopredict.db`
+
+### 3. Iniciar a API
+
+```bash
+uv run uvicorn api:app:app --reload
+```
+
+A API estará disponível em: **http://127.0.0.1:8000**
+
+### 4. Acessar a documentação
+
+| Endereço                          | Interface |
+|-----------------------------------|-----------|
+| http://127.0.0.1:8000/scalar      | Scalar    |
+| http://127.0.0.1:8000/docs        | Swagger   |
+| http://127.0.0.1:8000/redoc       | ReDoc     |
+
+---
+
+## 🧠 Rotas da API
+
+### Pacientes
+
+| Método | Rota                      | O que faz                    |
+|--------|---------------------------|------------------------------|
+| GET    | `/pacientes`              | Lista todos os pacientes     |
+| POST   | `/pacientes`              | Cria um paciente             |
+| GET    | `/pacientes/{id}`         | Busca paciente por ID        |
+| PUT    | `/pacientes/{id}`         | Atualiza paciente            |
+| DELETE | `/pacientes/{id}`         | Remove paciente              |
+
+### Avaliações e Previsão
+
+| Método | Rota                      | O que faz                              |
+|--------|---------------------------|----------------------------------------|
+| POST   | `/prever`                 | Recebe dados clínicos e devolve previsão |
+| GET    | `/avaliacoes`             | Lista avaliações                       |
+| GET    | `/avaliacoes/{id}`        | Busca avaliação por ID                 |
+
+### Modelos
+
+| Método | Rota                              | O que faz                              |
+|--------|-----------------------------------|----------------------------------------|
+| GET    | `/modelos`                        | Lista modelos disponíveis              |
+| GET    | `/modelos/{nome}/metricas`        | Métricas reais do modelo (do banco)    |
+
+### Relatórios
+
+| Método | Rota                      | O que faz                    |
+|--------|---------------------------|------------------------------|
+| GET    | `/relatorios`             | Lista relatórios             |
+| POST   | `/relatorios`             | Cria relatório               |
+| GET    | `/relatorios/{id}`        | Busca relatório por ID       |
+
+### Dashboard
+
+| Método | Rota                      | O que faz                    |
+|--------|---------------------------|------------------------------|
+| GET    | `/dashboard/stats`        | Estatísticas gerais          |
+
+---
+
+## 📊 Métricas dos modelos
+
+As métricas são calculadas durante o treino e salvas na tabela `model_metricas`
+do banco SQLite (`cardiopredict.db`).
+
+**Endpoint:** `GET /modelos/{nome}/metricas`
+
+**Resposta exemplo:**
 ```json
 {
-  "modelo_usado": "ensemble",
-  "tem_doenca": false,
-  "probabilidade_doenca": 0.18,
-  "resultado": "Sem indício de doença"
+  "nome": "Ensemble",
+  "acuracia": 0.942,
+  "precisao": 0.935,
+  "recall": 0.918,
+  "f1_score": 0.926,
+  "auc_roc": 0.96,
+  "atualizacao": "24/06/2026 15:30"
 }
 ```
 
-Quer usar outro modelo? Adicione `?modelo=...` na URL. Opções: `knn`, `svm`,
-`random_forest`, `ensemble`. Exemplo: `/prever?modelo=random_forest`.
+**Métricas disponíveis:**
 
----
-
-## 🧠 As rotas da API
-
-| Método | Rota        | O que faz                                            |
-|--------|-------------|------------------------------------------------------|
-| GET    | `/`         | Confirma que a API está no ar                        |
-| GET    | `/modelos`  | Lista os modelos disponíveis                         |
-| POST   | `/prever`   | Recebe um paciente e devolve a previsão              |
+| Métrica     | Significado                                                 |
+|-------------|-------------------------------------------------------------|
+| `acuracia`  | Percentual de acertos total                                 |
+| `precisao`  | Dos que o modelo disse ser positivo, quantos são realmente  |
+| `recall`    | Dos que são positivos, quantos o modelo encontrou           |
+| `f1_score`  | Média harmônica entre precisão e recall                     |
+| `auc_roc`   | Capacidade de distinguir entre classes (0.5 = aleatório, 1.0 = perfeito) |
 
 ---
 
 ## 📋 Campos do paciente (entrada do `/prever`)
 
-| Campo      | Significado                                       | Valores         |
-|------------|---------------------------------------------------|-----------------|
-| `age`      | Idade em anos                                     | ex.: 54         |
+| Campo      | Significado                                       | Valores           |
+|------------|---------------------------------------------------|-------------------|
+| `age`      | Idade em anos                                     | ex.: 54           |
 | `sex`      | Sexo                                              | 1 = masc, 0 = fem |
-| `cp`       | Tipo de dor no peito                              | 1 a 4           |
-| `trestbps` | Pressão arterial em repouso (mm Hg)               | ex.: 130        |
-| `chol`     | Colesterol (mg/dl)                                | ex.: 250        |
-| `fbs`      | Glicemia em jejum > 120 mg/dl                     | 1 = sim, 0 = não |
-| `restecg`  | Eletrocardiograma em repouso                      | 0 a 2           |
-| `thalach`  | Frequência cardíaca máxima atingida               | ex.: 150        |
-| `exang`    | Angina induzida por exercício                     | 1 = sim, 0 = não |
-| `oldpeak`  | Depressão do segmento ST no exercício             | ex.: 1.5        |
-| `slope`    | Inclinação do segmento ST                         | 1 a 3           |
-| `ca`       | Nº de vasos principais coloridos                  | 0 a 3           |
-| `thal`     | Talassemia                                        | 3, 6 ou 7       |
+| `cp`       | Tipo de dor no peito                              | 1 a 4             |
+| `trestbps` | Pressão arterial em repouso (mm Hg)               | ex.: 130          |
+| `chol`     | Colesterol (mg/dl)                                | ex.: 250          |
+| `fbs`      | Glicemia em jejum > 120 mg/dl                     | 1 = sim, 0 = não  |
+| `restecg`  | Eletrocardiograma em repouso                      | 0 a 2             |
+| `thalach`  | Frequência cardíaca máxima atingida               | ex.: 150          |
+| `exang`    | Angina induzida por exercício                     | 1 = sim, 0 = não  |
+| `oldpeak`  | Depressão do segmento ST no exercício             | ex.: 1.5          |
+| `slope`    | Inclinação do segmento ST                         | 1 a 3             |
+| `ca`       | Nº de vasos principais coloridos                  | 0 a 3             |
+| `thal`     | Talassemia                                        | 3, 6 ou 7         |
 
 ---
 
-## 🏋️ Re-treinar os modelos (opcional)
+## 🗄️ Banco de dados
 
-Os modelos treinados já vêm prontos na pasta `artefatos/`, então **não é
-obrigatório**. Mas se quiser treinar de novo (por exemplo, depois de mudar algo
-em `ml/`), rode:
+SQLite local: `src/database/cardiopredict.db`
+
+**Tabelas:**
+
+| Tabela           | Descrição                          |
+|------------------|------------------------------------|
+| `pacientes`      | Dados cadastrais dos pacientes     |
+| `avaliacoes`     | Resultados de previsões            |
+| `relatorios`     | Relatórios médicos                 |
+| `model_metricas` | Métricas de desempenho dos modelos |
+
+---
+
+## 🏋️ Re-treinar os modelos
 
 ```bash
-uv run python treinar.py
+cd apps/server
+PYTHONPATH=src uv run python -m services.train_models
 ```
 
-Isso baixa os dados, treina os 4 modelos e salva tudo em `artefatos/`.
-Pode demorar alguns minutos.
+O treino:
+- Baixa o dataset automaticamente
+- Executa GridSearchCV com validação cruzada
+- Salva os modelos em `src/artifacts/`
+- Atualiza as métricas no banco de dados (insere ou atualiza)
+
+---
+
+## 🔮 Exemplo de uso via terminal
+
+```bash
+# Criar um paciente
+curl -X POST "http://127.0.0.1:8000/pacientes" \
+     -H "Content-Type: application/json" \
+     -d '{"nome": "João", "idade": 55, "sexo": 1}'
+
+# Fazer uma previsão
+curl -X POST "http://127.0.0.1:8000/prever" \
+     -H "Content-Type: application/json" \
+     -d @exemplos/paciente.json
+
+# Ver métricas de um modelo
+curl "http://127.0.0.1:8000/modelos/ensemble/metricas"
+```
 
 ---
 

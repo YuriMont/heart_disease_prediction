@@ -26,7 +26,12 @@ dev = [
     "ruff>=0.5.0",
 ]
 
-# Este projeto é uma coleção de scripts (não uma biblioteca para instalar),
-# então pedimos ao uv para NÃO tentar empacotá-lo.
-[tool.uv]
-package = false
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

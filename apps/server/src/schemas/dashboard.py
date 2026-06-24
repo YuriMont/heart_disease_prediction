@@ -28,6 +28,8 @@ class ModeloInfo(BaseModel):
 class ModeloMetricas(BaseModel):
     nome: str
     acuracia: float
+    precisao: float
+    recall: float
+    f1_score: float
     auc_roc: float
-    sensibilidade: float
     atualizacao: str
