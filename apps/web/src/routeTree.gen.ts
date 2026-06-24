@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResultadosIndexRouteImport } from './routes/resultados/index'
+import { Route as RelatoriosIndexRouteImport } from './routes/relatorios/index'
+import { Route as PacientesIndexRouteImport } from './routes/pacientes/index'
+import { Route as ModelosIndexRouteImport } from './routes/modelos/index'
+import { Route as AvaliacaoIndexRouteImport } from './routes/avaliacao/index'
+import { Route as AvaliacaoIdIndexRouteImport } from './routes/avaliacao/$id/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResultadosIndexRoute = ResultadosIndexRouteImport.update({
+  id: '/resultados/',
+  path: '/resultados/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RelatoriosIndexRoute = RelatoriosIndexRouteImport.update({
+  id: '/relatorios/',
+  path: '/relatorios/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PacientesIndexRoute = PacientesIndexRouteImport.update({
+  id: '/pacientes/',
+  path: '/pacientes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelosIndexRoute = ModelosIndexRouteImport.update({
+  id: '/modelos/',
+  path: '/modelos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvaliacaoIndexRoute = AvaliacaoIndexRouteImport.update({
+  id: '/avaliacao/',
+  path: '/avaliacao/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvaliacaoIdIndexRoute = AvaliacaoIdIndexRouteImport.update({
+  id: '/avaliacao/$id/',
+  path: '/avaliacao/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/avaliacao/': typeof AvaliacaoIndexRoute
+  '/modelos/': typeof ModelosIndexRoute
+  '/pacientes/': typeof PacientesIndexRoute
+  '/relatorios/': typeof RelatoriosIndexRoute
+  '/resultados/': typeof ResultadosIndexRoute
+  '/avaliacao/$id/': typeof AvaliacaoIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/avaliacao': typeof AvaliacaoIndexRoute
+  '/modelos': typeof ModelosIndexRoute
+  '/pacientes': typeof PacientesIndexRoute
+  '/relatorios': typeof RelatoriosIndexRoute
+  '/resultados': typeof ResultadosIndexRoute
+  '/avaliacao/$id': typeof AvaliacaoIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/avaliacao/': typeof AvaliacaoIndexRoute
+  '/modelos/': typeof ModelosIndexRoute
+  '/pacientes/': typeof PacientesIndexRoute
+  '/relatorios/': typeof RelatoriosIndexRoute
+  '/resultados/': typeof ResultadosIndexRoute
+  '/avaliacao/$id/': typeof AvaliacaoIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/avaliacao/'
+    | '/modelos/'
+    | '/pacientes/'
+    | '/relatorios/'
+    | '/resultados/'
+    | '/avaliacao/$id/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/avaliacao'
+    | '/modelos'
+    | '/pacientes'
+    | '/relatorios'
+    | '/resultados'
+    | '/avaliacao/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/avaliacao/'
+    | '/modelos/'
+    | '/pacientes/'
+    | '/relatorios/'
+    | '/resultados/'
+    | '/avaliacao/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AvaliacaoIndexRoute: typeof AvaliacaoIndexRoute
+  ModelosIndexRoute: typeof ModelosIndexRoute
+  PacientesIndexRoute: typeof PacientesIndexRoute
+  RelatoriosIndexRoute: typeof RelatoriosIndexRoute
+  ResultadosIndexRoute: typeof ResultadosIndexRoute
+  AvaliacaoIdIndexRoute: typeof AvaliacaoIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resultados/': {
+      id: '/resultados/'
+      path: '/resultados'
+      fullPath: '/resultados/'
+      preLoaderRoute: typeof ResultadosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatorios/': {
+      id: '/relatorios/'
+      path: '/relatorios'
+      fullPath: '/relatorios/'
+      preLoaderRoute: typeof RelatoriosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pacientes/': {
+      id: '/pacientes/'
+      path: '/pacientes'
+      fullPath: '/pacientes/'
+      preLoaderRoute: typeof PacientesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modelos/': {
+      id: '/modelos/'
+      path: '/modelos'
+      fullPath: '/modelos/'
+      preLoaderRoute: typeof ModelosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/avaliacao/': {
+      id: '/avaliacao/'
+      path: '/avaliacao'
+      fullPath: '/avaliacao/'
+      preLoaderRoute: typeof AvaliacaoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/avaliacao/$id/': {
+      id: '/avaliacao/$id/'
+      path: '/avaliacao/$id'
+      fullPath: '/avaliacao/$id/'
+      preLoaderRoute: typeof AvaliacaoIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AvaliacaoIndexRoute: AvaliacaoIndexRoute,
+  ModelosIndexRoute: ModelosIndexRoute,
+  PacientesIndexRoute: PacientesIndexRoute,
+  RelatoriosIndexRoute: RelatoriosIndexRoute,
+  ResultadosIndexRoute: ResultadosIndexRoute,
+  AvaliacaoIdIndexRoute: AvaliacaoIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

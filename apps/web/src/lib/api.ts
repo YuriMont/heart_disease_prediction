@@ -1,10 +1,7 @@
 import Axios, { AxiosError, type AxiosRequestConfig } from 'axios';
-import { config } from "dotenv";
-
-config();
 
 export const AXIOS_INSTANCE = Axios.create({
-  baseURL: process.env.VITE_API_URL, // use your own URL or environment variable
+  baseURL: import.meta.env.VITE_API_URL, // use your own URL or environment variable
 });
 
 // Add a second `options` argument to pass extra options to each query

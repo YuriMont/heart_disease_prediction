@@ -1,2 +1,84 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
 
+@theme {
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-bg-2: var(--sidebar-bg-2);
+  --color-risk-low: var(--risk-low);
+  --color-risk-low-soft: var(--risk-low-soft);
+  --color-risk-med: var(--risk-med);
+  --color-risk-med-soft: var(--risk-med-soft);
+  --color-risk-high: var(--risk-high);
+  --color-risk-high-soft: var(--risk-high-soft);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@layer base {
+  :root {
+    --background: #eef3fb;
+    --foreground: #0e1b2e;
+    --card: #ffffff;
+    --card-foreground: #0e1b2e;
+    --primary: #1e63e9;
+    --primary-dark: #1648B0;
+    --primary-foreground: #ffffff;
+    --secondary: #f6f9fe;
+    --secondary-foreground: #0e1b2e;
+    --muted: #f6f9fe;
+    --muted-foreground: #5a6b82;
+    --accent: #0ea5c4;
+    --accent-foreground: #ffffff;
+    --destructive: #dc3848;
+    --destructive-foreground: #ffffff;
+    --border: #e2e9f3;
+    --input: #e2e9f3;
+    --ring: #1e63e9;
+    --radius: 0.75rem;
+    --sidebar-bg: #0b2545;
+    --sidebar-bg-2: #11355f;
+    --risk-low: #16a45f;
+    --risk-low-soft: #e2f5ec;
+    --risk-med: #e8930c;
+    --risk-med-soft: #fcf1dd;
+    --risk-high: #dc3848;
+    --risk-high-soft: #fbe6e8;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}

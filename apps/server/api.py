@@ -20,6 +20,8 @@ from fastapi import FastAPI
 from database import criar_tabelas
 from rotas import dashboard, modelos, paginas, pacientes, previsao, relatorios, resultado
 
+from fastapi.middleware.cors import CORSMiddleware
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,6 +35,19 @@ app = FastAPI(
     description="Recebe os dados de um paciente e prevê o risco de doença cardíaca.",
     version="2.0.0",
     lifespan=lifespan,
+)
+
+origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,      # allowed domains
+    allow_credentials=True,
+    allow_methods=["*"],        # GET, POST, PUT, DELETE, etc.
+    allow_headers=["*"],        # allow all headers
 )
 
 # Rotas originais
