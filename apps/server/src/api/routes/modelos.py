@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from database.database import get_db
 from models.metrica import ModelMetrica
 from schemas.dashboard import ModeloInfo, ModeloMetricas
+from schemas.modelo import NomeModelo
 from services import prediction_service as servico
 
 router = APIRouter(prefix="/modelos", tags=["modelos"])
@@ -37,24 +38,26 @@ def listar_modelos():
 
 
 @router.get("/{nome_modelo}/metricas", response_model=ModeloMetricas)
-def obter_metricas(nome_modelo: str, db: Session = Depends(get_db)):
+def obter_metricas(nome_modelo: NomeModelo, db: Session = Depends(get_db)):
     """Métricas de desempenho de um modelo."""
-    if nome_modelo not in servico.MODELOS:
+    modelo_valor = nome_modelo.value
+
+    if modelo_valor not in servico.MODELOS:
         raise HTTPException(
             status_code=404,
-            detail=f"Modelo '{nome_modelo}' não encontrado.",
+            detail=f"Modelo '{modelo_valor}' não encontrado.",
         )
 
-    metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == nome_modelo).first()
+    metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == modelo_valor).first()
 
     if not metrica_db:
         raise HTTPException(
             status_code=404,
-            detail=f"Métricas do modelo '{nome_modelo}' não disponíveis. Execute o treino primeiro.",
+            detail=f"Métricas do modelo '{modelo_valor}' não disponíveis. Execute o treino primeiro.",
         )
 
     return ModeloMetricas(
-        nome=NOMES_MODELOS.get(nome_modelo, nome_modelo),
+        nome=NOMES_MODELOS.get(modelo_valor, modelo_valor),
         acuracia=metrica_db.acuracia,
         precisao=metrica_db.precisao,
         recall=metrica_db.recall,
