@@ -48,7 +48,7 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * Fatores contribuintes para a predição.
+ * Fatores contribuintes para a predição (derivados do modelo RF treinado).
  * @summary Obter Fatores
  */
 export const obterFatoresAvaliacoesAvaliacaoIdFatoresGet = (
@@ -247,7 +247,7 @@ export function useObterFatoresAvaliacoesAvaliacaoIdFatoresGet<
 }
 
 /**
- * Importância global das variáveis no modelo.
+ * Importância global das variáveis no modelo RF treinado.
  * @summary Obter Importancia
  */
 export const obterImportanciaAvaliacoesAvaliacaoIdImportanciaGet = (

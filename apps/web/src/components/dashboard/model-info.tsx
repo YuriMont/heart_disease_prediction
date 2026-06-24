@@ -1,11 +1,12 @@
 import { BrainCircuit } from "lucide-react";
 import { useListarModelosModelosGet, useObterMetricasModelosNomeModeloMetricasGet } from "../../generated/api/modelos/modelos";
+import type { NomeModelo } from "../../generated/models";
 
 export function ModelInfo() {
   const { data: models } = useListarModelosModelosGet();
   const activeModel = models?.find((m) => m.ativo);
   const { data: metrics } = useObterMetricasModelosNomeModeloMetricasGet(
-    activeModel?.nome ?? "ensemble"
+    activeModel?.nome as NomeModelo
   );
 
   return (
@@ -31,12 +32,16 @@ export function ModelInfo() {
             <span className="text-[11px] text-[#9FB6D4]">Accuracy</span>
           </div>
           <div className="flex flex-col items-end">
-            <span className="text-[22px] font-bold text-white">{((metrics?.auc_roc ?? 0)*100).toFixed(2)}%</span>
-            <span className="text-[11px] text-[#9FB6D4]">AUC-ROC</span>
+            <span className="text-[22px] font-bold text-white">{((metrics?.precisao ?? 0)*100).toFixed(2)}%</span>
+            <span className="text-[11px] text-[#9FB6D4]">Precision</span>
           </div>
           <div className="flex flex-col items-end">
-            <span className="text-[22px] font-bold text-white">{((metrics?.sensibilidade ?? 0) * 100).toFixed(2)}%</span>
-            <span className="text-[11px] text-[#9FB6D4]">Sensibilidade</span>
+            <span className="text-[22px] font-bold text-white">{((metrics?.f1_score ?? 0) * 100).toFixed(2)}%</span>
+            <span className="text-[11px] text-[#9FB6D4]">F1 Score</span>
+          </div>
+          <div className="flex flex-col items-end">
+            <span className="text-[22px] font-bold text-white">{((metrics?.recall ?? 0) * 100).toFixed(2)}%</span>
+            <span className="text-[11px] text-[#9FB6D4]">Recall</span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-[13px] font-semibold text-white">{metrics?.atualizacao ?? "00/00/0000"}</span>

@@ -6,12 +6,11 @@
  * OpenAPI spec version: 2.0.0
  */
 
-export interface ModeloMetricas {
-  nome: string;
-  acuracia: number;
-  precisao: number;
-  recall: number;
-  f1_score: number;
-  auc_roc: number;
-  atualizacao: string;
-}
+export type NomeModelo = (typeof NomeModelo)[keyof typeof NomeModelo];
+
+export const NomeModelo = {
+  knn: "knn",
+  svm: "svm",
+  random_forest: "random_forest",
+  ensemble: "ensemble",
+} as const;

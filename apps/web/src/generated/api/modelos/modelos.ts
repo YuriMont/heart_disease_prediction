@@ -22,6 +22,7 @@ import type {
   HTTPValidationError,
   ModeloInfo,
   ModeloMetricas,
+  NomeModelo,
 } from "../../models";
 
 import { api } from "../../../lib/api";
@@ -203,7 +204,7 @@ export function useListarModelosModelosGet<
  * @summary Obter Metricas
  */
 export const obterMetricasModelosNomeModeloMetricasGet = (
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
@@ -214,7 +215,7 @@ export const obterMetricasModelosNomeModeloMetricasGet = (
 };
 
 export const getObterMetricasModelosNomeModeloMetricasGetQueryKey = (
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
 ) => {
   return [`/modelos/${nomeModelo}/metricas`] as const;
 };
@@ -223,7 +224,7 @@ export const getObterMetricasModelosNomeModeloMetricasGetQueryOptions = <
   TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -272,7 +273,7 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
   TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -299,7 +300,7 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
   TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -326,7 +327,7 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
   TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -349,7 +350,7 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
   TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: string,
+  nomeModelo: NomeModelo,
   options?: {
     query?: Partial<
       UseQueryOptions<

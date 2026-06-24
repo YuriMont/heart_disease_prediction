@@ -89,7 +89,7 @@ function ResultadoPage() {
           <ResultHero
             probability={avaliacao.probabilidade_doenca}
             riskLevel={avaliacao.tem_doenca ? "alto" : "baixo"}
-            confidence={Math.round((1 - avaliacao.probabilidade_doenca) * 100)}
+            confidence={Number(((1 - avaliacao.probabilidade_doenca) * 100).toFixed(1))}
             modelName={avaliacao.modelo_usado}
             temDoenca={avaliacao.tem_doenca}
           />

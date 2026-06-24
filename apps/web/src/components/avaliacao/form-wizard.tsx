@@ -109,7 +109,7 @@ export function AvaliacaoForm() {
       const avaliacao = await criarAvaliacao.mutateAsync({
         data: { paciente_id: paciente.id, ...values, modelo: selectedModel },
       });
-      navigate({ to: `/avaliacao/${avaliacao.id}/resultado` });
+      navigate({ to: `/avaliacao/${avaliacao.id}` });
     } catch (error) {
       console.error("Erro ao criar avaliação:", error);
     }

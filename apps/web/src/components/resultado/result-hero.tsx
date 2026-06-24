@@ -45,7 +45,7 @@ export function ResultHero({ probability, riskLevel, confidence, modelName, temD
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="font-heading text-[46px] font-bold" style={{ color: riskColor }}>
-            {Math.round(probability * 100)}%
+            {(probability * 100).toFixed(1)}%
           </span>
         </div>
       </div>
@@ -61,7 +61,7 @@ export function ResultHero({ probability, riskLevel, confidence, modelName, temD
         <h2 className="font-heading text-[28px] font-bold text-foreground">{riskLabel}</h2>
         <p className="mt-2 max-w-md text-sm text-muted-foreground">
           {temDoenca
-            ? `O modelo ${modelName} identificou uma probabilidade de ${Math.round(probability * 100)}% de doença cardíaca.`
+            ? `O modelo ${modelName} identificou uma probabilidade de ${(probability * 100).toFixed(1)}% de doença cardíaca.`
             : "O modelo identificou um baixo risco de doença cardíaca."}
         </p>
       </div>

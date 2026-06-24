@@ -5,6 +5,7 @@ import { Button } from "../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table";
 import { Progress } from "@radix-ui/react-progress";
+import type { NomeModelo } from "../../generated/models";
 
 export const Route = createFileRoute("/modelos/")({
   component: ModelosPage,
@@ -14,7 +15,7 @@ function ModelosPage() {
   const { data: models = [], isLoading } = useListarModelosModelosGet();
   const activeModel = models.find((m) => m.ativo);
   const { data: metrics } = useObterMetricasModelosNomeModeloMetricasGet(
-    activeModel?.nome ?? "-"
+    activeModel?.nome as NomeModelo
   );
 
   return (
@@ -67,12 +68,16 @@ function ModelosPage() {
                   <span className="text-[11px] text-[#9FB6D4]">Accuracy</span>
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[22px] font-bold text-white">{((metrics?.auc_roc ?? 0)*100).toFixed(2)}</span>
-                  <span className="text-[11px] text-[#9FB6D4]">AUC-ROC</span>
+                  <span className="text-[22px] font-bold text-white">{((metrics?.precisao ?? 0)*100).toFixed(2)}</span>
+                  <span className="text-[11px] text-[#9FB6D4]">Precisão</span>
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[22px] font-bold text-white">{((metrics?.sensibilidade ?? 0) * 100).toFixed(2)}%</span>
-                  <span className="text-[11px] text-[#9FB6D4]">Sensibilidade</span>
+                  <span className="text-[22px] font-bold text-white">{((metrics?.recall ?? 0) * 100).toFixed(2)}%</span>
+                  <span className="text-[11px] text-[#9FB6D4]">Recall</span>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className="text-[22px] font-bold text-white">{((metrics?.f1_score ?? 0) * 100).toFixed(2)}%</span>
+                  <span className="text-[11px] text-[#9FB6D4]">F1 Score</span>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className="text-[13px] font-semibold text-white">{metrics?.atualizacao ?? "00/00/0000"}</span>
@@ -141,17 +146,24 @@ function ModelosPage() {
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Sensibilidade</span>
-                  <span className="text-sm font-bold text-foreground">{((metrics?.sensibilidade ?? 0) * 100).toFixed(2)}%</span>
+                  <span className="text-sm text-muted-foreground">Recall</span>
+                  <span className="text-sm font-bold text-foreground">{((metrics?.recall ?? 0) * 100).toFixed(2)}%</span>
                 </div>
-                <Progress value={metrics?.sensibilidade ?? 0} indicatorClassName="bg-risk-low" />
+                <Progress value={metrics?.recall ?? 0} indicatorClassName="bg-risk-low" />
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Especificidade</span>
-                  <span className="text-sm font-bold text-foreground">{((metrics?.especificidade ?? 0) * 100).toFixed(2)}%</span>
+                  <span className="text-sm text-muted-foreground">Precisão</span>
+                  <span className="text-sm font-bold text-foreground">{((metrics?.precisao ?? 0) * 100).toFixed(2)}%</span>
                 </div>
-                <Progress value={metrics?.especificidade ?? 0} indicatorClassName="bg-accent" />
+                <Progress value={metrics?.precisao ?? 0} indicatorClassName="bg-accent" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">F1 Score</span>
+                  <span className="text-sm font-bold text-foreground">{((metrics?.f1_score ?? 0) * 100).toFixed(2)}%</span>
+                </div>
+                <Progress value={metrics?.f1_score ?? 0} indicatorClassName="bg-primary" />
               </div>
             </CardContent>
           </Card>

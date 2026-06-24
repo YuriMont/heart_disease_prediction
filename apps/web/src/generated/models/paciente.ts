@@ -25,7 +25,7 @@ export interface Paciente {
    * @maximum 4
    */
   cp: number;
-  /** Pressão arterial em repouso (mm Hg) */
+  /** Pressao arterial em repouso (mm Hg) */
   trestbps: number;
   /** Colesterol (mg/dl) */
   chol: number;
@@ -41,28 +41,28 @@ export interface Paciente {
    * @maximum 2
    */
   restecg: number;
-  /** Frequência cardíaca máxima atingida */
+  /** Frequencia cardiaca maxima atingida */
   thalach: number;
   /**
-   * Angina induzida por exercício (1 = sim)
+   * Angina induzida por exercicio (1 = sim)
    * @minimum 0
    * @maximum 1
    */
   exang: number;
-  /** Depressão do segmento ST no exercício */
+  /** Depressao do segmento ST no exercicio */
   oldpeak: number;
   /**
-   * Inclinação do segmento ST (1 a 3)
+   * Inclinacao do segmento ST (1 a 3)
    * @minimum 1
    * @maximum 3
    */
   slope: number;
   /**
-   * Nº de vasos principais coloridos (0 a 3)
+   * No de vasos principais coloridos (0 a 3)
    * @minimum 0
    * @maximum 3
    */
   ca: number;
-  /** Talassemia: 3 = normal, 6 = fixo, 7 = reversível */
+  /** Talassemia: 3 = normal, 6 = fixo, 7 = reversivel */
   thal: number;
 }

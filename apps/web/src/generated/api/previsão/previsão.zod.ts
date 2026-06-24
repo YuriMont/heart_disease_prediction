@@ -57,7 +57,7 @@ export const PreverPreverPostBody = zod.object({
     .min(1)
     .max(preverPreverPostBodyCpMax)
     .describe("Tipo de dor no peito (1 a 4)"),
-  trestbps: zod.number().describe("Pressão arterial em repouso (mm Hg)"),
+  trestbps: zod.number().describe("Pressao arterial em repouso (mm Hg)"),
   chol: zod.number().describe("Colesterol (mg\/dl)"),
   fbs: zod
     .number()
@@ -69,26 +69,26 @@ export const PreverPreverPostBody = zod.object({
     .min(preverPreverPostBodyRestecgMin)
     .max(preverPreverPostBodyRestecgMax)
     .describe("Eletrocardiograma em repouso (0 a 2)"),
-  thalach: zod.number().describe("Frequência cardíaca máxima atingida"),
+  thalach: zod.number().describe("Frequencia cardiaca maxima atingida"),
   exang: zod
     .number()
     .min(preverPreverPostBodyExangMin)
     .max(preverPreverPostBodyExangMax)
-    .describe("Angina induzida por exercício (1 = sim)"),
-  oldpeak: zod.number().describe("Depressão do segmento ST no exercício"),
+    .describe("Angina induzida por exercicio (1 = sim)"),
+  oldpeak: zod.number().describe("Depressao do segmento ST no exercicio"),
   slope: zod
     .number()
     .min(1)
     .max(preverPreverPostBodySlopeMax)
-    .describe("Inclinação do segmento ST (1 a 3)"),
+    .describe("Inclinacao do segmento ST (1 a 3)"),
   ca: zod
     .number()
     .min(preverPreverPostBodyCaMin)
     .max(preverPreverPostBodyCaMax)
-    .describe("Nº de vasos principais coloridos (0 a 3)"),
+    .describe("No de vasos principais coloridos (0 a 3)"),
   thal: zod
     .number()
-    .describe("Talassemia: 3 = normal, 6 = fixo, 7 = reversível"),
+    .describe("Talassemia: 3 = normal, 6 = fixo, 7 = reversivel"),
 });
 
 export const PreverPreverPostResponse = zod.unknown();

@@ -25,13 +25,15 @@ export const ListarModelosModelosGetResponse = zod.array(
  * @summary Obter Metricas
  */
 export const ObterMetricasModelosNomeModeloMetricasGetParams = zod.object({
-  nome_modelo: zod.string(),
+  nome_modelo: zod.enum(["knn", "svm", "random_forest", "ensemble"]),
 });
 
 export const ObterMetricasModelosNomeModeloMetricasGetResponse = zod.object({
   nome: zod.string(),
   acuracia: zod.number(),
+  precisao: zod.number(),
+  recall: zod.number(),
+  f1_score: zod.number(),
   auc_roc: zod.number(),
-  sensibilidade: zod.number(),
   atualizacao: zod.string(),
 });

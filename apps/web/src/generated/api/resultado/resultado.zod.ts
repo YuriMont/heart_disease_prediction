@@ -8,7 +8,7 @@
 import * as zod from "zod";
 
 /**
- * Fatores contribuintes para a predição.
+ * Fatores contribuintes para a predição (derivados do modelo RF treinado).
  * @summary Obter Fatores
  */
 export const ObterFatoresAvaliacoesAvaliacaoIdFatoresGetParams = zod.object({
@@ -26,7 +26,7 @@ export const ObterFatoresAvaliacoesAvaliacaoIdFatoresGetResponse = zod.array(
 );
 
 /**
- * Importância global das variáveis no modelo.
+ * Importância global das variáveis no modelo RF treinado.
  * @summary Obter Importancia
  */
 export const ObterImportanciaAvaliacoesAvaliacaoIdImportanciaGetParams =

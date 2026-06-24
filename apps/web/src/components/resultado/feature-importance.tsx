@@ -10,6 +10,7 @@ const COLORS = ["#1E63E9", "#0EA5C4", "#16A45F", "#E8930C", "#DC3848", "#7C3AED"
 
 export function FeatureImportance({ features }: FeatureImportanceProps) {
   const sorted = [...features].sort((a, b) => b.peso - a.peso);
+  const chartHeight = sorted.length * 28;
 
   return (
     <Card className="flex flex-col gap-4 p-6">
@@ -17,7 +18,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
         <CardTitle>Importância das Variáveis</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="h-[250px]">
+        <div style={{ height: chartHeight }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={sorted}
@@ -28,7 +29,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
               <YAxis
                 type="category"
                 dataKey="variavel"
-                width={120}
+                width={150}
                 tick={{ fontSize: 12, fill: "#5A6B82" }}
               />
               <Bar dataKey="peso" radius={[0, 6, 6, 0]} barSize={16}>

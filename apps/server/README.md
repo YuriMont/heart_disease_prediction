@@ -110,7 +110,7 @@ Isso:
 ### 3. Iniciar a API
 
 ```bash
-uv run uvicorn api:app:app --reload
+uv run python run.py
 ```
 
 A API estará disponível em: **http://127.0.0.1:8000**
@@ -238,8 +238,7 @@ SQLite local: `src/database/cardiopredict.db`
 ## 🏋️ Re-treinar os modelos
 
 ```bash
-cd apps/server
-PYTHONPATH=src uv run python -m services.train_models
+uv run python -m services.train_models
 ```
 
 O treino:
