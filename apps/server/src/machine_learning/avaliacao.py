@@ -1,15 +1,3 @@
-"""Funções para avaliar se o modelo está acertando.
-
-As principais métricas são:
-    - acuracia : porcentagem geral de acertos
-    - recall   : dos que REALMENTE têm doença, quantos o modelo achou
-    - precisao : dos que o modelo disse ter doença, quantos realmente têm
-    - f1       : equilíbrio entre recall e precisão
-
-As funções de gráfico (matriz de confusão e curva ROC) são úteis dentro dos
-notebooks, onde dá para ver as imagens.
-"""
-
 import matplotlib.pyplot as plt
 from sklearn.metrics import (
     ConfusionMatrixDisplay,

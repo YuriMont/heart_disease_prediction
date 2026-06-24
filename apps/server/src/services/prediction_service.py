@@ -1,23 +1,15 @@
-"""Lógica de previsão (a "regra de negócio" da API).
-
-Em projetos Express, esta parte ficaria nos "controllers/services". Aqui
-separamos a lógica das rotas: este arquivo carrega os modelos treinados e sabe
-como transformar os dados de um paciente em uma previsão. As rotas (pasta
-'rotas/') apenas chamam estas funções.
-"""
-
 import os
 
 import joblib
 import pandas as pd
 
-from ml.dados import COLUNAS_CATEGORICAS
-from esquemas import Paciente
+from machine_learning.dados import COLUNAS_CATEGORICAS
+from schemas.paciente import Paciente
 
 # ---------------------------------------------------------------------------
 # Carregar, uma única vez, os arquivos treinados (.pkl) da pasta 'artefatos/'.
 # ---------------------------------------------------------------------------
-PASTA_ARTEFATOS = os.path.join(os.path.dirname(__file__), "artefatos")
+PASTA_ARTEFATOS = os.path.join(os.path.dirname(__file__), "..", "artifacts")
 
 # Os nomes (e a ORDEM) das 20 colunas que os modelos esperam receber.
 NOMES_FEATURES = joblib.load(os.path.join(PASTA_ARTEFATOS, "feature_names.pkl"))

@@ -1,20 +1,3 @@
-"""Carregar e preparar os dados da base UCI Heart Disease.
-
-Este arquivo cuida de toda a parte de "limpar e organizar" os dados antes
-de treinar os modelos. Cada passo fica em uma função separada, com nome em
-português, para ficar fácil de ler de cima para baixo.
-
-A ordem dos passos (executada pela função preparar_dados no final) é:
-    1. baixar os dados
-    2. preencher valores faltantes
-    3. limitar valores extremos (outliers)
-    4. transformar o alvo em 0 ou 1
-    5. separar em treino e teste
-    6. transformar categorias em colunas 0/1 (one-hot)
-    7. padronizar os números (scaler)
-    8. equilibrar as classes (SMOTE)
-"""
-
 import numpy as np
 import pandas as pd
 from imblearn.over_sampling import SMOTE

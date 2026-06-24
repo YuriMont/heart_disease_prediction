@@ -1,17 +1,13 @@
-"""Rotas de pacientes e avaliações."""
-
+from schemas.avaliacao import AvaliacaoCreate, AvaliacaoResponse
+from schemas.paciente import PacienteCreate, PacienteResponse, Paciente as PacienteInput
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
-from esquemas import (
-    AvaliacaoCreate,
-    AvaliacaoResponse,
-    PacienteCreate,
-    PacienteResponse,
-)
-from models import Avaliacao, Paciente
-import servico as servico
+from database.database import get_db
+
+from models.avaliacao import Avaliacao
+from models.paciente import Paciente
+from services import prediction_service as servico
 
 router = APIRouter(tags=["pacientes"])
 
@@ -61,8 +57,6 @@ def criar_avaliacao(dados: AvaliacaoCreate, db: Session = Depends(get_db)):
             status_code=400,
             detail=f"Modelo '{dados.modelo}' não existe. Opções: {list(servico.MODELOS.keys())}",
         )
-
-    from esquemas import Paciente as PacienteInput
 
     paciente_input = PacienteInput(
         age=dados.age, sex=dados.sex, cp=dados.cp,

@@ -1,9 +1,7 @@
-"""Rotas de modelos de IA: listar, métricas, trocar ativo."""
-
 from fastapi import APIRouter, HTTPException
 
-from esquemas import ModeloInfo, ModeloMetricas
-import servico as servico
+from schemas.dashboard import ModeloInfo, ModeloMetricas
+from services import prediction_service as servico
 
 router = APIRouter(prefix="/modelos", tags=["modelos"])
 

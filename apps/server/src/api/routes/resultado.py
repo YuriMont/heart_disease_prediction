@@ -1,11 +1,9 @@
-"""Rotas de resultado detalhado: fatores contribuintes e importância."""
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
-from esquemas import ContributingFactor, FeatureImportance
-from models import Avaliacao
+from database.database import get_db
+from schemas.resultado import ContributingFactor, FeatureImportance
+from models.avaliacao import Avaliacao
 
 router = APIRouter(tags=["resultado"])
 

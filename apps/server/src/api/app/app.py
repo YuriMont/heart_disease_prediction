@@ -1,24 +1,9 @@
-"""Ponto de entrada da API (como o 'js' / 'index.js' de um projeto Express).
-
-Aqui a gente só faz duas coisas:
-    1. cria a aplicação (app)
-    2. conecta os arquivos de rotas (pasta 'rotas/') com app.include_router(...)
-
-A lógica de previsão fica em servico.py e as rotas ficam em rotas/.
-
-COMO RODAR (no terminal, dentro da pasta 'server'):
-
-    uv run uvicorn api:app --reload
-
-Depois abra no navegador:  http://127.0.0.1:8000/scalar
-"""
-
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from database import criar_tabelas
-from rotas import dashboard, modelos, paginas, pacientes, previsao, relatorios, resultado
+from database.database import criar_tabelas
+from api.routes import dashboard, modelos, paginas, pacientes, previsao, relatorios, resultado
 
 from fastapi.middleware.cors import CORSMiddleware
 

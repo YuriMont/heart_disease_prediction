@@ -1,12 +1,10 @@
-"""Rotas do Dashboard: estatísticas, distribuição de risco, fatores."""
-
 from fastapi import APIRouter, Depends
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from database import get_db
-from esquemas import DashboardStats, FatorRisco, RiskDistribution
-from models import Avaliacao
+from database.database import get_db
+from schemas.dashboard import DashboardStats, FatorRisco, RiskDistribution
+from models.avaliacao import Avaliacao
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 

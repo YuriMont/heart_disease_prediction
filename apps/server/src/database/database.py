@@ -1,8 +1,3 @@
-"""Conexão com o banco de dados SQLite via SQLAlchemy.
-
-Cria a engine, a session e a função get_db para dependência do FastAPI.
-"""
-
 import os
 
 from sqlalchemy import create_engine

@@ -1,13 +1,7 @@
-"""Rotas relacionadas à previsão de doença cardíaca.
-
-Equivale a um arquivo 'routes/previsao.js' no Express, com um Router.
-Aqui criamos um APIRouter e penduramos nele as rotas /modelos e /prever.
-"""
-
 from fastapi import APIRouter, HTTPException
 
-import servico as servico
-from esquemas import Paciente
+from services import prediction_service as servico
+from schemas.paciente import Paciente
 
 # O APIRouter é o "Router" do FastAPI. As rotas definidas aqui só passam a
 # existir depois que o api.py fizer app.include_router(router).

@@ -1,15 +1,3 @@
-"""Definição dos modelos de machine learning.
-
-Em vez de classes complicadas, usamos uma LISTA de dicionários (MODELOS).
-Cada dicionário descreve um modelo com 3 informações:
-
-    "nome"       -> nome do modelo (vira o nome do arquivo .pkl)
-    "estimador"  -> o algoritmo do scikit-learn que será treinado
-    "parametros" -> valores que o GridSearch vai testar para achar o melhor
-
-Para adicionar um novo modelo, basta acrescentar mais um dicionário na lista.
-"""
-
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier

@@ -1,12 +1,12 @@
-"""Rotas de relatórios."""
-
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from database import get_db
-from esquemas import AvaliacaoResponse, RelatorioResponse
-from models import Avaliacao, Relatorio
+from database.database import get_db
+from schemas.avaliacao import AvaliacaoResponse
+from schemas.relatorio import RelatorioResponse
+from models.avaliacao import Avaliacao
+from models.relatorio import Relatorio
 
 router = APIRouter(prefix="/relatorios", tags=["relatorios"])
 
