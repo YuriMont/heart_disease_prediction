@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BrainCircuit, Search, Check, Badge, Table } from "lucide-react";
+import { BrainCircuit, Search, Check } from "lucide-react";
 import { useListarModelosModelosGet, useObterMetricasModelosNomeModeloMetricasGet } from "../../generated/api/modelos/modelos";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
-import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table";
+import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "../../components/ui/table";
 import { Progress } from "@radix-ui/react-progress";
 import type { NomeModelo } from "../../generated/models";
+import { ModelInfo } from "../../components/dashboard/model-info";
+import { Badge } from "../../components/ui/badge";
 
 export const Route = createFileRoute("/modelos/")({
   component: ModelosPage,
@@ -17,6 +19,8 @@ function ModelosPage() {
   const { data: metrics } = useObterMetricasModelosNomeModeloMetricasGet(
     activeModel?.nome as NomeModelo
   );
+
+  console.log(models)
 
   return (
     <div className="flex flex-col gap-6">
@@ -48,44 +52,7 @@ function ModelosPage() {
         {/* Main Column */}
         <div className="flex flex-col gap-6">
           {/* Active Model Card */}
-          <div className="rounded-[18px]  bg-linear-to-l from-(--sidebar-bg) to-(--primary-dark) p-6">
-            <div className="flex items-start justify-between">
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <BrainCircuit className="h-6 w-6 text-white" />
-                  <h3 className="font-heading text-lg font-bold text-white">
-                    {activeModel?.nome ?? "Ensemble"}
-                  </h3>
-                  <Badge variant="success" className="text-[10px]">ATIVO</Badge>
-                </div>
-                <p className="text-sm text-[#9FB6D4]">
-                  {activeModel?.descricao ?? "-"}
-                </p>
-              </div>
-              <div className="flex gap-6">
-                <div className="flex flex-col items-end">
-                  <span className="text-[22px] font-bold text-white">{((metrics?.acuracia ?? 0)*100).toFixed(2)}%</span>
-                  <span className="text-[11px] text-[#9FB6D4]">Accuracy</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-[22px] font-bold text-white">{((metrics?.precisao ?? 0)*100).toFixed(2)}</span>
-                  <span className="text-[11px] text-[#9FB6D4]">Precisão</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-[22px] font-bold text-white">{((metrics?.recall ?? 0) * 100).toFixed(2)}%</span>
-                  <span className="text-[11px] text-[#9FB6D4]">Recall</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-[22px] font-bold text-white">{((metrics?.f1_score ?? 0) * 100).toFixed(2)}%</span>
-                  <span className="text-[11px] text-[#9FB6D4]">F1 Score</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-[13px] font-semibold text-white">{metrics?.atualizacao ?? "00/00/0000"}</span>
-                  <span className="text-[11px] text-[#9FB6D4]">Atualizado</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ModelInfo />
 
           {/* Models Table */}
           <Card className="p-6">
@@ -100,9 +67,7 @@ function ModelosPage() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Modelo</TableHead>
-                      <TableHead>Tipo</TableHead>
-                      <TableHead>Acurácia</TableHead>
-                      <TableHead>AUC-ROC</TableHead>
+                      <TableHead>Descrição</TableHead>
                       <TableHead>Status</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -115,10 +80,6 @@ function ModelosPage() {
                           <Badge variant={model.ativo ? "default" : "secondary"}>
                             {model.ativo ? "Ativo" : "Disponível"}
                           </Badge>
-                        </TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>
-                          {model.ativo && <Check className="h-4 w-4 text-risk-low" />}
                         </TableCell>
                       </TableRow>
                     ))}

@@ -16,14 +16,14 @@ export function ModelInfo() {
           <div className="flex items-center gap-3">
             <BrainCircuit className="h-6 w-6 text-white" />
             <h3 className="font-heading text-lg font-bold text-white">
-              Modelo de IA — {activeModel?.nome ?? "Ensemble"}
+              Modelo de IA — {activeModel?.nome}
             </h3>
             <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs font-semibold text-white">
-              Ensemble
+              {activeModel?.nome}
             </span>
           </div>
           <p className="text-sm text-[#9FB6D4]">
-            {activeModel?.descricao ?? "Combinação ponderada de KNN + SVM + Random Forest para máxima acurácia"}
+            {activeModel?.descricao ?? "-"}
           </p>
         </div>
         <div className="flex gap-6">
