@@ -27,8 +27,8 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 /**
  * Recebe um paciente e devolve a previsão de doença cardíaca.
  *
- * Para escolher outro modelo, use a query string. Exemplo:
- *     POST /prever?modelo=random_forest
+ * Para escolher outro modelo, passe o ID do modelo como query string. Exemplo:
+ *     POST /prever?modelo=<uuid-do-modelo>
  * @summary Prever
  */
 export const preverPreverPost = (

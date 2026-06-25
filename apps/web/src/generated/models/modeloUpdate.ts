@@ -6,11 +6,8 @@
  * OpenAPI spec version: 2.0.0
  */
 
-export type NomeModelo = (typeof NomeModelo)[keyof typeof NomeModelo];
-
-export const NomeModelo = {
-  knn: "knn",
-  svm: "svm",
-  random_forest: "random_forest",
-  ensemble: "ensemble",
-} as const;
+export interface ModeloUpdate {
+  nome?: string | null;
+  descricao?: string | null;
+  ativo?: boolean | null;
+}

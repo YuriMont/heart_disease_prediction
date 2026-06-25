@@ -10,14 +10,12 @@ import * as zod from "zod";
 /**
  * Recebe um paciente e devolve a previsão de doença cardíaca.
  *
- * Para escolher outro modelo, use a query string. Exemplo:
- *     POST /prever?modelo=random_forest
+ * Para escolher outro modelo, passe o ID do modelo como query string. Exemplo:
+ *     POST /prever?modelo=<uuid-do-modelo>
  * @summary Prever
  */
-export const preverPreverPostQueryModeloDefault = `ensemble`;
-
 export const PreverPreverPostQueryParams = zod.object({
-  modelo: zod.string().default(preverPreverPostQueryModeloDefault),
+  modelo: zod.union([zod.string(), zod.null()]).optional(),
 });
 
 export const preverPreverPostBodyAgeMax = 120;

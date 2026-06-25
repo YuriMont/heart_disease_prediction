@@ -5,15 +5,18 @@
  * Recebe os dados de um paciente e prevê o risco de doença cardíaca.
  * OpenAPI spec version: 2.0.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
@@ -22,11 +25,11 @@ import type {
   HTTPValidationError,
   ModeloInfo,
   ModeloMetricas,
-  NomeModelo,
+  ModeloUpdate,
 } from "../../models";
 
 import { api } from "../../../lib/api";
-import type { ErrorType } from "../../../lib/api";
+import type { ErrorType, BodyType } from "../../../lib/api";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -49,7 +52,7 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * Lista todos os modelos disponíveis.
+ * Lista apenas os modelos ativos (ativo=True).
  * @summary Listar Modelos
  */
 export const listarModelosModelosGet = (
@@ -203,32 +206,32 @@ export function useListarModelosModelosGet<
  * Métricas de desempenho de um modelo.
  * @summary Obter Metricas
  */
-export const obterMetricasModelosNomeModeloMetricasGet = (
-  nomeModelo: NomeModelo,
+export const obterMetricasModelosModeloIdMetricasGet = (
+  modeloId: string,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
   return api<ModeloMetricas>(
-    { url: `/modelos/${nomeModelo}/metricas`, method: "GET", signal },
+    { url: `/modelos/${modeloId}/metricas`, method: "GET", signal },
     options,
   );
 };
 
-export const getObterMetricasModelosNomeModeloMetricasGetQueryKey = (
-  nomeModelo: NomeModelo,
+export const getObterMetricasModelosModeloIdMetricasGetQueryKey = (
+  modeloId: string,
 ) => {
-  return [`/modelos/${nomeModelo}/metricas`] as const;
+  return [`/modelos/${modeloId}/metricas`] as const;
 };
 
-export const getObterMetricasModelosNomeModeloMetricasGetQueryOptions = <
-  TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+export const getObterMetricasModelosModeloIdMetricasGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: NomeModelo,
+  modeloId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+        Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
         TError,
         TData
       >
@@ -240,53 +243,49 @@ export const getObterMetricasModelosNomeModeloMetricasGetQueryOptions = <
 
   const queryKey =
     queryOptions?.queryKey ??
-    getObterMetricasModelosNomeModeloMetricasGetQueryKey(nomeModelo);
+    getObterMetricasModelosModeloIdMetricasGetQueryKey(modeloId);
 
   const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>
+    Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>
   > = ({ signal }) =>
-    obterMetricasModelosNomeModeloMetricasGet(
-      nomeModelo,
-      requestOptions,
-      signal,
-    );
+    obterMetricasModelosModeloIdMetricasGet(modeloId, requestOptions, signal);
 
   return {
     queryKey,
     queryFn,
-    enabled: nomeModelo !== null && nomeModelo !== undefined,
+    enabled: modeloId !== null && modeloId !== undefined,
     ...queryOptions,
   } as UseQueryOptions<
-    Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+    Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type ObterMetricasModelosNomeModeloMetricasGetQueryResult = NonNullable<
-  Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>
+export type ObterMetricasModelosModeloIdMetricasGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>
 >;
-export type ObterMetricasModelosNomeModeloMetricasGetQueryError =
+export type ObterMetricasModelosModeloIdMetricasGetQueryError =
   ErrorType<HTTPValidationError>;
 
-export function useObterMetricasModelosNomeModeloMetricasGet<
-  TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+export function useObterMetricasModelosModeloIdMetricasGet<
+  TData = Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: NomeModelo,
+  modeloId: string,
   options: {
     query: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+        Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
         TError,
         TData
       >
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+          Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
           TError,
-          Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>
+          Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>
         >,
         "initialData"
       >;
@@ -296,24 +295,24 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useObterMetricasModelosNomeModeloMetricasGet<
-  TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+export function useObterMetricasModelosModeloIdMetricasGet<
+  TData = Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: NomeModelo,
+  modeloId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+        Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
         TError,
         TData
       >
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+          Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
           TError,
-          Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>
+          Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>
         >,
         "initialData"
       >;
@@ -323,15 +322,15 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useObterMetricasModelosNomeModeloMetricasGet<
-  TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+export function useObterMetricasModelosModeloIdMetricasGet<
+  TData = Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: NomeModelo,
+  modeloId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+        Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
         TError,
         TData
       >
@@ -346,15 +345,15 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
  * @summary Obter Metricas
  */
 
-export function useObterMetricasModelosNomeModeloMetricasGet<
-  TData = Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+export function useObterMetricasModelosModeloIdMetricasGet<
+  TData = Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  nomeModelo: NomeModelo,
+  modeloId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof obterMetricasModelosNomeModeloMetricasGet>>,
+        Awaited<ReturnType<typeof obterMetricasModelosModeloIdMetricasGet>>,
         TError,
         TData
       >
@@ -365,8 +364,8 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getObterMetricasModelosNomeModeloMetricasGetQueryOptions(
-    nomeModelo,
+  const queryOptions = getObterMetricasModelosModeloIdMetricasGetQueryOptions(
+    modeloId,
     options,
   );
 
@@ -377,3 +376,100 @@ export function useObterMetricasModelosNomeModeloMetricasGet<
 
   return withQueryKey(query, queryOptions.queryKey);
 }
+
+/**
+ * Edita o nome, a descrição e/ou a flag ativo de um modelo.
+ * @summary Atualizar Modelo
+ */
+export const atualizarModeloModelosModeloIdPatch = (
+  modeloId: string,
+  modeloUpdate: BodyType<ModeloUpdate>,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<ModeloInfo>(
+    {
+      url: `/modelos/${modeloId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: modeloUpdate,
+      signal,
+    },
+    options,
+  );
+};
+
+export const getAtualizarModeloModelosModeloIdPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof atualizarModeloModelosModeloIdPatch>>,
+    TError,
+    { modeloId: string; data: BodyType<ModeloUpdate> },
+    TContext
+  >;
+  request?: SecondParameter<typeof api>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof atualizarModeloModelosModeloIdPatch>>,
+  TError,
+  { modeloId: string; data: BodyType<ModeloUpdate> },
+  TContext
+> => {
+  const mutationKey = ["atualizarModeloModelosModeloIdPatch"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof atualizarModeloModelosModeloIdPatch>>,
+    { modeloId: string; data: BodyType<ModeloUpdate> }
+  > = (props) => {
+    const { modeloId, data } = props ?? {};
+
+    return atualizarModeloModelosModeloIdPatch(modeloId, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AtualizarModeloModelosModeloIdPatchMutationResult = NonNullable<
+  Awaited<ReturnType<typeof atualizarModeloModelosModeloIdPatch>>
+>;
+export type AtualizarModeloModelosModeloIdPatchMutationBody =
+  BodyType<ModeloUpdate>;
+export type AtualizarModeloModelosModeloIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+
+/**
+ * @summary Atualizar Modelo
+ */
+export const useAtualizarModeloModelosModeloIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof atualizarModeloModelosModeloIdPatch>>,
+      TError,
+      { modeloId: string; data: BodyType<ModeloUpdate> },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof atualizarModeloModelosModeloIdPatch>>,
+  TError,
+  { modeloId: string; data: BodyType<ModeloUpdate> },
+  TContext
+> => {
+  return useMutation(
+    getAtualizarModeloModelosModeloIdPatchMutationOptions(options),
+    queryClient,
+  );
+};

@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from uuid import UUID
+
 from database.connection import get_db
 from schemas.resultado import ContributingFactor, FeatureImportance
 from database.models.avaliacao import Avaliacao
@@ -10,7 +12,7 @@ router = APIRouter(tags=["resultado"])
 
 
 @router.get("/avaliacoes/{avaliacao_id}/fatores", response_model=list[ContributingFactor])
-def obter_fatores(avaliacao_id: int, db: Session = Depends(get_db)):
+def obter_fatores(avaliacao_id: UUID, db: Session = Depends(get_db)):
     """Fatores contribuintes para a predição (derivados do modelo RF treinado)."""
     avaliacao = db.query(Avaliacao).get(avaliacao_id)
     if not avaliacao:
@@ -20,7 +22,7 @@ def obter_fatores(avaliacao_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/avaliacoes/{avaliacao_id}/importancia", response_model=list[FeatureImportance])
-def obter_importancia(avaliacao_id: int, db: Session = Depends(get_db)):
+def obter_importancia(avaliacao_id: UUID, db: Session = Depends(get_db)):
     """Importância global das variáveis no modelo RF treinado."""
     avaliacao = db.query(Avaliacao).get(avaliacao_id)
     if not avaliacao:

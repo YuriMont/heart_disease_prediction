@@ -7,8 +7,8 @@
  */
 
 export interface AvaliacaoResponse {
-  id: number;
-  paciente_id: number;
+  id: string;
+  paciente_id: string;
   age: number;
   sex: number;
   cp: number;

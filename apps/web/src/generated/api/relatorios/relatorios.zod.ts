@@ -12,8 +12,8 @@ import * as zod from "zod";
  * @summary Listar Relatorios
  */
 export const ListarRelatoriosRelatoriosGetResponseItem = zod.object({
-  id: zod.number(),
-  avaliacao_id: zod.number(),
+  id: zod.uuid(),
+  avaliacao_id: zod.uuid(),
   titulo: zod.string(),
   conteudo: zod.string(),
   criado_em: zod.iso.datetime({ offset: true }),
@@ -27,12 +27,12 @@ export const ListarRelatoriosRelatoriosGetResponse = zod.array(
  * @summary Obter Relatorio
  */
 export const ObterRelatorioRelatoriosRelatorioIdGetParams = zod.object({
-  relatorio_id: zod.number(),
+  relatorio_id: zod.uuid(),
 });
 
 export const ObterRelatorioRelatoriosRelatorioIdGetResponse = zod.object({
-  id: zod.number(),
-  avaliacao_id: zod.number(),
+  id: zod.uuid(),
+  avaliacao_id: zod.uuid(),
   titulo: zod.string(),
   conteudo: zod.string(),
   criado_em: zod.iso.datetime({ offset: true }),
@@ -43,12 +43,12 @@ export const ObterRelatorioRelatoriosRelatorioIdGetResponse = zod.object({
  * @summary Exportar Relatorio
  */
 export const ExportarRelatorioRelatoriosExportarPostBody = zod.object({
-  avaliacao_id: zod.number(),
+  avaliacao_id: zod.uuid(),
 });
 
 export const ExportarRelatorioRelatoriosExportarPostResponse = zod.object({
-  id: zod.number(),
-  avaliacao_id: zod.number(),
+  id: zod.uuid(),
+  avaliacao_id: zod.uuid(),
   titulo: zod.string(),
   conteudo: zod.string(),
   criado_em: zod.iso.datetime({ offset: true }),

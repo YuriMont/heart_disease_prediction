@@ -209,7 +209,7 @@ export function useListarRelatoriosRelatoriosGet<
  * @summary Obter Relatorio
  */
 export const obterRelatorioRelatoriosRelatorioIdGet = (
-  relatorioId: number,
+  relatorioId: string,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
@@ -220,7 +220,7 @@ export const obterRelatorioRelatoriosRelatorioIdGet = (
 };
 
 export const getObterRelatorioRelatoriosRelatorioIdGetQueryKey = (
-  relatorioId: number,
+  relatorioId: string,
 ) => {
   return [`/relatorios/${relatorioId}`] as const;
 };
@@ -229,7 +229,7 @@ export const getObterRelatorioRelatoriosRelatorioIdGetQueryOptions = <
   TData = Awaited<ReturnType<typeof obterRelatorioRelatoriosRelatorioIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  relatorioId: number,
+  relatorioId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -274,7 +274,7 @@ export function useObterRelatorioRelatoriosRelatorioIdGet<
   TData = Awaited<ReturnType<typeof obterRelatorioRelatoriosRelatorioIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  relatorioId: number,
+  relatorioId: string,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -301,7 +301,7 @@ export function useObterRelatorioRelatoriosRelatorioIdGet<
   TData = Awaited<ReturnType<typeof obterRelatorioRelatoriosRelatorioIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  relatorioId: number,
+  relatorioId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -328,7 +328,7 @@ export function useObterRelatorioRelatoriosRelatorioIdGet<
   TData = Awaited<ReturnType<typeof obterRelatorioRelatoriosRelatorioIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  relatorioId: number,
+  relatorioId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -351,7 +351,7 @@ export function useObterRelatorioRelatoriosRelatorioIdGet<
   TData = Awaited<ReturnType<typeof obterRelatorioRelatoriosRelatorioIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  relatorioId: number,
+  relatorioId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<

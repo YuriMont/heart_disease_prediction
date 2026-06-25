@@ -15,7 +15,7 @@ export * from "./featureImportance";
 export * from "./hTTPValidationError";
 export * from "./modeloInfo";
 export * from "./modeloMetricas";
-export * from "./nomeModelo";
+export * from "./modeloUpdate";
 export * from "./paciente";
 export * from "./pacienteCreate";
 export * from "./pacienteResponse";

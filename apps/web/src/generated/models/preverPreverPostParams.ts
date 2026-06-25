@@ -7,5 +7,5 @@
  */
 
 export type PreverPreverPostParams = {
-  modelo?: string;
+  modelo?: string | null;
 };

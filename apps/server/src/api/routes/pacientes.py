@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from schemas.avaliacao import AvaliacaoCreate, AvaliacaoResponse
 from schemas.paciente import PacienteCreate, PacienteResponse, Paciente as PacienteInput
 from fastapi import APIRouter, Depends, HTTPException
@@ -34,7 +36,7 @@ def listar_pacientes(db: Session = Depends(get_db)):
 
 
 @router.get("/pacientes/{paciente_id}", response_model=PacienteResponse)
-def obter_paciente(paciente_id: int, db: Session = Depends(get_db)):
+def obter_paciente(paciente_id: UUID, db: Session = Depends(get_db)):
     """Detalhes de um paciente."""
     paciente = db.query(Paciente).get(paciente_id)
     if not paciente:
@@ -53,17 +55,17 @@ def criar_avaliacao(dados: AvaliacaoCreate, db: Session = Depends(get_db)):
     if not paciente:
         raise HTTPException(status_code=404, detail="Paciente não encontrado.")
 
-    if dados.modelo not in servico.MODELOS:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Modelo '{dados.modelo}' não existe. Opções: {list(servico.MODELOS.keys())}",
-        )
-
     metrica_modelo = db.query(Modelo).filter(Modelo.id == dados.modelo).first()
     if not metrica_modelo or not metrica_modelo.ativo:
         raise HTTPException(
             status_code=400,
-            detail=f"Modelo '{dados.modelo}' não está ativo. Ative-o antes de usar.",
+            detail=f"Modelo '{dados.modelo}' não está ativo ou não existe. Ative-o antes de usar.",
+        )
+
+    if metrica_modelo.nome not in servico.MODELOS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Arquivo do modelo '{metrica_modelo.nome}' não encontrado. Opções: {list(servico.MODELOS.keys())}",
         )
 
     paciente_input = PacienteInput(
@@ -73,7 +75,7 @@ def criar_avaliacao(dados: AvaliacaoCreate, db: Session = Depends(get_db)):
         oldpeak=dados.oldpeak, slope=dados.slope, ca=dados.ca, thal=dados.thal,
     )
 
-    resultado = servico.prever(paciente_input, dados.modelo)
+    resultado = servico.prever(paciente_input, dados.modelo, db)
 
     avaliacao = Avaliacao(
         paciente_id=dados.paciente_id,
@@ -99,7 +101,7 @@ def listar_avaliacoes(db: Session = Depends(get_db)):
 
 
 @router.get("/avaliacoes/{avaliacao_id}", response_model=AvaliacaoResponse)
-def obter_avaliacao(avaliacao_id: int, db: Session = Depends(get_db)):
+def obter_avaliacao(avaliacao_id: UUID, db: Session = Depends(get_db)):
     """Detalhes de uma avaliação."""
     avaliacao = db.query(Avaliacao).get(avaliacao_id)
     if not avaliacao:

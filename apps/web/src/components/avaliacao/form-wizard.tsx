@@ -84,7 +84,7 @@ export function AvaliacaoForm() {
         data: {
           paciente_id: paciente.id,
           ...values,
-          modelo: selectedModel?.nome,
+          modelo: selectedModel!.id,
         },
       });
       navigate({ to: `/avaliacao/${avaliacao.id}` });
@@ -481,7 +481,7 @@ export function AvaliacaoForm() {
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={criarPaciente.isPending || criarAvaliacao.isPending || totalFields != filledFields}
+              disabled={criarPaciente.isPending || criarAvaliacao.isPending}
               className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-white shadow-[0_6px_16px_-4px_#1E63E966] transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Sparkles className="h-[18px] w-[18px]" />

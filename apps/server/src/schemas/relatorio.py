@@ -1,11 +1,12 @@
 from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel
 
 
 class RelatorioResponse(BaseModel):
-    id: int
-    avaliacao_id: int
+    id: UUID
+    avaliacao_id: UUID
     titulo: str
     conteudo: str
     criado_em: datetime

@@ -1,4 +1,5 @@
 from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel, Field
 
@@ -36,7 +37,7 @@ class PacienteCreate(BaseModel):
 
 
 class PacienteResponse(BaseModel):
-    id: int
+    id: UUID
     nome: str | None
     idade: int
     sexo: int

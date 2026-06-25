@@ -305,7 +305,7 @@ export const useCriarPacientePacientesPost = <
  * @summary Obter Paciente
  */
 export const obterPacientePacientesPacienteIdGet = (
-  pacienteId: number,
+  pacienteId: string,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
@@ -316,7 +316,7 @@ export const obterPacientePacientesPacienteIdGet = (
 };
 
 export const getObterPacientePacientesPacienteIdGetQueryKey = (
-  pacienteId: number,
+  pacienteId: string,
 ) => {
   return [`/pacientes/${pacienteId}`] as const;
 };
@@ -325,7 +325,7 @@ export const getObterPacientePacientesPacienteIdGetQueryOptions = <
   TData = Awaited<ReturnType<typeof obterPacientePacientesPacienteIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  pacienteId: number,
+  pacienteId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -370,7 +370,7 @@ export function useObterPacientePacientesPacienteIdGet<
   TData = Awaited<ReturnType<typeof obterPacientePacientesPacienteIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  pacienteId: number,
+  pacienteId: string,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -397,7 +397,7 @@ export function useObterPacientePacientesPacienteIdGet<
   TData = Awaited<ReturnType<typeof obterPacientePacientesPacienteIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  pacienteId: number,
+  pacienteId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -424,7 +424,7 @@ export function useObterPacientePacientesPacienteIdGet<
   TData = Awaited<ReturnType<typeof obterPacientePacientesPacienteIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  pacienteId: number,
+  pacienteId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -447,7 +447,7 @@ export function useObterPacientePacientesPacienteIdGet<
   TData = Awaited<ReturnType<typeof obterPacientePacientesPacienteIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  pacienteId: number,
+  pacienteId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -729,7 +729,7 @@ export const useCriarAvaliacaoAvaliacoesPost = <
  * @summary Obter Avaliacao
  */
 export const obterAvaliacaoAvaliacoesAvaliacaoIdGet = (
-  avaliacaoId: number,
+  avaliacaoId: string,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
@@ -740,7 +740,7 @@ export const obterAvaliacaoAvaliacoesAvaliacaoIdGet = (
 };
 
 export const getObterAvaliacaoAvaliacoesAvaliacaoIdGetQueryKey = (
-  avaliacaoId: number,
+  avaliacaoId: string,
 ) => {
   return [`/avaliacoes/${avaliacaoId}`] as const;
 };
@@ -749,7 +749,7 @@ export const getObterAvaliacaoAvaliacoesAvaliacaoIdGetQueryOptions = <
   TData = Awaited<ReturnType<typeof obterAvaliacaoAvaliacoesAvaliacaoIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  avaliacaoId: number,
+  avaliacaoId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -794,7 +794,7 @@ export function useObterAvaliacaoAvaliacoesAvaliacaoIdGet<
   TData = Awaited<ReturnType<typeof obterAvaliacaoAvaliacoesAvaliacaoIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  avaliacaoId: number,
+  avaliacaoId: string,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -821,7 +821,7 @@ export function useObterAvaliacaoAvaliacoesAvaliacaoIdGet<
   TData = Awaited<ReturnType<typeof obterAvaliacaoAvaliacoesAvaliacaoIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  avaliacaoId: number,
+  avaliacaoId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -848,7 +848,7 @@ export function useObterAvaliacaoAvaliacoesAvaliacaoIdGet<
   TData = Awaited<ReturnType<typeof obterAvaliacaoAvaliacoesAvaliacaoIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  avaliacaoId: number,
+  avaliacaoId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -871,7 +871,7 @@ export function useObterAvaliacaoAvaliacoesAvaliacaoIdGet<
   TData = Awaited<ReturnType<typeof obterAvaliacaoAvaliacoesAvaliacaoIdGet>>,
   TError = ErrorType<HTTPValidationError>,
 >(
-  avaliacaoId: number,
+  avaliacaoId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<

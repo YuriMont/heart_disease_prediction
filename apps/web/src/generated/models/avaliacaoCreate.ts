@@ -8,7 +8,7 @@
 
 export interface AvaliacaoCreate {
   /** ID do paciente */
-  paciente_id: number;
+  paciente_id: string;
   /**
    * @minimum 1
    * @maximum 120
@@ -62,6 +62,6 @@ export interface AvaliacaoCreate {
    * @maximum 7
    */
   thal: number;
-  /** Nome do modelo de IA */
-  modelo?: string;
+  /** ID do modelo de IA */
+  modelo: string;
 }

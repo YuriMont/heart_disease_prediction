@@ -1,10 +1,11 @@
 from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel, Field
 
 
 class AvaliacaoCreate(BaseModel):
-    paciente_id: int = Field(..., description="ID do paciente")
+    paciente_id: UUID = Field(..., description="ID do paciente")
     age: int = Field(..., ge=1, le=120)
     sex: int = Field(..., ge=0, le=1)
     cp: int = Field(..., ge=1, le=4)
@@ -18,12 +19,12 @@ class AvaliacaoCreate(BaseModel):
     slope: int = Field(..., ge=1, le=3)
     ca: float = Field(..., ge=0, le=3)
     thal: float = Field(..., ge=3, le=7)
-    modelo_id: str = Field(..., description="ID do modelo de IA")
+    modelo: str = Field(..., description="ID do modelo de IA")
 
 
 class AvaliacaoResponse(BaseModel):
-    id: int
-    paciente_id: int
+    id: UUID
+    paciente_id: UUID
     age: int
     sex: int
     cp: int

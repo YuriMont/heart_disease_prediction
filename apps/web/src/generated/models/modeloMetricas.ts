@@ -7,6 +7,7 @@
  */
 
 export interface ModeloMetricas {
+  id: string;
   nome: string;
   acuracia: number;
   precisao: number;

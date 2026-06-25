@@ -8,10 +8,11 @@
 import * as zod from "zod";
 
 /**
- * Lista todos os modelos disponíveis.
+ * Lista apenas os modelos ativos (ativo=True).
  * @summary Listar Modelos
  */
 export const ListarModelosModelosGetResponseItem = zod.object({
+  id: zod.string(),
   nome: zod.string(),
   descricao: zod.string(),
   ativo: zod.boolean(),
@@ -24,11 +25,12 @@ export const ListarModelosModelosGetResponse = zod.array(
  * Métricas de desempenho de um modelo.
  * @summary Obter Metricas
  */
-export const ObterMetricasModelosNomeModeloMetricasGetParams = zod.object({
-  nome_modelo: zod.enum(["knn", "svm", "random_forest", "ensemble"]),
+export const ObterMetricasModelosModeloIdMetricasGetParams = zod.object({
+  modelo_id: zod.string(),
 });
 
-export const ObterMetricasModelosNomeModeloMetricasGetResponse = zod.object({
+export const ObterMetricasModelosModeloIdMetricasGetResponse = zod.object({
+  id: zod.string(),
   nome: zod.string(),
   acuracia: zod.number(),
   precisao: zod.number(),
@@ -36,4 +38,25 @@ export const ObterMetricasModelosNomeModeloMetricasGetResponse = zod.object({
   f1_score: zod.number(),
   auc_roc: zod.number(),
   atualizacao: zod.string(),
+});
+
+/**
+ * Edita o nome, a descrição e/ou a flag ativo de um modelo.
+ * @summary Atualizar Modelo
+ */
+export const AtualizarModeloModelosModeloIdPatchParams = zod.object({
+  modelo_id: zod.string(),
+});
+
+export const AtualizarModeloModelosModeloIdPatchBody = zod.object({
+  nome: zod.union([zod.string(), zod.null()]).optional(),
+  descricao: zod.union([zod.string(), zod.null()]).optional(),
+  ativo: zod.union([zod.boolean(), zod.null()]).optional(),
+});
+
+export const AtualizarModeloModelosModeloIdPatchResponse = zod.object({
+  id: zod.string(),
+  nome: zod.string(),
+  descricao: zod.string(),
+  ativo: zod.boolean(),
 });

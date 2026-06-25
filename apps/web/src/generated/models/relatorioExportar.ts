@@ -7,5 +7,5 @@
  */
 
 export interface RelatorioExportar {
-  avaliacao_id: number;
+  avaliacao_id: string;
 }

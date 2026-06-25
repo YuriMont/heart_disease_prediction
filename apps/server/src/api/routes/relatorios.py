@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -36,7 +38,7 @@ def _gerar_conteudo(av: Avaliacao) -> str:
 
 
 class RelatorioExportar(BaseModel):
-    avaliacao_id: int
+    avaliacao_id: UUID
 
 
 @router.get("", response_model=list[RelatorioResponse])
@@ -46,7 +48,7 @@ def listar_relatorios(db: Session = Depends(get_db)):
 
 
 @router.get("/{relatorio_id}", response_model=RelatorioResponse)
-def obter_relatorio(relatorio_id: int, db: Session = Depends(get_db)):
+def obter_relatorio(relatorio_id: UUID, db: Session = Depends(get_db)):
     """Detalhes de um relatório."""
     relatorio = db.query(Relatorio).get(relatorio_id)
     if not relatorio:

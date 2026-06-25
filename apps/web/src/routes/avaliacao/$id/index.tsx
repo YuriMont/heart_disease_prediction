@@ -15,12 +15,11 @@ export const Route = createFileRoute("/avaliacao/$id/")({
 });
 
 function ResultadoPage() {
-  const { id } = Route.useParams();
-  const avaliacaoId = Number(id);
+  const { id: avaliacao_id } = Route.useParams();
 
-  const { data: avaliacao, isLoading } = useObterAvaliacaoAvaliacoesAvaliacaoIdGet(avaliacaoId);
-  const { data: factors = [] } = useObterFatoresAvaliacoesAvaliacaoIdFatoresGet(avaliacaoId);
-  const { data: importance = [] } = useObterImportanciaAvaliacoesAvaliacaoIdImportanciaGet(avaliacaoId);
+  const { data: avaliacao, isLoading } = useObterAvaliacaoAvaliacoesAvaliacaoIdGet(avaliacao_id);
+  const { data: factors = [] } = useObterFatoresAvaliacoesAvaliacaoIdFatoresGet(avaliacao_id);
+  const { data: importance = [] } = useObterImportanciaAvaliacoesAvaliacaoIdImportanciaGet(avaliacao_id);
   const exportarRelatorio = useExportarRelatorioRelatoriosExportarPost();
 
   if (isLoading) {
@@ -41,7 +40,7 @@ function ResultadoPage() {
 
   const handleExport = async () => {
     try {
-      await exportarRelatorio.mutateAsync({ data: { avaliacao_id: avaliacaoId } });
+      await exportarRelatorio.mutateAsync({ data: { avaliacao_id } });
       alert("Relatório exportado com sucesso!");
     } catch {
       alert("Erro ao exportar relatório");

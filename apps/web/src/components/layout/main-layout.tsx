@@ -1,7 +1,22 @@
 import { Outlet } from "@tanstack/react-router";
 import { Sidebar } from "./sidebar";
+import { useListarModelosModelosGet } from "../../generated/api/modelos/modelos";
+import { useAtom } from "jotai";
+import { modelAtom } from "../../store/model";
+import { useEffect } from "react";
 
 export function MainLayout() {
+
+  const { data: models = [] } = useListarModelosModelosGet();
+
+  const [selectedModel, setSelectedModel] = useAtom(modelAtom)
+
+  useEffect(() => {
+    if (selectedModel === null && models.length > 0) {
+      setSelectedModel(models[0]);
+    }
+  }, [selectedModel, models, setSelectedModel]);
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
       <Sidebar />

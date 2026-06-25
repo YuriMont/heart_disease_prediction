@@ -12,7 +12,7 @@ import * as zod from "zod";
  * @summary Listar Pacientes
  */
 export const ListarPacientesPacientesGetResponseItem = zod.object({
-  id: zod.number(),
+  id: zod.uuid(),
   nome: zod.union([zod.string(), zod.null()]),
   idade: zod.number(),
   sexo: zod.number(),
@@ -54,7 +54,7 @@ export const CriarPacientePacientesPostBody = zod.object({
 });
 
 export const CriarPacientePacientesPostResponse = zod.object({
-  id: zod.number(),
+  id: zod.uuid(),
   nome: zod.union([zod.string(), zod.null()]),
   idade: zod.number(),
   sexo: zod.number(),
@@ -66,11 +66,11 @@ export const CriarPacientePacientesPostResponse = zod.object({
  * @summary Obter Paciente
  */
 export const ObterPacientePacientesPacienteIdGetParams = zod.object({
-  paciente_id: zod.number(),
+  paciente_id: zod.uuid(),
 });
 
 export const ObterPacientePacientesPacienteIdGetResponse = zod.object({
-  id: zod.number(),
+  id: zod.uuid(),
   nome: zod.union([zod.string(), zod.null()]),
   idade: zod.number(),
   sexo: zod.number(),
@@ -82,8 +82,8 @@ export const ObterPacientePacientesPacienteIdGetResponse = zod.object({
  * @summary Listar Avaliacoes
  */
 export const ListarAvaliacoesAvaliacoesGetResponseItem = zod.object({
-  id: zod.number(),
-  paciente_id: zod.number(),
+  id: zod.uuid(),
+  paciente_id: zod.uuid(),
   age: zod.number(),
   sex: zod.number(),
   cp: zod.number(),
@@ -143,10 +143,8 @@ export const criarAvaliacaoAvaliacoesPostBodyCaMax = 3;
 export const criarAvaliacaoAvaliacoesPostBodyThalMin = 3;
 export const criarAvaliacaoAvaliacoesPostBodyThalMax = 7;
 
-export const criarAvaliacaoAvaliacoesPostBodyModeloDefault = `ensemble`;
-
 export const CriarAvaliacaoAvaliacoesPostBody = zod.object({
-  paciente_id: zod.number().describe("ID do paciente"),
+  paciente_id: zod.uuid().describe("ID do paciente"),
   age: zod.number().min(1).max(criarAvaliacaoAvaliacoesPostBodyAgeMax),
   sex: zod
     .number()
@@ -180,15 +178,12 @@ export const CriarAvaliacaoAvaliacoesPostBody = zod.object({
     .number()
     .min(criarAvaliacaoAvaliacoesPostBodyThalMin)
     .max(criarAvaliacaoAvaliacoesPostBodyThalMax),
-  modelo: zod
-    .string()
-    .default(criarAvaliacaoAvaliacoesPostBodyModeloDefault)
-    .describe("Nome do modelo de IA"),
+  modelo: zod.string().describe("ID do modelo de IA"),
 });
 
 export const CriarAvaliacaoAvaliacoesPostResponse = zod.object({
-  id: zod.number(),
-  paciente_id: zod.number(),
+  id: zod.uuid(),
+  paciente_id: zod.uuid(),
   age: zod.number(),
   sex: zod.number(),
   cp: zod.number(),
@@ -214,12 +209,12 @@ export const CriarAvaliacaoAvaliacoesPostResponse = zod.object({
  * @summary Obter Avaliacao
  */
 export const ObterAvaliacaoAvaliacoesAvaliacaoIdGetParams = zod.object({
-  avaliacao_id: zod.number(),
+  avaliacao_id: zod.uuid(),
 });
 
 export const ObterAvaliacaoAvaliacoesAvaliacaoIdGetResponse = zod.object({
-  id: zod.number(),
-  paciente_id: zod.number(),
+  id: zod.uuid(),
+  paciente_id: zod.uuid(),
   age: zod.number(),
   sex: zod.number(),
   cp: zod.number(),

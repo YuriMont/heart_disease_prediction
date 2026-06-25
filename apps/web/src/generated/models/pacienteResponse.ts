@@ -7,7 +7,7 @@
  */
 
 export interface PacienteResponse {
-  id: number;
+  id: string;
   nome: string | null;
   idade: number;
   sexo: number;

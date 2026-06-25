@@ -7,8 +7,8 @@
  */
 
 export interface RelatorioResponse {
-  id: number;
-  avaliacao_id: number;
+  id: string;
+  avaliacao_id: string;
   titulo: string;
   conteudo: string;
   criado_em: string;
