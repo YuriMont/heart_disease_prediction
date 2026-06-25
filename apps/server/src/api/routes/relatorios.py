@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from database.database import get_db
+from database.connection import get_db
 from schemas.avaliacao import AvaliacaoResponse
 from schemas.relatorio import RelatorioResponse
-from models.avaliacao import Avaliacao
-from models.relatorio import Relatorio
+from database.models.avaliacao import Avaliacao
+from database.models.relatorio import Relatorio
 
 router = APIRouter(prefix="/relatorios", tags=["relatorios"])
 

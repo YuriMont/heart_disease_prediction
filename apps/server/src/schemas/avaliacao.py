@@ -18,7 +18,7 @@ class AvaliacaoCreate(BaseModel):
     slope: int = Field(..., ge=1, le=3)
     ca: float = Field(..., ge=0, le=3)
     thal: float = Field(..., ge=3, le=7)
-    modelo: str = Field("ensemble", description="Nome do modelo de IA")
+    modelo_id: str = Field(..., description="ID do modelo de IA")
 
 
 class AvaliacaoResponse(BaseModel):

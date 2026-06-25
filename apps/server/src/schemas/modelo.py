@@ -1,15 +1,6 @@
-from enum import Enum
-
 from pydantic import BaseModel
 
-
-class NomeModelo(str, Enum):
-    knn = "knn"
-    svm = "svm"
-    random_forest = "random_forest"
-    ensemble = "ensemble"
-
-
 class ModeloUpdate(BaseModel):
+    nome: str | None = None
     descricao: str | None = None
     ativo: bool | None = None

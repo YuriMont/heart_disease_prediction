@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from database.database import criar_tabelas
+from database.connection import criar_tabelas
 from api.routes import dashboard, modelos, paginas, pacientes, previsao, relatorios, resultado
 
 from fastapi.middleware.cors import CORSMiddleware

@@ -3,11 +3,11 @@ from datetime import datetime
 
 import joblib
 
-from database.database import SessionLocal, criar_tabelas
+from database.connection import SessionLocal, criar_tabelas
 from machine_learning.avaliacao import avaliar
 from machine_learning.dados import preparar_dados
 from machine_learning.modelos import MODELOS, treinar_modelo
-from models.metrica import ModelMetrica
+from database.models.modelo import Modelo
 
 # Pasta onde os arquivos .pkl (modelos treinados) serão salvos.
 # os.path.dirname(__file__) é a pasta onde este arquivo está (a pasta 'server').
@@ -69,7 +69,7 @@ def main():
             metricas = avaliar(dados.y_teste, y_previsto, y_probabilidade, nome=modelo["nome"])
 
             # Salva ou atualiza as métricas no banco de dados
-            metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == modelo["nome"]).first()
+            metrica_db = db.query(Modelo).filter(Modelo.id == modelo["nome"]).first()
 
             if metrica_db:
                 metrica_db.acuracia = metricas["acuracia"]
@@ -80,7 +80,7 @@ def main():
                 metrica_db.atualizado_em = datetime.now()
                 print(f"   Métricas atualizadas no banco para: {modelo['nome']}")
             else:
-                nova_metrica = ModelMetrica(
+                nova_metrica = Modelo(
                     id=modelo["nome"],
                     nome=modelo["nome"],
                     descricao=DESCRICOES_PADRAO.get(modelo["nome"], modelo["nome"]),

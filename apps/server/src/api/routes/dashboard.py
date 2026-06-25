@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from database.database import get_db
+from database.connection import get_db
 from schemas.dashboard import DashboardStats, FatorRisco, RiskDistribution
-from models.avaliacao import Avaliacao
+from database.models.avaliacao import Avaliacao
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 

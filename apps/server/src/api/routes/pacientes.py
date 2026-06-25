@@ -3,11 +3,11 @@ from schemas.paciente import PacienteCreate, PacienteResponse, Paciente as Pacie
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database.database import get_db
+from database.connection import get_db
 
-from models.avaliacao import Avaliacao
-from models.metrica import ModelMetrica
-from models.paciente import Paciente
+from database.models.avaliacao import Avaliacao
+from database.models.modelo import Modelo
+from database.models.paciente import Paciente
 from services import prediction_service as servico
 
 router = APIRouter(tags=["pacientes"])
@@ -59,7 +59,7 @@ def criar_avaliacao(dados: AvaliacaoCreate, db: Session = Depends(get_db)):
             detail=f"Modelo '{dados.modelo}' não existe. Opções: {list(servico.MODELOS.keys())}",
         )
 
-    metrica_modelo = db.query(ModelMetrica).filter(ModelMetrica.id == dados.modelo).first()
+    metrica_modelo = db.query(Modelo).filter(Modelo.id == dados.modelo).first()
     if not metrica_modelo or not metrica_modelo.ativo:
         raise HTTPException(
             status_code=400,

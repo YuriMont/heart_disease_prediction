@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database.database import get_db
+from database.connection import get_db
 from schemas.resultado import ContributingFactor, FeatureImportance
-from models.avaliacao import Avaliacao
+from database.models.avaliacao import Avaliacao
 from services.feature_analysis import calcular_importancia_features, calcular_fatores_contribuintes
 
 router = APIRouter(tags=["resultado"])

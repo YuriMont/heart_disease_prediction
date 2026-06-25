@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database.database import get_db
-from models.metrica import ModelMetrica
+from database.connection import get_db
+from database.models.modelo import Modelo
 from schemas.dashboard import ModeloInfo, ModeloMetricas
 from schemas.modelo import NomeModelo, ModeloUpdate
 from services import prediction_service as servico
@@ -20,7 +20,7 @@ NOMES_MODELOS = {
 @router.get("", response_model=list[ModeloInfo])
 def listar_modelos(db: Session = Depends(get_db)):
     """Lista apenas os modelos ativos (ativo=True)."""
-    metricas = db.query(ModelMetrica).filter(ModelMetrica.ativo == True).all()
+    metricas = db.query(Modelo).filter(Modelo.ativo == True).all()
     return [
         ModeloInfo(
             nome=m.nome,
@@ -42,7 +42,7 @@ def obter_metricas(nome_modelo: NomeModelo, db: Session = Depends(get_db)):
             detail=f"Modelo '{modelo_valor}' não encontrado.",
         )
 
-    metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == modelo_valor).first()
+    metrica_db = db.query(Modelo).filter(Modelo.id == modelo_valor).first()
 
     if not metrica_db:
         raise HTTPException(
@@ -66,7 +66,7 @@ def atualizar_modelo(nome_modelo: NomeModelo, dados: ModeloUpdate, db: Session =
     """Edita a descrição e/ou a flag ativo de um modelo."""
     modelo_valor = nome_modelo.value
 
-    metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == modelo_valor).first()
+    metrica_db = db.query(Modelo).filter(Modelo.id == modelo_valor).first()
 
     if not metrica_db:
         raise HTTPException(
