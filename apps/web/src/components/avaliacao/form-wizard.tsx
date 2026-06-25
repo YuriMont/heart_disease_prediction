@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,7 +7,6 @@ import {
   UserRound,
   HeartPulse,
   Activity,
-  Check,
   Eraser,
   Sparkles,
   ShieldCheck,
@@ -37,6 +36,21 @@ const steps = [
   { label: "Exames cardíacos", num: 3 },
 ];
 
+const DEFAULT_VALUES_FORM = {
+  age: 0,
+  sex: 0,
+  trestbps: 0,
+  thalach: 0,
+  chol: 0,
+  cp: 1,
+  restecg: 0,
+  slope: 1,
+  thal: 3,
+  fbs: 0,
+  exang: 0,
+  oldpeak: 0,
+  ca: 0,
+};
 
 export function AvaliacaoForm() {
   const [selectedModel, setSelectedModel] = useAtom(modelAtom);
@@ -50,31 +64,16 @@ export function AvaliacaoForm() {
 
   const form = useForm<FormData>({
     resolver: zodResolver(PreverPreverPostBody),
-    defaultValues: {
-      age: 54,
-      sex: 1,
-      trestbps: 130,
-      thalach: 150,
-      chol: 250,
-      cp: 1,
-      restecg: 0,
-      slope: 1,
-      thal: 3,
-      fbs: 0,
-      exang: 0,
-      oldpeak: 1.5,
-      ca: 0,
-    },
+    defaultValues: DEFAULT_VALUES_FORM,
   });
 
-  const { watch, setValue } = form;
-  const values = watch();
+  const { setValue, formState } = form;
+
+  const values = form.watch();
 
   const totalFields = Object.keys(PreverPreverPostBody.shape).length;
-  const filledFields = Object.values(values).filter(
-    (v) => v !== undefined && v !== null,
-  ).length;
-  const progress = Math.round((filledFields / totalFields) * 100);
+
+  const filledFields = Object.keys(formState.dirtyFields).length;
 
   const handleSubmit = async () => {
     try {
@@ -82,7 +81,11 @@ export function AvaliacaoForm() {
         data: { idade: values.age, sexo: values.sex },
       });
       const avaliacao = await criarAvaliacao.mutateAsync({
-        data: { paciente_id: paciente.id, ...values, modelo: selectedModel?.nome },
+        data: {
+          paciente_id: paciente.id,
+          ...values,
+          modelo: selectedModel?.nome,
+        },
       });
       navigate({ to: `/avaliacao/${avaliacao.id}` });
     } catch (error) {
@@ -91,21 +94,7 @@ export function AvaliacaoForm() {
   };
 
   const handleClear = () => {
-    form.reset({
-      age: 0,
-      sex: 0,
-      trestbps: 0,
-      thalach: 0,
-      chol: 0,
-      cp: 1,
-      restecg: 0,
-      slope: 1,
-      thal: 3,
-      fbs: 0,
-      exang: 0,
-      oldpeak: 0,
-      ca: 0,
-    });
+    form.reset(DEFAULT_VALUES_FORM);
   };
 
   return (
@@ -140,22 +129,21 @@ export function AvaliacaoForm() {
           {/* Stepper */}
           <div className="flex items-center justify-around gap-[14px] rounded-[18px] border border-border bg-card px-6 py-[18px]">
             {steps.map((step, index) => (
-              <>
-              <div key={step.num} className="flex items-center gap-2.5">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary">
-                  <span className="font-heading text-[13px] font-bold text-white">
-                    {step.num}
+              <Fragment key={step.num}>
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary">
+                    <span className="font-heading text-[13px] font-bold text-white">
+                      {step.num}
+                    </span>
+                  </div>
+                  <span className="text-[13px] font-semibold text-foreground">
+                    {step.label}
                   </span>
                 </div>
-                <span className="text-[13px] font-semibold text-foreground">
-                  {step.label}
-                </span>
-              </div>
-              {index < steps.length - 1 && (
+                {index < steps.length - 1 && (
                   <div className="ml-2.5 h-[2px] flex-1 rounded bg-primary" />
                 )}
-              </>
-              
+              </Fragment>
             ))}
           </div>
 
@@ -173,12 +161,6 @@ export function AvaliacaoForm() {
                   Informações básicas do paciente
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 rounded-full bg-risk-low-soft px-[11px] py-[5px]">
-                <Check className="h-3.5 w-3.5 text-risk-low" />
-                <span className="text-xs font-semibold text-risk-low">
-                  Completo
-                </span>
-              </div>
             </div>
             <div className="flex gap-4">
               <div className="flex flex-1 flex-col gap-1">
@@ -188,6 +170,8 @@ export function AvaliacaoForm() {
                 <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                   <Input
                     type="number"
+                    required
+                    placeholder="Ex: 45"
                     value={values.age || ""}
                     onChange={(e) => setValue("age", Number(e.target.value))}
                     className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -225,12 +209,6 @@ export function AvaliacaoForm() {
                   Medições clínicas do paciente
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 rounded-full bg-risk-low-soft px-[11px] py-[5px]">
-                <Check className="h-3.5 w-3.5 text-risk-low" />
-                <span className="text-xs font-semibold text-risk-low">
-                  Completo
-                </span>
-              </div>
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
@@ -241,6 +219,8 @@ export function AvaliacaoForm() {
                   <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
+                      required
+                      placeholder="Ex: 120"
                       value={values.trestbps || ""}
                       onChange={(e) =>
                         setValue("trestbps", Number(e.target.value))
@@ -259,6 +239,8 @@ export function AvaliacaoForm() {
                   <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
+                      required
+                      placeholder="Ex: 150"
                       value={values.thalach || ""}
                       onChange={(e) =>
                         setValue("thalach", Number(e.target.value))
@@ -279,6 +261,8 @@ export function AvaliacaoForm() {
                   <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
+                      required
+                      placeholder="Ex: 200"
                       value={values.chol || ""}
                       onChange={(e) => setValue("chol", Number(e.target.value))}
                       className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -304,12 +288,6 @@ export function AvaliacaoForm() {
                 </span>
                 <span className="text-xs text-muted-foreground">
                   Resultados de testes clínicos específicos
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 rounded-full bg-risk-low-soft px-[11px] py-[5px]">
-                <Check className="h-3.5 w-3.5 text-risk-low" />
-                <span className="text-xs font-semibold text-risk-low">
-                  Completo
                 </span>
               </div>
             </div>
@@ -400,6 +378,8 @@ export function AvaliacaoForm() {
                     <Input
                       type="number"
                       step="0.1"
+                      required
+                      placeholder="Ex: 1.5"
                       value={values.oldpeak || ""}
                       onChange={(e) =>
                         setValue("oldpeak", Number(e.target.value))
@@ -497,30 +477,12 @@ export function AvaliacaoForm() {
 
             <div className="h-px w-full bg-border" />
 
-            {/* Progress */}
-            <div className="flex flex-col gap-[9px]">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">
-                  Campos preenchidos
-                </span>
-                <span className="font-heading text-[13px] font-bold text-foreground">
-                  {filledFields} / {totalFields}
-                </span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded bg-secondary">
-                <div
-                  className="h-full rounded bg-gradient-to-r from-primary to-accent transition-all"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-
             {/* Submit Button */}
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={criarPaciente.isPending || criarAvaliacao.isPending}
-              className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-white shadow-[0_6px_16px_-4px_#1E63E966] transition-all hover:bg-primary/90 disabled:opacity-50"
+              disabled={criarPaciente.isPending || criarAvaliacao.isPending || totalFields != filledFields}
+              className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-white shadow-[0_6px_16px_-4px_#1E63E966] transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Sparkles className="h-[18px] w-[18px]" />
               {criarPaciente.isPending || criarAvaliacao.isPending

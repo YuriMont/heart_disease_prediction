@@ -1,10 +1,13 @@
 import { BrainCircuit } from "lucide-react";
 import { useListarModelosModelosGet, useObterMetricasModelosNomeModeloMetricasGet } from "../../generated/api/modelos/modelos";
 import type { NomeModelo } from "../../generated/models";
+import { useAtom } from "jotai";
+import { modelAtom } from "../../store/model";
 
 export function ModelInfo() {
   const { data: models } = useListarModelosModelosGet();
-  const activeModel = models?.find((m) => m.ativo);
+  const [selectedModel] = useAtom(modelAtom);
+  const activeModel = models?.find((m) => m.nome === (selectedModel?.nome || "ensemble"));
   const { data: metrics } = useObterMetricasModelosNomeModeloMetricasGet(
     activeModel?.nome as NomeModelo
   );

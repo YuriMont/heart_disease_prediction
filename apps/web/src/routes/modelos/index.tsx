@@ -8,6 +8,8 @@ import { Progress } from "@radix-ui/react-progress";
 import type { NomeModelo } from "../../generated/models";
 import { ModelInfo } from "../../components/dashboard/model-info";
 import { Badge } from "../../components/ui/badge";
+import { modelAtom } from "../../store/model";
+import { useAtom } from "jotai";
 
 export const Route = createFileRoute("/modelos/")({
   component: ModelosPage,
@@ -15,12 +17,12 @@ export const Route = createFileRoute("/modelos/")({
 
 function ModelosPage() {
   const { data: models = [], isLoading } = useListarModelosModelosGet();
-  const activeModel = models.find((m) => m.ativo);
-  const { data: metrics } = useObterMetricasModelosNomeModeloMetricasGet(
-    activeModel?.nome as NomeModelo
-  );
 
-  console.log(models)
+  const [selectedModel, setSelectedModel] = useAtom(modelAtom)
+
+  const { data: metrics } = useObterMetricasModelosNomeModeloMetricasGet(
+    selectedModel?.nome as NomeModelo
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -73,12 +75,12 @@ function ModelosPage() {
                   </TableHeader>
                   <TableBody>
                     {models.map((model) => (
-                      <TableRow key={model.nome}>
+                      <TableRow key={model.nome} onClick={() => setSelectedModel(model)} className={selectedModel?.nome == model.nome ? "bg-gray-200 transition-colors" : ""}>
                         <TableCell className="font-medium">{model.nome}</TableCell>
                         <TableCell className="text-muted-foreground">{model.descricao}</TableCell>
                         <TableCell>
-                          <Badge variant={model.ativo ? "default" : "secondary"}>
-                            {model.ativo ? "Ativo" : "Disponível"}
+                          <Badge variant={selectedModel?.nome === model.nome ? "default" : "secondary"}>
+                            {selectedModel?.nome === model.nome ? "Ativo" : "Disponível"}
                           </Badge>
                         </TableCell>
                       </TableRow>

@@ -13,6 +13,13 @@ from models.metrica import ModelMetrica
 # os.path.dirname(__file__) é a pasta onde este arquivo está (a pasta 'server').
 PASTA_ARTEFATOS = os.path.join(os.path.dirname(__file__), "..", "artifacts")
 
+DESCRICOES_PADRAO = {
+    "ensemble": "Votação dos 3 modelos",
+    "random_forest": "Floresta aleatória",
+    "svm": "Vetores de suporte",
+    "knn": "K-vizinhos mais próximos",
+}
+
 
 def main():
     # Cria a pasta 'artefatos/' caso ela ainda não exista.
@@ -65,7 +72,6 @@ def main():
             metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == modelo["nome"]).first()
 
             if metrica_db:
-                # Atualiza métricas existentes
                 metrica_db.acuracia = metricas["acuracia"]
                 metrica_db.precisao = metricas["precisao"]
                 metrica_db.recall = metricas["recall"]
@@ -74,10 +80,11 @@ def main():
                 metrica_db.atualizado_em = datetime.now()
                 print(f"   Métricas atualizadas no banco para: {modelo['nome']}")
             else:
-                # Cria nova entrada de métricas
                 nova_metrica = ModelMetrica(
                     id=modelo["nome"],
                     nome=modelo["nome"],
+                    descricao=DESCRICOES_PADRAO.get(modelo["nome"], modelo["nome"]),
+                    ativo=True,
                     acuracia=metricas["acuracia"],
                     precisao=metricas["precisao"],
                     recall=metricas["recall"],

@@ -4,17 +4,10 @@ from sqlalchemy.orm import Session
 from database.database import get_db
 from models.metrica import ModelMetrica
 from schemas.dashboard import ModeloInfo, ModeloMetricas
-from schemas.modelo import NomeModelo
+from schemas.modelo import NomeModelo, ModeloUpdate
 from services import prediction_service as servico
 
 router = APIRouter(prefix="/modelos", tags=["modelos"])
-
-DESCRICOES = {
-    "ensemble": "Votação dos 3 modelos",
-    "random_forest": "Floresta aleatória",
-    "svm": "Vetores de suporte",
-    "knn": "K-vizinhos mais próximos",
-}
 
 NOMES_MODELOS = {
     "ensemble": "Ensemble",
@@ -25,15 +18,16 @@ NOMES_MODELOS = {
 
 
 @router.get("", response_model=list[ModeloInfo])
-def listar_modelos():
-    """Lista todos os modelos disponíveis."""
+def listar_modelos(db: Session = Depends(get_db)):
+    """Lista apenas os modelos ativos (ativo=True)."""
+    metricas = db.query(ModelMetrica).filter(ModelMetrica.ativo == True).all()
     return [
         ModeloInfo(
-            nome=nome,
-            descricao=DESCRICOES.get(nome, nome),
-            ativo=(nome == servico.MODELO_PADRAO),
+            nome=m.nome,
+            descricao=m.descricao or m.nome,
+            ativo=m.ativo,
         )
-        for nome in servico.MODELOS.keys()
+        for m in metricas
     ]
 
 
@@ -64,4 +58,33 @@ def obter_metricas(nome_modelo: NomeModelo, db: Session = Depends(get_db)):
         f1_score=metrica_db.f1_score,
         auc_roc=metrica_db.auc_roc,
         atualizacao=metrica_db.atualizado_em.strftime("%d/%m/%Y %H:%M"),
+    )
+
+
+@router.patch("/{nome_modelo}", response_model=ModeloInfo)
+def atualizar_modelo(nome_modelo: NomeModelo, dados: ModeloUpdate, db: Session = Depends(get_db)):
+    """Edita a descrição e/ou a flag ativo de um modelo."""
+    modelo_valor = nome_modelo.value
+
+    metrica_db = db.query(ModelMetrica).filter(ModelMetrica.id == modelo_valor).first()
+
+    if not metrica_db:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Modelo '{modelo_valor}' não encontrado no banco. Execute o treino primeiro.",
+        )
+
+    if dados.descricao is not None:
+        metrica_db.descricao = dados.descricao
+
+    if dados.ativo is not None:
+        metrica_db.ativo = dados.ativo
+
+    db.commit()
+    db.refresh(metrica_db)
+
+    return ModeloInfo(
+        nome=metrica_db.nome,
+        descricao=metrica_db.descricao or metrica_db.nome,
+        ativo=metrica_db.ativo,
     )

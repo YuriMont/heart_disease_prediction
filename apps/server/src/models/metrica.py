@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, Float, String, UniqueConstraint
+from sqlalchemy import Boolean, Column, DateTime, Float, String, UniqueConstraint
 
 from database.database import Base
 
@@ -10,6 +10,8 @@ class ModelMetrica(Base):
 
     id = Column(String(50), primary_key=True)
     nome = Column(String(100), nullable=False)
+    descricao = Column(String(255), nullable=True)
+    ativo = Column(Boolean, nullable=False, default=True)
     acuracia = Column(Float, nullable=False)
     precisao = Column(Float, nullable=False)
     recall = Column(Float, nullable=False)
