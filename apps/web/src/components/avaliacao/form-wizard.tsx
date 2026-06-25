@@ -24,28 +24,12 @@ import {
   useCriarPacientePacientesPost,
   useCriarAvaliacaoAvaliacoesPost,
 } from "../../generated/api/pacientes/pacientes";
-import type { ModeloInfo } from "../../generated/models";
 import { modelAtom } from "../../store/model";
 import { useAtom } from "jotai";
 import { useListarModelosModelosGet } from "../../generated/api/modelos/modelos";
+import { PreverPreverPostBody } from "../../generated/api/previsão/previsão.zod";
 
-const formSchema = z.object({
-  age: z.number().min(1).max(120),
-  sex: z.number(),
-  trestbps: z.number().min(60).max(250),
-  thalach: z.number().min(40).max(250),
-  chol: z.number().min(100).max(600),
-  cp: z.number(),
-  restecg: z.number(),
-  slope: z.number(),
-  thal: z.number(),
-  fbs: z.number(),
-  exang: z.number(),
-  oldpeak: z.number().min(0).max(10),
-  ca: z.number().min(0).max(3),
-});
-
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof PreverPreverPostBody>;
 
 const steps = [
   { label: "Dados do paciente", num: 1 },
@@ -65,7 +49,7 @@ export function AvaliacaoForm() {
   const criarAvaliacao = useCriarAvaliacaoAvaliacoesPost();
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(PreverPreverPostBody),
     defaultValues: {
       age: 54,
       sex: 1,
@@ -86,7 +70,7 @@ export function AvaliacaoForm() {
   const { watch, setValue } = form;
   const values = watch();
 
-  const totalFields = Object.keys(formSchema.shape).length;
+  const totalFields = Object.keys(PreverPreverPostBody.shape).length;
   const filledFields = Object.values(values).filter(
     (v) => v !== undefined && v !== null,
   ).length;
