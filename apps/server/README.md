@@ -235,6 +235,24 @@ SQLite local: `src/database/cardiopredict.db`
 
 ---
 
+## 🔁 Migrations (Alembic)
+
+As migrations versionam o schema do banco. Rode os comandos a partir de
+`apps/server` (ou use os atalhos `npm run` na raiz do monorepo).
+
+| Ação                        | `apps/server`                                         | Raiz do monorepo            |
+|-----------------------------|-------------------------------------------------------|-----------------------------|
+| Gerar migration (autogen)   | `uv run alembic revision --autogenerate -m "mensagem"`| `npm run db:revision -- -m "mensagem"` |
+| Aplicar migrations          | `uv run alembic upgrade head`                         | `npm run db:migrate`        |
+| Reverter última migration   | `uv run alembic downgrade -1`                         | `npm run db:downgrade`      |
+| Ver versão atual            | `uv run alembic current`                              | `npm run db:current`        |
+| Ver histórico               | `uv run alembic history`                              | `npm run db:history`        |
+
+> Os argumentos depois de `--` são repassados ao Alembic. Ex.:
+> `npm run db:revision -- -m "cria tabela pacientes"`.
+
+---
+
 ## 🏋️ Re-treinar os modelos
 
 ```bash

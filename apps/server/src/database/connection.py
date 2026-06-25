@@ -1,7 +1,9 @@
 from pathlib import Path
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
+
+from database.base import Base
 
 BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "cardiopredict.db"
@@ -19,11 +21,11 @@ SessionLocal = sessionmaker(
 )
 
 
-class Base(DeclarativeBase):
-    pass
-
-
 def criar_tabelas() -> None:
+    # Importa os modelos para que suas tabelas sejam registradas no metadata
+    # da Base antes de criá-las.
+    import database.models  # noqa: F401
+
     Base.metadata.create_all(bind=engine)
 
 

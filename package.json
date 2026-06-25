@@ -4,7 +4,13 @@
   "scripts": {
     "dev:web": "cd apps/web && npm run dev",
     "dev:api": "cd apps/server && uv run python run.py",
-    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\""
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
+    "train": "cd apps/server && uv run python -m services.train_models",
+    "db:revision": "cd apps/server && uv run alembic revision --autogenerate",
+    "db:migrate": "cd apps/server && uv run alembic upgrade head",
+    "db:downgrade": "cd apps/server && uv run alembic downgrade -1",
+    "db:current": "cd apps/server && uv run alembic current",
+    "db:history": "cd apps/server && uv run alembic history"
   },
   "workspaces": [
     "apps/*",

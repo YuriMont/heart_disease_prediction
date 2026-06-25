@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
-from schemas.avaliacao import AvaliacaoResponse
 from schemas.relatorio import RelatorioResponse
 from database.models.avaliacao import Avaliacao
 from database.models.relatorio import Relatorio
