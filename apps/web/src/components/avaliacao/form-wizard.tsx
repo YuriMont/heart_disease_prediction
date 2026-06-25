@@ -24,6 +24,10 @@ import {
   useCriarPacientePacientesPost,
   useCriarAvaliacaoAvaliacoesPost,
 } from "../../generated/api/pacientes/pacientes";
+import type { ModeloInfo } from "../../generated/models";
+import { modelAtom } from "../../store/model";
+import { useAtom } from "jotai";
+import { useListarModelosModelosGet } from "../../generated/api/modelos/modelos";
 
 const formSchema = z.object({
   age: z.number().min(1).max(120),
@@ -49,25 +53,12 @@ const steps = [
   { label: "Exames cardíacos", num: 3 },
 ];
 
-const models = [
-  {
-    id: "ensemble",
-    name: "Ensemble",
-    desc: "Votação dos 3 · padrão",
-    active: true,
-  },
-  {
-    id: "random_forest",
-    name: "Random Forest",
-    desc: "Floresta aleatória",
-    active: false,
-  },
-  { id: "svm", name: "SVM", desc: "Vetores de suporte", active: false },
-  { id: "knn", name: "KNN", desc: "K-vizinhos", active: false },
-];
 
 export function AvaliacaoForm() {
-  const [selectedModel, setSelectedModel] = useState("ensemble");
+  const [selectedModel, setSelectedModel] = useAtom(modelAtom);
+
+  const { data: models = [] } = useListarModelosModelosGet();
+
   const navigate = useNavigate();
 
   const criarPaciente = useCriarPacientePacientesPost();
@@ -107,7 +98,7 @@ export function AvaliacaoForm() {
         data: { idade: values.age, sexo: values.sex },
       });
       const avaliacao = await criarAvaliacao.mutateAsync({
-        data: { paciente_id: paciente.id, ...values, modelo: selectedModel },
+        data: { paciente_id: paciente.id, ...values, modelo: selectedModel?.nome },
       });
       navigate({ to: `/avaliacao/${avaliacao.id}` });
     } catch (error) {
@@ -494,24 +485,24 @@ export function AvaliacaoForm() {
             <div className="flex flex-col gap-2">
               {models.map((model) => (
                 <button
-                  key={model.id}
+                  key={model.nome}
                   type="button"
-                  onClick={() => setSelectedModel(model.id)}
+                  onClick={() => setSelectedModel(model)}
                   className={`flex items-center gap-2.5 rounded-xl px-3 py-[11px] transition-all ${
-                    selectedModel === model.id
+                    selectedModel?.nome === model.nome
                       ? "border border-primary bg-primary/10"
                       : "border border-border bg-secondary"
                   }`}
                 >
                   <div className="flex flex-1 flex-col items-start gap-[1px]">
                     <span className="text-[13px] font-semibold text-foreground">
-                      {model.name}
+                      {model.nome}
                     </span>
                     <span className="text-[11px] text-muted-foreground">
-                      {model.desc}
+                      {model.descricao}
                     </span>
                   </div>
-                  {selectedModel === model.id ? (
+                  {selectedModel?.nome === model.nome ? (
                     <CircleCheckBig className="h-[18px] w-[18px] text-primary" />
                   ) : (
                     <Circle className="h-[18px] w-[18px] text-muted-foreground" />
