@@ -2,7 +2,9 @@ import os
 
 import joblib
 import pandas as pd
+from sqlalchemy.orm import Session
 
+from database.models.modelo import Modelo
 from machine_learning.dados import COLUNAS_CATEGORICAS
 from schemas.paciente import Paciente
 
@@ -17,15 +19,17 @@ NOMES_FEATURES = joblib.load(os.path.join(PASTA_ARTEFATOS, "feature_names.pkl"))
 # O scaler padroniza os números do mesmo jeito que foi feito no treino.
 SCALER = joblib.load(os.path.join(PASTA_ARTEFATOS, "scaler.pkl"))
 
+# Arquivos utilitários que NÃO são modelos treinados.
+ARTEFATOS_EXCLUIR = {"scaler.pkl", "feature_names.pkl"}
+
 # Carrega todos os modelos disponíveis em um dicionário {nome: modelo}.
 MODELOS = {}
-for nome_modelo in ["knn", "svm", "random_forest", "ensemble"]:
-    caminho = os.path.join(PASTA_ARTEFATOS, f"{nome_modelo}.pkl")
-    if os.path.exists(caminho):
-        MODELOS[nome_modelo] = joblib.load(caminho)
-
-# Modelo usado quando o usuário não escolhe nenhum (o ensemble costuma ser o melhor).
-MODELO_PADRAO = "ensemble"
+if os.path.isdir(PASTA_ARTEFATOS):
+    for arquivo in os.listdir(PASTA_ARTEFATOS):
+        if arquivo.endswith(".pkl") and arquivo not in ARTEFATOS_EXCLUIR:
+            nome_modelo = arquivo.removesuffix(".pkl")
+            caminho = os.path.join(PASTA_ARTEFATOS, arquivo)
+            MODELOS[nome_modelo] = joblib.load(caminho)
 
 
 def montar_features(paciente: Paciente):
@@ -56,20 +60,65 @@ def montar_features(paciente: Paciente):
     return pd.DataFrame(escalado, columns=NOMES_FEATURES)
 
 
-def prever(paciente: Paciente, nome_modelo: str):
-    """Faz a previsão para um paciente usando o modelo escolhido.
+def _obter_modelo_por_id(db: Session, modelo_id: str) -> Modelo:
+    """Busca um modelo ativo pelo ID no banco de dados."""
+    modelo = db.query(Modelo).filter(Modelo.id == modelo_id, Modelo.ativo.is_(True)).first()
+    if not modelo:
+        raise ValueError(f"Modelo '{modelo_id}' não encontrado ou inativo.")
+    return modelo
 
-    Supõe que 'nome_modelo' existe (quem chama deve checar antes).
+
+def _modelos_disponiveis() -> set[str]:
+    """Retorna os nomes dos modelos que possuem artefato .pkl treinado."""
+    return set(MODELOS.keys())
+
+
+def obter_modelo_padrao_id(db: Session) -> str:
+    """Retorna o ID do primeiro modelo ativo que tenha artefato treinado."""
+    nomes_disponiveis = _modelos_disponiveis()
+
+    # Prioriza 'ensemble' se existir.
+    if "ensemble" in nomes_disponiveis:
+        modelo = db.query(Modelo).filter(
+            Modelo.nome == "ensemble",
+            Modelo.ativo.is_(True),
+        ).first()
+        if modelo:
+            return modelo.id
+
+    # Caso contrário, pega o primeiro que tenha artefato.
+    for nome in nomes_disponiveis:
+        modelo = db.query(Modelo).filter(
+            Modelo.nome == nome,
+            Modelo.ativo.is_(True),
+        ).first()
+        if modelo:
+            return modelo.id
+
+    raise ValueError("Nenhum modelo ativo com artefato treinado encontrado.")
+
+
+def prever(paciente: Paciente, modelo_id: str, db: Session):
+    """Faz a previsão para um paciente usando o modelo escolhido por ID.
+
+    Args:
+        paciente: Dados do paciente.
+        modelo_id: ID (UUID) do modelo no banco de dados.
+        db: Sessão do banco de dados.
     """
-    features = montar_features(paciente)
-    classificador = MODELOS[nome_modelo]
+    modelo_db = _obter_modelo_por_id(db, modelo_id)
 
-    # predict -> 0 ou 1. predict_proba[0][1] -> probabilidade de ser 1 (ter doença).
+    if modelo_db.nome not in _modelos_disponiveis():
+        raise ValueError(f"Arquivo do modelo '{modelo_db.nome}' não encontrado nos artefatos.")
+
+    features = montar_features(paciente)
+    classificador = MODELOS[modelo_db.nome]
+
     classe = int(classificador.predict(features)[0])
     probabilidade = float(classificador.predict_proba(features)[0][1])
 
     return {
-        "modelo_usado": nome_modelo,
+        "modelo_usado": modelo_db.nome,
         "tem_doenca": bool(classe == 1),
         "probabilidade_doenca": round(probabilidade, 4),
         "resultado": (

@@ -69,19 +69,18 @@ def main():
             metricas = avaliar(dados.y_teste, y_previsto, y_probabilidade, nome=modelo["nome"])
 
             # Salva ou atualiza as métricas no banco de dados
-            metrica_db = db.query(Modelo).filter(Modelo.id == modelo["nome"]).first()
+            modelo_db = db.query(Modelo).filter(Modelo.id == modelo["nome"]).first()
 
-            if metrica_db:
-                metrica_db.acuracia = metricas["acuracia"]
-                metrica_db.precisao = metricas["precisao"]
-                metrica_db.recall = metricas["recall"]
-                metrica_db.f1_score = metricas["f1_score"]
-                metrica_db.auc_roc = metricas["auc_roc"]
-                metrica_db.atualizado_em = datetime.now()
+            if modelo_db:
+                modelo_db.acuracia = metricas["acuracia"]
+                modelo_db.precisao = metricas["precisao"]
+                modelo_db.recall = metricas["recall"]
+                modelo_db.f1_score = metricas["f1_score"]
+                modelo_db.auc_roc = metricas["auc_roc"]
+                modelo_db.atualizado_em = datetime.now()
                 print(f"   Métricas atualizadas no banco para: {modelo['nome']}")
             else:
                 nova_metrica = Modelo(
-                    id=modelo["nome"],
                     nome=modelo["nome"],
                     descricao=DESCRICOES_PADRAO.get(modelo["nome"], modelo["nome"]),
                     ativo=True,

@@ -20,12 +20,14 @@ class FatorRisco(BaseModel):
 
 
 class ModeloInfo(BaseModel):
+    id: str
     nome: str
     descricao: str
     ativo: bool
 
 
 class ModeloMetricas(BaseModel):
+    id: str
     nome: str
     acuracia: float
     precisao: float

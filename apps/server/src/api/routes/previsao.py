@@ -1,25 +1,27 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
+from database.connection import get_db
 from services import prediction_service as servico
 from schemas.paciente import Paciente
 
-# O APIRouter é o "Router" do FastAPI. As rotas definidas aqui só passam a
-# existir depois que o api.py fizer app.include_router(router).
 router = APIRouter(tags=["previsão"])
 
 
 @router.post("/prever")
-def prever(paciente: Paciente, modelo: str = servico.MODELO_PADRAO):
+def prever(
+    paciente: Paciente,
+    modelo: str | None = None,
+    db: Session = Depends(get_db),
+):
     """Recebe um paciente e devolve a previsão de doença cardíaca.
 
-    Para escolher outro modelo, use a query string. Exemplo:
-        POST /prever?modelo=random_forest
+    Para escolher outro modelo, passe o ID do modelo como query string. Exemplo:
+        POST /prever?modelo=<uuid-do-modelo>
     """
-    # Se o usuário pedir um modelo que não existe, devolve erro 400.
-    if modelo not in servico.MODELOS:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Modelo '{modelo}' não existe. Opções: {list(servico.MODELOS.keys())}",
-        )
-
-    return servico.prever(paciente, modelo)
+    try:
+        if modelo is None:
+            modelo = servico.obter_modelo_padrao_id(db)
+        return servico.prever(paciente, modelo, db)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))

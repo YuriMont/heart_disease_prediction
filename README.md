@@ -258,14 +258,27 @@ npm run dev:web
 # Rodar apenas o backend
 npm run dev:api
 
+# Treinar modelos de ML
+npm run train
+
 # Gerar client de API (frontend)
 cd apps/web && npm run generate:api
+
+# Build de produção (frontend)
+cd apps/web && npm run build
+
+# Preview da build (frontend)
+cd apps/web && npm run preview
 
 # Lint (frontend)
 cd apps/web && npm run lint
 
-# Build de produção (frontend)
-cd apps/web && npm run build
+# Database (Alembic)
+npm run db:revision   # Gerar nova revisão
+npm run db:migrate    # Aplicar migrações
+npm run db:downgrade  # Reverter última migração
+npm run db:current    # Ver revisão atual
+npm run db:history    # Histórico de revisões
 ```
 
 ## Estrutura de Pastas
