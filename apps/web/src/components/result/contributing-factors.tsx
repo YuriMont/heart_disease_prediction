@@ -7,7 +7,7 @@ interface ContributingFactorsProps {
 }
 
 export function ContributingFactors({ factors }: ContributingFactorsProps) {
-  const sorted = [...factors].sort((a, b) => Math.abs(b.impacto) - Math.abs(a.impacto));
+  const sorted = [...factors].sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
 
   return (
     <Card className="flex flex-col gap-4 p-6">
@@ -16,7 +16,7 @@ export function ContributingFactors({ factors }: ContributingFactorsProps) {
       </CardHeader>
       <CardContent className="flex flex-col gap-3 p-0">
         {sorted.map((factor, index) => {
-          const isPositive = factor.impacto > 0;
+          const isPositive = factor.impact > 0;
           return (
             <div
               key={index}
@@ -36,7 +36,7 @@ export function ContributingFactors({ factors }: ContributingFactorsProps) {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[13px] font-medium text-foreground">
-                    {factor.variavel} {factor.valor}
+                    {factor.variable} {factor.value}
                   </span>
                 </div>
               </div>
@@ -45,7 +45,7 @@ export function ContributingFactors({ factors }: ContributingFactorsProps) {
                   isPositive ? "text-risk-high" : "text-risk-low"
                 }`}
               >
-                {isPositive ? "+" : ""}{factor.impacto.toFixed(2)}
+                {isPositive ? "+" : ""}{factor.impact.toFixed(2)}
               </span>
             </div>
           );

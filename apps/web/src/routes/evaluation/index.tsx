@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AvaliacaoForm } from "../../components/avaliacao/form-wizard";
+import { EvaluationForm } from "../../components/evaluation/form-wizard";
 
-export const Route = createFileRoute("/avaliacao/")({
-  component: AvaliacaoPage,
+export const Route = createFileRoute("/evaluation/")({
+  component: EvaluationPage,
 });
 
-function AvaliacaoPage() {
-  return <AvaliacaoForm />;
+function EvaluationPage() {
+  return <EvaluationForm />;
 }

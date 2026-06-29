@@ -8,10 +8,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database.base import Base
 
 if TYPE_CHECKING:
-    from database.models.avaliacao import Avaliacao
+    from database.models.evaluation import Evaluation
 
 
-class Paciente(Base):
+class Patient(Base):
     __tablename__ = "pacientes"
 
     id: Mapped[UUID] = mapped_column(
@@ -20,28 +20,28 @@ class Paciente(Base):
         default=uuid4,
     )
 
-    nome: Mapped[str | None] = mapped_column(
+    name: Mapped[str | None] = mapped_column(
         String(200),
         nullable=True,
     )
 
-    idade: Mapped[int] = mapped_column(
+    age: Mapped[int] = mapped_column(
         Integer,
         nullable=False,
     )
 
-    sexo: Mapped[int] = mapped_column(
+    sex: Mapped[int] = mapped_column(
         Integer,
         nullable=False,
     )
 
-    criado_em: Mapped[datetime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,
         nullable=False,
     )
 
-    avaliacoes: Mapped[list["Avaliacao"]] = relationship(
-        back_populates="paciente",
+    evaluations: Mapped[list["Evaluation"]] = relationship(
+        back_populates="patient",
         cascade="all, delete-orphan",
     )

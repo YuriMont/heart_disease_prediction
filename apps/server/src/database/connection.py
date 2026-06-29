@@ -21,9 +21,8 @@ SessionLocal = sessionmaker(
 )
 
 
-def criar_tabelas() -> None:
-    # Importa os modelos para que suas tabelas sejam registradas no metadata
-    # da Base antes de criá-las.
+def create_tables() -> None:
+    # Import models so their tables are registered in Base.metadata before creation.
     import database.models  # noqa: F401
 
     Base.metadata.create_all(bind=engine)

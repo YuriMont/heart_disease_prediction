@@ -8,10 +8,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database.base import Base
 
 if TYPE_CHECKING:
-    from database.models.avaliacao import Avaliacao
+    from database.models.evaluation import Evaluation
 
 
-class Relatorio(Base):
+class Report(Base):
     __tablename__ = "relatorios"
 
     id: Mapped[UUID] = mapped_column(
@@ -27,23 +27,23 @@ class Relatorio(Base):
         unique=True,
     )
 
-    titulo: Mapped[str] = mapped_column(
+    title: Mapped[str] = mapped_column(
         String(300),
         nullable=False,
     )
 
-    conteudo: Mapped[str] = mapped_column(
+    content: Mapped[str] = mapped_column(
         Text,
         nullable=False,
     )
 
-    criado_em: Mapped[datetime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,
         nullable=False,
     )
 
-    avaliacao: Mapped["Avaliacao"] = relationship(
-        back_populates="relatorio",
+    evaluation: Mapped["Evaluation"] = relationship(
+        back_populates="report",
         uselist=False,
     )

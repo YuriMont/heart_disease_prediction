@@ -3,83 +3,79 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
-from schemas.dashboard import DashboardStats, FatorRisco, RiskDistribution
-from database.models.avaliacao import Avaliacao
+from schemas.dashboard import DashboardStats, RiskFactor, RiskDistribution
+from database.models.evaluation import Evaluation
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
 
-def _classificar_risco(prob: float) -> str:
-    """Classifica a probabilidade em faixa de risco."""
+def _classify_risk(prob: float) -> str:
     if prob < 0.35:
-        return "baixo"
+        return "low"
     elif prob < 0.65:
-        return "medio"
-    return "alto"
+        return "medium"
+    return "high"
 
 
 @router.get("/stats", response_model=DashboardStats)
-def obter_stats(db: Session = Depends(get_db)):
-    """Total de análises e contagem por faixa de risco."""
-    total = db.query(func.count(Avaliacao.id)).scalar() or 0
-    avaliacoes = db.query(Avaliacao.probabilidade_doenca).all()
+def get_stats(db: Session = Depends(get_db)):
+    total = db.query(func.count(Evaluation.id)).scalar() or 0
+    avaliacoes = db.query(Evaluation.disease_probability).all()
 
-    baixo = sum(1 for (p,) in avaliacoes if _classificar_risco(p) == "baixo")
-    medio = sum(1 for (p,) in avaliacoes if _classificar_risco(p) == "medio")
-    alto = sum(1 for (p,) in avaliacoes if _classificar_risco(p) == "alto")
+    low = sum(1 for (p,) in avaliacoes if _classify_risk(p) == "low")
+    medium = sum(1 for (p,) in avaliacoes if _classify_risk(p) == "medium")
+    high = sum(1 for (p,) in avaliacoes if _classify_risk(p) == "high")
 
     return DashboardStats(
-        total_analises=total,
-        baixo_risco=baixo,
-        medio_risco=medio,
-        alto_risco=alto,
+        total_analyses=total,
+        low_risk=low,
+        medium_risk=medium,
+        high_risk=high,
     )
 
 
 @router.get("/risks", response_model=list[RiskDistribution])
-def obter_distribuicao_risco(db: Session = Depends(get_db)):
-    """Distribuição percentual de risco (dados para o donut chart)."""
-    total = db.query(func.count(Avaliacao.id)).scalar() or 0
+def get_risk_distribution(db: Session = Depends(get_db)):
+    total = db.query(func.count(Evaluation.id)).scalar() or 0
     if total == 0:
         return []
 
-    avaliacoes = db.query(Avaliacao.probabilidade_doenca).all()
-    contagem = {"baixo": 0, "medio": 0, "alto": 0}
+    avaliacoes = db.query(Evaluation.disease_probability).all()
+    contagem = {"low": 0, "medium": 0, "high": 0}
 
     for (p,) in avaliacoes:
-        contagem[_classificar_risco(p)] += 1
+        contagem[_classify_risk(p)] += 1
 
     return [
         RiskDistribution(
-            risco=risco,
-            quantidade=qtd,
-            percentual=round(qtd / total * 100, 1),
+            risk=risco,
+            quantity=qtd,
+            percentage=round(qtd / total * 100, 1),
         )
         for risco, qtd in contagem.items()
     ]
 
 
-@router.get("/fatores", response_model=list[FatorRisco])
-def obter_fatores_risco(db: Session = Depends(get_db)):
-    """Top fatores de risco com prevalência entre os pacientes avaliados."""
-    avaliacoes = db.query(Avaliacao).all()
+@router.get("/factors", response_model=list[RiskFactor])
+def get_risk_factors(db: Session = Depends(get_db)):
+    avaliacoes = db.query(Evaluation).all()
     if not avaliacoes:
         return []
 
     total = len(avaliacoes)
 
     fatores = [
-        ("Pressão elevada", sum(1 for a in avaliacoes if a.trestbps > 140) / total * 100),
-        ("Colesterol alto", sum(1 for a in avaliacoes if a.chol > 240) / total * 100),
-        ("Dor no peito (cp)", sum(1 for a in avaliacoes if a.cp in (1, 2)) / total * 100),
-        ("Angina ao esforço", sum(1 for a in avaliacoes if a.exang == 1) / total * 100),
-        ("Glicemia alta", sum(1 for a in avaliacoes if a.fbs == 1) / total * 100),
-        ("ECG alterado", sum(1 for a in avaliacoes if a.restecg != 0) / total * 100),
+        ("High blood pressure", sum(1 for a in avaliacoes if a.trestbps > 140) / total * 100),
+        ("High cholesterol", sum(1 for a in avaliacoes if a.chol > 240) / total * 100),
+        ("Chest pain (cp)", sum(1 for a in avaliacoes if a.cp in (1, 2)) / total * 100),
+        ("Exercise angina", sum(1 for a in avaliacoes if a.exang == 1) / total * 100),
+        ("High blood sugar", sum(1 for a in avaliacoes if a.fbs == 1) / total * 100),
+        ("Abnormal ECG", sum(1 for a in avaliacoes if a.restecg != 0) / total * 100),
     ]
 
     fatores.sort(key=lambda x: x[1], reverse=True)
 
     return [
-        FatorRisco(nome=nome, prevalencia=round(prev, 1))
+        RiskFactor(name=nome, prevalence=round(prev, 1))
         for nome, prev in fatores
     ]

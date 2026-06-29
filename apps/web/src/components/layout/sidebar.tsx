@@ -13,12 +13,12 @@ import { useAtom } from "jotai";
 import { modelAtom } from "../../store/model";
 
 const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, to: "/" },
-  { label: "Nova Avaliação", icon: Stethoscope, to: "/avaliacao" },
-  { label: "Pacientes", icon: Users, to: "/pacientes" },
-  { label: "Resultados", icon: ClipboardList, to: "/resultados" },
-  { label: "Relatórios", icon: FileText, to: "/relatorios" },
-  { label: "Modelo de IA", icon: BrainCircuit, to: "/modelos" },
+  { label: "Painel", icon: LayoutDashboard, to: "/" },
+  { label: "Nova Avaliação", icon: Stethoscope, to: "/evaluation" },
+  { label: "Pacientes", icon: Users, to: "/patients" },
+  { label: "Resultados", icon: ClipboardList, to: "/results" },
+  { label: "Relatórios", icon: FileText, to: "/reports" },
+  { label: "Modelo de IA", icon: BrainCircuit, to: "/models" },
 ];
 
 export function Sidebar() {
@@ -43,7 +43,7 @@ export function Sidebar() {
             CardioPredict
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-[1.5px] text-[#7FA8D9]">
-            AI · Cardiology
+            IA · Cardiologia
           </span>
         </div>
       </div>
@@ -93,7 +93,7 @@ export function Sidebar() {
             </span>
           </div>
           <p className="mt-2 text-[11px] text-[#9FB6D4]">
-            {selectedModel?.nome} - {selectedModel.descricao}
+            {selectedModel?.name} - {selectedModel.description}
           </p>
         </div>
       )}

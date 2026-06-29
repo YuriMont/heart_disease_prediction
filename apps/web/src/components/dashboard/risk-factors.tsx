@@ -1,10 +1,10 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
-import { useObterFatoresRiscoDashboardFatoresGet } from "../../generated/api/dashboard/dashboard";
+import { useGetRiskFactorsDashboardFactorsGet } from "../../generated/api/dashboard/dashboard";
 
 export function RiskFactors() {
-  const { data: factors } = useObterFatoresRiscoDashboardFatoresGet();
+  const { data: factors } = useGetRiskFactorsDashboardFactorsGet();
 
-  const sortedFactors = [...(factors ?? [])].sort((a, b) => b.prevalencia - a.prevalencia);
+  const sortedFactors = [...(factors ?? [])].sort((a, b) => b.prevalence - a.prevalence);
 
   return (
     <Card className="flex flex-col gap-[18px] p-6">
@@ -19,18 +19,18 @@ export function RiskFactors() {
       </CardHeader>
       <CardContent className="flex flex-1 flex-col justify-between gap-3.5 p-0">
         {sortedFactors.map((factor) => (
-          <div key={factor.nome} className="flex items-center gap-3.5">
+          <div key={factor.name} className="flex items-center gap-3.5">
             <div className="w-[150px] shrink-0">
-              <span className="text-[13px] font-medium text-foreground">{factor.nome}</span>
+              <span className="text-[13px] font-medium text-foreground">{factor.name}</span>
             </div>
             <div className="flex-1 rounded-full bg-secondary">
               <div
                 className="h-2.5 rounded-full bg-risk-high"
-                style={{ width: `${factor.prevalencia}%` }}
+                style={{ width: `${factor.prevalence}%` }}
               />
             </div>
             <span className="w-[42px] text-right font-heading text-[13px] font-bold text-foreground">
-              {factor.prevalencia}%
+              {factor.prevalence}%
             </span>
           </div>
         ))}

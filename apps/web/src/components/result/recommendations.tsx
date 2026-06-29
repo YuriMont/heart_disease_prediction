@@ -4,9 +4,9 @@ import { Card } from "../ui/card";
 export function Recommendations() {
   const recommendations = [
     "Manter acompanhamento cardiológico regular",
-    "Controlar pressão arterial com medicamentos se necessário",
-    "Adotar dieta equilibrada com baixo teor de sódio",
-    "Praticar exercícios físicos moderados (150 min/semana)",
+    "Controlar a pressão arterial com medicação se necessário",
+    "Adotar uma dieta balanceada com baixo teor de sódio",
+    "Praticar exercício físico moderado (150 min/semana)",
     "Evitar tabagismo e consumo excessivo de álcool",
   ];
 
@@ -26,8 +26,7 @@ export function Recommendations() {
       </ul>
       <div className="mt-5 rounded-lg bg-white/10 p-3">
         <p className="text-[11px] text-[#9FB6D4]">
-          Resultado gerado por IA para apoio à decisão clínica. Não substitui a avaliação médica
-          profissional.
+          Resultado gerado por IA para suporte à decisão clínica. Não substitui a avaliação médica profissional.
         </p>
       </div>
     </Card>

@@ -1,29 +1,29 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
-import { useObterDistribuicaoRiscoDashboardRisksGet } from "../../generated/api/dashboard/dashboard";
+import { useGetRiskDistributionDashboardRisksGet } from "../../generated/api/dashboard/dashboard";
 import { formatNumber } from "../../lib/utils";
 
 const COLORS: Record<string, string> = {
-  baixo: "#16A45F",
-  medio: "#E8930C",
-  alto: "#DC3848",
+  low: "#16A45F",
+  medium: "#E8930C",
+  high: "#DC3848",
 };
 
 const LABELS: Record<string, string> = {
-  baixo: "Baixo risco",
-  medio: "Médio risco",
-  alto: "Alto risco",
+  low: "Baixo Risco",
+  medium: "Risco Médio",
+  high: "Alto Risco",
 };
 
 export function RiskDistribution() {
-  const { data: distribution } = useObterDistribuicaoRiscoDashboardRisksGet();
+  const { data: distribution } = useGetRiskDistributionDashboardRisksGet();
 
   const chartData = (distribution ?? []).map((d) => ({
-    name: LABELS[d.risco] ?? d.risco,
-    value: d.quantidade,
-    percent: d.percentual,
-    color: COLORS[d.risco] ?? "#95A3B8",
-    risk: d.risco,
+    name: LABELS[d.risk] ?? d.risk,
+    value: d.quantity,
+    percent: d.percentage,
+    color: COLORS[d.risk] ?? "#95A3B8",
+    risk: d.risk,
   }));
 
   const total = chartData.reduce((sum, d) => sum + d.value, 0);
@@ -31,8 +31,8 @@ export function RiskDistribution() {
   return (
     <Card className="flex flex-col gap-5 p-6">
       <CardHeader className="p-0">
-        <CardTitle>Distribuição de Risco</CardTitle>
-        <CardDescription>Classificação dos {formatNumber(total)} pacientes</CardDescription>
+          <CardTitle>Distribuição de Risco</CardTitle>
+          <CardDescription>Classificação de {formatNumber(total)} pacientes</CardDescription>
       </CardHeader>
       <CardContent className="flex items-center gap-6 p-0">
         <div className="relative h-[180px] w-[180px]">

@@ -2,36 +2,36 @@ from pydantic import BaseModel
 
 
 class DashboardStats(BaseModel):
-    total_analises: int
-    baixo_risco: int
-    medio_risco: int
-    alto_risco: int
+    total_analyses: int
+    low_risk: int
+    medium_risk: int
+    high_risk: int
 
 
 class RiskDistribution(BaseModel):
-    risco: str
-    quantidade: int
-    percentual: float
+    risk: str
+    quantity: int
+    percentage: float
 
 
-class FatorRisco(BaseModel):
-    nome: str
-    prevalencia: float
+class RiskFactor(BaseModel):
+    name: str
+    prevalence: float
 
 
-class ModeloInfo(BaseModel):
+class ModelInfo(BaseModel):
     id: str
-    nome: str
-    descricao: str
-    ativo: bool
+    name: str
+    description: str
+    active: bool
 
 
-class ModeloMetricas(BaseModel):
+class ModelMetrics(BaseModel):
     id: str
-    nome: str
-    acuracia: float
-    precisao: float
+    name: str
+    accuracy: float
+    precision: float
     recall: float
     f1_score: float
     auc_roc: float
-    atualizacao: str
+    updated_at: str

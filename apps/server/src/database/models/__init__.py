@@ -1,11 +1,6 @@
-"""Modelos ORM do banco de dados.
+from database.models.evaluation import Evaluation
+from database.models.model import Model
+from database.models.patient import Patient
+from database.models.report import Report
 
-Define as tabelas: Paciente, Avaliacao, Relatorio, ModelMetrica.
-"""
-
-from database.models.avaliacao import Avaliacao
-from database.models.modelo import Modelo
-from database.models.paciente import Paciente
-from database.models.relatorio import Relatorio
-
-__all__ = ["Avaliacao", "Modelo", "Paciente", "Relatorio"]
+__all__ = ["Evaluation", "Model", "Patient", "Report"]

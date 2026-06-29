@@ -1,26 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, RotateCcw, Download } from "lucide-react";
-import { useObterAvaliacaoAvaliacoesAvaliacaoIdGet } from "../../../generated/api/pacientes/pacientes";
-import { useObterFatoresAvaliacoesAvaliacaoIdFatoresGet, useObterImportanciaAvaliacoesAvaliacaoIdImportanciaGet } from "../../../generated/api/resultado/resultado";
-import { useExportarRelatorioRelatoriosExportarPost } from "../../../generated/api/relatorios/relatorios";
+import { useGetEvaluationEvaluationsEvaluationIdGet } from "../../../generated/api/patients/patients";
+import { useGetFactorsEvaluationsEvaluationIdFactorsGet, useGetImportanceEvaluationsEvaluationIdImportanceGet } from "../../../generated/api/result/result";
+import { useExportReportReportsExportPost } from "../../../generated/api/reports/reports";
 import { Button } from "../../../components/ui/button";
-import { ResultHero } from "../../../components/resultado/result-hero";
-import { ContributingFactors } from "../../../components/resultado/contributing-factors";
-import { FeatureImportance } from "../../../components/resultado/feature-importance";
+import { ResultHero } from "../../../components/result/result-hero";
+import { ContributingFactors } from "../../../components/result/contributing-factors";
+import { FeatureImportance } from "../../../components/result/feature-importance";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
-import { Recommendations } from "../../../components/resultado/recommendations";
+import { Recommendations } from "../../../components/result/recommendations";
 
-export const Route = createFileRoute("/avaliacao/$id/")({
+export const Route = createFileRoute("/evaluation/$id/")({
   component: ResultadoPage,
 });
 
 function ResultadoPage() {
-  const { id: avaliacao_id } = Route.useParams();
+  const { id: evaluationId } = Route.useParams();
 
-  const { data: avaliacao, isLoading } = useObterAvaliacaoAvaliacoesAvaliacaoIdGet(avaliacao_id);
-  const { data: factors = [] } = useObterFatoresAvaliacoesAvaliacaoIdFatoresGet(avaliacao_id);
-  const { data: importance = [] } = useObterImportanciaAvaliacoesAvaliacaoIdImportanciaGet(avaliacao_id);
-  const exportarRelatorio = useExportarRelatorioRelatoriosExportarPost();
+  const { data: evaluation, isLoading } = useGetEvaluationEvaluationsEvaluationIdGet(evaluationId);
+  const { data: factors = [] } = useGetFactorsEvaluationsEvaluationIdFactorsGet(evaluationId);
+  const { data: importance = [] } = useGetImportanceEvaluationsEvaluationIdImportanceGet(evaluationId);
+  const exportarRelatorio = useExportReportReportsExportPost();
 
   if (isLoading) {
     return (
@@ -30,7 +30,7 @@ function ResultadoPage() {
     );
   }
 
-  if (!avaliacao) {
+  if (!evaluation) {
     return (
       <div className="flex h-full items-center justify-center">
         <span className="text-muted-foreground">Avaliação não encontrada</span>
@@ -40,7 +40,7 @@ function ResultadoPage() {
 
   const handleExport = async () => {
     try {
-      await exportarRelatorio.mutateAsync({ data: { avaliacao_id } });
+      await exportarRelatorio.mutateAsync({ data: { avaliacao_id: evaluationId } });
       alert("Relatório exportado com sucesso!");
     } catch {
       alert("Erro ao exportar relatório");
@@ -53,7 +53,7 @@ function ResultadoPage() {
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/avaliacao" className="hover:text-foreground">Nova Avaliação</Link>
+            <Link to="/evaluation" className="hover:text-foreground">Nova Avaliação</Link>
             <span>/</span>
             <span className="text-foreground">Resultado da Predição</span>
           </div>
@@ -65,10 +65,10 @@ function ResultadoPage() {
           <Link to="/">
             <Button variant="outline" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Voltar ao Dashboard
+              Voltar ao Painel
             </Button>
           </Link>
-          <Link to="/avaliacao">
+          <Link to="/evaluation">
             <Button variant="outline" className="gap-2">
               <RotateCcw className="h-4 w-4" />
               Nova Avaliação
@@ -86,11 +86,11 @@ function ResultadoPage() {
         {/* Main Column */}
         <div className="flex flex-col gap-6">
           <ResultHero
-            probability={avaliacao.probabilidade_doenca}
-            riskLevel={avaliacao.tem_doenca ? "alto" : "baixo"}
-            confidence={Number(((1 - avaliacao.probabilidade_doenca) * 100).toFixed(1))}
-            modelName={avaliacao.modelo_usado}
-            temDoenca={avaliacao.tem_doenca}
+            probability={evaluation.disease_probability}
+            riskLevel={evaluation.has_disease ? "high" : "low"}
+            confidence={Number(((1 - evaluation.disease_probability) * 100).toFixed(1))}
+            modelName={evaluation.model_used}
+            temDoenca={evaluation.has_disease}
           />
 
           <div className="grid grid-cols-2 gap-6">
@@ -108,19 +108,19 @@ function ResultadoPage() {
             </CardHeader>
             <CardContent className="p-0 flex flex-col gap-3">
               {[
-                { label: "Idade", value: `${avaliacao.age} anos` },
-                { label: "Sexo", value: avaliacao.sex === 1 ? "Masculino" : "Feminino" },
-                { label: "Pressão arterial", value: `${avaliacao.trestbps} mmHg` },
-                { label: "Colesterol", value: `${avaliacao.chol} mg/dL` },
-                { label: "Freq. cardíaca máx.", value: `${avaliacao.thalach} bpm` },
-                { label: "Dor no peito", value: `Tipo ${avaliacao.cp}` },
-                { label: "ECG em repouso", value: `Tipo ${avaliacao.restecg}` },
-                { label: "Depressão ST", value: `${avaliacao.oldpeak} mm` },
-                { label: "Inclinação ST", value: `Tipo ${avaliacao.slope}` },
-                { label: "Vasos coloridos", value: `${avaliacao.ca}` },
-                { label: "Talassemia", value: `Tipo ${avaliacao.thal}` },
-                { label: "Glicemia > 120", value: avaliacao.fbs === 1 ? "Sim" : "Não" },
-                { label: "Angina exercício", value: avaliacao.exang === 1 ? "Sim" : "Não" },
+                { label: "Idade", value: `${evaluation.age} anos` },
+                { label: "Sexo", value: evaluation.sex === 1 ? "Masculino" : "Feminino" },
+                { label: "Pressão arterial", value: `${evaluation.trestbps} mmHg` },
+                { label: "Colesterol", value: `${evaluation.chol} mg/dL` },
+                { label: "Frequência cardíaca máx.", value: `${evaluation.thalach} bpm` },
+                { label: "Dor torácica", value: `Tipo ${evaluation.cp}` },
+                { label: "ECG em repouso", value: `Tipo ${evaluation.restecg}` },
+                { label: "Depressão ST", value: `${evaluation.oldpeak} mm` },
+                { label: "Inclinação ST", value: `Tipo ${evaluation.slope}` },
+                { label: "Vasos coloridos", value: `${evaluation.ca}` },
+                { label: "Talassemia", value: `Tipo ${evaluation.thal}` },
+                { label: "Glicemia > 120", value: evaluation.fbs === 1 ? "Sim" : "Não" },
+                { label: "Angina por exercício", value: evaluation.exang === 1 ? "Sim" : "Não" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between py-1 border-b border-border last:border-0">
                   <span className="text-sm text-muted-foreground">{item.label}</span>

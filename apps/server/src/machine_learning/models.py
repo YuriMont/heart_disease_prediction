@@ -4,43 +4,38 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
 
-def _criar_ensemble():
-    """Monta o modelo 'ensemble': junta KNN + SVM + Random Forest e faz uma votação.
-
-    A previsão final é a combinação das previsões dos três modelos (voting="soft"
-    usa as probabilidades de cada um).
-    """
-    estimadores = [
+def _create_ensemble():
+    estimators = [
         ("knn", KNeighborsClassifier(n_neighbors=5)),
         ("svm", SVC(probability=True, random_state=42)),
         ("rf", RandomForestClassifier(n_estimators=200, random_state=42)),
     ]
-    return VotingClassifier(estimators=estimadores, voting="soft")
+    return VotingClassifier(estimators=estimators, voting="soft")
 
 
-MODELOS = [
+MODELS = [
     {
-        "nome": "knn",
-        "estimador": KNeighborsClassifier(),
-        "parametros": {
+        "name": "knn",
+        "estimator": KNeighborsClassifier(),
+        "params": {
             "n_neighbors": [3, 5, 7, 9, 11, 13, 15],
             "weights": ["uniform", "distance"],
             "metric": ["euclidean", "manhattan"],
         },
     },
     {
-        "nome": "svm",
-        "estimador": SVC(probability=True, random_state=42),
-        "parametros": {
+        "name": "svm",
+        "estimator": SVC(probability=True, random_state=42),
+        "params": {
             "C": [0.1, 1, 10, 100],
             "kernel": ["linear", "rbf"],
             "gamma": ["scale", "auto"],
         },
     },
     {
-        "nome": "random_forest",
-        "estimador": RandomForestClassifier(random_state=42),
-        "parametros": {
+        "name": "random_forest",
+        "estimator": RandomForestClassifier(random_state=42),
+        "params": {
             "n_estimators": [100, 200, 300],
             "max_features": ["sqrt", "log2"],
             "max_depth": [4, 6, 8, None],
@@ -48,31 +43,25 @@ MODELOS = [
         },
     },
     {
-        "nome": "ensemble",
-        "estimador": _criar_ensemble(),
-        "parametros": {},  # o ensemble não tem parâmetros para testar
+        "name": "ensemble",
+        "estimator": _create_ensemble(),
+        "params": {},
     },
 ]
 
 
-def treinar_modelo(estimador, parametros, X_treino, y_treino, cv=5):
-    """Procura a melhor combinação de parâmetros e treina o modelo.
-
-    O GridSearchCV testa todas as combinações de 'parametros' usando validação
-    cruzada (cv=5) e fica com a melhor. Devolve o modelo já treinado e pronto
-    para fazer previsões.
-    """
-    busca = GridSearchCV(
-        estimator=estimador,
-        param_grid=parametros,
+def train_model(estimator, params, X_train, y_train, cv=5):
+    search = GridSearchCV(
+        estimator=estimator,
+        param_grid=params,
         cv=cv,
         scoring="accuracy",
-        n_jobs=-1,   # usa todos os núcleos do processador (mais rápido)
+        n_jobs=-1,
         verbose=1,
     )
-    busca.fit(X_treino, y_treino)
+    search.fit(X_train, y_train)
 
-    print(f"  Melhores parâmetros: {busca.best_params_}")
-    print(f"  Acurácia na validação: {busca.best_score_:.4f}")
+    print(f"  Best params: {search.best_params_}")
+    print(f"  Validation accuracy: {search.best_score_:.4f}")
 
-    return busca.best_estimator_
+    return search.best_estimator_

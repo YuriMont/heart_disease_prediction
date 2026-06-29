@@ -1,92 +1,88 @@
 from uuid import UUID
 
-from schemas.avaliacao import AvaliacaoCreate, AvaliacaoResponse
-from schemas.paciente import PacienteCreate, PacienteResponse, Paciente as PacienteInput
+from schemas.evaluation import EvaluationCreate, EvaluationResponse
+from schemas.patient import PatientCreate, PatientResponse, Patient as PatientInput
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
 
-from database.models.avaliacao import Avaliacao
-from database.models.modelo import Modelo
-from database.models.paciente import Paciente
+from database.models.evaluation import Evaluation
+from database.models.model import Model
+from database.models.patient import Patient
 from services import prediction_service as servico
 
-router = APIRouter(tags=["pacientes"])
+router = APIRouter(tags=["patients"])
 
 
 # ---------------------------------------------------------------------------
-# Pacientes
+# Patients
 # ---------------------------------------------------------------------------
 
-@router.post("/pacientes", response_model=PacienteResponse)
-def criar_paciente(dados: PacienteCreate, db: Session = Depends(get_db)):
-    """Cria um novo paciente."""
-    paciente = Paciente(nome=dados.nome, idade=dados.idade, sexo=dados.sexo)
-    db.add(paciente)
+@router.post("/patients", response_model=PatientResponse)
+def create_patient(dados: PatientCreate, db: Session = Depends(get_db)):
+    patient = Patient(name=dados.name, age=dados.age, sex=dados.sex)
+    db.add(patient)
     db.commit()
-    db.refresh(paciente)
-    return paciente
+    db.refresh(patient)
+    return patient
 
 
-@router.get("/pacientes", response_model=list[PacienteResponse])
-def listar_pacientes(db: Session = Depends(get_db)):
-    """Lista todos os pacientes."""
-    return db.query(Paciente).order_by(Paciente.criado_em.desc()).all()
+@router.get("/patients", response_model=list[PatientResponse])
+def list_patients(db: Session = Depends(get_db)):
+    return db.query(Patient).order_by(Patient.created_at.desc()).all()
 
 
-@router.get("/pacientes/{paciente_id}", response_model=PacienteResponse)
-def obter_paciente(paciente_id: UUID, db: Session = Depends(get_db)):
-    """Detalhes de um paciente."""
-    paciente = db.query(Paciente).get(paciente_id)
-    if not paciente:
-        raise HTTPException(status_code=404, detail="Paciente não encontrado.")
-    return paciente
+@router.get("/patients/{patient_id}", response_model=PatientResponse)
+def get_patient(patient_id: UUID, db: Session = Depends(get_db)):
+    patient = db.query(Patient).get(patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found.")
+    return patient
 
 
 # ---------------------------------------------------------------------------
-# Avaliações
+# Evaluations
 # ---------------------------------------------------------------------------
 
-@router.post("/avaliacoes", response_model=AvaliacaoResponse)
-def criar_avaliacao(dados: AvaliacaoCreate, db: Session = Depends(get_db)):
-    """Cria avaliação e retorna predição."""
-    paciente = db.query(Paciente).get(dados.paciente_id)
-    if not paciente:
-        raise HTTPException(status_code=404, detail="Paciente não encontrado.")
+@router.post("/evaluations", response_model=EvaluationResponse)
+def create_evaluation(dados: EvaluationCreate, db: Session = Depends(get_db)):
+    patient = db.query(Patient).get(dados.paciente_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found.")
 
-    metrica_modelo = db.query(Modelo).filter(Modelo.id == dados.modelo).first()
-    if not metrica_modelo or not metrica_modelo.ativo:
+    metrica_modelo = db.query(Model).filter(Model.id == dados.modelo).first()
+    if not metrica_modelo or not metrica_modelo.active:
         raise HTTPException(
             status_code=400,
-            detail=f"Modelo '{dados.modelo}' não está ativo ou não existe. Ative-o antes de usar.",
+            detail=f"Model '{dados.modelo}' is not active or does not exist. Activate it first.",
         )
 
-    if metrica_modelo.nome not in servico.MODELOS:
+    if metrica_modelo.name not in servico.MODELOS:
         raise HTTPException(
             status_code=400,
-            detail=f"Arquivo do modelo '{metrica_modelo.nome}' não encontrado. Opções: {list(servico.MODELOS.keys())}",
+            detail=f"Model file '{metrica_modelo.name}' not found. Options: {list(servico.MODELOS.keys())}",
         )
 
-    paciente_input = PacienteInput(
+    paciente_input = PatientInput(
         age=dados.age, sex=dados.sex, cp=dados.cp,
         trestbps=dados.trestbps, chol=dados.chol, fbs=dados.fbs,
         restecg=dados.restecg, thalach=dados.thalach, exang=dados.exang,
         oldpeak=dados.oldpeak, slope=dados.slope, ca=dados.ca, thal=dados.thal,
     )
 
-    resultado = servico.prever(paciente_input, dados.modelo, db)
+    resultado = servico.predict(paciente_input, dados.modelo, db)
 
-    avaliacao = Avaliacao(
+    avaliacao = Evaluation(
         paciente_id=dados.paciente_id,
         age=dados.age, sex=dados.sex, cp=dados.cp,
         trestbps=dados.trestbps, chol=dados.chol, fbs=dados.fbs,
         restecg=dados.restecg, thalach=dados.thalach, exang=dados.exang,
         oldpeak=dados.oldpeak, slope=dados.slope, ca=dados.ca, thal=dados.thal,
-        modelo_usado=resultado["modelo_usado"],
-        tem_doenca=1 if resultado["tem_doenca"] else 0,
-        probabilidade_doenca=resultado["probabilidade_doenca"],
-        resultado_texto=resultado["resultado"],
+        model_used=resultado["modelo_usado"],
+        has_disease=1 if resultado["tem_doenca"] else 0,
+        disease_probability=resultado["probabilidade_doenca"],
+        result_text=resultado["resultado"],
     )
     db.add(avaliacao)
     db.commit()
@@ -94,16 +90,14 @@ def criar_avaliacao(dados: AvaliacaoCreate, db: Session = Depends(get_db)):
     return avaliacao
 
 
-@router.get("/avaliacoes", response_model=list[AvaliacaoResponse])
-def listar_avaliacoes(db: Session = Depends(get_db)):
-    """Lista todas as avaliações."""
-    return db.query(Avaliacao).order_by(Avaliacao.criado_em.desc()).all()
+@router.get("/evaluations", response_model=list[EvaluationResponse])
+def list_evaluations(db: Session = Depends(get_db)):
+    return db.query(Evaluation).order_by(Evaluation.created_at.desc()).all()
 
 
-@router.get("/avaliacoes/{avaliacao_id}", response_model=AvaliacaoResponse)
-def obter_avaliacao(avaliacao_id: UUID, db: Session = Depends(get_db)):
-    """Detalhes de uma avaliação."""
-    avaliacao = db.query(Avaliacao).get(avaliacao_id)
-    if not avaliacao:
-        raise HTTPException(status_code=404, detail="Avaliação não encontrada.")
-    return avaliacao
+@router.get("/evaluations/{evaluation_id}", response_model=EvaluationResponse)
+def get_evaluation(evaluation_id: UUID, db: Session = Depends(get_db)):
+    evaluation = db.query(Evaluation).get(evaluation_id)
+    if not evaluation:
+        raise HTTPException(status_code=404, detail="Evaluation not found.")
+    return evaluation

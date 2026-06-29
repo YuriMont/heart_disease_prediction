@@ -9,13 +9,13 @@ interface FeatureImportanceProps {
 const COLORS = ["#1E63E9", "#0EA5C4", "#16A45F", "#E8930C", "#DC3848", "#7C3AED"];
 
 export function FeatureImportance({ features }: FeatureImportanceProps) {
-  const sorted = [...features].sort((a, b) => b.peso - a.peso);
+  const sorted = [...features].sort((a, b) => b.weight - a.weight);
   const chartHeight = sorted.length * 28;
 
   return (
     <Card className="flex flex-col gap-4 p-6">
       <CardHeader className="p-0">
-        <CardTitle>Importância das Variáveis</CardTitle>
+        <CardTitle>Importância das Características</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <div style={{ height: chartHeight }}>
@@ -28,11 +28,11 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
               <XAxis type="number" domain={[0, 1]} hide />
               <YAxis
                 type="category"
-                dataKey="variavel"
+                dataKey="variable"
                 width={150}
                 tick={{ fontSize: 12, fill: "#5A6B82" }}
               />
-              <Bar dataKey="peso" radius={[0, 6, 6, 0]} barSize={16}>
+              <Bar dataKey="weight" radius={[0, 6, 6, 0]} barSize={16}>
                 {sorted.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}

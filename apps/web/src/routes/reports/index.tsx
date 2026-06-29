@@ -3,18 +3,17 @@ import { Search, Bell, Download, Eye } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
-import { useListarRelatoriosRelatoriosGet } from "../../generated/api/relatorios/relatorios";
+import { useListReportsReportsGet } from "../../generated/api/reports/reports";
 
-export const Route = createFileRoute("/relatorios/")({
-  component: RelatoriosPage,
+export const Route = createFileRoute("/reports/")({
+  component: ReportsPage,
 });
 
-function RelatoriosPage() {
-  const { data: reports = [], isLoading } = useListarRelatoriosRelatoriosGet();
+function ReportsPage() {
+  const { data: reports = [], isLoading } = useListReportsReportsGet();
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <h1 className="font-heading text-[26px] font-bold text-foreground">Relatórios</h1>
@@ -25,7 +24,7 @@ function RelatoriosPage() {
         <div className="flex items-center gap-3.5">
           <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
             <Search className="h-[17px] w-[17px] text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Buscar relatório...</span>
+            <span className="text-sm text-muted-foreground">Pesquisar relatório...</span>
           </div>
           <button className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card">
             <Bell className="h-[19px] w-[19px] text-secondary-foreground" />
@@ -37,27 +36,25 @@ function RelatoriosPage() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-5">
         <div className="rounded-[18px] border border-border bg-card p-5">
-          <span className="text-sm text-muted-foreground">Relatórios gerados</span>
+            <span className="text-sm text-muted-foreground">Relatórios gerados</span>
           <div className="mt-2 font-heading text-[34px] font-bold text-foreground">
             {reports.length}
           </div>
         </div>
         <div className="rounded-[18px] border border-border bg-card p-5">
-          <span className="text-sm text-muted-foreground">Média de Risco</span>
+            <span className="text-sm text-muted-foreground">Risco Médio</span>
           <div className="mt-2 font-heading text-[34px] font-bold text-foreground">Médio</div>
           <span className="text-xs text-risk-low">Estável</span>
         </div>
         <div className="rounded-[18px] border border-border bg-card p-5">
-          <span className="text-sm text-muted-foreground">Tendência Mensal</span>
+            <span className="text-sm text-muted-foreground">Tendência Mensal</span>
           <div className="mt-2 font-heading text-[34px] font-bold text-foreground">+5%</div>
           <span className="text-xs text-risk-low">↑</span>
         </div>
       </div>
 
-      {/* Table */}
       <Card className="p-6">
         <CardHeader className="p-0 mb-4">
           <CardTitle>Relatórios Recentes</CardTitle>
@@ -82,10 +79,10 @@ function RelatoriosPage() {
                 {reports.map((report) => (
                   <TableRow key={report.id}>
                     <TableCell className="font-medium">#{report.id}</TableCell>
-                    <TableCell>{report.titulo}</TableCell>
+                    <TableCell>{report.title}</TableCell>
                     <TableCell className="text-muted-foreground">#{report.avaliacao_id}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {new Date(report.criado_em).toLocaleDateString("pt-BR")}
+                      {new Date(report.created_at).toLocaleDateString("pt-BR")}
                     </TableCell>
                     <TableCell>
                       <Button variant="ghost" size="icon" className="h-8 w-8">

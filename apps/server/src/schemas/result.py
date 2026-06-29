@@ -2,11 +2,11 @@ from pydantic import BaseModel
 
 
 class ContributingFactor(BaseModel):
-    variavel: str
-    valor: str
-    impacto: float
+    variable: str
+    value: str
+    impact: float
 
 
 class FeatureImportance(BaseModel):
-    variavel: str
-    peso: float
+    variable: str
+    weight: float

@@ -1,125 +1,100 @@
-# Web — Sistema de Avaliação de Risco de Pacientes
+# Web — Frontend de Avaliação de Risco Cardíaco
 
-Frontend React do projeto PIBIC para avaliação de risco de pacientes.
+Frontend React do projeto PIBIC. Interface em **português**, código em **inglês**.
 
 ## Stack
 
 | Camada | Tecnologia |
-|---|---|
-| UI | React 19 + TypeScript 6 |
-| Build | Vite 8 |
+|--------|------------|
+| UI | React 19 + TypeScript |
+| Build | Vite |
 | Roteamento | TanStack Router (file-based) |
-| State async | TanStack React Query 5 |
+| State | TanStack React Query |
 | Estilo | Tailwind CSS 4 |
 | HTTP | Axios |
-| Validação | Zod 4 |
-| API Client | Orval (gera hooks + schemas a partir de OpenAPI) |
+| Validação | Zod |
+| API Client | Orval (gerado de OpenAPI) |
 
 ## Pré-requisitos
 
 - Node.js >= 18
-- Backend rodando em `http://localhost:8000` (FastAPI com OpenAPI em `/openapi.json`)
+- Backend em `http://localhost:8000` (FastAPI)
 
 ## Instalação
 
 ```bash
-# Na raiz do monorepo
-npm install
-
-# Ou apenas no web/
 cd apps/web
 npm install
-```
-
-## Variáveis de Ambiente
-
-Copie `.env.example` para `.env`:
-
-```bash
 cp .env.example .env
 ```
 
-| Variável | Descrição | Padrão |
-|---|---|---|
-| `VITE_API_URL` | URL do backend API | `http://localhost:8000` |
+| Variável | Padrão |
+|----------|--------|
+| `VITE_API_URL` | `http://localhost:8000` |
 
 ## Scripts
 
 | Comando | Descrição |
-|---|---|
-| `npm run dev` | Inicia o servidor de desenvolvimento (HMR) |
-| `npm run build` | Compila TS + gera build de produção |
-| `npm run preview` | Visualiza o build de produção localmente |
-| `npm run lint` | Executa ESLint em todos os arquivos |
-| `npm run generate:api` | Regenera client de API + schemas Zod a partir do backend |
+|---------|-----------|
+| `dev` | Servidor dev (HMR) |
+| `build` | Compila TS + build produção |
+| `preview` | Preview da build |
+| `lint` | ESLint |
+| `generate:api` | Regenera client Orval do OpenAPI |
 
 ## Estrutura
 
 ```
 src/
-├── main.tsx                 # Entry point
-├── index.css                # Estilos globais (Tailwind)
-├── routeTree.gen.ts         # Árvore de rotas (gerada automaticamente)
-├── assets/                  # Imagens e SVGs
-├── lib/
-│   ├── api.ts               # Instância Axios (baseURL = VITE_API_URL)
-│   └── queryClient.ts       # Instância do React Query
+├── components/
+│   ├── dashboard/        # Cards, gráficos, estatísticas
+│   ├── evaluation/       # Formulário de avaliação (wizard)
+│   ├── result/           # Hero, fatores, importância, recomendações
+│   ├── layout/           # Sidebar, MainLayout
+│   └── ui/               # Componentes base (Button, Card, Input, etc.)
+│
 ├── routes/
-│   ├── __root.tsx           # Layout raiz
-│   └── index.tsx            # Rota "/"
-└── generated/               # ⚠️ Gerado pelo Orval — NÃO EDITAR
-    ├── api/                 # Hooks React Query por domínio
-    │   ├── dashboard/
-    │   ├── geral/
-    │   ├── modelos/
-    │   ├── pacientes/
-    │   ├── previsão/
-    │   ├── relatorios/
-    │   └── resultado/
-    └── models/              # Tipos TypeScript + schemas Zod
+│   ├── __root.tsx        # Layout raiz
+│   ├── index.tsx         # Dashboard (/)
+│   ├── evaluation/       # Nova avaliação (/evaluation)
+│   │   └── $id/          # Resultado da avaliação (/evaluation/$id)
+│   ├── patients/         # Lista de pacientes (/patients)
+│   ├── models/           # Modelos de ML (/models)
+│   ├── reports/          # Relatórios (/reports)
+│   └── results/          # Resultados (/results)
+│
+├── generated/            # ⚠️ Orval — não editar
+│   ├── api/              # Hooks por domínio (dashboard, patients, result, etc.)
+│   └── models/           # Tipos TS + schemas Zod
+│
+├── lib/                  # api.ts, utils, queryClient
+└── store/                # Jotai atoms
 ```
 
 ## Geração de API
 
-O projeto usa **Orval** para gerar automaticamente hooks React Query e schemas Zod a partir da spec OpenAPI do backend.
-
 ```bash
-npm run generate:api
+npm run generate:api      # busca /openapi.json do backend
 ```
 
-Isso busca `http://localhost:8000/openapi.json` e gera o código em `src/generated/`. **Nunca edite arquivos em `src/generated/`** — eles são sobrescritos a cada geração.
+Gera hooks React Query + schemas Zod em `src/generated/`. **Nunca editar.**
 
-### Domínios de API gerados
+## Rotas
 
-- **dashboard** — Estatísticas do dashboard
-- **geral** — Endpoints gerais
-- **modelos** — Modelos de ML disponíveis
-- **pacientes** — CRUD de pacientes
-- **previsão** — Previsão de risco
-- **relatorios** — Exportação de relatórios
-- **resultado** — Resultados de avaliação
-
-## Roteamento
-
-Usa TanStack Router com **file-based routing**. As rotas são definidas em `src/routes/` e a árvore é gerada automaticamente em `src/routeTree.gen.ts`.
-
-Para adicionar uma rota, crie um arquivo em `src/routes/`:
-
-```
-src/routes/
-├── __root.tsx        # Layout raiz (presente)
-├── index.tsx         # "/"
-├── pacientes.tsx     # "/pacientes"
-└── pacientes/
-    └── $id.tsx       # "/pacientes/:id"
-```
+| Path | Página |
+|------|--------|
+| `/` | Dashboard |
+| `/evaluation` | Nova Avaliação |
+| `/evaluation/$id` | Resultado da Predição |
+| `/patients` | Pacientes |
+| `/models` | Modelos de IA |
+| `/reports` | Relatórios |
+| `/results` | Resultados |
 
 ## Backend
 
-O frontend se comunica com um backend que expõe uma API REST com spec OpenAPI. O Vite faz proxy de `/api` para o backend durante o desenvolvimento.
-
-Certifique-se de que o backend esteja rodando antes de iniciar o frontend.
+API FastAPI em `apps/server`. Rode antes do frontend.
 
 ## Licença
 
-Projeto PIBIC — Programa Institucional de Bolsas de Iniciação Científica.
+PIBIC — Programa Institucional de Bolsas de Iniciação Científica.

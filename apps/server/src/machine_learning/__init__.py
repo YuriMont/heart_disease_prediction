@@ -1,10 +1,9 @@
-"""Pacote com o código de machine learning do projeto.
+"""Machine learning package for the CardioPredict project.
 
-Aqui dentro ficam os 3 arquivos que fazem o trabalho de aprendizado de máquina:
+Contains three modules:
+- data.py       -> downloads and prepares data (clean, organize, standardize)
+- models.py     -> defines which models to use (KNN, SVM, etc.)
+- evaluation.py -> measures model performance (accuracy, recall, etc.)
 
-- dados.py     -> baixa e prepara os dados (limpa, organiza, padroniza)
-- modelos.py   -> define quais modelos vamos usar (KNN, SVM, etc.)
-- avaliacao.py -> mede se o modelo está acertando (acurácia, recall...)
-
-A ideia é que cada arquivo cuide de UMA parte, para ficar fácil de entender.
+Each module handles a single concern for clarity and maintainability.
 """

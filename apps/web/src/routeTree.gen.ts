@@ -10,115 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ResultadosIndexRouteImport } from './routes/resultados/index'
-import { Route as RelatoriosIndexRouteImport } from './routes/relatorios/index'
-import { Route as PacientesIndexRouteImport } from './routes/pacientes/index'
-import { Route as ModelosIndexRouteImport } from './routes/modelos/index'
-import { Route as AvaliacaoIndexRouteImport } from './routes/avaliacao/index'
-import { Route as AvaliacaoIdIndexRouteImport } from './routes/avaliacao/$id/index'
+import { Route as ResultsIndexRouteImport } from './routes/results/index'
+import { Route as ReportsIndexRouteImport } from './routes/reports/index'
+import { Route as PatientsIndexRouteImport } from './routes/patients/index'
+import { Route as ModelsIndexRouteImport } from './routes/models/index'
+import { Route as EvaluationIndexRouteImport } from './routes/evaluation/index'
+import { Route as EvaluationIdIndexRouteImport } from './routes/evaluation/$id/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResultadosIndexRoute = ResultadosIndexRouteImport.update({
-  id: '/resultados/',
-  path: '/resultados/',
+const ResultsIndexRoute = ResultsIndexRouteImport.update({
+  id: '/results/',
+  path: '/results/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RelatoriosIndexRoute = RelatoriosIndexRouteImport.update({
-  id: '/relatorios/',
-  path: '/relatorios/',
+const ReportsIndexRoute = ReportsIndexRouteImport.update({
+  id: '/reports/',
+  path: '/reports/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PacientesIndexRoute = PacientesIndexRouteImport.update({
-  id: '/pacientes/',
-  path: '/pacientes/',
+const PatientsIndexRoute = PatientsIndexRouteImport.update({
+  id: '/patients/',
+  path: '/patients/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ModelosIndexRoute = ModelosIndexRouteImport.update({
-  id: '/modelos/',
-  path: '/modelos/',
+const ModelsIndexRoute = ModelsIndexRouteImport.update({
+  id: '/models/',
+  path: '/models/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AvaliacaoIndexRoute = AvaliacaoIndexRouteImport.update({
-  id: '/avaliacao/',
-  path: '/avaliacao/',
+const EvaluationIndexRoute = EvaluationIndexRouteImport.update({
+  id: '/evaluation/',
+  path: '/evaluation/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AvaliacaoIdIndexRoute = AvaliacaoIdIndexRouteImport.update({
-  id: '/avaliacao/$id/',
-  path: '/avaliacao/$id/',
+const EvaluationIdIndexRoute = EvaluationIdIndexRouteImport.update({
+  id: '/evaluation/$id/',
+  path: '/evaluation/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/avaliacao/': typeof AvaliacaoIndexRoute
-  '/modelos/': typeof ModelosIndexRoute
-  '/pacientes/': typeof PacientesIndexRoute
-  '/relatorios/': typeof RelatoriosIndexRoute
-  '/resultados/': typeof ResultadosIndexRoute
-  '/avaliacao/$id/': typeof AvaliacaoIdIndexRoute
+  '/evaluation/': typeof EvaluationIndexRoute
+  '/models/': typeof ModelsIndexRoute
+  '/patients/': typeof PatientsIndexRoute
+  '/reports/': typeof ReportsIndexRoute
+  '/results/': typeof ResultsIndexRoute
+  '/evaluation/$id/': typeof EvaluationIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/avaliacao': typeof AvaliacaoIndexRoute
-  '/modelos': typeof ModelosIndexRoute
-  '/pacientes': typeof PacientesIndexRoute
-  '/relatorios': typeof RelatoriosIndexRoute
-  '/resultados': typeof ResultadosIndexRoute
-  '/avaliacao/$id': typeof AvaliacaoIdIndexRoute
+  '/evaluation': typeof EvaluationIndexRoute
+  '/models': typeof ModelsIndexRoute
+  '/patients': typeof PatientsIndexRoute
+  '/reports': typeof ReportsIndexRoute
+  '/results': typeof ResultsIndexRoute
+  '/evaluation/$id': typeof EvaluationIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/avaliacao/': typeof AvaliacaoIndexRoute
-  '/modelos/': typeof ModelosIndexRoute
-  '/pacientes/': typeof PacientesIndexRoute
-  '/relatorios/': typeof RelatoriosIndexRoute
-  '/resultados/': typeof ResultadosIndexRoute
-  '/avaliacao/$id/': typeof AvaliacaoIdIndexRoute
+  '/evaluation/': typeof EvaluationIndexRoute
+  '/models/': typeof ModelsIndexRoute
+  '/patients/': typeof PatientsIndexRoute
+  '/reports/': typeof ReportsIndexRoute
+  '/results/': typeof ResultsIndexRoute
+  '/evaluation/$id/': typeof EvaluationIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/avaliacao/'
-    | '/modelos/'
-    | '/pacientes/'
-    | '/relatorios/'
-    | '/resultados/'
-    | '/avaliacao/$id/'
+    | '/evaluation/'
+    | '/models/'
+    | '/patients/'
+    | '/reports/'
+    | '/results/'
+    | '/evaluation/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/avaliacao'
-    | '/modelos'
-    | '/pacientes'
-    | '/relatorios'
-    | '/resultados'
-    | '/avaliacao/$id'
+    | '/evaluation'
+    | '/models'
+    | '/patients'
+    | '/reports'
+    | '/results'
+    | '/evaluation/$id'
   id:
     | '__root__'
     | '/'
-    | '/avaliacao/'
-    | '/modelos/'
-    | '/pacientes/'
-    | '/relatorios/'
-    | '/resultados/'
-    | '/avaliacao/$id/'
+    | '/evaluation/'
+    | '/models/'
+    | '/patients/'
+    | '/reports/'
+    | '/results/'
+    | '/evaluation/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AvaliacaoIndexRoute: typeof AvaliacaoIndexRoute
-  ModelosIndexRoute: typeof ModelosIndexRoute
-  PacientesIndexRoute: typeof PacientesIndexRoute
-  RelatoriosIndexRoute: typeof RelatoriosIndexRoute
-  ResultadosIndexRoute: typeof ResultadosIndexRoute
-  AvaliacaoIdIndexRoute: typeof AvaliacaoIdIndexRoute
+  EvaluationIndexRoute: typeof EvaluationIndexRoute
+  ModelsIndexRoute: typeof ModelsIndexRoute
+  PatientsIndexRoute: typeof PatientsIndexRoute
+  ReportsIndexRoute: typeof ReportsIndexRoute
+  ResultsIndexRoute: typeof ResultsIndexRoute
+  EvaluationIdIndexRoute: typeof EvaluationIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,46 +130,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resultados/': {
-      id: '/resultados/'
-      path: '/resultados'
-      fullPath: '/resultados/'
-      preLoaderRoute: typeof ResultadosIndexRouteImport
+    '/results/': {
+      id: '/results/'
+      path: '/results'
+      fullPath: '/results/'
+      preLoaderRoute: typeof ResultsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/relatorios/': {
-      id: '/relatorios/'
-      path: '/relatorios'
-      fullPath: '/relatorios/'
-      preLoaderRoute: typeof RelatoriosIndexRouteImport
+    '/reports/': {
+      id: '/reports/'
+      path: '/reports'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof ReportsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pacientes/': {
-      id: '/pacientes/'
-      path: '/pacientes'
-      fullPath: '/pacientes/'
-      preLoaderRoute: typeof PacientesIndexRouteImport
+    '/patients/': {
+      id: '/patients/'
+      path: '/patients'
+      fullPath: '/patients/'
+      preLoaderRoute: typeof PatientsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/modelos/': {
-      id: '/modelos/'
-      path: '/modelos'
-      fullPath: '/modelos/'
-      preLoaderRoute: typeof ModelosIndexRouteImport
+    '/models/': {
+      id: '/models/'
+      path: '/models'
+      fullPath: '/models/'
+      preLoaderRoute: typeof ModelsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/avaliacao/': {
-      id: '/avaliacao/'
-      path: '/avaliacao'
-      fullPath: '/avaliacao/'
-      preLoaderRoute: typeof AvaliacaoIndexRouteImport
+    '/evaluation/': {
+      id: '/evaluation/'
+      path: '/evaluation'
+      fullPath: '/evaluation/'
+      preLoaderRoute: typeof EvaluationIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/avaliacao/$id/': {
-      id: '/avaliacao/$id/'
-      path: '/avaliacao/$id'
-      fullPath: '/avaliacao/$id/'
-      preLoaderRoute: typeof AvaliacaoIdIndexRouteImport
+    '/evaluation/$id/': {
+      id: '/evaluation/$id/'
+      path: '/evaluation/$id'
+      fullPath: '/evaluation/$id/'
+      preLoaderRoute: typeof EvaluationIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -177,12 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AvaliacaoIndexRoute: AvaliacaoIndexRoute,
-  ModelosIndexRoute: ModelosIndexRoute,
-  PacientesIndexRoute: PacientesIndexRoute,
-  RelatoriosIndexRoute: RelatoriosIndexRoute,
-  ResultadosIndexRoute: ResultadosIndexRoute,
-  AvaliacaoIdIndexRoute: AvaliacaoIdIndexRoute,
+  EvaluationIndexRoute: EvaluationIndexRoute,
+  ModelsIndexRoute: ModelsIndexRoute,
+  PatientsIndexRoute: PatientsIndexRoute,
+  ReportsIndexRoute: ReportsIndexRoute,
+  ResultsIndexRoute: ResultsIndexRoute,
+  EvaluationIdIndexRoute: EvaluationIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

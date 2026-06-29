@@ -5,78 +5,73 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
-from schemas.relatorio import RelatorioResponse
-from database.models.avaliacao import Avaliacao
-from database.models.relatorio import Relatorio
+from schemas.report import ReportResponse
+from database.models.evaluation import Evaluation
+from database.models.report import Report
 
-router = APIRouter(prefix="/relatorios", tags=["relatorios"])
+router = APIRouter(prefix="/reports", tags=["reports"])
 
 
-def _gerar_conteudo(av: Avaliacao) -> str:
-    """Gera o conteúdo textual do relatório."""
-    risco = "ALTO" if av.probabilidade_doenca >= 0.65 else (
-        "MÉDIO" if av.probabilidade_doenca >= 0.35 else "BAIXO"
+def _generate_content(evaluation: Evaluation) -> str:
+    risk = "HIGH" if evaluation.disease_probability >= 0.65 else (
+        "MEDIUM" if evaluation.disease_probability >= 0.35 else "LOW"
     )
     return (
-        f"RELATÓRIO DE AVALIAÇÃO CARDIOVASCULAR\n"
+        f"CARDIOVASCULAR EVALUATION REPORT\n"
         f"{'=' * 40}\n\n"
-        f"Paciente ID: {av.paciente_id}\n"
-        f"Data: {av.criado_em.strftime('%d/%m/%Y %H:%M')}\n"
-        f"Modelo: {av.modelo_usado}\n\n"
-        f"--- RESULTADO ---\n"
-        f"Classificação: {risco} RISCO\n"
-        f"Probabilidade: {av.probabilidade_doenca * 100:.1f}%\n"
-        f"Conclusão: {av.resultado_texto}\n\n"
-        f"--- DADOS CLÍNICOS ---\n"
-        f"Idade: {av.age} anos\n"
-        f"Sexo: {'Masculino' if av.sex == 1 else 'Feminino'}\n"
-        f"Pressão arterial: {av.trestbps} mmHg\n"
-        f"Colesterol: {av.chol} mg/dL\n"
-        f"Freq. cardíaca máx.: {av.thalach} bpm\n"
-        f"Depressão ST: {av.oldpeak} mm\n"
+        f"Patient ID: {evaluation.paciente_id}\n"
+        f"Date: {evaluation.created_at.strftime('%d/%m/%Y %H:%M')}\n"
+        f"Model: {evaluation.model_used}\n\n"
+        f"--- RESULT ---\n"
+        f"Classification: {risk} RISK\n"
+        f"Probability: {evaluation.disease_probability * 100:.1f}%\n"
+        f"Conclusion: {evaluation.result_text}\n\n"
+        f"--- CLINICAL DATA ---\n"
+        f"Age: {evaluation.age} years\n"
+        f"Sex: {'Male' if evaluation.sex == 1 else 'Female'}\n"
+        f"Blood pressure: {evaluation.trestbps} mmHg\n"
+        f"Cholesterol: {evaluation.chol} mg/dL\n"
+        f"Max heart rate: {evaluation.thalach} bpm\n"
+        f"ST depression: {evaluation.oldpeak} mm\n"
     )
 
 
-class RelatorioExportar(BaseModel):
+class ReportExport(BaseModel):
     avaliacao_id: UUID
 
 
-@router.get("", response_model=list[RelatorioResponse])
-def listar_relatorios(db: Session = Depends(get_db)):
-    """Lista todos os relatórios."""
-    return db.query(Relatorio).order_by(Relatorio.criado_em.desc()).all()
+@router.get("", response_model=list[ReportResponse])
+def list_reports(db: Session = Depends(get_db)):
+    return db.query(Report).order_by(Report.created_at.desc()).all()
 
 
-@router.get("/{relatorio_id}", response_model=RelatorioResponse)
-def obter_relatorio(relatorio_id: UUID, db: Session = Depends(get_db)):
-    """Detalhes de um relatório."""
-    relatorio = db.query(Relatorio).get(relatorio_id)
-    if not relatorio:
-        raise HTTPException(status_code=404, detail="Relatório não encontrado.")
-    return relatorio
+@router.get("/{report_id}", response_model=ReportResponse)
+def get_report(report_id: UUID, db: Session = Depends(get_db)):
+    report = db.query(Report).get(report_id)
+    if not report:
+        raise HTTPException(status_code=404, detail="Report not found.")
+    return report
 
 
-@router.post("/exportar", response_model=RelatorioResponse)
-def exportar_relatorio(dados: RelatorioExportar, db: Session = Depends(get_db)):
-    """Gera e salva um relatório para uma avaliação."""
-    avaliacao = db.query(Avaliacao).get(dados.avaliacao_id)
-    if not avaliacao:
-        raise HTTPException(status_code=404, detail="Avaliação não encontrada.")
+@router.post("/export", response_model=ReportResponse)
+def export_report(data: ReportExport, db: Session = Depends(get_db)):
+    evaluation = db.query(Evaluation).get(data.avaliacao_id)
+    if not evaluation:
+        raise HTTPException(status_code=404, detail="Evaluation not found.")
 
-    # Verificar se já existe relatório
-    existente = db.query(Relatorio).filter_by(avaliacao_id=dados.avaliacao_id).first()
-    if existente:
-        return existente
+    existing = db.query(Report).filter_by(avaliacao_id=data.avaliacao_id).first()
+    if existing:
+        return existing
 
-    conteudo = _gerar_conteudo(avaliacao)
-    titulo = f"Relatório Avaliação #{avaliacao.id} — Paciente #{avaliacao.paciente_id}"
+    content = _generate_content(evaluation)
+    title = f"Evaluation Report #{evaluation.id} — Patient #{evaluation.paciente_id}"
 
-    relatorio = Relatorio(
-        avaliacao_id=dados.avaliacao_id,
-        titulo=titulo,
-        conteudo=conteudo,
+    report = Report(
+        avaliacao_id=data.avaliacao_id,
+        title=title,
+        content=content,
     )
-    db.add(relatorio)
+    db.add(report)
     db.commit()
-    db.refresh(relatorio)
-    return relatorio
+    db.refresh(report)
+    return report

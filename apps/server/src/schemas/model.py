@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class ModeloUpdate(BaseModel):
-    nome: str | None = None
-    descricao: str | None = None
-    ativo: bool | None = None
+class ModelUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    active: bool | None = None

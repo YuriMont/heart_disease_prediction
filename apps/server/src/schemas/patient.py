@@ -4,7 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 
 
-class Paciente(BaseModel):
+class Patient(BaseModel):
     age: int = Field(..., ge=1, le=120, description="Idade em anos")
     sex: int = Field(..., ge=0, le=1, description="Sexo: 1 = masculino, 0 = feminino")
     cp: int = Field(..., ge=1, le=4, description="Tipo de dor no peito (1 a 4)")
@@ -30,17 +30,17 @@ class Paciente(BaseModel):
     }
 
 
-class PacienteCreate(BaseModel):
-    nome: str | None = Field(None, max_length=200, description="Nome do paciente")
-    idade: int = Field(..., ge=1, le=120, description="Idade em anos")
-    sexo: int = Field(..., ge=0, le=1, description="Sexo: 1 = masculino, 0 = feminino")
+class PatientCreate(BaseModel):
+    name: str | None = Field(None, max_length=200, description="Nome do paciente")
+    age: int = Field(..., ge=1, le=120, description="Idade em anos")
+    sex: int = Field(..., ge=0, le=1, description="Sexo: 1 = masculino, 0 = feminino")
 
 
-class PacienteResponse(BaseModel):
+class PatientResponse(BaseModel):
     id: UUID
-    nome: str | None
-    idade: int
-    sexo: int
-    criado_em: datetime
+    name: str | None
+    age: int
+    sex: int
+    created_at: datetime
 
     model_config = {"from_attributes": True}

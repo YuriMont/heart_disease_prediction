@@ -1,31 +1,18 @@
-# CardioPredict - Sistema de Predição de Doença Cardíaca
+# CardioPredict — Predição de Doença Cardíaca
 
-Sistema completo para avaliação de risco de doença cardíaca utilizando machine learning, desenvolvido no âmbito do PIBIC (Programa Institucional de Bolsas de Iniciação Científica).
+Sistema completo para avaliação de risco de doença cardíaca utilizando machine learning. Desenvolvido no âmbito do PIBIC (Programa Institucional de Bolsas de Iniciação Científica).
 
-## Visão Geral
+O **código** (variáveis, funções, rotas, banco de dados) usa nomes em **inglês**. A **interface do usuário** é exibida em **português**.
 
-O CardioPredict combina uma API REST com modelos de machine learning para prever o risco de doença cardíaca a partir de dados clínicos de pacientes. O sistema permite cadastrar pacientes, realizar previsões, gerar relatórios e acompanhar métricas de desempenho dos modelos.
+## Funcionalidades
 
-### Funcionalidades
+- **Predição de Risco** — ML para classificar risco cardíaco (KNN, SVM, Random Forest, Ensemble)
+- **CRUD de Pacientes** — Cadastro e gerenciamento
+- **Avaliações** — Registro de predições por paciente
+- **Relatórios** — Geração e exportação
+- **Dashboard** — Estatísticas e métricas em tempo real
 
-- **Previsão de Risco**: Algoritmo de ML para predição de doença cardíaca
-- **CRUD de Pacientes**: Cadastro e gerenciamento de dados de pacientes
-- **Relatórios**: Geração e exportação de relatórios médicos
-- **Dashboard**: Visualização de estatísticas e métricas
-- **Modelos de ML**: KNN, SVM, Random Forest e Ensemble
-
-## Arquitetura
-
-```
-pibic/
-├── apps/
-│   ├── web/          # Frontend React
-│   └── server/       # Backend FastAPI + ML
-├── design/           # Arquivos de design (Penpot)
-└── docs/             # Documentação
-```
-
-## Stack Tecnológica
+## Stack
 
 ### Backend (`apps/server`)
 
@@ -33,7 +20,7 @@ pibic/
 |------------|------------|
 | Framework | FastAPI |
 | ML | scikit-learn, imbalanced-learn |
-| Banco de Dados | SQLite + SQLAlchemy |
+| Banco | SQLite + SQLAlchemy + Alembic |
 | Validação | Pydantic |
 | Servidor | Uvicorn |
 
@@ -41,283 +28,174 @@ pibic/
 
 | Componente | Tecnologia |
 |------------|------------|
-| UI | React 19 + TypeScript 6 |
-| Build | Vite 8 |
-| Roteamento | TanStack Router |
-| State | TanStack React Query 5 |
+| UI | React 19 + TypeScript |
+| Build | Vite |
+| Roteamento | TanStack Router (file-based) |
+| State | TanStack React Query |
 | Estilo | Tailwind CSS 4 |
 | HTTP | Axios |
-| Validação | Zod 4 |
+| Validação | Zod |
+| API Client | Orval (gerado de OpenAPI) |
 
 ## Pré-requisitos
 
 - **Node.js** >= 18
 - **Python** >= 3.12
-- **uv** (gerenciador de pacotes Python)
-
-### Instalação do uv
-
-```bash
-# Linux/macOS
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Windows (PowerShell)
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
+- **uv** (gerenciador Python) — [instalação](https://docs.astral.sh/uv/)
 
 ## Instalação
 
-### 1. Clonar o repositório
-
 ```bash
-git clone <url-do-repositorio>
-cd <nome-do-repositorio>
-```
-
-### 2. Instalar dependências
-
-```bash
-# Instalar dependências do monorepo
-npm install
-
-# Instalar dependências do backend
-cd apps/server
-uv sync
-cd ../..
-```
-
-### 3. Configurar variáveis de ambiente
-
-```bash
-# Frontend
+git clone <url>
+cd <repo>
+npm install                     # dependências do monorepo
+cd apps/server && uv sync && cd ../..
 cp apps/web/.env.example apps/web/.env
-```
-
-Edite `apps/web/.env` conforme necessário:
-
-```env
-VITE_API_URL=http://localhost:8000
 ```
 
 ## Como Rodar
 
-### Backend
-
 ```bash
-# Acessar diretório do servidor
+# Backend (primeira vez: treinar modelos)
 cd apps/server
-
-# Treinar os modelos (primeira vez)
 uv run python -m services.train_models
+uv run python run.py             # http://localhost:8000
 
-# Iniciar o servidor
-uv run python run.py
-```
-
-A API estará disponível em: **http://localhost:8000**
-
-### Frontend
-
-```bash
-# Acessar diretório do web
+# Frontend (outro terminal)
 cd apps/web
+npm run dev                      # http://localhost:5173
 
-# Iniciar servidor de desenvolvimento
-npm run dev
-```
-
-O frontend estará disponível em: **http://localhost:5173**
-
-### Ambos simultaneamente
-
-```bash
-# Na raiz do projeto
-npm run dev
+# Ambos
+npm run dev                      # raiz do monorepo
 ```
 
 ## Endpoints da API
 
+Rotas antigas (português) redirecionam com `308 Permanent Redirect` para as novas rotas em inglês.
+
 ### Documentação
 
 | Interface | URL |
-|-----------|-----|
-| Scalar | http://localhost:8000/scalar |
-| Swagger | http://localhost:8000/docs |
-| ReDoc | http://localhost:8000/redoc |
+|-----------|------|
+| Scalar | `/scalar` |
+| Swagger | `/docs` |
+| ReDoc | `/redoc` |
 
-### Rotas Principais
-
-#### Pacientes
+### Rotas
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| GET | `/pacientes` | Lista todos os pacientes |
-| POST | `/pacientes` | Cria um paciente |
-| GET | `/pacientes/{id}` | Busca paciente por ID |
-| PUT | `/pacientes/{id}` | Atualiza paciente |
-| DELETE | `/pacientes/{id}` | Remove paciente |
+| GET | `/patients` | Lista pacientes |
+| POST | `/patients` | Cria paciente |
+| GET | `/patients/{id}` | Paciente por ID |
+| GET | `/evaluations` | Lista avaliações |
+| POST | `/evaluations` | Cria avaliação |
+| GET | `/evaluations/{id}` | Avaliação por ID |
+| GET | `/evaluations/{id}/factors` | Fatores contribuintes |
+| GET | `/evaluations/{id}/importance` | Importância das features |
+| POST | `/predict` | Predição de risco |
+| GET | `/models` | Lista modelos |
+| GET | `/models/{id}/metrics` | Métricas do modelo |
+| GET | `/reports` | Lista relatórios |
+| GET | `/reports/{id}` | Relatório por ID |
+| POST | `/reports/export` | Exportar relatório |
+| GET | `/dashboard/stats` | Estatísticas do dashboard |
+| GET | `/dashboard/risks` | Distribuição de risco |
+| GET | `/dashboard/factors` | Fatores de risco |
 
-#### Previsão
-
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/prever` | Realiza previsão de risco |
-
-#### Modelos
-
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| GET | `/modelos` | Lista modelos disponíveis |
-| GET | `/modelos/{nome}/metricas` | Métricas do modelo |
-
-#### Relatórios
-
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| GET | `/relatorios` | Lista relatórios |
-| POST | `/relatorios` | Cria relatório |
-| GET | `/relatorios/{id}` | Busca relatório por ID |
-
-#### Dashboard
-
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| GET | `/dashboard/stats` | Estatísticas gerais |
-
-## Modelos de Machine Learning
-
-O sistema utiliza 4 modelos para previsão:
+## Modelos de ML
 
 | Modelo | Descrição |
 |--------|-----------|
 | KNN | K-Nearest Neighbors |
 | SVM | Support Vector Machine |
 | Random Forest | Floresta Aleatória |
-| Ensemble | Combinação dos modelos anteriores |
+| Ensemble | Combinação dos anteriores |
 
-### Métricas
+Métricas: `accuracy`, `precision`, `recall`, `f1_score`, `auc_roc`.
 
-| Métrica | Descrição |
-|---------|-----------|
-| Acurácia | Percentual de acertos |
-| Precisão | Verdadeiros positivos / Preditos positivos |
-| Recall | Verdadeiros positivos / Positivos reais |
-| F1-Score | Média harmônica entre precisão e recall |
-| AUC-ROC | Capacidade de distinção entre classes |
-
-### Re-treinar Modelos
-
+Re-treinar:
 ```bash
 cd apps/server
-PYTHONPATH=src uv run python -m services.train_models
+uv run python -m services.train_models
 ```
 
-## Campos do Paciente
+## Campos do Paciente (entrada da predição)
 
-| Campo | Tipo | Descrição | Valores |
-|-------|------|-----------|---------|
-| age | int | Idade | Anos |
-| sex | int | Sexo | 1 = masculino, 0 = feminino |
-| cp | int | Tipo de dor no peito | 1-4 |
-| trestbps | int | Pressão arterial em repouso | mm Hg |
-| chol | int | Colesterol | mg/dl |
-| fbs | int | Glicemia em jejum > 120 | 1 = sim, 0 = não |
-| restecg | int | Eletrocardiograma em repouso | 0-2 |
-| thalach | int | Frequência cardíaca máxima | bpm |
-| exang | int | Angina induzida por exercício | 1 = sim, 0 = não |
-| oldpeak | float | Depressão do segmento ST | Valores positivos |
-| slope | int | Inclinação do segmento ST | 1-3 |
-| ca | int | Nº de vasos principais coloridos | 0-3 |
-| thal | int | Talassemia | 3, 6 ou 7 |
+| Campo | Descrição | Valores |
+|-------|-----------|---------|
+| age | Idade | anos |
+| sex | Sexo | 1 = M, 0 = F |
+| cp | Dor torácica | 1–4 |
+| trestbps | Pressão arterial (repouso) | mm Hg |
+| chol | Colesterol | mg/dl |
+| fbs | Glicemia jejum > 120 | 1 = sim, 0 = não |
+| restecg | ECG em repouso | 0–2 |
+| thalach | Frequência cardíaca máxima | bpm |
+| exang | Angina por exercício | 1 = sim, 0 = não |
+| oldpeak | Depressão ST | float |
+| slope | Inclinação ST | 1–3 |
+| ca | Vasos coloridos | 0–3 |
+| thal | Talassemia | 3, 6, 7 |
 
-## Estrutura do Banco de Dados
+## Banco de Dados
 
-O sistema utiliza SQLite com as seguintes tabelas:
+SQLite em `apps/server/src/database/cardiopredict.db`
 
 | Tabela | Descrição |
 |--------|-----------|
-| `pacientes` | Dados cadastrais dos pacientes |
-| `avaliacoes` | Resultados de previsões |
-| `relatorios` | Relatórios médicos |
-| `model_metricas` | Métricas de desempenho dos modelos |
+| `patients` | Pacientes |
+| `evaluations` | Avaliações/predições |
+| `reports` | Relatórios |
+| `model_metrics` | Métricas dos modelos |
 
-Localização: `apps/server/src/database/cardiopredict.db`
+### Migrations (Alembic)
+
+```bash
+npm run db:revision -- -m "descrição"   # gerar migration
+npm run db:migrate                       # aplicar
+npm run db:downgrade                     # reverter
+```
 
 ## Comandos Úteis
 
 ```bash
-# Instalar dependências
-npm install
-
-# Rodar backend e frontend
-npm run dev
-
-# Rodar apenas o frontend
-npm run dev:web
-
-# Rodar apenas o backend
-npm run dev:api
-
-# Treinar modelos de ML
-npm run train
-
-# Gerar client de API (frontend)
-cd apps/web && npm run generate:api
-
-# Build de produção (frontend)
-cd apps/web && npm run build
-
-# Preview da build (frontend)
-cd apps/web && npm run preview
-
-# Lint (frontend)
-cd apps/web && npm run lint
-
-# Database (Alembic)
-npm run db:revision   # Gerar nova revisão
-npm run db:migrate    # Aplicar migrações
-npm run db:downgrade  # Reverter última migração
-npm run db:current    # Ver revisão atual
-npm run db:history    # Histórico de revisões
+npm run dev              # front + back
+npm run dev:web          # só front
+npm run dev:api          # só back
+npm run train            # treinar modelos
+npm run generate:api     # regerar client (front)
+npm run build            # build produção (front)
+npm run lint             # ESLint
 ```
 
-## Estrutura de Pastas
+## Estrutura
 
 ```
 pibic/
 ├── apps/
 │   ├── web/                    # Frontend React
 │   │   ├── src/
-│   │   │   ├── components/     # Componentes React
-│   │   │   ├── routes/         # Rotas (TanStack Router)
-│   │   │   ├── generated/      # Código gerado pelo Orval
-│   │   │   └── lib/            # Utilitários
-│   │   ├── package.json
-│   │   └── vite.config.ts
+│   │   │   ├── components/     # UI components
+│   │   │   ├── routes/         # TanStack Router
+│   │   │   ├── generated/      # Orval (não editar)
+│   │   │   └── lib/            # utils
+│   │   └── package.json
 │   │
 │   └── server/                 # Backend FastAPI
 │       ├── src/
-│       │   ├── api/            # Rotas da API
-│       │   ├── database/       # Configuração do banco
-│       │   ├── machine_learning/ # Modelos de ML
-│       │   ├── models/         # Modelos ORM
-│       │   ├── schemas/        # Schemas Pydantic
-│       │   ├── services/       # Lógica de negócio
-│       │   └── artifacts/      # Modelos treinados (.pkl)
-│       ├── notebooks/          # Jupyter notebooks
+│       │   ├── api/            # rotas + middleware redirect
+│       │   ├── database/       # SQLAlchemy + Alembic
+│       │   ├── machine_learning/
+│       │   ├── schemas/        # Pydantic
+│       │   ├── services/       # lógica de negócio
+│       │   └── artifacts/      # .pkl treinados
 │       └── pyproject.toml
 │
-├── design/                     # Arquivos de design
-├── docs/                       # Documentação
-└── package.json                # Configuração do monorepo
+├── design/                     # Design (Penpot)
+└── package.json
 ```
 
-## Considerações
+## Aviso
 
-- Este projeto é **acadêmico/educacional**
-- Não deve ser utilizado para diagnóstico médico real
-- Os modelos são treinados com o dataset UCI Heart Disease
-
-## Licença
-
-Projeto PIBIC - Programa Institucional de Bolsas de Iniciação Científica.
+Projeto **acadêmico/educacional**. Não deve ser usado para diagnóstico médico real. Modelos treinados com dataset UCI Heart Disease.

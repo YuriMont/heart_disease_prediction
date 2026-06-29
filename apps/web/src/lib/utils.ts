@@ -15,12 +15,11 @@ export function formatPercent(value: number): string {
 
 export function getRiskColor(risk: string): string {
   switch (risk.toLowerCase()) {
-    case "baixo":
+    case "low":
       return "text-[var(--risk-low)]";
-    case "medio":
-    case "médio":
+    case "medium":
       return "text-[var(--risk-med)]";
-    case "alto":
+    case "high":
       return "text-[var(--risk-high)]";
     default:
       return "text-muted-foreground";
@@ -29,12 +28,11 @@ export function getRiskColor(risk: string): string {
 
 export function getRiskBg(risk: string): string {
   switch (risk.toLowerCase()) {
-    case "baixo":
+    case "low":
       return "bg-[var(--risk-low-soft)]";
-    case "medio":
-    case "médio":
+    case "medium":
       return "bg-[var(--risk-med-soft)]";
-    case "alto":
+    case "high":
       return "bg-[var(--risk-high-soft)]";
     default:
       return "bg-muted";
@@ -43,12 +41,11 @@ export function getRiskBg(risk: string): string {
 
 export function getRiskDotColor(risk: string): string {
   switch (risk.toLowerCase()) {
-    case "baixo":
+    case "low":
       return "bg-[var(--risk-low)]";
-    case "medio":
-    case "médio":
+    case "medium":
       return "bg-[var(--risk-med)]";
-    case "alto":
+    case "high":
       return "bg-[var(--risk-high)]";
     default:
       return "bg-muted-foreground";

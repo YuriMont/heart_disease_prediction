@@ -8,11 +8,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database.base import Base
 
 if TYPE_CHECKING:
-    from database.models.paciente import Paciente
-    from database.models.relatorio import Relatorio
+    from database.models.patient import Patient
+    from database.models.report import Report
 
 
-class Avaliacao(Base):
+class Evaluation(Base):
     __tablename__ = "avaliacoes"
 
     id: Mapped[UUID] = mapped_column(
@@ -48,38 +48,38 @@ class Avaliacao(Base):
     ca: Mapped[float] = mapped_column(Float, nullable=False)
     thal: Mapped[float] = mapped_column(Float, nullable=False)
 
-    modelo_usado: Mapped[str] = mapped_column(
+    model_used: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
     )
 
-    tem_doenca: Mapped[int] = mapped_column(
+    has_disease: Mapped[int] = mapped_column(
         Integer,
         nullable=False,
     )
 
-    probabilidade_doenca: Mapped[float] = mapped_column(
+    disease_probability: Mapped[float] = mapped_column(
         Float,
         nullable=False,
     )
 
-    resultado_texto: Mapped[str] = mapped_column(
+    result_text: Mapped[str] = mapped_column(
         String(200),
         nullable=False,
     )
 
-    criado_em: Mapped[datetime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,
         nullable=False,
     )
 
-    paciente: Mapped["Paciente"] = relationship(
-        back_populates="avaliacoes"
+    patient: Mapped["Patient"] = relationship(
+        back_populates="evaluations"
     )
 
-    relatorio: Mapped["Relatorio"] = relationship(
-        back_populates="avaliacao",
+    report: Mapped["Report"] = relationship(
+        back_populates="evaluation",
         uselist=False,
         cascade="all, delete-orphan",
     )

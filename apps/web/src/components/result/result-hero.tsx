@@ -12,9 +12,9 @@ interface ResultHeroProps {
 }
 
 export function ResultHero({ probability, riskLevel, confidence, modelName, temDoenca }: ResultHeroProps) {
-  const riskColor = riskLevel === "alto" ? "#DC3848" : riskLevel === "medio" ? "#E8930C" : "#16A45F";
+  const riskColor = riskLevel === "high" ? "#DC3848" : riskLevel === "medium" ? "#E8930C" : "#16A45F";
   const riskLabel = temDoenca ? "Possível Doença Cardíaca" : "Baixo Risco";
-  const riskBadge = riskLevel === "alto" ? "ALTO RISCO" : riskLevel === "medio" ? "MÉDIO RISCO" : "BAIXO RISCO";
+  const riskBadge = riskLevel === "high" ? "ALTO RISCO" : riskLevel === "medium" ? "RISCO MÉDIO" : "BAIXO RISCO";
 
   const gaugeData = [
     { name: "risk", value: probability * 100 },

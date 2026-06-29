@@ -4,7 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 
 
-class AvaliacaoCreate(BaseModel):
+class EvaluationCreate(BaseModel):
     paciente_id: UUID = Field(..., description="ID do paciente")
     age: int = Field(..., ge=1, le=120)
     sex: int = Field(..., ge=0, le=1)
@@ -22,7 +22,7 @@ class AvaliacaoCreate(BaseModel):
     modelo: str = Field(..., description="ID do modelo de IA")
 
 
-class AvaliacaoResponse(BaseModel):
+class EvaluationResponse(BaseModel):
     id: UUID
     paciente_id: UUID
     age: int
@@ -38,10 +38,10 @@ class AvaliacaoResponse(BaseModel):
     slope: int
     ca: float
     thal: float
-    modelo_usado: str
-    tem_doenca: bool
-    probabilidade_doenca: float
-    resultado_texto: str
-    criado_em: datetime
+    model_used: str
+    has_disease: bool
+    disease_probability: float
+    result_text: str
+    created_at: datetime
 
     model_config = {"from_attributes": True}

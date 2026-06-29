@@ -12,50 +12,47 @@ from sklearn.metrics import (
 )
 
 
-def avaliar(y_verdadeiro, y_previsto, y_probabilidade=None, nome="Modelo"):
-    """Calcula e imprime as principais métricas. Devolve um dicionário com elas."""
-    print(f"\n--- Avaliação: {nome} ---")
-    print(classification_report(y_verdadeiro, y_previsto))
+def evaluate(y_true, y_pred, y_probability=None, name="Model"):
+    print(f"\n--- Evaluation: {name} ---")
+    print(classification_report(y_true, y_pred))
 
-    metricas = {
-        "acuracia": float(accuracy_score(y_verdadeiro, y_previsto)),
-        "recall": float(recall_score(y_verdadeiro, y_previsto)),
-        "precisao": float(precision_score(y_verdadeiro, y_previsto)),
-        "f1_score": float(f1_score(y_verdadeiro, y_previsto)),
+    metrics = {
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "recall": float(recall_score(y_true, y_pred)),
+        "precision": float(precision_score(y_true, y_pred)),
+        "f1_score": float(f1_score(y_true, y_pred)),
     }
 
-    if y_probabilidade is not None:
-        fpr, tpr, _ = roc_curve(y_verdadeiro, y_probabilidade)
-        metricas["auc_roc"] = float(auc(fpr, tpr))
+    if y_probability is not None:
+        fpr, tpr, _ = roc_curve(y_true, y_probability)
+        metrics["auc_roc"] = float(auc(fpr, tpr))
     else:
-        metricas["auc_roc"] = 0.0
+        metrics["auc_roc"] = 0.0
 
-    for nome_metrica, valor in metricas.items():
-        print(f"  {nome_metrica:10s}: {valor:.4f}")
+    for name_metric, value in metrics.items():
+        print(f"  {name_metric:10s}: {value:.4f}")
 
-    return metricas
+    return metrics
 
 
-def plotar_matriz_confusao(y_verdadeiro, y_previsto, titulo="Matriz de Confusão"):
-    """Mostra um quadro com acertos e erros do modelo (útil nos notebooks)."""
-    rotulos = sorted(set(y_verdadeiro))
-    matriz = confusion_matrix(y_verdadeiro, y_previsto, labels=rotulos)
-    ConfusionMatrixDisplay(matriz, display_labels=rotulos).plot(cmap=plt.cm.Blues)
-    plt.title(titulo)
+def plot_confusion_matrix(y_true, y_pred, title="Confusion Matrix"):
+    labels = sorted(set(y_true))
+    matrix = confusion_matrix(y_true, y_pred, labels=labels)
+    ConfusionMatrixDisplay(matrix, display_labels=labels).plot(cmap=plt.cm.Blues)
+    plt.title(title)
     plt.show()
 
 
-def plotar_curva_roc(y_verdadeiro, y_probabilidade, titulo="Curva ROC"):
-    """Desenha a curva ROC e devolve a área (AUC). Quanto mais perto de 1, melhor."""
-    fpr, tpr, _ = roc_curve(y_verdadeiro, y_probabilidade)
+def plot_roc_curve(y_true, y_probability, title="ROC Curve"):
+    fpr, tpr, _ = roc_curve(y_true, y_probability)
     area = auc(fpr, tpr)
 
     plt.figure(figsize=(8, 6))
     plt.plot(fpr, tpr, color="darkorange", lw=2, label=f"ROC (AUC = {area:.2f})")
-    plt.plot([0, 1], [0, 1], color="navy", lw=2, linestyle="--", label="Aleatório")
-    plt.xlabel("Taxa de Falsos Positivos")
-    plt.ylabel("Taxa de Verdadeiros Positivos")
-    plt.title(titulo)
+    plt.plot([0, 1], [0, 1], color="navy", lw=2, linestyle="--", label="Random")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title(title)
     plt.legend(loc="lower right")
     plt.grid(True)
     plt.show()

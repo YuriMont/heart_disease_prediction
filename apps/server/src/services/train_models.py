@@ -3,113 +3,100 @@ from datetime import datetime
 
 import joblib
 
-from database.connection import SessionLocal, criar_tabelas
-from machine_learning.avaliacao import avaliar
-from machine_learning.dados import preparar_dados
-from machine_learning.modelos import MODELOS, treinar_modelo
-from database.models.modelo import Modelo
+from database.connection import SessionLocal, create_tables
+from machine_learning.evaluation import evaluate
+from machine_learning.data import prepare_data
+from machine_learning.models import MODELS, train_model
+from database.models.model import Model
 
-# Pasta onde os arquivos .pkl (modelos treinados) serão salvos.
-# os.path.dirname(__file__) é a pasta onde este arquivo está (a pasta 'server').
-PASTA_ARTEFATOS = os.path.join(os.path.dirname(__file__), "..", "artifacts")
+ARTIFACTS_DIR = os.path.join(os.path.dirname(__file__), "..", "artifacts")
 
-DESCRICOES_PADRAO = {
-    "ensemble": "Votação dos 3 modelos",
-    "random_forest": "Floresta aleatória",
-    "svm": "Vetores de suporte",
-    "knn": "K-vizinhos mais próximos",
+DEFAULT_DESCRIPTIONS = {
+    "ensemble": "Voting ensemble of 3 models",
+    "random_forest": "Random forest",
+    "svm": "Support vector machine",
+    "knn": "K-nearest neighbors",
 }
 
 
 def main():
-    # Cria a pasta 'artefatos/' caso ela ainda não exista.
-    os.makedirs(PASTA_ARTEFATOS, exist_ok=True)
+    os.makedirs(ARTIFACTS_DIR, exist_ok=True)
 
-    # Garante que a tabela de métricas existe
-    criar_tabelas()
+    create_tables()
 
-    print("1) Preparando os dados...")
-    dados = preparar_dados()
-    print(f"   Treino: {dados.X_treino.shape} | Teste: {dados.X_teste.shape}")
+    print("1) Preparing data...")
+    data = prepare_data()
+    print(f"   Train: {data.X_train.shape} | Test: {data.X_test.shape}")
 
-    # Salva o scaler e os nomes das colunas. A API PRECISA destes dois arquivos
-    # para transformar os dados de um novo paciente exatamente como foi feito
-    # aqui no treino.
-    joblib.dump(dados.scaler, os.path.join(PASTA_ARTEFATOS, "scaler.pkl"))
+    joblib.dump(data.scaler, os.path.join(ARTIFACTS_DIR, "scaler.pkl"))
     joblib.dump(
-        dados.X_treino.columns.tolist(),
-        os.path.join(PASTA_ARTEFATOS, "feature_names.pkl"),
+        data.X_train.columns.tolist(),
+        os.path.join(ARTIFACTS_DIR, "feature_names.pkl"),
     )
-    print("   Salvos: scaler.pkl e feature_names.pkl")
+    print("   Saved: scaler.pkl and feature_names.pkl")
 
-    print("\n2) Treinando os modelos...")
+    print("\n2) Training models...")
     db = SessionLocal()
 
     try:
-        for modelo in MODELOS:
-            print(f"\n>>> Modelo: {modelo['nome']}")
+        for model_config in MODELS:
+            print(f"\n>>> Model: {model_config['name']}")
 
-            # Treina e pega o melhor modelo daquele tipo.
-            treinado = treinar_modelo(
-                modelo["estimador"],
-                modelo["parametros"],
-                dados.X_treino,
-                dados.y_treino,
+            trained = train_model(
+                model_config["estimator"],
+                model_config["params"],
+                data.X_train,
+                data.y_train,
             )
 
-            # Avalia no conjunto de teste (dados que o modelo nunca viu).
-            y_previsto = treinado.predict(dados.X_teste)
+            y_pred = trained.predict(data.X_test)
 
-            # Pega probabilidades para calcular AUC-ROC
-            if hasattr(treinado, "predict_proba"):
-                y_probabilidade = treinado.predict_proba(dados.X_teste)[:, 1]
+            if hasattr(trained, "predict_proba"):
+                y_probability = trained.predict_proba(data.X_test)[:, 1]
             else:
-                y_probabilidade = None
+                y_probability = None
 
-            metricas = avaliar(dados.y_teste, y_previsto, y_probabilidade, nome=modelo["nome"])
+            metrics = evaluate(data.y_test, y_pred, y_probability, name=model_config["name"])
 
-            # Salva ou atualiza as métricas no banco de dados
-            modelo_db = db.query(Modelo).filter(Modelo.id == modelo["nome"]).first()
+            model_db = db.query(Model).filter(Model.id == model_config["name"]).first()
 
-            if modelo_db:
-                modelo_db.acuracia = metricas["acuracia"]
-                modelo_db.precisao = metricas["precisao"]
-                modelo_db.recall = metricas["recall"]
-                modelo_db.f1_score = metricas["f1_score"]
-                modelo_db.auc_roc = metricas["auc_roc"]
-                modelo_db.atualizado_em = datetime.now()
-                print(f"   Métricas atualizadas no banco para: {modelo['nome']}")
+            if model_db:
+                model_db.accuracy = metrics["accuracy"]
+                model_db.precision = metrics["precision"]
+                model_db.recall = metrics["recall"]
+                model_db.f1_score = metrics["f1_score"]
+                model_db.auc_roc = metrics["auc_roc"]
+                model_db.updated_at = datetime.now()
+                print(f"   Metrics updated in database for: {model_config['name']}")
             else:
-                nova_metrica = Modelo(
-                    nome=modelo["nome"],
-                    descricao=DESCRICOES_PADRAO.get(modelo["nome"], modelo["nome"]),
-                    ativo=True,
-                    acuracia=metricas["acuracia"],
-                    precisao=metricas["precisao"],
-                    recall=metricas["recall"],
-                    f1_score=metricas["f1_score"],
-                    auc_roc=metricas["auc_roc"],
+                new_metrics = Model(
+                    name=model_config["name"],
+                    description=DEFAULT_DESCRIPTIONS.get(model_config["name"], model_config["name"]),
+                    active=True,
+                    accuracy=metrics["accuracy"],
+                    precision=metrics["precision"],
+                    recall=metrics["recall"],
+                    f1_score=metrics["f1_score"],
+                    auc_roc=metrics["auc_roc"],
                 )
-                db.add(nova_metrica)
-                print(f"   Métricas salvas no banco para: {modelo['nome']}")
+                db.add(new_metrics)
+                print(f"   Metrics saved to database for: {model_config['name']}")
 
-            # Salva o modelo treinado em um arquivo .pkl.
-            caminho = os.path.join(PASTA_ARTEFATOS, f"{modelo['nome']}.pkl")
-            joblib.dump(treinado, caminho)
-            print(f"   Salvo: {caminho}")
+            caminho = os.path.join(ARTIFACTS_DIR, f"{model_config['name']}.pkl")
+            joblib.dump(trained, caminho)
+            print(f"   Saved: {caminho}")
 
-        # Confirma todas as alterações no banco
         db.commit()
-        print("\n   Todas as métricas foram salvas no banco de dados!")
+        print("\n   All metrics saved to database!")
 
     except Exception as e:
         db.rollback()
-        print(f"\n   Erro ao salvar métricas: {e}")
+        print(f"\n   Error saving metrics: {e}")
         raise
     finally:
         db.close()
 
-    print("\nPronto! Todos os modelos foram treinados e salvos em 'artefatos/'.")
+    print("\nDone! All models trained and saved in 'artifacts/'.")
 
 
 if __name__ == "__main__":

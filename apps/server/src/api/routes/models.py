@@ -2,76 +2,73 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
-from database.models.modelo import Modelo
-from schemas.dashboard import ModeloInfo, ModeloMetricas
-from schemas.modelo import ModeloUpdate
+from database.models.model import Model
+from schemas.dashboard import ModelInfo, ModelMetrics
+from schemas.model import ModelUpdate
 
-router = APIRouter(prefix="/modelos", tags=["modelos"])
+router = APIRouter(prefix="/models", tags=["models"])
 
 
-@router.get("", response_model=list[ModeloInfo])
-def listar_modelos(db: Session = Depends(get_db)):
-    """Lista apenas os modelos ativos (ativo=True)."""
-    modelo = db.query(Modelo).filter(Modelo.ativo.is_(True)).all()
+@router.get("", response_model=list[ModelInfo])
+def list_models(db: Session = Depends(get_db)):
+    modelos = db.query(Model).filter(Model.active.is_(True)).all()
     return [
-        ModeloInfo(
+        ModelInfo(
             id=m.id,
-            nome=m.nome,
-            descricao=m.descricao or m.nome,
-            ativo=m.ativo,
+            name=m.name,
+            description=m.description or m.name,
+            active=m.active,
         )
-        for m in modelo
+        for m in modelos
     ]
 
 
-@router.get("/{modelo_id}/metricas", response_model=ModeloMetricas)
-def obter_metricas(modelo_id: str, db: Session = Depends(get_db)):
-    """Métricas de desempenho de um modelo."""
-    modelo_db = db.query(Modelo).filter(Modelo.id == modelo_id).first()
+@router.get("/{model_id}/metrics", response_model=ModelMetrics)
+def get_metrics(model_id: str, db: Session = Depends(get_db)):
+    modelo_db = db.query(Model).filter(Model.id == model_id).first()
 
     if not modelo_db:
         raise HTTPException(
             status_code=404,
-            detail=f"Métricas do modelo '{modelo_id}' não disponíveis. Execute o treino primeiro.",
+            detail=f"Metrics for model '{model_id}' not available. Run training first.",
         )
 
-    return ModeloMetricas(
+    return ModelMetrics(
         id=modelo_db.id,
-        nome=modelo_db.nome,
-        acuracia=modelo_db.acuracia,
-        precisao=modelo_db.precisao,
+        name=modelo_db.name,
+        accuracy=modelo_db.accuracy,
+        precision=modelo_db.precision,
         recall=modelo_db.recall,
         f1_score=modelo_db.f1_score,
         auc_roc=modelo_db.auc_roc,
-        atualizacao=modelo_db.atualizado_em.strftime("%d/%m/%Y %H:%M"),
+        updated_at=modelo_db.updated_at.strftime("%d/%m/%Y %H:%M"),
     )
 
 
-@router.patch("/{modelo_id}", response_model=ModeloInfo)
-def atualizar_modelo(modelo_id: str, dados: ModeloUpdate, db: Session = Depends(get_db)):
-    """Edita o nome, a descrição e/ou a flag ativo de um modelo."""
-    modelo_db = db.query(Modelo).filter(Modelo.id == modelo_id).first()
+@router.patch("/{model_id}", response_model=ModelInfo)
+def update_model(model_id: str, dados: ModelUpdate, db: Session = Depends(get_db)):
+    modelo_db = db.query(Model).filter(Model.id == model_id).first()
 
     if not modelo_db:
         raise HTTPException(
             status_code=404,
-            detail=f"Modelo '{modelo_id}' não encontrado no banco. Execute o treino primeiro.",
+            detail=f"Model '{model_id}' not found in database. Run training first.",
         )
 
-    if dados.nome is not None:
-        modelo_db.nome = dados.nome
+    if dados.name is not None:
+        modelo_db.name = dados.name
 
-    if dados.descricao is not None:
-        modelo_db.descricao = dados.descricao
+    if dados.description is not None:
+        modelo_db.description = dados.description
 
-    if dados.ativo is not None:
-        modelo_db.ativo = dados.ativo
+    if dados.active is not None:
+        modelo_db.active = dados.active
 
     db.commit()
     db.refresh(modelo_db)
 
-    return ModeloInfo(
-        nome=modelo_db.nome,
-        descricao=modelo_db.descricao,
-        ativo=modelo_db.ativo,
+    return ModelInfo(
+        name=modelo_db.name,
+        description=modelo_db.description,
+        active=modelo_db.active,
     )

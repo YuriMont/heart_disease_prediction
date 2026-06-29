@@ -20,20 +20,20 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Segmented } from "../ui/segmented";
 import {
-  useCriarPacientePacientesPost,
-  useCriarAvaliacaoAvaliacoesPost,
-} from "../../generated/api/pacientes/pacientes";
+  useCreatePatientPatientsPost,
+  useCreateEvaluationEvaluationsPost,
+} from "../../generated/api/patients/patients";
 import { modelAtom } from "../../store/model";
 import { useAtom } from "jotai";
-import { useListarModelosModelosGet } from "../../generated/api/modelos/modelos";
-import { PreverPreverPostBody } from "../../generated/api/previsão/previsão.zod";
+import { useListModelsModelsGet } from "../../generated/api/models/models";
+import { PredictPredictPostBody } from "../../generated/api/prediction/prediction.zod";
 
-type FormData = z.infer<typeof PreverPreverPostBody>;
+type FormData = z.infer<typeof PredictPredictPostBody>;
 
 const steps = [
-  { label: "Dados do paciente", num: 1 },
-  { label: "Medições clínicas", num: 2 },
-  { label: "Exames cardíacos", num: 3 },
+  { label: "Dados do Paciente", num: 1 },
+  { label: "Medidas Clínicas", num: 2 },
+  { label: "Exames Cardíacos", num: 3 },
 ];
 
 const DEFAULT_VALUES_FORM = {
@@ -52,44 +52,40 @@ const DEFAULT_VALUES_FORM = {
   ca: 0,
 };
 
-export function AvaliacaoForm() {
+export function EvaluationForm() {
   const [selectedModel, setSelectedModel] = useAtom(modelAtom);
 
-  const { data: models = [] } = useListarModelosModelosGet();
+  const { data: models = [] } = useListModelsModelsGet();
 
   const navigate = useNavigate();
 
-  const criarPaciente = useCriarPacientePacientesPost();
-  const criarAvaliacao = useCriarAvaliacaoAvaliacoesPost();
+  const createPatient = useCreatePatientPatientsPost();
+  const createEvaluation = useCreateEvaluationEvaluationsPost();
 
   const form = useForm<FormData>({
-    resolver: zodResolver(PreverPreverPostBody),
+    resolver: zodResolver(PredictPredictPostBody),
     defaultValues: DEFAULT_VALUES_FORM,
   });
 
-  const { setValue, formState } = form;
+  const { setValue } = form;
 
   const values = form.watch();
 
-  const totalFields = Object.keys(PreverPreverPostBody.shape).length;
-
-  const filledFields = Object.keys(formState.dirtyFields).length;
-
   const handleSubmit = async () => {
     try {
-      const paciente = await criarPaciente.mutateAsync({
-        data: { idade: values.age, sexo: values.sex },
+      const patient = await createPatient.mutateAsync({
+        data: { age: values.age, sex: values.sex },
       });
-      const avaliacao = await criarAvaliacao.mutateAsync({
+      const evaluation = await createEvaluation.mutateAsync({
         data: {
-          paciente_id: paciente.id,
+          paciente_id: patient.id,
           ...values,
           modelo: selectedModel!.id,
         },
       });
-      navigate({ to: `/avaliacao/${avaliacao.id}` });
+      navigate({ to: `/evaluation/${evaluation.id}` });
     } catch (error) {
-      console.error("Erro ao criar avaliação:", error);
+      console.error("Error creating evaluation:", error);
     }
   };
 
@@ -104,7 +100,7 @@ export function AvaliacaoForm() {
         <div className="flex flex-col gap-[5px]">
           <div className="flex items-center gap-[7px]">
             <span className="text-xs font-medium text-muted-foreground">
-              Dashboard
+              Painel
             </span>
             <span className="text-muted-foreground">/</span>
             <span className="text-xs font-semibold text-primary">
@@ -118,7 +114,7 @@ export function AvaliacaoForm() {
         <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-[9px]">
           <Activity className="h-[15px] w-[15px] text-primary-dark" />
           <span className="text-[13px] font-semibold text-primary-dark">
-            Preenchimento dos dados clínicos
+            Entrada de dados clínicos
           </span>
         </div>
       </div>
@@ -147,7 +143,7 @@ export function AvaliacaoForm() {
             ))}
           </div>
 
-          {/* Section 1 - Dados Demográficos */}
+          {/* Section 1 - Demographic Data */}
           <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
@@ -171,7 +167,7 @@ export function AvaliacaoForm() {
                   <Input
                     type="number"
                     required
-                    placeholder="Ex: 45"
+                    placeholder="Ex.: 45"
                     value={values.age || ""}
                     onChange={(e) => setValue("age", Number(e.target.value))}
                     className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -195,7 +191,7 @@ export function AvaliacaoForm() {
             </div>
           </div>
 
-          {/* Section 2 - Dados Biométricos */}
+          {/* Section 2 - Biometric Data */}
           <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
@@ -206,7 +202,7 @@ export function AvaliacaoForm() {
                   Dados Biométricos
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Medições clínicas do paciente
+                  Medidas clínicas do paciente
                 </span>
               </div>
             </div>
@@ -214,13 +210,13 @@ export function AvaliacaoForm() {
               <div className="flex gap-4">
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
-                    Pressão em repouso
+                    Pressão Arterial em Repouso
                   </Label>
                   <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
                       required
-                      placeholder="Ex: 120"
+                      placeholder="Ex.: 120"
                       value={values.trestbps || ""}
                       onChange={(e) =>
                         setValue("trestbps", Number(e.target.value))
@@ -234,13 +230,13 @@ export function AvaliacaoForm() {
                 </div>
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
-                    Freq. cardíaca máx.
+                    Frequência Cardíaca Máxima
                   </Label>
                   <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
                       required
-                      placeholder="Ex: 150"
+                      placeholder="Ex.: 150"
                       value={values.thalach || ""}
                       onChange={(e) =>
                         setValue("thalach", Number(e.target.value))
@@ -256,13 +252,13 @@ export function AvaliacaoForm() {
               <div className="flex gap-4">
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
-                    Colesterol total
+                    Colesterol Total
                   </Label>
                   <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
                       required
-                      placeholder="Ex: 200"
+                      placeholder="Ex.: 200"
                       value={values.chol || ""}
                       onChange={(e) => setValue("chol", Number(e.target.value))}
                       className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -276,7 +272,7 @@ export function AvaliacaoForm() {
             </div>
           </div>
 
-          {/* Section 3 - Exames Cardíacos */}
+          {/* Section 3 - Heart Exams */}
           <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
@@ -287,7 +283,7 @@ export function AvaliacaoForm() {
                   Exames Cardíacos
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Resultados de testes clínicos específicos
+                  Resultados de exames clínicos específicos
                 </span>
               </div>
             </div>
@@ -295,7 +291,7 @@ export function AvaliacaoForm() {
               <div className="flex gap-4">
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
-                    label="Tipo de dor no peito"
+                    label="Tipo de Dor Torácica"
                     options={[
                       { label: "Típica", value: 1 },
                       { label: "Atípica", value: 2 },
@@ -308,7 +304,7 @@ export function AvaliacaoForm() {
                 </div>
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
-                    label="Eletrocardiograma em repouso"
+                    label="ECG em Repouso"
                     options={[
                       { label: "Normal", value: 0 },
                       { label: "Anormal", value: 1 },
@@ -322,11 +318,11 @@ export function AvaliacaoForm() {
               <div className="flex gap-4">
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
-                    label="Inclinação do segmento ST"
+                    label="Inclinação do Segmento ST"
                     options={[
-                      { label: "Subida", value: 1 },
+                      { label: "Ascendente", value: 1 },
                       { label: "Plano", value: 2 },
-                      { label: "Descida", value: 3 },
+                      { label: "Descendente", value: 3 },
                     ]}
                     value={values.slope}
                     onChange={(v) => setValue("slope", v as number)}
@@ -337,8 +333,8 @@ export function AvaliacaoForm() {
                     label="Talassemia"
                     options={[
                       { label: "Normal", value: 3 },
-                      { label: "Fixo", value: 6 },
-                      { label: "Reversível", value: 7 },
+                      { label: "Defeito fixo", value: 6 },
+                      { label: "Defeito reversível", value: 7 },
                     ]}
                     value={values.thal}
                     onChange={(v) => setValue("thal", v as number)}
@@ -348,7 +344,7 @@ export function AvaliacaoForm() {
               <div className="flex gap-4">
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
-                    label="Glicemia em jejum &gt; 120 mg/dl"
+                    label="Glicemia em Jejum > 120 mg/dl"
                     options={[
                       { label: "Sim", value: 1 },
                       { label: "Não", value: 0 },
@@ -359,7 +355,7 @@ export function AvaliacaoForm() {
                 </div>
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
-                    label="Angina induzida por exercício"
+                    label="Angina Induzida por Exercício"
                     options={[
                       { label: "Sim", value: 1 },
                       { label: "Não", value: 0 },
@@ -372,14 +368,14 @@ export function AvaliacaoForm() {
               <div className="flex gap-4">
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
-                    Depressão do segmento ST
+                    Depressão do Segmento ST
                   </Label>
                   <div className="flex items-center justify-between rounded-[10px] border border-(--border-strong) bg-secondary px-3">
                     <Input
                       type="number"
                       step="0.1"
                       required
-                      placeholder="Ex: 1.5"
+                      placeholder="Ex.: 1.5"
                       value={values.oldpeak || ""}
                       onChange={(e) =>
                         setValue("oldpeak", Number(e.target.value))
@@ -393,7 +389,7 @@ export function AvaliacaoForm() {
                 </div>
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
-                    label="Vasos principais coloridos"
+                    label="Vasos Principais"
                     options={[
                       { label: "0", value: 0 },
                       { label: "1", value: 1 },
@@ -413,7 +409,7 @@ export function AvaliacaoForm() {
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-[15px] w-[15px] text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
-                Dados protegidos · processamento conforme LGPD
+                Dados protegidos · processados conforme LGPD
               </span>
             </div>
             <Button
@@ -440,7 +436,7 @@ export function AvaliacaoForm() {
                   Modelo de IA
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Algoritmo de previsão
+                  Algoritmo de Predição
                 </span>
               </div>
             </div>
@@ -449,24 +445,24 @@ export function AvaliacaoForm() {
             <div className="flex flex-col gap-2">
               {models.map((model) => (
                 <button
-                  key={model.nome}
+                  key={model.name}
                   type="button"
                   onClick={() => setSelectedModel(model)}
                   className={`flex items-center gap-2.5 rounded-xl px-3 py-[11px] transition-all ${
-                    selectedModel?.nome === model.nome
+                    selectedModel?.name === model.name
                       ? "border border-primary bg-primary/10"
                       : "border border-border bg-secondary"
                   }`}
                 >
                   <div className="flex flex-1 flex-col items-start gap-[1px]">
                     <span className="text-[13px] font-semibold text-foreground">
-                      {model.nome}
+                      {model.name}
                     </span>
                     <span className="text-[11px] text-muted-foreground">
-                      {model.descricao}
+                      {model.description}
                     </span>
                   </div>
-                  {selectedModel?.nome === model.nome ? (
+                  {selectedModel?.name === model.name ? (
                     <CircleCheckBig className="h-[18px] w-[18px] text-primary" />
                   ) : (
                     <Circle className="h-[18px] w-[18px] text-muted-foreground" />
@@ -481,11 +477,11 @@ export function AvaliacaoForm() {
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={criarPaciente.isPending || criarAvaliacao.isPending}
+              disabled={createPatient.isPending || createEvaluation.isPending}
               className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-white shadow-[0_6px_16px_-4px_#1E63E966] transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Sparkles className="h-[18px] w-[18px]" />
-              {criarPaciente.isPending || criarAvaliacao.isPending
+              {createPatient.isPending || createEvaluation.isPending
                 ? "Processando..."
                 : "Executar Predição"}
             </button>
@@ -499,10 +495,10 @@ export function AvaliacaoForm() {
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-[15px] font-bold text-foreground">
-                  Legenda dos exames
+                  Legenda de Exames
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Significado dos códigos
+                  Significados dos códigos
                 </span>
               </div>
             </div>
@@ -513,7 +509,7 @@ export function AvaliacaoForm() {
               {[
                 {
                   icon: HeartPulse,
-                  title: "Tipo de dor no peito",
+                  title: "Tipo de Dor Torácica",
                   desc: "Típica, atípica, não anginosa ou assintomática",
                 },
                 {
@@ -524,12 +520,12 @@ export function AvaliacaoForm() {
                 {
                   icon: Activity,
                   title: "Inclinação ST",
-                  desc: "Subida, plano ou descida",
+                  desc: "Ascendente, plano ou descendente",
                 },
                 {
                   icon: Activity,
                   title: "Talassemia",
-                  desc: "Normal, fixo ou reversível",
+                  desc: "Normal, defeito fixo ou reversível",
                 },
               ].map((item) => (
                 <div key={item.title} className="flex gap-3">

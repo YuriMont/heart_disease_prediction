@@ -4,29 +4,27 @@ from sqlalchemy.orm import Session
 from uuid import UUID
 
 from database.connection import get_db
-from schemas.resultado import ContributingFactor, FeatureImportance
-from database.models.avaliacao import Avaliacao
-from services.feature_analysis import calcular_importancia_features, calcular_fatores_contribuintes
+from schemas.result import ContributingFactor, FeatureImportance
+from database.models.evaluation import Evaluation
+from services.feature_analysis import calculate_feature_importance, calculate_contributing_factors
 
-router = APIRouter(tags=["resultado"])
+router = APIRouter(tags=["result"])
 
 
-@router.get("/avaliacoes/{avaliacao_id}/fatores", response_model=list[ContributingFactor])
-def obter_fatores(avaliacao_id: UUID, db: Session = Depends(get_db)):
-    """Fatores contribuintes para a predição (derivados do modelo RF treinado)."""
-    avaliacao = db.query(Avaliacao).get(avaliacao_id)
-    if not avaliacao:
-        raise HTTPException(status_code=404, detail="Avaliação não encontrada.")
-    fatores = calcular_fatores_contribuintes(avaliacao)
+@router.get("/evaluations/{evaluation_id}/factors", response_model=list[ContributingFactor])
+def get_factors(evaluation_id: UUID, db: Session = Depends(get_db)):
+    evaluation = db.query(Evaluation).get(evaluation_id)
+    if not evaluation:
+        raise HTTPException(status_code=404, detail="Evaluation not found.")
+    fatores = calculate_contributing_factors(evaluation)
     return fatores
 
 
-@router.get("/avaliacoes/{avaliacao_id}/importancia", response_model=list[FeatureImportance])
-def obter_importancia(avaliacao_id: UUID, db: Session = Depends(get_db)):
-    """Importância global das variáveis no modelo RF treinado."""
-    avaliacao = db.query(Avaliacao).get(avaliacao_id)
-    if not avaliacao:
-        raise HTTPException(status_code=404, detail="Avaliação não encontrada.")
+@router.get("/evaluations/{evaluation_id}/importance", response_model=list[FeatureImportance])
+def get_importance(evaluation_id: UUID, db: Session = Depends(get_db)):
+    evaluation = db.query(Evaluation).get(evaluation_id)
+    if not evaluation:
+        raise HTTPException(status_code=404, detail="Evaluation not found.")
 
-    dados = calcular_importancia_features()
+    dados = calculate_feature_importance()
     return dados
