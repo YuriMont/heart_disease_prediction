@@ -22,10 +22,6 @@ function ReportsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3.5">
-          <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
-            <Search className="h-[17px] w-[17px] text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Pesquisar relatório...</span>
-          </div>
           <button className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card">
             <Bell className="h-[19px] w-[19px] text-secondary-foreground" />
           </button>
@@ -68,7 +64,6 @@ function ReportsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
                   <TableHead>Título</TableHead>
                   <TableHead>Avaliação</TableHead>
                   <TableHead>Data</TableHead>
@@ -78,7 +73,6 @@ function ReportsPage() {
               <TableBody>
                 {reports.map((report) => (
                   <TableRow key={report.id}>
-                    <TableCell className="font-medium">#{report.id}</TableCell>
                     <TableCell>{report.title}</TableCell>
                     <TableCell className="text-muted-foreground">#{report.avaliacao_id}</TableCell>
                     <TableCell className="text-muted-foreground">

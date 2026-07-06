@@ -10,10 +10,6 @@ import * as zod from "zod";
 /**
  * @summary Predict
  */
-export const PredictPredictPostQueryParams = zod.object({
-  modelo: zod.union([zod.string(), zod.null()]).optional(),
-});
-
 export const predictPredictPostBodyAgeMax = 120;
 
 export const predictPredictPostBodySexMin = 0;
@@ -21,68 +17,86 @@ export const predictPredictPostBodySexMax = 1;
 
 export const predictPredictPostBodyCpMax = 4;
 
+export const predictPredictPostBodyTrestbpsExclusiveMin = 0;
+
+export const predictPredictPostBodyCholExclusiveMin = 0;
+
 export const predictPredictPostBodyFbsMin = 0;
 export const predictPredictPostBodyFbsMax = 1;
 
 export const predictPredictPostBodyRestecgMin = 0;
 export const predictPredictPostBodyRestecgMax = 2;
 
+export const predictPredictPostBodyThalachExclusiveMin = 0;
+
 export const predictPredictPostBodyExangMin = 0;
 export const predictPredictPostBodyExangMax = 1;
+
+export const predictPredictPostBodyOldpeakMin = 0;
 
 export const predictPredictPostBodySlopeMax = 3;
 
 export const predictPredictPostBodyCaMin = 0;
 export const predictPredictPostBodyCaMax = 3;
 
+export const predictPredictPostBodyThalMin = 3;
+export const predictPredictPostBodyThalMax = 7;
+
 export const PredictPredictPostBody = zod.object({
-  age: zod
-    .number()
-    .min(1)
-    .max(predictPredictPostBodyAgeMax)
-    .describe("Idade em anos"),
+  paciente_id: zod.uuid().describe("ID do paciente"),
+  age: zod.number().min(1).max(predictPredictPostBodyAgeMax),
   sex: zod
     .number()
     .min(predictPredictPostBodySexMin)
-    .max(predictPredictPostBodySexMax)
-    .describe("Sexo: 1 = masculino, 0 = feminino"),
-  cp: zod
-    .number()
-    .min(1)
-    .max(predictPredictPostBodyCpMax)
-    .describe("Tipo de dor no peito (1 a 4)"),
-  trestbps: zod.number().describe("Pressao arterial em repouso (mm Hg)"),
-  chol: zod.number().describe("Colesterol (mg\/dl)"),
+    .max(predictPredictPostBodySexMax),
+  cp: zod.number().min(1).max(predictPredictPostBodyCpMax),
+  trestbps: zod.number().gt(predictPredictPostBodyTrestbpsExclusiveMin),
+  chol: zod.number().gt(predictPredictPostBodyCholExclusiveMin),
   fbs: zod
     .number()
     .min(predictPredictPostBodyFbsMin)
-    .max(predictPredictPostBodyFbsMax)
-    .describe("Glicemia em jejum > 120 mg\/dl (1 = sim)"),
+    .max(predictPredictPostBodyFbsMax),
   restecg: zod
     .number()
     .min(predictPredictPostBodyRestecgMin)
-    .max(predictPredictPostBodyRestecgMax)
-    .describe("Eletrocardiograma em repouso (0 a 2)"),
-  thalach: zod.number().describe("Frequencia cardiaca maxima atingida"),
+    .max(predictPredictPostBodyRestecgMax),
+  thalach: zod.number().gt(predictPredictPostBodyThalachExclusiveMin),
   exang: zod
     .number()
     .min(predictPredictPostBodyExangMin)
-    .max(predictPredictPostBodyExangMax)
-    .describe("Angina induzida por exercicio (1 = sim)"),
-  oldpeak: zod.number().describe("Depressao do segmento ST no exercicio"),
-  slope: zod
-    .number()
-    .min(1)
-    .max(predictPredictPostBodySlopeMax)
-    .describe("Inclinacao do segmento ST (1 a 3)"),
+    .max(predictPredictPostBodyExangMax),
+  oldpeak: zod.number().min(predictPredictPostBodyOldpeakMin),
+  slope: zod.number().min(1).max(predictPredictPostBodySlopeMax),
   ca: zod
     .number()
     .min(predictPredictPostBodyCaMin)
-    .max(predictPredictPostBodyCaMax)
-    .describe("No de vasos principais coloridos (0 a 3)"),
+    .max(predictPredictPostBodyCaMax),
   thal: zod
     .number()
-    .describe("Talassemia: 3 = normal, 6 = fixo, 7 = reversivel"),
+    .min(predictPredictPostBodyThalMin)
+    .max(predictPredictPostBodyThalMax),
+  modelo: zod.string().describe("ID do modelo de IA"),
 });
 
-export const PredictPredictPostResponse = zod.unknown();
+export const PredictPredictPostResponse = zod.object({
+  id: zod.uuid(),
+  paciente_id: zod.uuid(),
+  age: zod.number(),
+  sex: zod.number(),
+  cp: zod.number(),
+  trestbps: zod.number(),
+  chol: zod.number(),
+  fbs: zod.number(),
+  restecg: zod.number(),
+  thalach: zod.number(),
+  exang: zod.number(),
+  oldpeak: zod.number(),
+  slope: zod.number(),
+  ca: zod.number(),
+  thal: zod.number(),
+  model_used: zod.string(),
+  has_disease: zod.boolean(),
+  disease_probability: zod.number(),
+  result_text: zod.string(),
+  created_at: zod.iso.datetime({ offset: true }),
+});

@@ -68,12 +68,6 @@ function ResultadoPage() {
               Voltar ao Painel
             </Button>
           </Link>
-          <Link to="/evaluation">
-            <Button variant="outline" className="gap-2">
-              <RotateCcw className="h-4 w-4" />
-              Nova Avaliação
-            </Button>
-          </Link>
           <Button onClick={handleExport} disabled={exportarRelatorio.isPending} className="gap-2">
             <Download className="h-4 w-4" />
             {exportarRelatorio.isPending ? "Exportando..." : "Exportar Relatório"}

@@ -23,10 +23,6 @@ function ResultsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3.5">
-          <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
-            <Search className="h-[17px] w-[17px] text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Pesquisar resultado...</span>
-          </div>
           <Link to="/evaluation">
             <Button className="gap-2">
               <ClipboardList className="h-4 w-4" />
@@ -49,7 +45,6 @@ function ResultsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
                   <TableHead>Paciente</TableHead>
                   <TableHead>Resultado</TableHead>
                   <TableHead>Probabilidade</TableHead>
@@ -61,7 +56,6 @@ function ResultsPage() {
               <TableBody>
                 {evaluations.map((ev) => (
                   <TableRow key={ev.id}>
-                    <TableCell className="font-medium">#{ev.id}</TableCell>
                     <TableCell>#{ev.paciente_id}</TableCell>
                     <TableCell>
                       <Badge variant={ev.has_disease ? "danger" : "success"}>

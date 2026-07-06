@@ -14,7 +14,6 @@ import { modelAtom } from "../../store/model";
 
 const navItems = [
   { label: "Painel", icon: LayoutDashboard, to: "/" },
-  { label: "Nova Avaliação", icon: Stethoscope, to: "/evaluation" },
   { label: "Pacientes", icon: Users, to: "/patients" },
   { label: "Resultados", icon: ClipboardList, to: "/results" },
   { label: "Relatórios", icon: FileText, to: "/reports" },

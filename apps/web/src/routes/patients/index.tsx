@@ -1,10 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Search, Users, Plus } from "lucide-react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Search, Users, Plus, Stethoscope, Eye } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
-import { useListPatientsPatientsGet } from "../../generated/api/patients/patients";
+import { useListPatientsPatientsGet, useListEvaluationsEvaluationsGet } from "../../generated/api/patients/patients";
+import { useSetAtom } from "jotai";
+import { selectedPatientAtom } from "../../atoms/patient";
 
 export const Route = createFileRoute("/patients/")({
   component: PatientsPage,
@@ -12,6 +14,14 @@ export const Route = createFileRoute("/patients/")({
 
 function PatientsPage() {
   const { data: patients = [], isLoading } = useListPatientsPatientsGet();
+
+  const setSelectedPatient = useSetAtom(selectedPatientAtom);
+  const navigate = useNavigate();
+
+  const handleEvaluate = (patient: typeof patients[0]) => {
+    setSelectedPatient(patient);
+    navigate({ to: "/evaluation" });
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -23,14 +33,12 @@ function PatientsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3.5">
-          <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
-            <Search className="h-[17px] w-[17px] text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Pesquisar paciente...</span>
-          </div>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Novo Paciente
-          </Button>
+          <Link to="/patients/new">
+            <Button className="gap-2">
+              <Plus className="h-4 w-4" />
+              Novo Paciente
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -83,17 +91,16 @@ function PatientsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>Idade</TableHead>
                   <TableHead>Sexo</TableHead>
                   <TableHead>Cadastrado</TableHead>
+                  <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {patients.map((patient) => (
                   <TableRow key={patient.id}>
-                    <TableCell className="font-medium">#{patient.id}</TableCell>
                     <TableCell>{patient.name ?? "Sem nome"}</TableCell>
                     <TableCell>{patient.age} anos</TableCell>
                     <TableCell>
@@ -103,6 +110,18 @@ function PatientsPage() {
                     </TableCell>
                     <TableCell className="text-muted-foreground">
                       {new Date(patient.created_at).toLocaleDateString("pt-BR")}
+                    </TableCell>
+                    <TableCell className="text-right">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEvaluate(patient)}
+                          className="gap-1.5 rounded-lg"
+                        >
+                          <Stethoscope className="h-3.5 w-3.5" />
+                          Avaliar
+                        </Button>
+                      
                     </TableCell>
                   </TableRow>
                 ))}

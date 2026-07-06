@@ -14,9 +14,9 @@ import type {
 } from "@tanstack/react-query";
 
 import type {
+  EvaluationResponse,
   HTTPValidationError,
-  Patient,
-  PredictPredictPostParams,
+  PredictRequest,
 } from "../../models";
 
 import { api } from "../../../lib/api";
@@ -28,18 +28,16 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
  * @summary Predict
  */
 export const predictPredictPost = (
-  patient: BodyType<Patient>,
-  params?: PredictPredictPostParams,
+  predictRequest: BodyType<PredictRequest>,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<unknown>(
+  return api<EvaluationResponse>(
     {
       url: `/predict`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      data: patient,
-      params,
+      data: predictRequest,
       signal,
     },
     options,
@@ -53,14 +51,14 @@ export const getPredictPredictPostMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof predictPredictPost>>,
     TError,
-    { data: BodyType<Patient>; params?: PredictPredictPostParams },
+    { data: BodyType<PredictRequest> },
     TContext
   >;
   request?: SecondParameter<typeof api>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof predictPredictPost>>,
   TError,
-  { data: BodyType<Patient>; params?: PredictPredictPostParams },
+  { data: BodyType<PredictRequest> },
   TContext
 > => {
   const mutationKey = ["predictPredictPost"];
@@ -74,11 +72,11 @@ export const getPredictPredictPostMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof predictPredictPost>>,
-    { data: BodyType<Patient>; params?: PredictPredictPostParams }
+    { data: BodyType<PredictRequest> }
   > = (props) => {
-    const { data, params } = props ?? {};
+    const { data } = props ?? {};
 
-    return predictPredictPost(data, params, requestOptions);
+    return predictPredictPost(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -87,7 +85,7 @@ export const getPredictPredictPostMutationOptions = <
 export type PredictPredictPostMutationResult = NonNullable<
   Awaited<ReturnType<typeof predictPredictPost>>
 >;
-export type PredictPredictPostMutationBody = BodyType<Patient>;
+export type PredictPredictPostMutationBody = BodyType<PredictRequest>;
 export type PredictPredictPostMutationError = ErrorType<HTTPValidationError>;
 
 /**
@@ -101,7 +99,7 @@ export const usePredictPredictPost = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof predictPredictPost>>,
       TError,
-      { data: BodyType<Patient>; params?: PredictPredictPostParams },
+      { data: BodyType<PredictRequest> },
       TContext
     >;
     request?: SecondParameter<typeof api>;
@@ -110,7 +108,7 @@ export const usePredictPredictPost = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof predictPredictPost>>,
   TError,
-  { data: BodyType<Patient>; params?: PredictPredictPostParams },
+  { data: BodyType<PredictRequest> },
   TContext
 > => {
   return useMutation(

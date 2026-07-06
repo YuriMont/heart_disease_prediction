@@ -57,18 +57,6 @@ function ModelsPage() {
             Modelos de Inteligência Artificial
           </h1>
         </div>
-        <div className="flex gap-3">
-          <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
-            <Search className="h-[17px] w-[17px] text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">
-              Pesquisar modelo...
-            </span>
-          </div>
-          <Button className="gap-2">
-            <BrainCircuit className="h-4 w-4" />
-            Novo Modelo
-          </Button>
-        </div>
       </div>
 
       <div className="grid grid-cols-[1fr_340px] gap-6">
@@ -144,7 +132,7 @@ function ModelsPage() {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
-                    Accuracy
+                    Acurácia
                   </span>
                   <span className="text-sm font-bold text-foreground">
                     {((metrics?.accuracy ?? 0) * 100).toFixed(2)}%
@@ -167,7 +155,7 @@ function ModelsPage() {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
-                    Precision
+                    Precisão
                   </span>
                   <span className="text-sm font-bold text-foreground">
                     {((metrics?.precision ?? 0) * 100).toFixed(2)}%
@@ -202,19 +190,19 @@ function ModelsPage() {
             </CardHeader>
             <CardContent className="p-0 flex flex-col gap-2">
               {[
-                { field: "age", label: "Age", range: "1-120" },
-                { field: "sex", label: "Sex", range: "0/1" },
-                { field: "cp", label: "Chest pain", range: "1-4" },
-                { field: "trestbps", label: "Resting pressure", range: "mmHg" },
-                { field: "chol", label: "Cholesterol", range: "mg/dL" },
-                { field: "fbs", label: "Fasting glucose", range: "0/1" },
-                { field: "restecg", label: "Resting ECG", range: "0-2" },
-                { field: "thalach", label: "Max rate", range: "bpm" },
-                { field: "exang", label: "Exercise angina", range: "0/1" },
-                { field: "oldpeak", label: "ST depression", range: "mm" },
-                { field: "slope", label: "ST slope", range: "1-3" },
-                { field: "ca", label: "Colored vessels", range: "0-3" },
-                { field: "thal", label: "Thalassemia", range: "3/6/7" },
+                { field: "age", label: "Idade", range: "1-120" },
+                { field: "sex", label: "Sexo", range: "0/1" },
+                { field: "cp", label: "Dor torácica", range: "1-4" },
+                { field: "trestbps", label: "Pressão em repouso", range: "mmHg" },
+                { field: "chol", label: "Colesterol", range: "mg/dL" },
+                { field: "fbs", label: "Glicemia em jejum", range: "0/1" },
+                { field: "restecg", label: "ECG em repouso", range: "0-2" },
+                { field: "thalach", label: "Freq. cardíaca máx.", range: "bpm" },
+                { field: "exang", label: "Angina por exercício", range: "0/1" },
+                { field: "oldpeak", label: "Depressão ST", range: "mm" },
+                { field: "slope", label: "Inclinação ST", range: "1-3" },
+                { field: "ca", label: "Vasos coloridos", range: "0-3" },
+                { field: "thal", label: "Talassemia", range: "3/6/7" },
               ].map((f) => (
                 <div
                   key={f.field}

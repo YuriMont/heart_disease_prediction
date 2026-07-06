@@ -39,13 +39,13 @@ export function ModelInfo() {
             <span className="text-[22px] font-bold text-white">
               {((metrics?.accuracy ?? 0) * 100).toFixed(2)}%
             </span>
-            <span className="text-[11px] text-[#9FB6D4]">Accuracy</span>
+            <span className="text-[11px] text-[#9FB6D4]">Acurácia</span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-[22px] font-bold text-white">
               {((metrics?.precision ?? 0) * 100).toFixed(2)}%
             </span>
-            <span className="text-[11px] text-[#9FB6D4]">Precision</span>
+            <span className="text-[11px] text-[#9FB6D4]">Precisão</span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-[22px] font-bold text-white">
@@ -61,10 +61,10 @@ export function ModelInfo() {
           </div>
           <div className="flex flex-col items-end">
             <span className="text-[13px] font-semibold text-white">
-              {metrics?.updated_at ? new Date(metrics.updated_at).toLocaleDateString() : "00/00/0000"}
+              {metrics?.updated_at  || "00/00/0000"}
             </span>
             <span className="text-[11px] text-[#9FB6D4]">
-              Ultima atualização
+              Última atualização
             </span>
           </div>
         </div>

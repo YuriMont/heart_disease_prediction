@@ -6,63 +6,62 @@
  * OpenAPI spec version: 2.0.0
  */
 
-export interface Patient {
+export interface PredictRequest {
+  /** ID do paciente */
+  paciente_id: string;
   /**
-   * Idade em anos
    * @minimum 1
    * @maximum 120
    */
   age: number;
   /**
-   * Sexo: 1 = masculino, 0 = feminino
    * @minimum 0
    * @maximum 1
    */
   sex: number;
   /**
-   * Tipo de dor no peito (1 a 4)
    * @minimum 1
    * @maximum 4
    */
   cp: number;
-  /** Pressao arterial em repouso (mm Hg) */
+  /** @exclusiveMinimum 0 */
   trestbps: number;
-  /** Colesterol (mg/dl) */
+  /** @exclusiveMinimum 0 */
   chol: number;
   /**
-   * Glicemia em jejum > 120 mg/dl (1 = sim)
    * @minimum 0
    * @maximum 1
    */
   fbs: number;
   /**
-   * Eletrocardiograma em repouso (0 a 2)
    * @minimum 0
    * @maximum 2
    */
   restecg: number;
-  /** Frequencia cardiaca maxima atingida */
+  /** @exclusiveMinimum 0 */
   thalach: number;
   /**
-   * Angina induzida por exercicio (1 = sim)
    * @minimum 0
    * @maximum 1
    */
   exang: number;
-  /** Depressao do segmento ST no exercicio */
+  /** @minimum 0 */
   oldpeak: number;
   /**
-   * Inclinacao do segmento ST (1 a 3)
    * @minimum 1
    * @maximum 3
    */
   slope: number;
   /**
-   * No de vasos principais coloridos (0 a 3)
    * @minimum 0
    * @maximum 3
    */
   ca: number;
-  /** Talassemia: 3 = normal, 6 = fixo, 7 = reversivel */
+  /**
+   * @minimum 3
+   * @maximum 7
+   */
   thal: number;
+  /** ID do modelo de IA */
+  modelo: string;
 }

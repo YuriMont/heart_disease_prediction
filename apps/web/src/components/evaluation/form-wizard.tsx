@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -14,16 +14,18 @@ import {
   ListChecks,
   CircleCheckBig,
   Circle,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Segmented } from "../ui/segmented";
 import {
-  useCreatePatientPatientsPost,
   useCreateEvaluationEvaluationsPost,
+  useListPatientsPatientsGet,
 } from "../../generated/api/patients/patients";
 import { modelAtom } from "../../store/model";
+import { selectedPatientAtom } from "../../atoms/patient";
 import { useAtom } from "jotai";
 import { useListModelsModelsGet } from "../../generated/api/models/models";
 import { PredictPredictPostBody } from "../../generated/api/prediction/prediction.zod";
@@ -54,12 +56,13 @@ const DEFAULT_VALUES_FORM = {
 
 export function EvaluationForm() {
   const [selectedModel, setSelectedModel] = useAtom(modelAtom);
+  const [selectedPatient, setSelectedPatient] = useAtom(selectedPatientAtom);
 
   const { data: models = [] } = useListModelsModelsGet();
+  const { data: patients = [] } = useListPatientsPatientsGet();
 
   const navigate = useNavigate();
 
-  const createPatient = useCreatePatientPatientsPost();
   const createEvaluation = useCreateEvaluationEvaluationsPost();
 
   const form = useForm<FormData>({
@@ -71,14 +74,19 @@ export function EvaluationForm() {
 
   const values = form.watch();
 
+  useEffect(() => {
+    if (selectedPatient) {
+      setValue("paciente_id", selectedPatient.id)
+      setValue("age", selectedPatient.age);
+      setValue("sex", selectedPatient.sex);
+    }
+  }, [selectedPatient, setValue]);
+
   const handleSubmit = async () => {
+    if (!selectedPatient) return;
     try {
-      const patient = await createPatient.mutateAsync({
-        data: { age: values.age, sex: values.sex },
-      });
       const evaluation = await createEvaluation.mutateAsync({
         data: {
-          paciente_id: patient.id,
           ...values,
           modelo: selectedModel!.id,
         },
@@ -91,6 +99,13 @@ export function EvaluationForm() {
 
   const handleClear = () => {
     form.reset(DEFAULT_VALUES_FORM);
+  };
+
+  const handlePatientChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const patient = patients.find((p) => p.id === e.target.value);
+    if (patient) {
+      setSelectedPatient(patient);
+    }
   };
 
   return (
@@ -122,28 +137,7 @@ export function EvaluationForm() {
       <div className="flex gap-[22px]">
         {/* Form Column */}
         <div className="flex flex-1 flex-col gap-5">
-          {/* Stepper */}
-          <div className="flex items-center justify-around gap-[14px] rounded-[18px] border border-border bg-card px-6 py-[18px]">
-            {steps.map((step, index) => (
-              <Fragment key={step.num}>
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary">
-                    <span className="font-heading text-[13px] font-bold text-white">
-                      {step.num}
-                    </span>
-                  </div>
-                  <span className="text-[13px] font-semibold text-foreground">
-                    {step.label}
-                  </span>
-                </div>
-                {index < steps.length - 1 && (
-                  <div className="ml-2.5 h-[2px] flex-1 rounded bg-primary" />
-                )}
-              </Fragment>
-            ))}
-          </div>
-
-          {/* Section 1 - Demographic Data */}
+          {/* Patient Select */}
           <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
@@ -151,47 +145,39 @@ export function EvaluationForm() {
               </div>
               <div className="flex flex-1 flex-col gap-0.5">
                 <span className="font-heading text-base font-bold text-foreground">
-                  Dados Demográficos
+                  Paciente
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Informações básicas do paciente
+                  Paciente em avaliação
                 </span>
               </div>
             </div>
-            <div className="flex gap-4">
-              <div className="flex flex-1 flex-col gap-1">
-                <Label className="text-[13px] font-semibold text-muted-foreground">
-                  Idade
-                </Label>
-                <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
-                  <Input
-                    type="number"
-                    required
-                    placeholder="Ex.: 45"
-                    value={values.age || ""}
-                    onChange={(e) => setValue("age", Number(e.target.value))}
-                    className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
-                  />
-                  <span className="text-[13px] text-muted-foreground">
-                    anos
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-1 flex-col gap-1">
-                <Segmented
-                  label="Sexo"
-                  options={[
-                    { label: "Masculino", value: 1 },
-                    { label: "Feminino", value: 0 },
-                  ]}
-                  value={values.sex}
-                  onChange={(v) => setValue("sex", v as number)}
-                />
+            <div className="flex flex-col gap-1">
+              <Label className="text-[13px] font-semibold text-muted-foreground">
+                Selecionar Paciente
+              </Label>
+              <div className="relative">
+                <select
+                  value={selectedPatient?.id ?? ""}
+                  onChange={handlePatientChange}
+                  className="flex h-10 w-full appearance-none rounded-[8px] border border-(--border-strong) bg-secondary px-3 pr-10 text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <option value="" disabled>
+                    Selecione um paciente...
+                  </option>
+                  {patients.map((patient) => (
+                    <option key={patient.id} value={patient.id}>
+                      {patient.name ?? "Sem nome"} — {patient.age} anos (
+                      {patient.sex === 1 ? "M" : "F"})
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               </div>
             </div>
           </div>
 
-          {/* Section 2 - Biometric Data */}
+          {/* Section 1 - Biometric Data */}
           <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
@@ -272,7 +258,7 @@ export function EvaluationForm() {
             </div>
           </div>
 
-          {/* Section 3 - Heart Exams */}
+          {/* Section 2 - Heart Exams */}
           <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
@@ -477,11 +463,11 @@ export function EvaluationForm() {
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={createPatient.isPending || createEvaluation.isPending}
+              disabled={createEvaluation.isPending}
               className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-white shadow-[0_6px_16px_-4px_#1E63E966] transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Sparkles className="h-[18px] w-[18px]" />
-              {createPatient.isPending || createEvaluation.isPending
+              {createEvaluation.isPending
                 ? "Processando..."
                 : "Executar Predição"}
             </button>
