@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, RotateCcw, Download } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import { useGetEvaluationEvaluationsEvaluationIdGet } from "../../../generated/api/patients/patients";
 import { useGetFactorsEvaluationsEvaluationIdFactorsGet, useGetImportanceEvaluationsEvaluationIdImportanceGet } from "../../../generated/api/result/result";
 import { useExportReportReportsExportPost } from "../../../generated/api/reports/reports";
@@ -87,14 +87,14 @@ function ResultadoPage() {
             temDoenca={evaluation.has_disease}
           />
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6 overflow-auto">
             <ContributingFactors factors={factors} />
             <FeatureImportance features={importance} />
           </div>
         </div>
 
         {/* Side Column */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 h-full">
           {/* Data Summary */}
           <Card className="p-6">
             <CardHeader className="p-0 mb-4">

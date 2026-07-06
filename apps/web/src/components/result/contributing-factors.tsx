@@ -14,7 +14,7 @@ export function ContributingFactors({ factors }: ContributingFactorsProps) {
       <CardHeader className="p-0">
         <CardTitle>Principais Fatores Contribuintes</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3 p-0">
+      <CardContent className="flex flex-col gap-3 p-0 max-h-[28rem] overflow-auto">
         {sorted.map((factor, index) => {
           const isPositive = factor.impact > 0;
           return (

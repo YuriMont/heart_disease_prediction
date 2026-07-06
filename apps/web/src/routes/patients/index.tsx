@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Search, Users, Plus, Stethoscope, Eye } from "lucide-react";
+import { Users, Plus, Stethoscope } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
-import { useListPatientsPatientsGet, useListEvaluationsEvaluationsGet } from "../../generated/api/patients/patients";
+import { useListPatientsPatientsGet } from "../../generated/api/patients/patients";
 import { useSetAtom } from "jotai";
 import { selectedPatientAtom } from "../../atoms/patient";
 

@@ -1,4 +1,4 @@
-import { Search, Bell, Plus } from "lucide-react";
+import { Bell, Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "../ui/button";
 

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BrainCircuit, Search } from "lucide-react";
+import { Eye, MoreHorizontal, Rocket } from "lucide-react";
 import {
   useListModelsModelsGet,
   useGetMetricsModelsModelIdMetricsGet,
@@ -22,8 +22,22 @@ import {
 import { Progress } from "@radix-ui/react-progress";
 import { ModelInfo } from "../../components/dashboard/model-info";
 import { Badge } from "../../components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
 import { modelAtom } from "../../store/model";
 import { useAtom } from "jotai";
+import { useState } from "react";
 
 export const Route = createFileRoute("/models/")({
   component: ModelsPage,
@@ -33,6 +47,7 @@ function ModelsPage() {
   const { data: models = [], isLoading } = useListModelsModelsGet();
 
   const [selectedModel, setSelectedModel] = useAtom(modelAtom);
+  const [isVariablesOpen, setIsVariablesOpen] = useState(false);
 
   const { data: metrics } = useGetMetricsModelsModelIdMetricsGet(
     selectedModel?.id ?? "",
@@ -59,7 +74,7 @@ function ModelsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-[1fr_340px] gap-6">
+      <div className="flex flex-col gap-6">
         {/* Main Column */}
         <div className="flex flex-col gap-6">
           {/* Active Model Card */}
@@ -80,13 +95,13 @@ function ModelsPage() {
                       <TableHead>Modelo</TableHead>
                       <TableHead>Descrição</TableHead>
                       <TableHead>Status</TableHead>
+                      <TableHead className="w-[50px]">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {models.map((model) => (
                       <TableRow
                         key={model.name}
-                        onClick={() => setSelectedModel(model)}
                         className={
                           selectedModel?.name == model.name
                             ? "bg-gray-200 transition-colors"
@@ -111,6 +126,33 @@ function ModelsPage() {
                               ? "Ativo"
                               : "Disponível"}
                           </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="bg-card" align="end">
+                              <DropdownMenuItem
+                                onClick={() => setIsVariablesOpen(true)}
+                              >
+                                <Eye className="h-4 w-4" />
+                                Variáveis de entrada
+                              </DropdownMenuItem>
+                              {model.name != selectedModel?.name && (<DropdownMenuItem
+                                onClick={() => setSelectedModel(model)}
+                              >
+                                <Rocket className="h-4 w-4" />
+                                Selecionar modelo
+                              </DropdownMenuItem>)}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -184,45 +226,87 @@ function ModelsPage() {
           </Card>
 
           {/* Features */}
-          <Card className="p-6">
-            <CardHeader className="p-0 mb-4">
-              <CardTitle>Variáveis de Entrada</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0 flex flex-col gap-2">
-              {[
-                { field: "age", label: "Idade", range: "1-120" },
-                { field: "sex", label: "Sexo", range: "0/1" },
-                { field: "cp", label: "Dor torácica", range: "1-4" },
-                { field: "trestbps", label: "Pressão em repouso", range: "mmHg" },
-                { field: "chol", label: "Colesterol", range: "mg/dL" },
-                { field: "fbs", label: "Glicemia em jejum", range: "0/1" },
-                { field: "restecg", label: "ECG em repouso", range: "0-2" },
-                { field: "thalach", label: "Freq. cardíaca máx.", range: "bpm" },
-                { field: "exang", label: "Angina por exercício", range: "0/1" },
-                { field: "oldpeak", label: "Depressão ST", range: "mm" },
-                { field: "slope", label: "Inclinação ST", range: "1-3" },
-                { field: "ca", label: "Vasos coloridos", range: "0-3" },
-                { field: "thal", label: "Talassemia", range: "3/6/7" },
-              ].map((f) => (
-                <div
-                  key={f.field}
-                  className="flex items-center justify-between py-1.5 border-b border-border last:border-0"
-                >
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium text-foreground">
-                      {f.label}
-                    </span>
-                    <span className="text-[11px] text-muted-foreground font-mono">
-                      {f.field}
-                    </span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    {f.range}
-                  </span>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+          
+    
+              <Dialog open={isVariablesOpen} onOpenChange={setIsVariablesOpen}>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>Variáveis de Entrada</DialogTitle>
+                    <DialogDescription>
+                      Variáveis utilizadas pelo modelo para predição de
+                      doença cardíaca.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Campo</TableHead>
+                        <TableHead>Descrição</TableHead>
+                        <TableHead>Valores</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {[
+                        { field: "age", label: "Idade", range: "1-120" },
+                        { field: "sex", label: "Sexo", range: "0/1" },
+                        { field: "cp", label: "Dor torácica", range: "1-4" },
+                        {
+                          field: "trestbps",
+                          label: "Pressão em repouso",
+                          range: "mmHg",
+                        },
+                        { field: "chol", label: "Colesterol", range: "mg/dL" },
+                        {
+                          field: "fbs",
+                          label: "Glicemia em jejum",
+                          range: "0/1",
+                        },
+                        {
+                          field: "restecg",
+                          label: "ECG em repouso",
+                          range: "0-2",
+                        },
+                        {
+                          field: "thalach",
+                          label: "Freq. cardíaca máx.",
+                          range: "bpm",
+                        },
+                        {
+                          field: "exang",
+                          label: "Angina por exercício",
+                          range: "0/1",
+                        },
+                        {
+                          field: "oldpeak",
+                          label: "Depressão ST",
+                          range: "mm",
+                        },
+                        {
+                          field: "slope",
+                          label: "Inclinação ST",
+                          range: "1-3",
+                        },
+                        {
+                          field: "ca",
+                          label: "Vasos coloridos",
+                          range: "0-3",
+                        },
+                        { field: "thal", label: "Talassemia", range: "3/6/7" },
+                      ].map((f) => (
+                        <TableRow key={f.field}>
+                          <TableCell className="font-mono text-xs font-medium">
+                            {f.field}
+                          </TableCell>
+                          <TableCell>{f.label}</TableCell>
+                          <TableCell className="text-muted-foreground">
+                            {f.range}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </DialogContent>
+              </Dialog>
         </div>
       </div>
     </div>

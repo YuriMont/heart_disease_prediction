@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -31,12 +31,6 @@ import { useListModelsModelsGet } from "../../generated/api/models/models";
 import { CreateEvaluationEvaluationsPostBody } from "../../generated/api/patients/patients.zod";
 
 type FormData = z.infer<typeof CreateEvaluationEvaluationsPostBody>;
-
-const steps = [
-  { label: "Dados do Paciente", num: 1 },
-  { label: "Medidas Clínicas", num: 2 },
-  { label: "Exames Cardíacos", num: 3 },
-];
 
 const DEFAULT_VALUES_FORM = {
   age: 0,

@@ -1,7 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import {
   LayoutDashboard,
-  Stethoscope,
   Users,
   ClipboardList,
   FileText,
