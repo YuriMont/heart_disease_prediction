@@ -28,9 +28,9 @@ import { modelAtom } from "../../store/model";
 import { selectedPatientAtom } from "../../atoms/patient";
 import { useAtom } from "jotai";
 import { useListModelsModelsGet } from "../../generated/api/models/models";
-import { PredictPredictPostBody } from "../../generated/api/prediction/prediction.zod";
+import { CreateEvaluationEvaluationsPostBody } from "../../generated/api/patients/patients.zod";
 
-type FormData = z.infer<typeof PredictPredictPostBody>;
+type FormData = z.infer<typeof CreateEvaluationEvaluationsPostBody>;
 
 const steps = [
   { label: "Dados do Paciente", num: 1 },
@@ -66,7 +66,7 @@ export function EvaluationForm() {
   const createEvaluation = useCreateEvaluationEvaluationsPost();
 
   const form = useForm<FormData>({
-    resolver: zodResolver(PredictPredictPostBody),
+    resolver: zodResolver(CreateEvaluationEvaluationsPostBody),
     defaultValues: DEFAULT_VALUES_FORM,
   });
 
@@ -88,7 +88,7 @@ export function EvaluationForm() {
       const evaluation = await createEvaluation.mutateAsync({
         data: {
           ...values,
-          modelo: selectedModel!.id,
+          model_id: selectedModel!.id,
         },
       });
       navigate({ to: `/evaluation/${evaluation.id}` });

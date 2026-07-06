@@ -80,6 +80,7 @@ export const GetPatientPatientsPatientIdGetResponse = zod.object({
 export const ListEvaluationsEvaluationsGetResponseItem = zod.object({
   id: zod.uuid(),
   paciente_id: zod.uuid(),
+  patient_name: zod.string().nullable(),
   age: zod.number(),
   sex: zod.number(),
   cp: zod.number(),
@@ -175,12 +176,13 @@ export const CreateEvaluationEvaluationsPostBody = zod.object({
     .number()
     .min(createEvaluationEvaluationsPostBodyThalMin)
     .max(createEvaluationEvaluationsPostBodyThalMax),
-  modelo: zod.string().describe("ID do modelo de IA"),
+  model_id: zod.string().describe("ID do modelo de IA"),
 });
 
 export const CreateEvaluationEvaluationsPostResponse = zod.object({
   id: zod.uuid(),
   paciente_id: zod.uuid(),
+  patient_name: zod.string().nullable(),
   age: zod.number(),
   sex: zod.number(),
   cp: zod.number(),
@@ -211,6 +213,7 @@ export const GetEvaluationEvaluationsEvaluationIdGetParams = zod.object({
 export const GetEvaluationEvaluationsEvaluationIdGetResponse = zod.object({
   id: zod.uuid(),
   paciente_id: zod.uuid(),
+  patient_name: zod.string().nullable(),
   age: zod.number(),
   sex: zod.number(),
   cp: zod.number(),

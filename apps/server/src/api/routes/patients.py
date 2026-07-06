@@ -3,7 +3,7 @@ from uuid import UUID
 from schemas.evaluation import EvaluationCreate, EvaluationResponse
 from schemas.patient import PatientCreate, PatientResponse, Patient as PatientInput
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from database.connection import get_db
 
@@ -51,11 +51,11 @@ def create_evaluation(dados: EvaluationCreate, db: Session = Depends(get_db)):
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found.")
 
-    metrica_modelo = db.query(Model).filter(Model.id == dados.modelo).first()
+    metrica_modelo = db.query(Model).filter(Model.id == dados.model_id).first()
     if not metrica_modelo or not metrica_modelo.active:
         raise HTTPException(
             status_code=400,
-            detail=f"Model '{dados.modelo}' is not active or does not exist. Activate it first.",
+            detail=f"Model '{dados.model_id}' is not active or does not exist. Activate it first.",
         )
 
     if metrica_modelo.name not in servico.MODELOS:
@@ -71,7 +71,7 @@ def create_evaluation(dados: EvaluationCreate, db: Session = Depends(get_db)):
         oldpeak=dados.oldpeak, slope=dados.slope, ca=dados.ca, thal=dados.thal,
     )
 
-    resultado = servico.predict(paciente_input, dados.modelo, db)
+    resultado = servico.predict(paciente_input, dados.model_id, db)
 
     avaliacao = Evaluation(
         paciente_id=dados.paciente_id,
@@ -87,12 +87,20 @@ def create_evaluation(dados: EvaluationCreate, db: Session = Depends(get_db)):
     db.add(avaliacao)
     db.commit()
     db.refresh(avaliacao)
-    return avaliacao
+    return EvaluationResponse(
+        **{c.name: getattr(avaliacao, c.name) for c in Evaluation.__table__.columns},
+        patient_name=patient.name if patient else None,
+    )
 
 
 @router.get("/evaluations", response_model=list[EvaluationResponse])
 def list_evaluations(db: Session = Depends(get_db)):
-    return db.query(Evaluation).order_by(Evaluation.created_at.desc()).all()
+    return (
+        db.query(Evaluation)
+        .options(joinedload(Evaluation.patient))
+        .order_by(Evaluation.created_at.desc())
+        .all()
+    )
 
 
 @router.get("/evaluations/{evaluation_id}", response_model=EvaluationResponse)

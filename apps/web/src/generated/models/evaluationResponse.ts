@@ -9,6 +9,7 @@
 export interface EvaluationResponse {
   id: string;
   paciente_id: string;
+  patient_name: string | null;
   age: number;
   sex: number;
   cp: number;

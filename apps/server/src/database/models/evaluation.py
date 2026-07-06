@@ -78,6 +78,10 @@ class Evaluation(Base):
         back_populates="evaluations"
     )
 
+    @property
+    def patient_name(self) -> str | None:
+        return self.patient.name if self.patient else None
+
     report: Mapped["Report"] = relationship(
         back_populates="evaluation",
         uselist=False,

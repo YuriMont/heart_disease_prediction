@@ -56,7 +56,7 @@ function ResultsPage() {
               <TableBody>
                 {evaluations.map((ev) => (
                   <TableRow key={ev.id}>
-                    <TableCell>#{ev.paciente_id}</TableCell>
+                    <TableCell>{ev.patient_name ?? `#${ev.paciente_id.slice(0, 8)}`}</TableCell>
                     <TableCell>
                       <Badge variant={ev.has_disease ? "danger" : "success"}>
                         {ev.has_disease ? "Doença" : "Saudável"}

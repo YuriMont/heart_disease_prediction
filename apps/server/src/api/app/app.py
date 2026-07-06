@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from database.connection import create_tables
-from api.routes import dashboard, models as modelos, pages as paginas, patients as pacientes, prediction as previsao, reports as relatorios, result as resultado
+from api.routes import dashboard, models, pages, patients, reports, result
 
 from fastapi.middleware.cors import CORSMiddleware
 from api.middleware.redirect import RedirectMiddleware
@@ -37,10 +37,9 @@ app.add_middleware(
 
 app.add_middleware(RedirectMiddleware)
 
-app.include_router(paginas.router)
-app.include_router(previsao.router)
+app.include_router(pages.router)
 app.include_router(dashboard.router)
-app.include_router(pacientes.router)
-app.include_router(resultado.router)
-app.include_router(modelos.router)
-app.include_router(relatorios.router)
+app.include_router(patients.router)
+app.include_router(result.router)
+app.include_router(models.router)
+app.include_router(reports.router)

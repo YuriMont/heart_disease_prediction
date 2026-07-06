@@ -63,5 +63,5 @@ export interface EvaluationCreate {
    */
   thal: number;
   /** ID do modelo de IA */
-  modelo: string;
+  model_id: string;
 }
