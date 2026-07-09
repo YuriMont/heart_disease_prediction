@@ -26,5 +26,5 @@ def get_importance(evaluation_id: UUID, db: Session = Depends(get_db)):
     if not evaluation:
         raise HTTPException(status_code=404, detail="Evaluation not found.")
 
-    dados = calculate_feature_importance()
+    dados = calculate_feature_importance(evaluation.model_used)
     return dados

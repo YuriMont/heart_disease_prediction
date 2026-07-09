@@ -1,6 +1,7 @@
 import os
 
 import joblib
+import shap
 import pandas as pd
 from sqlalchemy.orm import Session
 
@@ -23,6 +24,11 @@ if os.path.isdir(ARTIFACTS_DIR):
             nome_modelo = arquivo.removesuffix(".pkl")
             caminho = os.path.join(ARTIFACTS_DIR, arquivo)
             MODELOS[nome_modelo] = joblib.load(caminho)
+
+EXPLAINERS = {}
+for nome, modelo in MODELOS.items():
+    if hasattr(modelo, "feature_importances_"):
+        EXPLAINERS[nome] = shap.TreeExplainer(modelo)
 
 
 def assemble_features(paciente: Patient):
