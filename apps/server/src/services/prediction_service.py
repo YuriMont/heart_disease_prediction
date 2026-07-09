@@ -15,7 +15,9 @@ FEATURE_NAMES = joblib.load(os.path.join(ARTIFACTS_DIR, "feature_names.pkl"))
 
 SCALER = joblib.load(os.path.join(ARTIFACTS_DIR, "scaler.pkl"))
 
-EXCLUDE_ARTIFACTS = {"scaler.pkl", "feature_names.pkl"}
+EXCLUDE_ARTIFACTS = {"scaler.pkl", "feature_names.pkl", "training_background.pkl"}
+
+TRAINING_BACKGROUND = joblib.load(os.path.join(ARTIFACTS_DIR, "training_background.pkl"))
 
 MODELOS = {}
 if os.path.isdir(ARTIFACTS_DIR):
@@ -25,10 +27,7 @@ if os.path.isdir(ARTIFACTS_DIR):
             caminho = os.path.join(ARTIFACTS_DIR, arquivo)
             MODELOS[nome_modelo] = joblib.load(caminho)
 
-EXPLAINERS = {}
-for nome, modelo in MODELOS.items():
-    if hasattr(modelo, "feature_importances_"):
-        EXPLAINERS[nome] = shap.TreeExplainer(modelo)
+
 
 
 def assemble_features(paciente: Patient):

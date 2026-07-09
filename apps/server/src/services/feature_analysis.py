@@ -1,8 +1,12 @@
+import shap
+
+import numpy as np
+
 from schemas.result import ContributingFactor, FeatureImportance
-from services.prediction_service import MODELOS, FEATURE_NAMES, SCALER, EXPLAINERS
+from services.constants import get_display_name, get_unit, get_categories, get_continuous_keys, get_categorical_keys
+from services.prediction_service import MODELOS, FEATURE_NAMES, SCALER, TRAINING_BACKGROUND
 from database.models.evaluation import Evaluation
 from machine_learning.data import CATEGORICAL_COLUMNS, CONTINUOUS_COLUMNS
-import numpy as np
 
 _ORIGINAL_FEATURES = CONTINUOUS_COLUMNS + CATEGORICAL_COLUMNS
 
@@ -21,22 +25,6 @@ def _build_feature_map():
 
 _FEATURE_MAP = _build_feature_map()
 
-_DISPLAY_NAMES = {
-    "age": "Age",
-    "sex": "Sex",
-    "cp": "Chest pain type",
-    "trestbps": "Resting blood pressure",
-    "chol": "Cholesterol",
-    "fbs": "Fasting blood sugar",
-    "restecg": "Resting ECG",
-    "thalach": "Max heart rate",
-    "exang": "Exercise angina",
-    "oldpeak": "ST depression",
-    "slope": "ST slope",
-    "ca": "Colored vessels",
-    "thal": "Thalassemia",
-}
-
 
 def _get_model_importance(model_name: str):
     if model_name not in MODELOS:
@@ -47,10 +35,10 @@ def _get_model_importance(model_name: str):
     if hasattr(model, "feature_importances_"):
         importances = model.feature_importances_
     else:
-        explainer = EXPLAINERS.get(model_name)
-        if explainer:
+        try:
+            explainer = shap.KernelExplainer(model.predict_proba, TRAINING_BACKGROUND, link="identity")
             importances = _shap_importance(explainer)
-        else:
+        except Exception:
             return {}, {}
 
     grouped = {}
@@ -72,6 +60,8 @@ def _shap_importance(explainer):
     shap_values = explainer.shap_values(background)
     if isinstance(shap_values, list):
         shap_values = shap_values[1]
+    if shap_values.ndim == 3:
+        shap_values = shap_values[:, :, 1]
     return np.abs(shap_values).mean(axis=0)
 
 
@@ -80,7 +70,7 @@ def calculate_feature_importance(model_name: str = "random_forest") -> list[Feat
 
     return sorted(
         [
-            FeatureImportance(variable=_DISPLAY_NAMES.get(k, k), weight=v)
+            FeatureImportance(variable=get_display_name(k) or k, weight=v)
             for k, v in grouped_importance.items()
         ],
         key=lambda x: x.weight,
@@ -97,72 +87,20 @@ def calculate_contributing_factors(evaluation: Evaluation) -> list[ContributingF
 
     factors: list[ContributingFactor] = []
 
-    _add_continuous_factor(
-        factors, "Age", evaluation.age, "years",
-        grouped_importance.get("age", 0), scaler_means.get("age", 0),
-        scaler_stds.get("age", 1),
-    )
-    _add_continuous_factor(
-        factors, "Resting blood pressure", evaluation.trestbps, "mmHg",
-        grouped_importance.get("trestbps", 0), scaler_means.get("trestbps", 0),
-        scaler_stds.get("trestbps", 1),
-    )
-    _add_continuous_factor(
-        factors, "Cholesterol", evaluation.chol, "mg/dL",
-        grouped_importance.get("chol", 0), scaler_means.get("chol", 0),
-        scaler_stds.get("chol", 1),
-    )
-    _add_continuous_factor(
-        factors, "Max heart rate", evaluation.thalach, "bpm",
-        grouped_importance.get("thalach", 0), scaler_means.get("thalach", 0),
-        scaler_stds.get("thalach", 1),
-    )
-    _add_continuous_factor(
-        factors, "ST depression", evaluation.oldpeak, "mm",
-        grouped_importance.get("oldpeak", 0), scaler_means.get("oldpeak", 0),
-        scaler_stds.get("oldpeak", 1),
-    )
+    for key in get_continuous_keys():
+        _add_continuous_factor(
+            factors, get_display_name(key) or key, getattr(evaluation, key),
+            get_unit(key) or "",
+            grouped_importance.get(key, 0), scaler_means.get(key, 0),
+            scaler_stds.get(key, 1),
+        )
 
-    _add_category_factor(
-        factors, "Chest pain type", evaluation.cp,
-        {1: "Typical", 2: "Atypical", 3: "Non-anginal", 4: "Asymptomatic"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "ST slope", evaluation.slope,
-        {1: "Upsloping", 2: "Flat", 3: "Downsloping"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "Thalassemia", evaluation.thal,
-        {3: "Normal", 6: "Fixed defect", 7: "Reversible defect"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "Colored vessels", evaluation.ca,
-        {0: "None", 1: "1 vessel", 2: "2 vessels", 3: "3 vessels"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "Sex", evaluation.sex,
-        {0: "Female", 1: "Male"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "Exercise angina", evaluation.exang,
-        {0: "No", 1: "Yes"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "Fasting blood sugar", evaluation.fbs,
-        {0: "Normal", 1: "High"},
-        grouped_importance, onehot_importance,
-    )
-    _add_category_factor(
-        factors, "Resting ECG", evaluation.restecg,
-        {0: "Normal", 1: "ST-T abnormality", 2: "LV hypertrophy"},
-        grouped_importance, onehot_importance,
-    )
+    for key in get_categorical_keys():
+        _add_category_factor(
+            factors, get_display_name(key) or key, getattr(evaluation, key),
+            get_categories(key) or {},
+            grouped_importance, onehot_importance,
+        )
 
     factors.sort(key=lambda f: abs(f.impact), reverse=True)
     return factors

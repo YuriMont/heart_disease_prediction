@@ -1,0 +1,98 @@
+{
+  "age": {
+    "type": "continuous",
+    "display_name": "Age",
+    "unit": "years"
+  },
+  "sex": {
+    "type": "categorical",
+    "display_name": "Sex",
+    "categories": {
+      "0": "Female",
+      "1": "Male"
+    }
+  },
+  "cp": {
+    "type": "categorical",
+    "display_name": "Chest pain type",
+    "categories": {
+      "1": "Typical",
+      "2": "Atypical",
+      "3": "Non-anginal",
+      "4": "Asymptomatic"
+    }
+  },
+  "trestbps": {
+    "type": "continuous",
+    "display_name": "Resting blood pressure",
+    "unit": "mmHg"
+  },
+  "chol": {
+    "type": "continuous",
+    "display_name": "Cholesterol",
+    "unit": "mg/dL"
+  },
+  "fbs": {
+    "type": "categorical",
+    "display_name": "Fasting blood sugar",
+    "categories": {
+      "0": "Normal",
+      "1": "High"
+    }
+  },
+  "restecg": {
+    "type": "categorical",
+    "display_name": "Resting ECG",
+    "categories": {
+      "0": "Normal",
+      "1": "ST-T abnormality",
+      "2": "LV hypertrophy"
+    }
+  },
+  "thalach": {
+    "type": "continuous",
+    "display_name": "Max heart rate",
+    "unit": "bpm"
+  },
+  "exang": {
+    "type": "categorical",
+    "display_name": "Exercise angina",
+    "categories": {
+      "0": "No",
+      "1": "Yes"
+    }
+  },
+  "oldpeak": {
+    "type": "continuous",
+    "display_name": "ST depression",
+    "unit": "mm"
+  },
+  "slope": {
+    "type": "categorical",
+    "display_name": "ST slope",
+    "categories": {
+      "1": "Upsloping",
+      "2": "Flat",
+      "3": "Downsloping"
+    }
+  },
+  "ca": {
+    "type": "categorical",
+    "display_name": "Colored vessels",
+    "categories": {
+      "0": "None",
+      "1": "1 vessel",
+      "2": "2 vessels",
+      "3": "3 vessels"
+    }
+  },
+  "thal": {
+    "type": "categorical",
+    "display_name": "Thalassemia",
+    "categories": {
+      "3": "Normal",
+      "6": "Fixed defect",
+      "7": "Reversible defect"
+    }
+  }
+}
