@@ -4,11 +4,12 @@ import type { FeatureImportance as FeatureImportanceType } from "../../generated
 
 interface FeatureImportanceProps {
   features: FeatureImportanceType[];
+  isLoading: boolean;
 }
 
 const COLORS = ["#1E63E9", "#0EA5C4", "#16A45F", "#E8930C", "#DC3848", "#7C3AED"];
 
-export function FeatureImportance({ features }: FeatureImportanceProps) {
+export function FeatureImportance({ features, isLoading }: FeatureImportanceProps) {
   const sorted = [...features].sort((a, b) => b.weight - a.weight);
   const chartHeight = sorted.length * 28;
 
@@ -18,7 +19,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
         <CardTitle>Importância das Características</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <div style={{ height: chartHeight }}>
+        {isLoading? (<span>Carregando...</span>) : (<div style={{ height: chartHeight }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={sorted}
@@ -39,7 +40,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </div>)}
       </CardContent>
     </Card>
   );

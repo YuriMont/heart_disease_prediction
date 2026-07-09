@@ -1,12 +1,15 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import type { ContributingFactor } from "../../generated/models/contributingFactor";
+import { ScrollArea } from "../ui/scroll-area";
+
 
 interface ContributingFactorsProps {
   factors: ContributingFactor[];
+  isLoading: boolean;
 }
 
-export function ContributingFactors({ factors }: ContributingFactorsProps) {
+export function ContributingFactors({ factors, isLoading }: ContributingFactorsProps) {
   const sorted = [...factors].sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
 
   return (
@@ -14,7 +17,8 @@ export function ContributingFactors({ factors }: ContributingFactorsProps) {
       <CardHeader className="p-0">
         <CardTitle>Principais Fatores Contribuintes</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3 p-0 max-h-[28rem] overflow-auto">
+      <CardContent className="flex flex-col gap-3 p-0">
+        <ScrollArea className="max-h-[28rem] overflow-auto">{isLoading && <span>Carregeando...</span>}
         {sorted.map((factor, index) => {
           const isPositive = factor.impact > 0;
           return (
@@ -49,7 +53,8 @@ export function ContributingFactors({ factors }: ContributingFactorsProps) {
               </span>
             </div>
           );
-        })}
+        })}</ScrollArea>
+        
       </CardContent>
     </Card>
   );

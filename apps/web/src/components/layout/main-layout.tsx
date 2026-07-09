@@ -4,6 +4,7 @@ import { useListModelsModelsGet } from "../../generated/api/models/models";
 import { useAtom } from "jotai";
 import { modelAtom } from "../../store/model";
 import { useEffect } from "react";
+import { ScrollArea } from "../ui/scroll-area";
 
 export function MainLayout() {
 
@@ -20,9 +21,9 @@ export function MainLayout() {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
       <Sidebar />
-      <main className="flex-1 overflow-y-auto p-7">
+      <ScrollArea className="flex-1 overflow-y-auto p-7">
         <Outlet />
-      </main>
+      </ScrollArea>
     </div>
   );
 }

@@ -17,12 +17,12 @@ export const Route = createFileRoute("/evaluation/$id/")({
 function ResultadoPage() {
   const { id: evaluationId } = Route.useParams();
 
-  const { data: evaluation, isLoading } = useGetEvaluationEvaluationsEvaluationIdGet(evaluationId);
-  const { data: factors = [] } = useGetFactorsEvaluationsEvaluationIdFactorsGet(evaluationId);
-  const { data: importance = [] } = useGetImportanceEvaluationsEvaluationIdImportanceGet(evaluationId);
+  const { data: evaluation, isLoading: isLoadingEvaluation } = useGetEvaluationEvaluationsEvaluationIdGet(evaluationId);
+  const { data: factors = [], isLoading: isLoadingFactors } = useGetFactorsEvaluationsEvaluationIdFactorsGet(evaluationId);
+  const { data: importance = [], isLoading: isLoadingImportance } = useGetImportanceEvaluationsEvaluationIdImportanceGet(evaluationId);
   const exportarRelatorio = useExportReportReportsExportPost();
 
-  if (isLoading) {
+  if (isLoadingEvaluation) {
     return (
       <div className="flex h-full items-center justify-center">
         <span className="text-muted-foreground">Carregando resultado...</span>
@@ -88,8 +88,8 @@ function ResultadoPage() {
           />
 
           <div className="grid grid-cols-2 gap-6 overflow-auto">
-            <ContributingFactors factors={factors} />
-            <FeatureImportance features={importance} />
+            <ContributingFactors factors={factors} isLoading={isLoadingFactors}/>
+            <FeatureImportance features={importance} isLoading={isLoadingImportance}/>
           </div>
         </div>
 

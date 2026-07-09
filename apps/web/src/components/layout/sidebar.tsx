@@ -95,19 +95,6 @@ export function Sidebar() {
           </p>
         </div>
       )}
-
-      {/* Profile */}
-      <div className="flex items-center gap-3 px-1 pt-0 pb-1">
-        <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-primary/20">
-          <span className="text-[13px] font-bold text-primary">DR</span>
-        </div>
-        <div className="flex flex-col flex-1">
-          <span className="text-[13px] font-semibold text-white">
-            Dra. Renata Lima
-          </span>
-          <span className="text-[11px] text-[#9FB6D4]">Cardiologista</span>
-        </div>
-      </div>
     </aside>
   );
 }

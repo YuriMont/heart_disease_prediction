@@ -17,9 +17,11 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "baseUrl": ".",
+     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true,
