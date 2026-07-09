@@ -116,7 +116,7 @@ export function EvaluationForm() {
               Nova Avaliação
             </span>
           </div>
-          <h1 className="font-heading text-[26px] font-bold text-foreground">
+          <h1 className="font-heading text-2xl font-bold text-foreground">
             Avaliação de Risco Cardiovascular
           </h1>
         </div>
@@ -438,7 +438,7 @@ export function EvaluationForm() {
                     <span className="text-[13px] font-semibold text-foreground">
                       {model.name}
                     </span>
-                    <span className="text-[11px] text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       {model.description}
                     </span>
                   </div>

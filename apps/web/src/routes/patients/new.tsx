@@ -19,7 +19,7 @@ function NewPatientPage() {
               Novo Paciente
             </span>
           </div>
-          <h1 className="font-heading text-[26px] font-bold text-foreground">
+          <h1 className="font-heading text-2xl font-bold text-foreground">
             Cadastro de Paciente
           </h1>
         </div>

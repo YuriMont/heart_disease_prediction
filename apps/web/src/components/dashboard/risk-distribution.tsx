@@ -59,7 +59,7 @@ export function RiskDistribution() {
             <span className="font-heading text-[30px] font-bold text-foreground">
               {formatNumber(total)}
             </span>
-            <span className="text-[11px] font-medium text-muted-foreground">pacientes</span>
+            <span className="text-xs font-medium text-muted-foreground">pacientes</span>
           </div>
         </div>
         <div className="flex flex-1 flex-col gap-4">
@@ -68,7 +68,7 @@ export function RiskDistribution() {
               <div className="h-[11px] w-[11px] rounded-full" style={{ backgroundColor: entry.color }} />
               <div className="flex flex-1 flex-col">
                 <span className="text-[13px] font-semibold text-foreground">{entry.name}</span>
-                <span className="text-[11px] text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   {formatNumber(entry.value)} pacientes
                 </span>
               </div>

@@ -27,7 +27,7 @@ function PatientsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="font-heading text-[26px] font-bold text-foreground">Pacientes</h1>
+          <h1 className="font-heading text-2xl font-bold text-foreground">Pacientes</h1>
           <p className="text-sm text-muted-foreground">
             Gerenciamento de pacientes cadastrados
           </p>
@@ -66,7 +66,7 @@ function PatientsPage() {
           </div>
         </div>
         <div className="rounded-[18px] border border-border bg-card p-5 flex items-center gap-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-risk-high-soft">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500-soft">
             <Users className="h-[22px] w-[22px] text-risk-high" />
           </div>
           <div>

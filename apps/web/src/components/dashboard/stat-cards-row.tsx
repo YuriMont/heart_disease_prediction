@@ -49,12 +49,12 @@ export function StatCardsRow() {
       />
       <StatCard
         icon={HeartPulse}
-        iconBg="bg-risk-high-soft"
+        iconBg="bg-red-500-soft"
         iconColor="text-risk-high"
         value={formatNumber(high)}
         label="Alto Risco"
         trend={`${highPct}%`}
-        trendBg="bg-risk-high-soft"
+        trendBg="bg-red-500-soft"
         trendColor="text-risk-high"
       />
     </div>

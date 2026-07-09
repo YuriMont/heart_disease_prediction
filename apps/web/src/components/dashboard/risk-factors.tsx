@@ -25,7 +25,7 @@ export function RiskFactors() {
             </div>
             <div className="flex-1 rounded-full bg-secondary">
               <div
-                className="h-2.5 rounded-full bg-risk-high"
+                className="h-2.5 rounded-full bg-red-500"
                 style={{ width: `${factor.prevalence}%` }}
               />
             </div>

@@ -17,7 +17,7 @@ function ResultsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="font-heading text-[26px] font-bold text-foreground">Resultados</h1>
+          <h1 className="font-heading text-2xl font-bold text-foreground">Resultados</h1>
           <p className="text-sm text-muted-foreground">
             Histórico de avaliação e predição
           </p>

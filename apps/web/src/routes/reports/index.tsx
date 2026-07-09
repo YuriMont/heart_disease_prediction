@@ -16,7 +16,7 @@ function ReportsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="font-heading text-[26px] font-bold text-foreground">Relatórios</h1>
+          <h1 className="font-heading text-2xl font-bold text-foreground">Relatórios</h1>
           <p className="text-sm text-muted-foreground">
             Histórico de relatórios gerados pelo sistema
           </p>

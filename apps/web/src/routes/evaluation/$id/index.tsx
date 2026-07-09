@@ -57,7 +57,7 @@ function ResultadoPage() {
             <span>/</span>
             <span className="text-foreground">Resultado da Predição</span>
           </div>
-          <h1 className="font-heading text-[26px] font-bold text-foreground">
+          <h1 className="font-heading text-2xl font-bold text-foreground">
             Resultado da Predição
           </h1>
         </div>

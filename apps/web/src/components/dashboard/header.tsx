@@ -6,7 +6,7 @@ export function DashboardHeader() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-col gap-1">
-        <h1 className="font-heading text-[26px] font-bold text-foreground">Painel</h1>
+        <h1 className="font-heading text-2xl font-bold text-foreground">Painel</h1>
         <p className="text-sm text-muted-foreground">
           Visão geral da análise de risco cardiovascular
         </p>

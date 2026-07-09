@@ -30,24 +30,24 @@ export function Sidebar() {
   const [selectedModel] = useAtom(modelAtom);
 
   return (
-    <aside className="flex h-full w-[264px] flex-col gap-2 bg-gradient-to-br from-[var(--sidebar-bg)] to-[var(--sidebar-bg-2)] p-7 6">
+    <aside className="flex h-full w-[264px] flex-col gap-2 bg-primary p-7">
       {/* Logo */}
       <div className="flex items-center gap-3 pb-7">
-        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
-          <HeartPulse className="h-6 w-6 text-white" />
+        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-secondary">
+          <HeartPulse className="h-6 w-6 text-primary" />
         </div>
         <div className="flex flex-col">
           <span className="font-heading text-[17px] font-bold text-white">
             CardioPredict
           </span>
-          <span className="text-[11px] font-semibold uppercase tracking-[1.5px] text-[#7FA8D9]">
+          <span className="text-xs font-semibold uppercase tracking-[1.5px] text-accent">
             IA · Cardiologia
           </span>
         </div>
       </div>
 
       {/* Nav Label */}
-      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#5E7BA0]">
+      <span className="text-xs font-semibold uppercase tracking-wider text-accent">
         Menu
       </span>
 
@@ -60,10 +60,10 @@ export function Sidebar() {
               key={item.to}
               to={item.to}
               className={cn(
-                "flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                "flex items-center gap-3.5 text-white rounded-xl px-4 py-3 text-sm font-medium transition-colors",
                 active
-                  ? "bg-primary text-white"
-                  : "text-[#C2D0E4] hover:bg-white/10 hover:text-white",
+                  ? "bg-secondary/10"
+                  : "hover:bg-secondary/20 hover:text-white/60",
               )}
             >
               <item.icon
@@ -83,14 +83,14 @@ export function Sidebar() {
 
       {/* Model Status */}
       {selectedModel && (
-        <div className="rounded-[14px] border border-white/[0.12] bg-white/[0.08] p-4">
+        <div className="rounded-[14px] border border-secondary/40 bg-secondary/10 p-4">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-risk-low" />
             <span className="text-xs font-semibold text-white">
               Modelo Ativo
             </span>
           </div>
-          <p className="mt-2 text-[11px] text-[#9FB6D4]">
+          <p className="mt-2 text-xs text-accent">
             {selectedModel?.name} - {selectedModel.description}
           </p>
         </div>

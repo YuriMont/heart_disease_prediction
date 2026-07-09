@@ -11,7 +11,7 @@ export function Recommendations() {
   ];
 
   return (
-    <Card className="rounded-[18px]  bg-linear-to-l from-(--sidebar-bg) to-(--primary-dark) p-6">
+    <Card className="rounded-[18px]  bg-primary p-6">
       <div className="flex items-center gap-2 mb-4">
         <Sparkles className="h-5 w-5 text-white" />
         <h3 className="font-heading text-base font-bold text-white">Recomendações</h3>
@@ -25,7 +25,7 @@ export function Recommendations() {
         ))}
       </ul>
       <div className="mt-5 rounded-lg bg-white/10 p-3">
-        <p className="text-[11px] text-[#9FB6D4]">
+        <p className="text-xs text-accent">
           Resultado gerado por IA para suporte à decisão clínica. Não substitui a avaliação médica profissional.
         </p>
       </div>
