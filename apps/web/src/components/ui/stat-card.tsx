@@ -8,7 +8,6 @@ interface StatCardProps {
   value: string | number;
   label: string;
   trend?: string;
-  trendUp?: boolean;
   trendBg?: string;
   trendColor?: string;
 }
@@ -20,12 +19,11 @@ export function StatCard({
   value,
   label,
   trend,
-
   trendBg = "bg-risk-low-soft",
   trendColor = "text-risk-low",
 }: StatCardProps) {
   return (
-    <div className="flex flex-col gap-4 rounded-[18px] border border-border bg-card p-[22px] shadow-sm">
+    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-[22px] shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-[2px]">
       <div className="flex items-center justify-between">
         <div className={cn("flex h-11 w-11 items-center justify-center rounded-xl", iconBg)}>
           <Icon className={cn("h-[22px] w-[22px]", iconColor)} />
@@ -37,7 +35,7 @@ export function StatCard({
         )}
       </div>
       <div>
-        <div className="font-heading text-[34px] font-bold leading-tight text-foreground">
+        <div className="font-mono text-[34px] font-bold leading-tight tracking-tight text-foreground">
           {value}
         </div>
         <div className="mt-1 text-[13px] font-medium text-muted-foreground">{label}</div>

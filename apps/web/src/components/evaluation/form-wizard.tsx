@@ -14,12 +14,12 @@ import {
   ListChecks,
   CircleCheckBig,
   Circle,
-  ChevronDown,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Segmented } from "../ui/segmented";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import {
   useCreateEvaluationEvaluationsPost,
   useListPatientsPatientsGet,
@@ -95,34 +95,23 @@ export function EvaluationForm() {
     form.reset(DEFAULT_VALUES_FORM);
   };
 
-  const handlePatientChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const patient = patients.find((p) => p.id === e.target.value);
-    if (patient) {
-      setSelectedPatient(patient);
-    }
-  };
-
   return (
     <div className="flex flex-col gap-[22px]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-[5px]">
-          <div className="flex items-center gap-[7px]">
-            <span className="text-xs font-medium text-muted-foreground">
-              Painel
-            </span>
+          <div className="flex items-center gap-[7px] text-xs">
+            <span className="text-muted-foreground">Painel</span>
             <span className="text-muted-foreground">/</span>
-            <span className="text-xs font-semibold text-primary">
-              Nova Avaliação
-            </span>
+            <span className="font-semibold text-primary">Nova Avaliação</span>
           </div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
             Avaliação de Risco Cardiovascular
           </h1>
         </div>
         <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-[9px]">
-          <Activity className="h-[15px] w-[15px] text-primary-dark" />
-          <span className="text-[13px] font-semibold text-primary-dark">
+          <Activity className="h-[15px] w-[15px] text-primary" />
+          <span className="text-[13px] font-semibold text-primary">
             Entrada de dados clínicos
           </span>
         </div>
@@ -132,7 +121,7 @@ export function EvaluationForm() {
         {/* Form Column */}
         <div className="flex flex-1 flex-col gap-5">
           {/* Patient Select */}
-          <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
+          <div className="flex flex-col gap-[18px] rounded-2xl border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
                 <UserRound className="h-5 w-5 text-primary" />
@@ -150,29 +139,30 @@ export function EvaluationForm() {
               <Label className="text-[13px] font-semibold text-muted-foreground">
                 Selecionar Paciente
               </Label>
-              <div className="relative">
-                <select
-                  value={selectedPatient?.id ?? ""}
-                  onChange={handlePatientChange}
-                  className="flex h-10 w-full appearance-none rounded-[8px] border border-(--border-strong) bg-secondary px-3 pr-10 text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <option value="" disabled>
-                    Selecione um paciente...
-                  </option>
+              <Select
+                value={selectedPatient?.id ?? ""}
+                onValueChange={(value) => {
+                  const patient = patients.find(p => p.id === value);
+                  if (patient) setSelectedPatient(patient);
+                }}
+              >
+                <SelectTrigger className="w-full rounded-[0.5rem]">
+                  <SelectValue placeholder="Selecione um paciente..." />
+                </SelectTrigger>
+                <SelectContent className="rounded-[0.5rem]">
                   {patients.map((patient) => (
-                    <option key={patient.id} value={patient.id}>
+                    <SelectItem className="rounded-[0.5rem]" key={patient.id} value={patient.id}>
                       {patient.name ?? "Sem nome"} — {patient.age} anos (
                       {patient.sex === 1 ? "M" : "F"})
-                    </option>
+                    </SelectItem>
                   ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              </div>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
           {/* Section 1 - Biometric Data */}
-          <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
+          <div className="flex flex-col gap-[18px] rounded-2xl border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
                 <HeartPulse className="h-5 w-5 text-primary" />
@@ -192,7 +182,7 @@ export function EvaluationForm() {
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Pressão Arterial em Repouso
                   </Label>
-                  <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
+                  <div className="flex items-center justify-between rounded-lg border border-border bg-muted px-3">
                     <Input
                       type="number"
                       required
@@ -212,7 +202,7 @@ export function EvaluationForm() {
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Frequência Cardíaca Máxima
                   </Label>
-                  <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
+                  <div className="flex items-center justify-between rounded-lg border border-border bg-muted px-3">
                     <Input
                       type="number"
                       required
@@ -234,7 +224,7 @@ export function EvaluationForm() {
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Colesterol Total
                   </Label>
-                  <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
+                  <div className="flex items-center justify-between rounded-lg border border-border bg-muted px-3">
                     <Input
                       type="number"
                       required
@@ -253,7 +243,7 @@ export function EvaluationForm() {
           </div>
 
           {/* Section 2 - Heart Exams */}
-          <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
+          <div className="flex flex-col gap-[18px] rounded-2xl border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
                 <HeartPulse className="h-5 w-5 text-primary" />
@@ -350,7 +340,7 @@ export function EvaluationForm() {
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Depressão do Segmento ST
                   </Label>
-                  <div className="flex items-center justify-between rounded-[10px] border border-(--border-strong) bg-secondary px-3">
+                  <div className="flex items-center justify-between rounded-lg border border-border bg-muted px-3">
                     <Input
                       type="number"
                       step="0.1"
@@ -395,7 +385,7 @@ export function EvaluationForm() {
             <Button
               variant="outline"
               onClick={handleClear}
-              className="gap-2 rounded-xl border-[var(--border-strong)]"
+              className="gap-2 rounded-xl"
             >
               <Eraser className="h-[17px] w-[17px]" />
               Limpar Dados
@@ -406,10 +396,10 @@ export function EvaluationForm() {
         {/* Info Column */}
         <div className="flex w-[330px] flex-col gap-4">
           {/* ControlPanel */}
-          <div className="flex flex-col gap-4 rounded-[18px] border border-border bg-card p-[22px]">
+          <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-[22px]">
             <div className="flex items-center gap-[11px]">
-              <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] bg-gradient-to-br from-primary to-accent">
-                <Cpu className="h-[19px] w-[19px] text-white" />
+              <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] bg-gradient-to-br from-primary to-primary/70">
+                <Cpu className="h-[19px] w-[19px] text-primary-foreground" />
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-[15px] font-bold text-foreground">
@@ -431,7 +421,7 @@ export function EvaluationForm() {
                   className={`flex items-center gap-2.5 rounded-xl px-3 py-[11px] transition-all ${
                     selectedModel?.name === model.name
                       ? "border border-primary bg-primary/10"
-                      : "border border-border bg-secondary"
+                      : "border border-border bg-muted"
                   }`}
                 >
                   <div className="flex flex-1 flex-col items-start gap-[1px]">
@@ -443,9 +433,9 @@ export function EvaluationForm() {
                     </span>
                   </div>
                   {selectedModel?.name === model.name ? (
-                    <CircleCheckBig className="h-[18px] w-[18px] text-primary" />
+                    <CircleCheckBig className="h-[18px] w-[18px] text-primary shrink-0" />
                   ) : (
-                    <Circle className="h-[18px] w-[18px] text-muted-foreground" />
+                    <Circle className="h-[18px] w-[18px] text-muted-foreground shrink-0" />
                   )}
                 </button>
               ))}
@@ -458,7 +448,7 @@ export function EvaluationForm() {
               type="button"
               onClick={handleSubmit}
               disabled={createEvaluation.isPending}
-              className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-white shadow-[0_6px_16px_-4px_#1E63E966] transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex w-full items-center justify-center gap-[9px] rounded-xl bg-primary px-0 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Sparkles className="h-[18px] w-[18px]" />
               {createEvaluation.isPending
@@ -468,10 +458,10 @@ export function EvaluationForm() {
           </div>
 
           {/* VariablesGuide */}
-          <div className="flex flex-1 flex-col gap-[18px] rounded-[18px] border border-border bg-card p-[22px]">
+          <div className="flex flex-1 flex-col gap-[18px] rounded-2xl border border-border bg-card p-[22px]">
             <div className="flex items-center gap-[11px]">
-              <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] bg-gradient-to-br from-primary to-accent">
-                <ListChecks className="h-[19px] w-[19px] text-white" />
+              <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] bg-gradient-to-br from-primary to-primary/70">
+                <ListChecks className="h-[19px] w-[19px] text-primary-foreground" />
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-[15px] font-bold text-foreground">
@@ -509,7 +499,7 @@ export function EvaluationForm() {
                 },
               ].map((item) => (
                 <div key={item.title} className="flex gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-secondary">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted">
                     <item.icon className="h-4 w-4 text-primary" />
                   </div>
                   <div className="flex flex-col gap-[3px]">

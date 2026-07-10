@@ -19,6 +19,28 @@ const navItems = [
   { label: "Modelo de IA", icon: BrainCircuit, to: "/models" },
 ];
 
+function EcgAmbient() {
+  return (
+    <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden opacity-[0.04]">
+      <svg
+        viewBox="0 0 600 120"
+        className="h-full w-[600px] animate-ecg"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0 60 L50 60 L65 20 L80 100 L95 55 L110 55 L120 10 L130 55 L150 55 L165 60 L180 60 L200 60 L215 30 L230 90 L245 50 L260 50 L270 10 L280 50 L300 50 L315 60 L330 60 L350 60 L365 20 L380 100 L395 55 L410 55 L420 10 L430 55 L450 55 L465 60 L480 60 L500 60 L515 30 L530 90 L545 50 L560 50 L570 10 L580 50 L600 50"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          className="text-white"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+}
+
 export function Sidebar() {
   const location = useLocation();
 
@@ -30,24 +52,26 @@ export function Sidebar() {
   const [selectedModel] = useAtom(modelAtom);
 
   return (
-    <aside className="flex h-full w-[264px] flex-col gap-2 bg-primary p-7">
+    <aside className="relative flex h-full w-[264px] flex-col gap-2 bg-sidebar p-7 overflow-hidden">
+      <EcgAmbient />
+
       {/* Logo */}
       <div className="flex items-center gap-3 pb-7">
-        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-secondary">
-          <HeartPulse className="h-6 w-6 text-primary" />
+        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-primary shadow-sm">
+          <HeartPulse className="h-6 w-6 text-primary-foreground" />
         </div>
         <div className="flex flex-col">
-          <span className="font-heading text-[17px] font-bold text-white">
+          <span className="font-heading text-[17px] font-bold text-sidebar-foreground">
             CardioPredict
           </span>
-          <span className="text-xs font-semibold uppercase tracking-[1.5px] text-accent">
+          <span className="text-xs font-semibold uppercase tracking-[1.5px] text-sidebar-accent-foreground/60">
             IA · Cardiologia
           </span>
         </div>
       </div>
 
       {/* Nav Label */}
-      <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+      <span className="text-xs font-semibold uppercase tracking-wider text-sidebar-accent-foreground/50">
         Menu
       </span>
 
@@ -60,16 +84,16 @@ export function Sidebar() {
               key={item.to}
               to={item.to}
               className={cn(
-                "flex items-center gap-3.5 text-white rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200",
                 active
-                  ? "bg-secondary/10"
-                  : "hover:bg-secondary/20 hover:text-white/60",
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground",
               )}
             >
               <item.icon
                 className={cn(
-                  "h-5 w-5",
-                  active ? "text-white" : "text-[#9FB2CC]",
+                  "h-5 w-5 shrink-0",
+                  active ? "text-primary-foreground" : "text-sidebar-foreground/40",
                 )}
               />
               {item.label}
@@ -83,15 +107,18 @@ export function Sidebar() {
 
       {/* Model Status */}
       {selectedModel && (
-        <div className="rounded-[14px] border border-secondary/40 bg-secondary/10 p-4">
+        <div className="rounded-2xl border border-sidebar-border bg-sidebar-accent/50 p-4 backdrop-blur-sm">
           <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-risk-low" />
-            <span className="text-xs font-semibold text-white">
+            <div className="relative">
+              <div className="h-2 w-2 rounded-full bg-risk-low" />
+              <div className="absolute inset-0 h-2 w-2 animate-pulse-ring rounded-full bg-risk-low/30" />
+            </div>
+            <span className="text-xs font-semibold text-sidebar-foreground">
               Modelo Ativo
             </span>
           </div>
-          <p className="mt-2 text-xs text-accent">
-            {selectedModel?.name} - {selectedModel.description}
+          <p className="mt-2 text-xs text-sidebar-foreground/50 leading-relaxed">
+            {selectedModel?.name} — {selectedModel.description}
           </p>
         </div>
       )}

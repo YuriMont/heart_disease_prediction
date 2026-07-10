@@ -44,7 +44,7 @@ export function PatientForm() {
   return (
       <div className="flex gap-[22px]">
         <div className="flex flex-1 flex-col gap-5 max-w-[600px]">
-          <div className="flex flex-col gap-[18px] rounded-[18px] border border-border bg-card p-6">
+          <div className="flex flex-col gap-[18px] rounded-2xl border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-primary/10">
                 <UserRound className="h-5 w-5 text-primary" />
@@ -64,7 +64,7 @@ export function PatientForm() {
                 <Label className="text-[13px] font-semibold text-muted-foreground">
                   Nome
                 </Label>
-                <div className="flex items-center rounded-[8px] border border-(--border-strong) bg-secondary px-3">
+                <div className="flex items-center rounded-lg border border-border bg-muted px-3">
                   <Input
                     type="text"
                     placeholder="Ex.: João Silva"
@@ -80,7 +80,7 @@ export function PatientForm() {
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Idade
                   </Label>
-                  <div className="flex items-center justify-between rounded-[8px] border border-(--border-strong) bg-secondary px-3">
+                  <div className="flex items-center justify-between rounded-lg border border-border bg-muted px-3">
                     <Input
                       type="number"
                       required
@@ -118,7 +118,7 @@ export function PatientForm() {
             <Button
               variant="outline"
               onClick={() => navigate({ to: "/patients" })}
-              className="gap-2 rounded-xl border-[var(--border-strong)]"
+              className="gap-2 rounded-xl"
             >
               <ArrowLeft className="h-[17px] w-[17px]" />
               Voltar

@@ -3,6 +3,8 @@ import { Eye, ClipboardList } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
+import { Skeleton } from "../../components/ui/skeleton";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "../../components/ui/empty";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
 import { useListEvaluationsEvaluationsGet } from "../../generated/api/patients/patients";
 
@@ -17,7 +19,7 @@ function ResultsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="font-heading text-2xl font-bold text-foreground">Resultados</h1>
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Resultados</h1>
           <p className="text-sm text-muted-foreground">
             Histórico de avaliação e predição
           </p>
@@ -38,9 +40,30 @@ function ResultsPage() {
         </CardHeader>
         <CardContent className="p-0">
           {isLoading ? (
-            <p className="text-muted-foreground">Carregando...</p>
+            <div className="flex flex-col gap-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <Skeleton className="h-5 flex-1" />
+                  <Skeleton className="h-5 w-20" />
+                  <Skeleton className="h-5 w-16" />
+                  <Skeleton className="h-5 w-24" />
+                  <Skeleton className="h-5 w-28" />
+                  <Skeleton className="h-8 w-8 rounded-lg" />
+                </div>
+              ))}
+            </div>
           ) : evaluations.length === 0 ? (
-            <p className="text-muted-foreground">Nenhuma avaliação encontrada</p>
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <ClipboardList className="h-5 w-5" />
+                </EmptyMedia>
+                <EmptyTitle>Nenhuma avaliação realizada</EmptyTitle>
+                <EmptyDescription>
+                  As avaliações de risco cardiovascular aparecerão aqui após serem processadas pelo modelo de IA.
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           ) : (
             <Table>
               <TableHeader>
@@ -58,7 +81,7 @@ function ResultsPage() {
                   <TableRow key={ev.id}>
                     <TableCell>{ev.patient_name ?? `#${ev.paciente_id.slice(0, 8)}`}</TableCell>
                     <TableCell>
-                      <Badge variant={ev.has_disease ? "danger" : "success"}>
+                      <Badge variant={ev.has_disease ? "destructive" : "secondary"}>
                         {ev.has_disease ? "Doença" : "Saudável"}
                       </Badge>
                     </TableCell>

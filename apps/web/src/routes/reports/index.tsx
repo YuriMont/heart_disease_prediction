@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Bell, Download, Eye } from "lucide-react";
+import { Download, Eye, FileText } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/card";
+import { Skeleton } from "../../components/ui/skeleton";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "../../components/ui/empty";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
 import { useListReportsReportsGet } from "../../generated/api/reports/reports";
 
@@ -12,42 +14,41 @@ export const Route = createFileRoute("/reports/")({
 function ReportsPage() {
   const { data: reports = [], isLoading } = useListReportsReportsGet();
 
+  const reportsEsteMes = reports.filter((r) => {
+    const date = new Date(r.created_at);
+    const now = new Date();
+    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="font-heading text-2xl font-bold text-foreground">Relatórios</h1>
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Relatórios</h1>
           <p className="text-sm text-muted-foreground">
             Histórico de relatórios gerados pelo sistema
           </p>
         </div>
         <div className="flex items-center gap-3.5">
-          <button className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card">
-            <Bell className="h-[19px] w-[19px] text-secondary-foreground" />
-          </button>
-          <Button className="gap-2">
+          <Button onClick={() => alert("função não implementada")} className="gap-2">
             <Download className="h-4 w-4" />
             Exportar PDF
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
-        <div className="rounded-[18px] border border-border bg-card p-5">
-            <span className="text-sm text-muted-foreground">Relatórios gerados</span>
-          <div className="mt-2 font-heading text-[34px] font-bold text-foreground">
+      <div className="grid grid-cols-2 gap-5">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="font-mono text-[34px] font-bold tracking-tight text-foreground">
             {reports.length}
           </div>
+          <span className="text-sm text-muted-foreground">Relatórios gerados</span>
         </div>
-        <div className="rounded-[18px] border border-border bg-card p-5">
-            <span className="text-sm text-muted-foreground">Risco Médio</span>
-          <div className="mt-2 font-heading text-[34px] font-bold text-foreground">Médio</div>
-          <span className="text-xs text-risk-low">Estável</span>
-        </div>
-        <div className="rounded-[18px] border border-border bg-card p-5">
-            <span className="text-sm text-muted-foreground">Tendência Mensal</span>
-          <div className="mt-2 font-heading text-[34px] font-bold text-foreground">+5%</div>
-          <span className="text-xs text-risk-low">↑</span>
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="font-mono text-[34px] font-bold tracking-tight text-foreground">
+            {reportsEsteMes}
+          </div>
+          <span className="text-sm text-muted-foreground">Relatórios este mês</span>
         </div>
       </div>
 
@@ -57,9 +58,28 @@ function ReportsPage() {
         </CardHeader>
         <CardContent className="p-0">
           {isLoading ? (
-            <p className="text-muted-foreground">Carregando...</p>
+            <div className="flex flex-col gap-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <Skeleton className="h-5 flex-1" />
+                  <Skeleton className="h-5 w-20" />
+                  <Skeleton className="h-5 w-28" />
+                  <Skeleton className="h-8 w-8 rounded-lg" />
+                </div>
+              ))}
+            </div>
           ) : reports.length === 0 ? (
-            <p className="text-muted-foreground">Nenhum relatório encontrado</p>
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <FileText className="h-5 w-5" />
+                </EmptyMedia>
+                <EmptyTitle>Nenhum relatório gerado</EmptyTitle>
+                <EmptyDescription>
+                  Os relatórios exportados aparecerão aqui. Realize uma avaliação e exporte o relatório para visualizá-lo.
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           ) : (
             <Table>
               <TableHeader>

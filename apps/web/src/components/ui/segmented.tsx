@@ -17,7 +17,7 @@ export function Segmented({ label, options, value, onChange, className }: Segmen
   return (
     <div className={cn("flex w-full flex-col gap-1", className)}>
       <label className="text-[13px] font-semibold text-muted-foreground">{label}</label>
-      <div className="flex rounded-[8px] border border-[var(--border-strong)] bg-secondary p-1">
+      <div className="flex rounded-lg border border-border bg-muted p-0.5">
         {options.map((opt) => (
           <button
             key={opt.value}
@@ -50,7 +50,7 @@ export function SegmentedMulti({ label, options, value, onChange, className }: S
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <label className="text-[13px] font-semibold text-muted-foreground">{label}</label>
-      <div className="flex flex-wrap rounded-[10px] border border-[var(--border-strong)] bg-secondary p-1 gap-1">
+      <div className="flex flex-wrap rounded-xl border border-border bg-muted p-1 gap-1">
         {options.map((opt) => (
           <button
             key={opt.value}

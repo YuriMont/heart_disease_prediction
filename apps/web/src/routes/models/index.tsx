@@ -21,6 +21,7 @@ import {
 } from "../../components/ui/table";
 import { ModelInfo } from "../../components/dashboard/model-info";
 import { Badge } from "../../components/ui/badge";
+import { Skeleton } from "../../components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -67,7 +68,7 @@ function ModelsPage() {
             <span>/</span>
             <span className="text-foreground">Modelos de IA</span>
           </div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
             Modelos de Inteligência Artificial
           </h1>
         </div>
@@ -86,7 +87,16 @@ function ModelsPage() {
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
-                <p className="text-muted-foreground">Carregando...</p>
+                <div className="flex flex-col gap-3">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <Skeleton className="h-5 w-28" />
+                      <Skeleton className="h-5 flex-1" />
+                      <Skeleton className="h-5 w-16" />
+                      <Skeleton className="h-8 w-8 rounded-lg" />
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <Table>
                   <TableHeader>
@@ -103,7 +113,7 @@ function ModelsPage() {
                         key={model.name}
                         className={
                           selectedModel?.name == model.name
-                            ? "bg-accent transition-colors"
+                            ? "bg-primary/5 transition-colors"
                             : ""
                         }
                       >
@@ -175,14 +185,14 @@ function ModelsPage() {
               <CardTitle>Desempenho</CardTitle>
             </CardHeader>
             <CardContent
-              className="p-0 flex flex-col gap-5 *:border-b *:border--b-accent *:pb-5 [&>*:last-child]:border-b-0 [&>*:last-child]:pb-0"
+              className="p-0 flex flex-col gap-5 *:border-b *:border-border *:pb-5 [&>*:last-child]:border-b-0 [&>*:last-child]:pb-0"
             >
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
                     Acurácia
                   </span>
-                  <span className="text-sm font-bold text-foreground">
+                  <span className="font-mono text-sm font-bold text-foreground">
                     {((metrics?.accuracy ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
@@ -190,7 +200,7 @@ function ModelsPage() {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Recall</span>
-                  <span className="text-sm font-bold text-foreground">
+                  <span className="font-mono text-sm font-bold text-foreground">
                     {((metrics?.recall ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
@@ -200,7 +210,7 @@ function ModelsPage() {
                   <span className="text-sm text-muted-foreground">
                     Precisão
                   </span>
-                  <span className="text-sm font-bold text-foreground">
+                  <span className="font-mono text-sm font-bold text-foreground">
                     {((metrics?.precision ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
@@ -210,7 +220,7 @@ function ModelsPage() {
                   <span className="text-sm text-muted-foreground">
                     F1 Score
                   </span>
-                  <span className="text-sm font-bold text-foreground">
+                  <span className="font-mono text-sm font-bold text-foreground">
                     {((metrics?.f1_score ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>

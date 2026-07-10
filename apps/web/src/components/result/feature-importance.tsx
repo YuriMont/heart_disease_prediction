@@ -1,5 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
 import type { FeatureImportance as FeatureImportanceType } from "../../generated/models/featureImportance";
 
 interface FeatureImportanceProps {
@@ -7,7 +8,7 @@ interface FeatureImportanceProps {
   isLoading: boolean;
 }
 
-const COLORS = ["#1E63E9", "#0EA5C4", "#16A45F", "#E8930C", "#DC3848", "#7C3AED"];
+const COLORS = ["#BE123C", "#0D9488", "#059669", "#D97706", "#7C3AED", "#0284C7"];
 
 export function FeatureImportance({ features, isLoading }: FeatureImportanceProps) {
   const sorted = [...features].sort((a, b) => b.weight - a.weight);
@@ -19,7 +20,16 @@ export function FeatureImportance({ features, isLoading }: FeatureImportanceProp
         <CardTitle>Importância das Características</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {isLoading? (<span>Carregando...</span>) : (<div style={{ height: chartHeight }}>
+        {isLoading ? (
+          <div className="flex flex-col gap-3 py-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 flex-1 rounded-md" />
+              </div>
+            ))}
+          </div>
+        ) : (<div style={{ height: chartHeight }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={sorted}
@@ -31,7 +41,7 @@ export function FeatureImportance({ features, isLoading }: FeatureImportanceProp
                 type="category"
                 dataKey="variable"
                 width={150}
-                tick={{ fontSize: 12, fill: "#5A6B82" }}
+                tick={{ fontSize: 12, fill: "#64748B" }}
               />
               <Bar dataKey="weight" radius={[0, 6, 6, 0]} barSize={16}>
                 {sorted.map((_, index) => (

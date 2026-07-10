@@ -1,5 +1,6 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
 import type { ContributingFactor } from "../../generated/models/contributingFactor";
 import { ScrollArea } from "../ui/scroll-area";
 
@@ -22,25 +23,37 @@ export function ContributingFactors({
         <CardTitle>Principais Fatores Contribuintes</CardTitle>
       </CardHeader>
       <ScrollArea className="max-h-[28rem] overflow-auto">
-        <CardContent className="flex-1 p-0 flex flex-col gap-3">
-          {isLoading && <span>Carregeando...</span>}
-          {sorted.map((factor, index) => {
+        <CardContent className="flex-1 flex flex-col gap-3 p-0">
+          {isLoading && (
+            <div className="flex flex-col gap-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-7 w-7 rounded-full" />
+                    <Skeleton className="h-4 w-40" />
+                  </div>
+                  <Skeleton className="h-4 w-12" />
+                </div>
+              ))}
+            </div>
+          )}
+          {!isLoading && sorted.map((factor, index) => {
             const isPositive = factor.impact > 0;
             return (
               <div
                 key={index}
-                className="flex items-center justify-between rounded-xl bg-secondary/50 px-4 py-3"
+                className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3"
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-full ${
-                      isPositive ? "bg-red-500-soft" : "bg-risk-low-soft"
+                      isPositive ? "bg-risk-high-soft" : "bg-risk-low-soft"
                     }`}
                   >
                     {isPositive ? (
-                      <ArrowUp className="h-3.5 w-3.5 text-red-500" />
+                      <ArrowUp className="h-3.5 w-3.5 text-risk-high" />
                     ) : (
-                      <ArrowDown className="h-3.5 w-3.5 text-green-500" />
+                      <ArrowDown className="h-3.5 w-3.5 text-risk-low" />
                     )}
                   </div>
                   <div className="flex flex-col">
@@ -50,7 +63,7 @@ export function ContributingFactors({
                   </div>
                 </div>
                 <span
-                  className={`font-heading text-sm font-bold ${
+                  className={`font-mono text-sm font-bold ${
                     isPositive ? "text-risk-high" : "text-risk-low"
                   }`}
                 >
