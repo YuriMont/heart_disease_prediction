@@ -68,7 +68,8 @@ def update_model(model_id: str, dados: ModelUpdate, db: Session = Depends(get_db
     db.refresh(modelo_db)
 
     return ModelInfo(
+        id=modelo_db.id,
         name=modelo_db.name,
-        description=modelo_db.description,
+        description=modelo_db.description or modelo_db.name,
         active=modelo_db.active,
     )

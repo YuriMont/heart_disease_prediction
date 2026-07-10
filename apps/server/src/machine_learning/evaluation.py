@@ -38,7 +38,7 @@ def evaluate(y_true, y_pred, y_probability=None, name="Model"):
 def plot_confusion_matrix(y_true, y_pred, title="Confusion Matrix"):
     labels = sorted(set(y_true))
     matrix = confusion_matrix(y_true, y_pred, labels=labels)
-    ConfusionMatrixDisplay(matrix, display_labels=labels).plot(cmap=plt.cm.Blues)
+    ConfusionMatrixDisplay(matrix, display_labels=labels).plot()
     plt.title(title)
     plt.show()
 

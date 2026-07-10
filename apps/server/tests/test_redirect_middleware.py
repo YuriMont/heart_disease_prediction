@@ -27,8 +27,9 @@ class TestRedirectMiddleware:
         for old_path, new_path in REDIRECT_TESTS:
             response = client.get(old_path, follow_redirects=False)
             assert response.status_code == 308, f"{old_path} should return 308"
-            assert response.headers["location"] == new_path, \
+            assert response.headers["location"] == new_path, (
                 f"{old_path} should redirect to {new_path}, got {response.headers['location']}"
+            )
 
     def test_new_paths_dont_redirect(self):
         new_paths = [new for _, new in REDIRECT_TESTS]

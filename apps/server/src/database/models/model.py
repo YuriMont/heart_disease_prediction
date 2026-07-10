@@ -51,6 +51,4 @@ class Model(Base):
         nullable=False,
     )
 
-    __table_args__ = (
-        UniqueConstraint("name", name="uq_model_name"),
-    )
+    __table_args__ = (UniqueConstraint("name", name="uq_model_name"),)

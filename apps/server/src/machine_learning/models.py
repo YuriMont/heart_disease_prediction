@@ -7,7 +7,7 @@ from sklearn.svm import SVC
 def _create_ensemble():
     estimators = [
         ("knn", KNeighborsClassifier(n_neighbors=5)),
-        ("svm", SVC(probability=True, random_state=42)),
+        ("svm", SVC(probability=True, random_state=42)),  # type: ignore[call-overload]
         ("rf", RandomForestClassifier(n_estimators=200, random_state=42)),
     ]
     return VotingClassifier(estimators=estimators, voting="soft")
@@ -25,7 +25,7 @@ MODELS = [
     },
     {
         "name": "svm",
-        "estimator": SVC(probability=True, random_state=42),
+        "estimator": SVC(probability=True, random_state=42),  # type: ignore[call-overload]
         "params": {
             "C": [0.1, 1, 10, 100],
             "kernel": ["linear", "rbf"],

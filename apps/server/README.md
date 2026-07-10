@@ -62,9 +62,30 @@ server/
 
 ```bash
 cd apps/server
-uv sync                                   # instalar dependências
+uv sync --extra dev                       # instalar dependências (incluindo dev)
 uv run python -m services.train_models    # treinar (primeira vez)
 uv run python run.py                      # http://127.0.0.1:8000
+```
+
+### Lint e Type Check
+
+```bash
+# instalar dependências (incluindo dev)
+cd apps/server && uv sync --extra dev
+
+# Lint (ruff)
+npm run lint              # verificar lint
+npm run lint:fix          # corrigir automaticamente
+npm run format            # formatar código
+
+# Type check (pyright)
+npm run typecheck         # verificar tipos estáticos
+
+# Ou direto com uv:
+uv run ruff check
+uv run ruff check --fix
+uv run ruff format
+uv run pyright
 ```
 
 ### Documentação

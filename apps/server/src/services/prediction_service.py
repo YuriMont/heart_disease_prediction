@@ -1,7 +1,6 @@
 import os
 
 import joblib
-import shap
 import pandas as pd
 from sqlalchemy.orm import Session
 
@@ -17,7 +16,9 @@ SCALER = joblib.load(os.path.join(ARTIFACTS_DIR, "scaler.pkl"))
 
 EXCLUDE_ARTIFACTS = {"scaler.pkl", "feature_names.pkl", "training_background.pkl"}
 
-TRAINING_BACKGROUND = joblib.load(os.path.join(ARTIFACTS_DIR, "training_background.pkl"))
+TRAINING_BACKGROUND = joblib.load(
+    os.path.join(ARTIFACTS_DIR, "training_background.pkl")
+)
 
 MODELOS = {}
 if os.path.isdir(ARTIFACTS_DIR):
@@ -26,8 +27,6 @@ if os.path.isdir(ARTIFACTS_DIR):
             nome_modelo = arquivo.removesuffix(".pkl")
             caminho = os.path.join(ARTIFACTS_DIR, arquivo)
             MODELOS[nome_modelo] = joblib.load(caminho)
-
-
 
 
 def assemble_features(paciente: Patient):
@@ -45,7 +44,9 @@ def assemble_features(paciente: Patient):
 
 
 def _get_model_by_id(db: Session, modelo_id: str) -> Model:
-    modelo = db.query(Model).filter(Model.id == modelo_id, Model.active.is_(True)).first()
+    modelo = (
+        db.query(Model).filter(Model.id == modelo_id, Model.active.is_(True)).first()
+    )
     if not modelo:
         raise ValueError(f"Model '{modelo_id}' not found or inactive.")
     return modelo
@@ -59,18 +60,26 @@ def get_default_model_id(db: Session) -> str:
     nomes_disponiveis = _available_models()
 
     if "ensemble" in nomes_disponiveis:
-        modelo = db.query(Model).filter(
-            Model.name == "ensemble",
-            Model.active.is_(True),
-        ).first()
+        modelo = (
+            db.query(Model)
+            .filter(
+                Model.name == "ensemble",
+                Model.active.is_(True),
+            )
+            .first()
+        )
         if modelo:
             return modelo.id
 
     for nome in nomes_disponiveis:
-        modelo = db.query(Model).filter(
-            Model.name == nome,
-            Model.active.is_(True),
-        ).first()
+        modelo = (
+            db.query(Model)
+            .filter(
+                Model.name == nome,
+                Model.active.is_(True),
+            )
+            .first()
+        )
         if modelo:
             return modelo.id
 

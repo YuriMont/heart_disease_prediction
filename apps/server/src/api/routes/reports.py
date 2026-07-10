@@ -5,16 +5,18 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
-from schemas.report import ReportResponse
 from database.models.evaluation import Evaluation
 from database.models.report import Report
+from schemas.report import ReportResponse
 
 router = APIRouter(prefix="/reports", tags=["reports"])
 
 
 def _generate_content(evaluation: Evaluation) -> str:
-    risk = "HIGH" if evaluation.disease_probability >= 0.65 else (
-        "MEDIUM" if evaluation.disease_probability >= 0.35 else "LOW"
+    risk = (
+        "HIGH"
+        if evaluation.disease_probability >= 0.65
+        else ("MEDIUM" if evaluation.disease_probability >= 0.35 else "LOW")
     )
     return (
         f"CARDIOVASCULAR EVALUATION REPORT\n"

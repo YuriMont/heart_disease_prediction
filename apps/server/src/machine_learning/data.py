@@ -21,6 +21,9 @@ class PreparedData:
 
 def load_data():
     dataset = fetch_ucirepo(id=45)
+    assert dataset.data is not None, "UCI dataset data is missing"
+    assert dataset.data.features is not None, "UCI dataset features are missing"
+    assert dataset.data.targets is not None, "UCI dataset targets are missing"
     X = dataset.data.features.copy()
     y = dataset.data.targets.copy()
     return X, y
@@ -67,7 +70,7 @@ def binarize_target(y):
 
 def balance_smote(X_train, y_train, random_state=42):
     smote = SMOTE(random_state=random_state)
-    X_bal, y_bal = smote.fit_resample(X_train, y_train)
+    X_bal, y_bal = smote.fit_resample(X_train, y_train)  # type: ignore[assignment]
     return X_bal, y_bal
 
 

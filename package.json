@@ -10,7 +10,11 @@
     "db:migrate": "cd apps/server && uv run alembic upgrade head",
     "db:downgrade": "cd apps/server && uv run alembic downgrade -1",
     "db:current": "cd apps/server && uv run alembic current",
-    "db:history": "cd apps/server && uv run alembic history"
+    "db:history": "cd apps/server && uv run alembic history",
+    "lint": "cd apps/server && uv run ruff check",
+    "lint:fix": "cd apps/server && uv run ruff check --fix",
+    "format": "cd apps/server && uv run ruff format",
+    "typecheck": "cd apps/server && uv run pyright"
   },
   "workspaces": [
     "apps/*",

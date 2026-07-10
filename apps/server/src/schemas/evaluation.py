@@ -22,8 +22,6 @@ class EvaluationCreate(BaseModel):
     model_id: str = Field(..., description="ID do modelo de IA")
 
 
-
-
 class EvaluationResponse(BaseModel):
     id: UUID
     paciente_id: UUID

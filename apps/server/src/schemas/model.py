@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class ModelUpdate(BaseModel):
     name: str | None = None
     description: str | None = None

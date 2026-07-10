@@ -74,9 +74,7 @@ class Evaluation(Base):
         nullable=False,
     )
 
-    patient: Mapped["Patient"] = relationship(
-        back_populates="evaluations"
-    )
+    patient: Mapped["Patient"] = relationship(back_populates="evaluations")
 
     @property
     def patient_name(self) -> str | None:

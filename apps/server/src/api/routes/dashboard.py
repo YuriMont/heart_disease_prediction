@@ -3,8 +3,8 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
-from schemas.dashboard import DashboardStats, RiskFactor, RiskDistribution
 from database.models.evaluation import Evaluation
+from schemas.dashboard import DashboardStats, RiskDistribution, RiskFactor
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
@@ -65,7 +65,10 @@ def get_risk_factors(db: Session = Depends(get_db)):
     total = len(avaliacoes)
 
     fatores = [
-        ("High blood pressure", sum(1 for a in avaliacoes if a.trestbps > 140) / total * 100),
+        (
+            "High blood pressure",
+            sum(1 for a in avaliacoes if a.trestbps > 140) / total * 100,
+        ),
         ("High cholesterol", sum(1 for a in avaliacoes if a.chol > 240) / total * 100),
         ("Chest pain (cp)", sum(1 for a in avaliacoes if a.cp in (1, 2)) / total * 100),
         ("Exercise angina", sum(1 for a in avaliacoes if a.exang == 1) / total * 100),
@@ -75,7 +78,4 @@ def get_risk_factors(db: Session = Depends(get_db)):
 
     fatores.sort(key=lambda x: x[1], reverse=True)
 
-    return [
-        RiskFactor(name=nome, prevalence=round(prev, 1))
-        for nome, prev in fatores
-    ]
+    return [RiskFactor(name=nome, prevalence=round(prev, 1)) for nome, prev in fatores]

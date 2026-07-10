@@ -3,13 +3,12 @@ from datetime import datetime
 
 import joblib
 import shap
-import numpy as np
 
 from database.connection import SessionLocal, create_tables
-from machine_learning.evaluation import evaluate
-from machine_learning.data import prepare_data
-from machine_learning.models import MODELS, train_model
 from database.models.model import Model
+from machine_learning.data import prepare_data
+from machine_learning.evaluation import evaluate
+from machine_learning.models import MODELS, train_model
 
 ARTIFACTS_DIR = os.path.join(os.path.dirname(__file__), "..", "artifacts")
 
@@ -36,7 +35,9 @@ def main():
         os.path.join(ARTIFACTS_DIR, "feature_names.pkl"),
     )
     background_summary = shap.kmeans(data.X_train, 50)
-    joblib.dump(background_summary, os.path.join(ARTIFACTS_DIR, "training_background.pkl"))
+    joblib.dump(
+        background_summary, os.path.join(ARTIFACTS_DIR, "training_background.pkl")
+    )
     print("   Saved: scaler.pkl, feature_names.pkl, and training_background.pkl")
 
     print("\n2) Training models...")
@@ -60,9 +61,13 @@ def main():
             else:
                 y_probability = None
 
-            metrics = evaluate(data.y_test, y_pred, y_probability, name=model_config["name"])
+            metrics = evaluate(
+                data.y_test, y_pred, y_probability, name=model_config["name"]
+            )
 
-            model_db = db.query(Model).filter(Model.name == model_config["name"]).first()
+            model_db = (
+                db.query(Model).filter(Model.name == model_config["name"]).first()
+            )
 
             if model_db:
                 model_db.accuracy = metrics["accuracy"]
@@ -75,7 +80,9 @@ def main():
             else:
                 new_metrics = Model(
                     name=model_config["name"],
-                    description=DEFAULT_DESCRIPTIONS.get(model_config["name"], model_config["name"]),
+                    description=DEFAULT_DESCRIPTIONS.get(
+                        model_config["name"], model_config["name"]
+                    ),
                     active=True,
                     accuracy=metrics["accuracy"],
                     precision=metrics["precision"],
