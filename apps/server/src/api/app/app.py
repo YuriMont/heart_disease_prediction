@@ -8,11 +8,26 @@ from api.routes import dashboard, models, pages, patients, reports, result
 from fastapi.middleware.cors import CORSMiddleware
 from api.middleware.redirect import RedirectMiddleware
 
+from redis.asyncio import Redis
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+
+redis: Redis | None = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_tables()
+
+    redis = Redis(host="localhost", port=6379, decode_responses=False)
+
+    FastAPICache.init(
+        RedisBackend(redis),
+        prefix="api-cache",
+    )
+
     yield
+
+    await redis.close()
 
 
 app = FastAPI(

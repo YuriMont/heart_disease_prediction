@@ -8,10 +8,12 @@ from schemas.result import ContributingFactor, FeatureImportance
 from database.models.evaluation import Evaluation
 from services.feature_analysis import calculate_feature_importance, calculate_contributing_factors
 
+from fastapi_cache.decorator import cache
+
 router = APIRouter(tags=["result"])
 
-
 @router.get("/evaluations/{evaluation_id}/factors", response_model=list[ContributingFactor])
+@cache(expire=300) # 5 Minutos
 def get_factors(evaluation_id: UUID, db: Session = Depends(get_db)):
     evaluation = db.query(Evaluation).get(evaluation_id)
     if not evaluation:
@@ -21,6 +23,7 @@ def get_factors(evaluation_id: UUID, db: Session = Depends(get_db)):
 
 
 @router.get("/evaluations/{evaluation_id}/importance", response_model=list[FeatureImportance])
+@cache(expire=300) # 5 Minutos
 def get_importance(evaluation_id: UUID, db: Session = Depends(get_db)):
     evaluation = db.query(Evaluation).get(evaluation_id)
     if not evaluation:

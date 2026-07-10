@@ -17,8 +17,7 @@ server/
 │   │       ├── dashboard.py       # /dashboard/*
 │   │       ├── models.py          # /models/*
 │   │       ├── pages.py           # /, /scalar
-│   │       ├── patients.py        # /patients/*, /evaluations/*
-│   │       ├── prediction.py      # /predict
+│   │       ├── patients.py        # /patients/*, /evaluations/*, /predict
 │   │       ├── reports.py         # /reports/*
 │   │       └── result.py          # /evaluations/{id}/factors, /importance
 │   │
@@ -88,11 +87,10 @@ Rotas antigas (português) redirecionam com 308 para as novas.
 | POST | `/patients` | Criar paciente |
 | GET | `/patients/{id}` | Paciente por ID |
 | GET | `/evaluations` | Lista avaliações |
-| POST | `/evaluations` | Criar avaliação |
+| POST | `/evaluations` | Criar avaliação + predição |
 | GET | `/evaluations/{id}` | Avaliação por ID |
 | GET | `/evaluations/{id}/factors` | Fatores contribuintes |
 | GET | `/evaluations/{id}/importance` | Importância das features |
-| POST | `/predict` | Predizer risco |
 | GET | `/models` | Lista modelos |
 | GET | `/models/{id}/metrics` | Métricas do modelo |
 | GET | `/reports` | Lista relatórios |
@@ -141,6 +139,16 @@ SQLite em `src/database/cardiopredict.db`
 | `reports` | Relatórios |
 | `model_metrics` | Métricas dos modelos |
 
+### Redis (Cache)
+
+A API usa Redis via `fastapi-cache2` para cache de resultados. O servidor espera Redis em `localhost:6379`.
+
+```bash
+docker run -d --name cardiopredict-redis -p 6379:6379 redis:7-alpine
+```
+
+Configure com variáveis de ambiente: `REDIS_HOST` (default `localhost`) e `REDIS_PORT` (default `6379`).
+
 ### Migrations (Alembic)
 
 ```bash
@@ -159,10 +167,10 @@ curl -X POST http://localhost:8000/patients \
   -H "Content-Type: application/json" \
   -d '{"name": "João", "age": 55, "sex": 1}'
 
-# Predizer
-curl -X POST http://localhost:8000/predict \
+# Criar avaliação (inclui predição)
+curl -X POST http://localhost:8000/evaluations \
   -H "Content-Type: application/json" \
-  -d @exemplos/paciente.json
+  -d '{"paciente_id": "<patient-uuid>", "age": 55, "sex": 1, "cp": 2, "trestbps": 140, "chol": 220, "fbs": 0, "restecg": 1, "thalach": 160, "exang": 0, "oldpeak": 1.2, "slope": 2, "ca": 0, "thal": 3, "model_id": 1}'
 
 # Rotas antigas funcionam (308 redirect)
 curl -v http://localhost:8000/pacientes

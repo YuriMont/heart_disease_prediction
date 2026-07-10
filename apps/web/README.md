@@ -9,10 +9,15 @@ Frontend React do projeto PIBIC. Interface em **português**, código em **ingl�
 | UI | React 19 + TypeScript |
 | Build | Vite |
 | Roteamento | TanStack Router (file-based) |
-| State | TanStack React Query |
+| State async | TanStack React Query 5 |
+| State local | Jotai |
+| Componentes | shadcn/ui (Radix UI + Tailwind) |
 | Estilo | Tailwind CSS 4 |
 | HTTP | Axios |
-| Validação | Zod |
+| Validação | Zod 4 |
+| Formulários | React Hook Form + Zod |
+| Gráficos | Recharts |
+| Ícones | Lucide React |
 | API Client | Orval (gerado de OpenAPI) |
 
 ## Pré-requisitos
@@ -51,6 +56,7 @@ src/
 │   ├── evaluation/       # Formulário de avaliação (wizard)
 │   ├── result/           # Hero, fatores, importância, recomendações
 │   ├── layout/           # Sidebar, MainLayout
+│   ├── patients/         # Formulário de cadastro
 │   └── ui/               # Componentes base (Button, Card, Input, etc.)
 │
 ├── routes/
@@ -58,7 +64,7 @@ src/
 │   ├── index.tsx         # Dashboard (/)
 │   ├── evaluation/       # Nova avaliação (/evaluation)
 │   │   └── $id/          # Resultado da avaliação (/evaluation/$id)
-│   ├── patients/         # Lista de pacientes (/patients)
+│   ├── patients/         # Lista (/patients) + cadastro (/patients/new)
 │   ├── models/           # Modelos de ML (/models)
 │   ├── reports/          # Relatórios (/reports)
 │   └── results/          # Resultados (/results)
@@ -68,16 +74,17 @@ src/
 │   └── models/           # Tipos TS + schemas Zod
 │
 ├── lib/                  # api.ts, utils, queryClient
-└── store/                # Jotai atoms
+├── atoms/                # Jotai atoms
+└── store/                # State management
 ```
 
 ## Geração de API
 
 ```bash
-npm run generate:api      # busca /openapi.json do backend
+npm run generate:api      # busca /openapi.json do backend via Orval
 ```
 
-Gera hooks React Query + schemas Zod em `src/generated/`. **Nunca editar.**
+Gera hooks React Query + schemas Zod em `src/generated/`. **Nunca editar manualmente.**
 
 ## Rotas
 
@@ -87,6 +94,7 @@ Gera hooks React Query + schemas Zod em `src/generated/`. **Nunca editar.**
 | `/evaluation` | Nova Avaliação |
 | `/evaluation/$id` | Resultado da Predição |
 | `/patients` | Pacientes |
+| `/patients/new` | Cadastro de Paciente |
 | `/models` | Modelos de IA |
 | `/reports` | Relatórios |
 | `/results` | Resultados |
