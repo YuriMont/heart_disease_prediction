@@ -8,20 +8,6 @@
 import * as zod from 'zod';
 
 /**
- * @summary List Patients
- */
-export const ListPatientsPatientsGetResponseItem = zod.object({
-  id: zod.uuid(),
-  name: zod.union([zod.string(), zod.null()]),
-  age: zod.number(),
-  sex: zod.number(),
-  created_at: zod.iso.datetime({ offset: true }),
-});
-export const ListPatientsPatientsGetResponse = zod.array(
-  ListPatientsPatientsGetResponseItem,
-);
-
-/**
  * @summary Create Patient
  */
 export const createPatientPatientsPostBodyNameOneMax = 200;
@@ -57,6 +43,63 @@ export const CreatePatientPatientsPostResponse = zod.object({
   age: zod.number(),
   sex: zod.number(),
   created_at: zod.iso.datetime({ offset: true }),
+});
+
+/**
+ * @summary List Patients
+ */
+export const listPatientsPatientsGetQueryPageDefault = 1;
+
+export const listPatientsPatientsGetQueryLimitDefault = 20;
+export const listPatientsPatientsGetQueryLimitMax = 100;
+
+export const listPatientsPatientsGetQuerySexOneMin = 0;
+export const listPatientsPatientsGetQuerySexOneMax = 1;
+
+export const ListPatientsPatientsGetQueryParams = zod.object({
+  page: zod
+    .number()
+    .min(1)
+    .default(listPatientsPatientsGetQueryPageDefault)
+    .describe('Número da página'),
+  limit: zod
+    .number()
+    .min(1)
+    .max(listPatientsPatientsGetQueryLimitMax)
+    .default(listPatientsPatientsGetQueryLimitDefault)
+    .describe('Itens por página'),
+  name: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Filtrar por nome'),
+  sex: zod
+    .union([
+      zod
+        .number()
+        .min(listPatientsPatientsGetQuerySexOneMin)
+        .max(listPatientsPatientsGetQuerySexOneMax),
+      zod.null(),
+    ])
+    .optional()
+    .describe('Filtrar por sexo'),
+});
+
+export const ListPatientsPatientsGetResponse = zod.object({
+  data: zod.array(
+    zod.object({
+      id: zod.uuid(),
+      name: zod.union([zod.string(), zod.null()]),
+      age: zod.number(),
+      sex: zod.number(),
+      created_at: zod.iso.datetime({ offset: true }),
+    }),
+  ),
+  meta: zod.object({
+    total: zod.number(),
+    page: zod.number(),
+    limit: zod.number(),
+    total_pages: zod.number(),
+  }),
 });
 
 /**

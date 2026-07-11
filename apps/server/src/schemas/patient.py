@@ -3,6 +3,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+from schemas.common import PaginatedResponse
+
 
 class Patient(BaseModel):
     age: int = Field(..., ge=1, le=120, description="Idade em anos")
@@ -64,3 +66,7 @@ class PatientResponse(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class PatientListResponse(PaginatedResponse[PatientResponse]):
+    pass

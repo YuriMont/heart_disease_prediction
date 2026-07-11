@@ -1,15 +1,16 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, joinedload
 
 from database.connection import get_db
 from database.models.evaluation import Evaluation
 from database.models.model import Model
 from database.models.patient import Patient
+from schemas.common import PaginationMeta
 from schemas.evaluation import EvaluationCreate, EvaluationResponse
 from schemas.patient import Patient as PatientInput
-from schemas.patient import PatientCreate, PatientResponse
+from schemas.patient import PatientCreate, PatientListResponse, PatientResponse
 from services import prediction_service as servico
 
 router = APIRouter(tags=["patients"])
@@ -29,9 +30,40 @@ def create_patient(dados: PatientCreate, db: Session = Depends(get_db)):
     return patient
 
 
-@router.get("/patients", response_model=list[PatientResponse])
-def list_patients(db: Session = Depends(get_db)):
-    return db.query(Patient).order_by(Patient.created_at.desc()).all()
+@router.get("/patients", response_model=PatientListResponse)
+def list_patients(
+    page: int = Query(1, ge=1, description="Número da página"),
+    limit: int = Query(20, ge=1, le=100, description="Itens por página"),
+    name: str | None = Query(None, description="Filtrar por nome"),
+    sex: int | None = Query(None, ge=0, le=1, description="Filtrar por sexo"),
+    db: Session = Depends(get_db),
+):
+    query = db.query(Patient)
+
+    if name:
+        query = query.filter(Patient.name.ilike(f"%{name}%"))
+    if sex is not None:
+        query = query.filter(Patient.sex == sex)
+
+    total = query.count()
+    total_pages = max(1, (total + limit - 1) // limit)
+
+    items = (
+        query.order_by(Patient.created_at.desc())
+        .offset((page - 1) * limit)
+        .limit(limit)
+        .all()
+    )
+
+    return PatientListResponse(
+        data=[PatientResponse.model_validate(p) for p in items],
+        meta=PaginationMeta(
+            total=total,
+            page=page,
+            limit=limit,
+            total_pages=total_pages,
+        ),
+    )
 
 
 @router.get("/patients/{patient_id}", response_model=PatientResponse)

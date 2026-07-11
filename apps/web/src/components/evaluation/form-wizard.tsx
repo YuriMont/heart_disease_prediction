@@ -59,7 +59,8 @@ export function EvaluationForm() {
   const [selectedPatient, setSelectedPatient] = useAtom(selectedPatientAtom);
 
   const { data: models = [] } = useListModelsModelsGet();
-  const { data: patients = [] } = useListPatientsPatientsGet();
+  const { data: patientsData } = useListPatientsPatientsGet();
+  const patients = patientsData?.data ?? [];
 
   const navigate = useNavigate();
 
