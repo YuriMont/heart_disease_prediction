@@ -1,7 +1,7 @@
-import { ClipboardList, ShieldCheck, Activity, HeartPulse } from "lucide-react";
-import { StatCard } from "../ui/stat-card";
-import { useGetStatsDashboardStatsGet } from "../../generated/api/dashboard/dashboard";
-import { formatNumber } from "../../lib/utils";
+import { ClipboardList, ShieldCheck, Activity, HeartPulse } from 'lucide-react';
+import { StatCard } from '../ui/stat-card';
+import { useGetStatsDashboardStatsGet } from '../../generated/api/dashboard/dashboard';
+import { formatNumber } from '../../lib/utils';
 
 export function StatCardsRow() {
   const { data: stats } = useGetStatsDashboardStatsGet();

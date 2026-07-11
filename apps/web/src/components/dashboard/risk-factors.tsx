@@ -1,11 +1,19 @@
-import { Activity } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
-import { useGetRiskFactorsDashboardFactorsGet } from "../../generated/api/dashboard/dashboard";
+import { Activity } from 'lucide-react';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '../ui/card';
+import { useGetRiskFactorsDashboardFactorsGet } from '../../generated/api/dashboard/dashboard';
 
 export function RiskFactors() {
   const { data: factors } = useGetRiskFactorsDashboardFactorsGet();
 
-  const sortedFactors = [...(factors ?? [])].sort((a, b) => b.prevalence - a.prevalence);
+  const sortedFactors = [...(factors ?? [])].sort(
+    (a, b) => b.prevalence - a.prevalence,
+  );
   const isEmpty = sortedFactors.length === 0;
 
   return (
@@ -13,7 +21,9 @@ export function RiskFactors() {
       <CardHeader className="flex flex-row items-center justify-between p-0">
         <div className="flex flex-col gap-[3px]">
           <CardTitle>Fatores de Risco mais Frequentes</CardTitle>
-          <CardDescription>Prevalência entre pacientes avaliados</CardDescription>
+          <CardDescription>
+            Prevalência entre pacientes avaliados
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col justify-between gap-3.5 p-0">
@@ -28,7 +38,9 @@ export function RiskFactors() {
           sortedFactors.map((factor) => (
             <div key={factor.name} className="flex items-center gap-3.5">
               <div className="w-[150px] shrink-0">
-                <span className="text-[13px] font-medium text-foreground">{factor.name}</span>
+                <span className="text-[13px] font-medium text-foreground">
+                  {factor.name}
+                </span>
               </div>
               <div className="flex-1 rounded-full bg-muted">
                 <div

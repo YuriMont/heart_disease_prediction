@@ -1,25 +1,25 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Download } from "lucide-react";
-import { useGetEvaluationEvaluationsEvaluationIdGet } from "../../../generated/api/patients/patients";
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { ArrowLeft, Download } from 'lucide-react';
+import { useGetEvaluationEvaluationsEvaluationIdGet } from '../../../generated/api/patients/patients';
 import {
   useGetFactorsEvaluationsEvaluationIdFactorsGet,
   useGetImportanceEvaluationsEvaluationIdImportanceGet,
-} from "../../../generated/api/result/result";
-import { useExportReportReportsExportPost } from "../../../generated/api/reports/reports";
-import { Button } from "../../../components/ui/button";
-import { Skeleton } from "../../../components/ui/skeleton";
-import { ResultHero } from "../../../components/result/result-hero";
-import { ContributingFactors } from "../../../components/result/contributing-factors";
-import { FeatureImportance } from "../../../components/result/feature-importance";
+} from '../../../generated/api/result/result';
+import { useExportReportReportsExportPost } from '../../../generated/api/reports/reports';
+import { Button } from '../../../components/ui/button';
+import { Skeleton } from '../../../components/ui/skeleton';
+import { ResultHero } from '../../../components/result/result-hero';
+import { ContributingFactors } from '../../../components/result/contributing-factors';
+import { FeatureImportance } from '../../../components/result/feature-importance';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../components/ui/card";
-import { Recommendations } from "../../../components/result/recommendations";
+} from '../../../components/ui/card';
+import { Recommendations } from '../../../components/result/recommendations';
 
-export const Route = createFileRoute("/evaluation/$id/")({
+export const Route = createFileRoute('/evaluation/$id/')({
   component: ResultadoPage,
 });
 
@@ -49,7 +49,7 @@ function ResultadoPage() {
         staleTime: 1 * 60 * 1000, // 1 minuto
       },
     });
-    
+
   const exportarRelatorio = useExportReportReportsExportPost();
 
   if (isLoadingEvaluation) {
@@ -144,9 +144,9 @@ function ResultadoPage() {
       await exportarRelatorio.mutateAsync({
         data: { avaliacao_id: evaluationId },
       });
-      alert("Relatório exportado com sucesso!");
+      alert('Relatório exportado com sucesso!');
     } catch {
-      alert("Erro ao exportar relatório");
+      alert('Erro ao exportar relatório');
     }
   };
 
@@ -183,8 +183,8 @@ function ResultadoPage() {
           >
             <Download className="h-4 w-4" />
             {exportarRelatorio.isPending
-              ? "Exportando..."
-              : "Exportar Relatório"}
+              ? 'Exportando...'
+              : 'Exportar Relatório'}
           </Button>
         </div>
       </div>
@@ -195,7 +195,7 @@ function ResultadoPage() {
         <div className="flex flex-col gap-6">
           <ResultHero
             probability={evaluation.disease_probability}
-            riskLevel={evaluation.has_disease ? "high" : "low"}
+            riskLevel={evaluation.has_disease ? 'high' : 'low'}
             confidence={Number(
               ((1 - evaluation.disease_probability) * 100).toFixed(1),
             )}
@@ -224,36 +224,36 @@ function ResultadoPage() {
             </CardHeader>
             <CardContent className="flex flex-col gap-3 p-0">
               {[
-                { label: "Idade", value: `${evaluation.age} anos` },
+                { label: 'Idade', value: `${evaluation.age} anos` },
                 {
-                  label: "Sexo",
-                  value: evaluation.sex === 1 ? "Masculino" : "Feminino",
+                  label: 'Sexo',
+                  value: evaluation.sex === 1 ? 'Masculino' : 'Feminino',
                 },
                 {
-                  label: "Pressão arterial",
+                  label: 'Pressão arterial',
                   value: `${evaluation.trestbps} mmHg`,
                 },
-                { label: "Colesterol", value: `${evaluation.chol} mg/dL` },
+                { label: 'Colesterol', value: `${evaluation.chol} mg/dL` },
                 {
-                  label: "Frequência cardíaca máx.",
+                  label: 'Frequência cardíaca máx.',
                   value: `${evaluation.thalach} bpm`,
                 },
-                { label: "Dor torácica", value: `Tipo ${evaluation.cp}` },
+                { label: 'Dor torácica', value: `Tipo ${evaluation.cp}` },
                 {
-                  label: "ECG em repouso",
+                  label: 'ECG em repouso',
                   value: `Tipo ${evaluation.restecg}`,
                 },
-                { label: "Depressão ST", value: `${evaluation.oldpeak} mm` },
-                { label: "Inclinação ST", value: `Tipo ${evaluation.slope}` },
-                { label: "Vasos coloridos", value: `${evaluation.ca}` },
-                { label: "Talassemia", value: `Tipo ${evaluation.thal}` },
+                { label: 'Depressão ST', value: `${evaluation.oldpeak} mm` },
+                { label: 'Inclinação ST', value: `Tipo ${evaluation.slope}` },
+                { label: 'Vasos coloridos', value: `${evaluation.ca}` },
+                { label: 'Talassemia', value: `Tipo ${evaluation.thal}` },
                 {
-                  label: "Glicemia > 120",
-                  value: evaluation.fbs === 1 ? "Sim" : "Não",
+                  label: 'Glicemia > 120',
+                  value: evaluation.fbs === 1 ? 'Sim' : 'Não',
                 },
                 {
-                  label: "Angina por exercício",
-                  value: evaluation.exang === 1 ? "Sim" : "Não",
+                  label: 'Angina por exercício',
+                  value: evaluation.exang === 1 ? 'Sim' : 'Não',
                 },
               ].map((item) => (
                 <div

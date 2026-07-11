@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import * as zod from "zod";
+import * as zod from 'zod';
 
 /**
  * @summary Get Factors

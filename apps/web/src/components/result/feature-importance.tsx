@@ -1,16 +1,33 @@
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts";
-import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
-import type { FeatureImportance as FeatureImportanceType } from "../../generated/models/featureImportance";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Cell,
+} from 'recharts';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Skeleton } from '../ui/skeleton';
+import type { FeatureImportance as FeatureImportanceType } from '../../generated/models/featureImportance';
 
 interface FeatureImportanceProps {
   features: FeatureImportanceType[];
   isLoading: boolean;
 }
 
-const COLORS = ["#BE123C", "#0D9488", "#059669", "#D97706", "#7C3AED", "#0284C7"];
+const COLORS = [
+  '#BE123C',
+  '#0D9488',
+  '#059669',
+  '#D97706',
+  '#7C3AED',
+  '#0284C7',
+];
 
-export function FeatureImportance({ features, isLoading }: FeatureImportanceProps) {
+export function FeatureImportance({
+  features,
+  isLoading,
+}: FeatureImportanceProps) {
   const sorted = [...features].sort((a, b) => b.weight - a.weight);
   const chartHeight = sorted.length * 28;
 
@@ -29,28 +46,33 @@ export function FeatureImportance({ features, isLoading }: FeatureImportanceProp
               </div>
             ))}
           </div>
-        ) : (<div style={{ height: chartHeight }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={sorted}
-              layout="vertical"
-              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-            >
-              <XAxis type="number" domain={[0, 1]} hide />
-              <YAxis
-                type="category"
-                dataKey="variable"
-                width={150}
-                tick={{ fontSize: 12, fill: "#64748B" }}
-              />
-              <Bar dataKey="weight" radius={[0, 6, 6, 0]} barSize={16}>
-                {sorted.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>)}
+        ) : (
+          <div style={{ height: chartHeight }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={sorted}
+                layout="vertical"
+                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+              >
+                <XAxis type="number" domain={[0, 1]} hide />
+                <YAxis
+                  type="category"
+                  dataKey="variable"
+                  width={150}
+                  tick={{ fontSize: 12, fill: '#64748B' }}
+                />
+                <Bar dataKey="weight" radius={[0, 6, 6, 0]} barSize={16}>
+                  {sorted.map((_, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

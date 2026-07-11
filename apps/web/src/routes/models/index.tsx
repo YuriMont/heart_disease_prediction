@@ -1,16 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Eye, MoreHorizontal, Rocket } from "lucide-react";
+import { createFileRoute } from '@tanstack/react-router';
+import { Eye, MoreHorizontal, Rocket } from 'lucide-react';
 import {
   useListModelsModelsGet,
   useGetMetricsModelsModelIdMetricsGet,
-} from "../../generated/api/models/models";
-import { Button } from "../../components/ui/button";
+} from '../../generated/api/models/models';
+import { Button } from '../../components/ui/button';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
+} from '../../components/ui/card';
 import {
   TableBody,
   TableCell,
@@ -18,28 +18,28 @@ import {
   TableHeader,
   TableRow,
   Table,
-} from "../../components/ui/table";
-import { ModelInfo } from "../../components/dashboard/model-info";
-import { Badge } from "../../components/ui/badge";
-import { Skeleton } from "../../components/ui/skeleton";
+} from '../../components/ui/table';
+import { ModelInfo } from '../../components/dashboard/model-info';
+import { Badge } from '../../components/ui/badge';
+import { Skeleton } from '../../components/ui/skeleton';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../../components/ui/dialog";
+} from '../../components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
-import { modelAtom } from "../../store/model";
-import { useAtom } from "jotai";
-import { useState } from "react";
+} from '../../components/ui/dropdown-menu';
+import { modelAtom } from '../../store/model';
+import { useAtom } from 'jotai';
+import { useState } from 'react';
 
-export const Route = createFileRoute("/models/")({
+export const Route = createFileRoute('/models/')({
   component: ModelsPage,
 });
 
@@ -50,7 +50,7 @@ function ModelsPage() {
   const [isVariablesOpen, setIsVariablesOpen] = useState(false);
 
   const { data: metrics } = useGetMetricsModelsModelIdMetricsGet(
-    selectedModel?.id ?? "",
+    selectedModel?.id ?? '',
     {
       query: {
         enabled: !!selectedModel?.id,
@@ -113,8 +113,8 @@ function ModelsPage() {
                         key={model.name}
                         className={
                           selectedModel?.name == model.name
-                            ? "bg-primary/5 transition-colors"
-                            : ""
+                            ? 'bg-primary/5 transition-colors'
+                            : ''
                         }
                       >
                         <TableCell className="font-medium">
@@ -127,13 +127,13 @@ function ModelsPage() {
                           <Badge
                             variant={
                               selectedModel?.name === model.name
-                                ? "default"
-                                : "secondary"
+                                ? 'default'
+                                : 'secondary'
                             }
                           >
                             {selectedModel?.name === model.name
-                              ? "Ativo"
-                              : "Disponível"}
+                              ? 'Ativo'
+                              : 'Disponível'}
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -184,9 +184,7 @@ function ModelsPage() {
             <CardHeader className="p-0 mb-4">
               <CardTitle>Desempenho</CardTitle>
             </CardHeader>
-            <CardContent
-              className="p-0 flex flex-col gap-5 *:border-b *:border-border *:pb-5 [&>*:last-child]:border-b-0 [&>*:last-child]:pb-0"
-            >
+            <CardContent className="p-0 flex flex-col gap-5 *:border-b *:border-border *:pb-5 [&>*:last-child]:border-b-0 [&>*:last-child]:pb-0">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
@@ -249,51 +247,51 @@ function ModelsPage() {
                 </TableHeader>
                 <TableBody>
                   {[
-                    { field: "age", label: "Idade", range: "1-120" },
-                    { field: "sex", label: "Sexo", range: "0/1" },
-                    { field: "cp", label: "Dor torácica", range: "1-4" },
+                    { field: 'age', label: 'Idade', range: '1-120' },
+                    { field: 'sex', label: 'Sexo', range: '0/1' },
+                    { field: 'cp', label: 'Dor torácica', range: '1-4' },
                     {
-                      field: "trestbps",
-                      label: "Pressão em repouso",
-                      range: "mmHg",
+                      field: 'trestbps',
+                      label: 'Pressão em repouso',
+                      range: 'mmHg',
                     },
-                    { field: "chol", label: "Colesterol", range: "mg/dL" },
+                    { field: 'chol', label: 'Colesterol', range: 'mg/dL' },
                     {
-                      field: "fbs",
-                      label: "Glicemia em jejum",
-                      range: "0/1",
-                    },
-                    {
-                      field: "restecg",
-                      label: "ECG em repouso",
-                      range: "0-2",
+                      field: 'fbs',
+                      label: 'Glicemia em jejum',
+                      range: '0/1',
                     },
                     {
-                      field: "thalach",
-                      label: "Freq. cardíaca máx.",
-                      range: "bpm",
+                      field: 'restecg',
+                      label: 'ECG em repouso',
+                      range: '0-2',
                     },
                     {
-                      field: "exang",
-                      label: "Angina por exercício",
-                      range: "0/1",
+                      field: 'thalach',
+                      label: 'Freq. cardíaca máx.',
+                      range: 'bpm',
                     },
                     {
-                      field: "oldpeak",
-                      label: "Depressão ST",
-                      range: "mm",
+                      field: 'exang',
+                      label: 'Angina por exercício',
+                      range: '0/1',
                     },
                     {
-                      field: "slope",
-                      label: "Inclinação ST",
-                      range: "1-3",
+                      field: 'oldpeak',
+                      label: 'Depressão ST',
+                      range: 'mm',
                     },
                     {
-                      field: "ca",
-                      label: "Vasos coloridos",
-                      range: "0-3",
+                      field: 'slope',
+                      label: 'Inclinação ST',
+                      range: '1-3',
                     },
-                    { field: "thal", label: "Talassemia", range: "3/6/7" },
+                    {
+                      field: 'ca',
+                      label: 'Vasos coloridos',
+                      range: '0-3',
+                    },
+                    { field: 'thal', label: 'Talassemia', range: '3/6/7' },
                   ].map((f) => (
                     <TableRow key={f.field}>
                       <TableCell className="font-mono text-xs font-medium">

@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -19,17 +19,17 @@ import type {
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
 import type {
   HTTPValidationError,
   ModelInfo,
   ModelMetrics,
   ModelUpdate,
-} from "../../models";
+} from '../../models';
 
-import { api } from "../../../lib/api";
-import type { ErrorType, BodyType } from "../../../lib/api";
+import { api } from '../../../lib/api';
+import type { ErrorType, BodyType } from '../../../lib/api';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -41,7 +41,7 @@ const withQueryKey = <T extends object, K>(
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
     // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
+    if (key === 'queryKey') continue;
     Object.defineProperty(result, key, {
       enumerable: true,
       configurable: true,
@@ -58,7 +58,7 @@ export const listModelsModelsGet = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<ModelInfo[]>({ url: `/models`, method: "GET", signal }, options);
+  return api<ModelInfo[]>({ url: `/models`, method: 'GET', signal }, options);
 };
 
 export const getListModelsModelsGetQueryKey = () => {
@@ -116,7 +116,7 @@ export function useListModelsModelsGet<
           TError,
           Awaited<ReturnType<typeof listModelsModelsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -142,7 +142,7 @@ export function useListModelsModelsGet<
           TError,
           Awaited<ReturnType<typeof listModelsModelsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -209,7 +209,7 @@ export const getMetricsModelsModelIdMetricsGet = (
   signal?: AbortSignal,
 ) => {
   return api<ModelMetrics>(
-    { url: `/models/${modelId}/metrics`, method: "GET", signal },
+    { url: `/models/${modelId}/metrics`, method: 'GET', signal },
     options,
   );
 };
@@ -284,7 +284,7 @@ export function useGetMetricsModelsModelIdMetricsGet<
           TError,
           Awaited<ReturnType<typeof getMetricsModelsModelIdMetricsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -311,7 +311,7 @@ export function useGetMetricsModelsModelIdMetricsGet<
           TError,
           Awaited<ReturnType<typeof getMetricsModelsModelIdMetricsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -386,8 +386,8 @@ export const updateModelModelsModelIdPatch = (
   return api<ModelInfo>(
     {
       url: `/models/${modelId}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       data: modelUpdate,
       signal,
     },
@@ -412,10 +412,10 @@ export const getUpdateModelModelsModelIdPatchMutationOptions = <
   { modelId: string; data: BodyType<ModelUpdate> },
   TContext
 > => {
-  const mutationKey = ["updateModelModelsModelIdPatch"];
+  const mutationKey = ['updateModelModelsModelIdPatch'];
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
-      "mutationKey" in options.mutation &&
+      'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }

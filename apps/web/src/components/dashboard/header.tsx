@@ -1,6 +1,6 @@
-import { Plus, HeartPulse } from "lucide-react";
-import { Link } from "@tanstack/react-router";
-import { Button } from "../ui/button";
+import { Plus, HeartPulse } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
+import { Button } from '../ui/button';
 
 export function DashboardHeader() {
   return (
@@ -19,7 +19,8 @@ export function DashboardHeader() {
             </span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Análise de risco cardiovascular · pacientes avaliados pelo modelo de IA
+            Análise de risco cardiovascular · pacientes avaliados pelo modelo de
+            IA
           </p>
         </div>
       </div>

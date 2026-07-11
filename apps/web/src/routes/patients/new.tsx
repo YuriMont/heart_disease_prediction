@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PatientForm } from "../../components/patients/patient-form";
+import { createFileRoute } from '@tanstack/react-router';
+import { PatientForm } from '../../components/patients/patient-form';
 
-export const Route = createFileRoute("/patients/new")({
+export const Route = createFileRoute('/patients/new')({
   component: NewPatientPage,
 });
 

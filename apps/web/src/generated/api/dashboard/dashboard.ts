@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -16,16 +16,16 @@ import type {
   UndefinedInitialDataOptions,
   UseQueryOptions,
   UseQueryResult,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
 import type {
   DashboardStats,
   RiskDistribution,
   RiskFactor,
-} from "../../models";
+} from '../../models';
 
-import { api } from "../../../lib/api";
-import type { ErrorType } from "../../../lib/api";
+import { api } from '../../../lib/api';
+import type { ErrorType } from '../../../lib/api';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -37,7 +37,7 @@ const withQueryKey = <T extends object, K>(
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
     // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
+    if (key === 'queryKey') continue;
     Object.defineProperty(result, key, {
       enumerable: true,
       configurable: true,
@@ -55,7 +55,7 @@ export const getStatsDashboardStatsGet = (
   signal?: AbortSignal,
 ) => {
   return api<DashboardStats>(
-    { url: `/dashboard/stats`, method: "GET", signal },
+    { url: `/dashboard/stats`, method: 'GET', signal },
     options,
   );
 };
@@ -116,7 +116,7 @@ export function useGetStatsDashboardStatsGet<
           TError,
           Awaited<ReturnType<typeof getStatsDashboardStatsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -142,7 +142,7 @@ export function useGetStatsDashboardStatsGet<
           TError,
           Awaited<ReturnType<typeof getStatsDashboardStatsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -208,7 +208,7 @@ export const getRiskDistributionDashboardRisksGet = (
   signal?: AbortSignal,
 ) => {
   return api<RiskDistribution[]>(
-    { url: `/dashboard/risks`, method: "GET", signal },
+    { url: `/dashboard/risks`, method: 'GET', signal },
     options,
   );
 };
@@ -270,7 +270,7 @@ export function useGetRiskDistributionDashboardRisksGet<
           TError,
           Awaited<ReturnType<typeof getRiskDistributionDashboardRisksGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -296,7 +296,7 @@ export function useGetRiskDistributionDashboardRisksGet<
           TError,
           Awaited<ReturnType<typeof getRiskDistributionDashboardRisksGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -363,7 +363,7 @@ export const getRiskFactorsDashboardFactorsGet = (
   signal?: AbortSignal,
 ) => {
   return api<RiskFactor[]>(
-    { url: `/dashboard/factors`, method: "GET", signal },
+    { url: `/dashboard/factors`, method: 'GET', signal },
     options,
   );
 };
@@ -424,7 +424,7 @@ export function useGetRiskFactorsDashboardFactorsGet<
           TError,
           Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -450,7 +450,7 @@ export function useGetRiskFactorsDashboardFactorsGet<
           TError,
           Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },

@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import * as zod from "zod";
+import * as zod from 'zod';
 
 /**
  * @summary List Patients
@@ -38,17 +38,17 @@ export const CreatePatientPatientsPostBody = zod.object({
       zod.null(),
     ])
     .optional()
-    .describe("Nome do paciente"),
+    .describe('Nome do paciente'),
   age: zod
     .number()
     .min(1)
     .max(createPatientPatientsPostBodyAgeMax)
-    .describe("Idade em anos"),
+    .describe('Idade em anos'),
   sex: zod
     .number()
     .min(createPatientPatientsPostBodySexMin)
     .max(createPatientPatientsPostBodySexMax)
-    .describe("Sexo: 1 = masculino, 0 = feminino"),
+    .describe('Sexo: 1 = masculino, 0 = feminino'),
 });
 
 export const CreatePatientPatientsPostResponse = zod.object({
@@ -140,7 +140,7 @@ export const createEvaluationEvaluationsPostBodyThalMin = 3;
 export const createEvaluationEvaluationsPostBodyThalMax = 7;
 
 export const CreateEvaluationEvaluationsPostBody = zod.object({
-  paciente_id: zod.uuid().describe("ID do paciente"),
+  paciente_id: zod.uuid().describe('ID do paciente'),
   age: zod.number().min(1).max(createEvaluationEvaluationsPostBodyAgeMax),
   sex: zod
     .number()
@@ -176,7 +176,7 @@ export const CreateEvaluationEvaluationsPostBody = zod.object({
     .number()
     .min(createEvaluationEvaluationsPostBodyThalMin)
     .max(createEvaluationEvaluationsPostBodyThalMax),
-  model_id: zod.string().describe("ID do modelo de IA"),
+  model_id: zod.string().describe('ID do modelo de IA'),
 });
 
 export const CreateEvaluationEvaluationsPostResponse = zod.object({

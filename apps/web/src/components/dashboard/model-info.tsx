@@ -1,15 +1,13 @@
-import { BrainCircuit } from "lucide-react";
-import {
-  useGetMetricsModelsModelIdMetricsGet,
-} from "../../generated/api/models/models";
-import { useAtom } from "jotai";
-import { modelAtom } from "../../store/model";
+import { BrainCircuit } from 'lucide-react';
+import { useGetMetricsModelsModelIdMetricsGet } from '../../generated/api/models/models';
+import { useAtom } from 'jotai';
+import { modelAtom } from '../../store/model';
 
 export function ModelInfo() {
   const [selectedModel] = useAtom(modelAtom);
 
   const { data: metrics } = useGetMetricsModelsModelIdMetricsGet(
-    selectedModel?.id ?? "",
+    selectedModel?.id ?? '',
     {
       query: {
         enabled: !!selectedModel?.id,
@@ -31,7 +29,7 @@ export function ModelInfo() {
             </span>
           </div>
           <p className="text-sm text-primary-foreground/70">
-            {selectedModel?.description ?? "-"}
+            {selectedModel?.description ?? '-'}
           </p>
         </div>
         <div className="flex gap-8">
@@ -61,7 +59,7 @@ export function ModelInfo() {
           </div>
           <div className="flex flex-col items-end gap-[2px]">
             <span className="font-mono text-xs font-semibold text-primary-foreground/80">
-              {metrics?.updated_at || "00/00/0000"}
+              {metrics?.updated_at || '00/00/0000'}
             </span>
             <span className="text-xs text-primary-foreground/60">
               Última atualização

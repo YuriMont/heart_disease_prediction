@@ -1,30 +1,30 @@
-import { useState } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Search, X, Users, Plus, Stethoscope } from "lucide-react";
-import { Button } from "../../components/ui/button";
+import { useState } from 'react';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { Search, X, Users, Plus, Stethoscope } from 'lucide-react';
+import { Button } from '../../components/ui/button';
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
-} from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
-import { Skeleton } from "../../components/ui/skeleton";
+} from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { Skeleton } from '../../components/ui/skeleton';
 import {
   Empty,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
   EmptyDescription,
-} from "../../components/ui/empty";
-import { Input } from "../../components/ui/input";
+} from '../../components/ui/empty';
+import { Input } from '../../components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from '../../components/ui/select';
 import {
   Table,
   TableHeader,
@@ -32,29 +32,29 @@ import {
   TableRow,
   TableHead,
   TableCell,
-} from "../../components/ui/table";
-import { useListPatientsPatientsGet } from "../../generated/api/patients/patients";
-import { useSetAtom } from "jotai";
-import { selectedPatientAtom } from "../../atoms/patient";
-import { Label } from "@/components/ui/label";
+} from '../../components/ui/table';
+import { useListPatientsPatientsGet } from '../../generated/api/patients/patients';
+import { useSetAtom } from 'jotai';
+import { selectedPatientAtom } from '../../atoms/patient';
+import { Label } from '@/components/ui/label';
 
-export const Route = createFileRoute("/patients/")({
+export const Route = createFileRoute('/patients/')({
   component: PatientsPage,
 });
 
 function PatientsPage() {
   const { data: patients = [], isLoading } = useListPatientsPatientsGet();
 
-  const [searchName, setSearchName] = useState("");
-  const [filterSex, setFilterSex] = useState("all");
+  const [searchName, setSearchName] = useState('');
+  const [filterSex, setFilterSex] = useState('all');
 
   const handleSearch = () => {
     // TODO: integrar busca com backend
   };
 
   const handleClear = () => {
-    setSearchName("");
-    setFilterSex("all");
+    setSearchName('');
+    setFilterSex('all');
   };
 
   const setSelectedPatient = useSetAtom(selectedPatientAtom);
@@ -62,7 +62,7 @@ function PatientsPage() {
 
   const handleEvaluate = (patient: (typeof patients)[0]) => {
     setSelectedPatient(patient);
-    navigate({ to: "/evaluation" });
+    navigate({ to: '/evaluation' });
   };
 
   return (
@@ -217,17 +217,17 @@ function PatientsPage() {
               <TableBody>
                 {patients.map((patient) => (
                   <TableRow key={patient.id}>
-                    <TableCell>{patient.name ?? "Sem nome"}</TableCell>
+                    <TableCell>{patient.name ?? 'Sem nome'}</TableCell>
                     <TableCell>{patient.age} anos</TableCell>
                     <TableCell>
                       <Badge
-                        variant={patient.sex === 1 ? "default" : "secondary"}
+                        variant={patient.sex === 1 ? 'default' : 'secondary'}
                       >
-                        {patient.sex === 1 ? "M" : "F"}
+                        {patient.sex === 1 ? 'M' : 'F'}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {new Date(patient.created_at).toLocaleDateString("pt-BR")}
+                      {new Date(patient.created_at).toLocaleDateString('pt-BR')}
                     </TableCell>
                     <TableCell className="text-right">
                       <Button

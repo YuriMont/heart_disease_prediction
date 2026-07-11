@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation } from '@tanstack/react-router';
 import {
   LayoutDashboard,
   Users,
@@ -6,17 +6,17 @@ import {
   FileText,
   BrainCircuit,
   HeartPulse,
-} from "lucide-react";
-import { cn } from "../../lib/utils";
-import { useAtom } from "jotai";
-import { modelAtom } from "../../store/model";
+} from 'lucide-react';
+import { cn } from '../../lib/utils';
+import { useAtom } from 'jotai';
+import { modelAtom } from '../../store/model';
 
 const navItems = [
-  { label: "Painel", icon: LayoutDashboard, to: "/" },
-  { label: "Pacientes", icon: Users, to: "/patients" },
-  { label: "Resultados", icon: ClipboardList, to: "/results" },
-  { label: "Relatórios", icon: FileText, to: "/reports" },
-  { label: "Modelo de IA", icon: BrainCircuit, to: "/models" },
+  { label: 'Painel', icon: LayoutDashboard, to: '/' },
+  { label: 'Pacientes', icon: Users, to: '/patients' },
+  { label: 'Resultados', icon: ClipboardList, to: '/results' },
+  { label: 'Relatórios', icon: FileText, to: '/reports' },
+  { label: 'Modelo de IA', icon: BrainCircuit, to: '/models' },
 ];
 
 function EcgAmbient() {
@@ -45,7 +45,7 @@ export function Sidebar() {
   const location = useLocation();
 
   const isActive = (to: string) => {
-    if (to === "/") return location.pathname === "/";
+    if (to === '/') return location.pathname === '/';
     return location.pathname.startsWith(to);
   };
 
@@ -84,16 +84,18 @@ export function Sidebar() {
               key={item.to}
               to={item.to}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200",
+                'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200',
                 active
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground",
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground',
               )}
             >
               <item.icon
                 className={cn(
-                  "h-5 w-5 shrink-0",
-                  active ? "text-primary-foreground" : "text-sidebar-foreground/40",
+                  'h-5 w-5 shrink-0',
+                  active
+                    ? 'text-primary-foreground'
+                    : 'text-sidebar-foreground/40',
                 )}
               />
               {item.label}

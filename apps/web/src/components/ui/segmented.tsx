@@ -1,4 +1,4 @@
-import { cn } from "../../lib/utils";
+import { cn } from '../../lib/utils';
 
 interface SegmentedOption {
   label: string;
@@ -13,10 +13,18 @@ interface SegmentedProps {
   className?: string;
 }
 
-export function Segmented({ label, options, value, onChange, className }: SegmentedProps) {
+export function Segmented({
+  label,
+  options,
+  value,
+  onChange,
+  className,
+}: SegmentedProps) {
   return (
-    <div className={cn("flex w-full flex-col gap-1", className)}>
-      <label className="text-[13px] font-semibold text-muted-foreground">{label}</label>
+    <div className={cn('flex w-full flex-col gap-1', className)}>
+      <label className="text-[13px] font-semibold text-muted-foreground">
+        {label}
+      </label>
       <div className="flex rounded-lg border border-border bg-muted p-0.5">
         {options.map((opt) => (
           <button
@@ -24,10 +32,10 @@ export function Segmented({ label, options, value, onChange, className }: Segmen
             type="button"
             onClick={() => onChange(opt.value)}
             className={cn(
-              "flex-1 rounded-sm px-4 py-1.5 text-sm font-medium transition-all",
+              'flex-1 rounded-sm px-4 py-1.5 text-sm font-medium transition-all',
               value === opt.value
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground',
             )}
           >
             {opt.label}
@@ -46,10 +54,18 @@ interface SegmentedMultiProps {
   className?: string;
 }
 
-export function SegmentedMulti({ label, options, value, onChange, className }: SegmentedMultiProps) {
+export function SegmentedMulti({
+  label,
+  options,
+  value,
+  onChange,
+  className,
+}: SegmentedMultiProps) {
   return (
-    <div className={cn("flex w-full flex-col gap-2", className)}>
-      <label className="text-[13px] font-semibold text-muted-foreground">{label}</label>
+    <div className={cn('flex w-full flex-col gap-2', className)}>
+      <label className="text-[13px] font-semibold text-muted-foreground">
+        {label}
+      </label>
       <div className="flex flex-wrap rounded-xl border border-border bg-muted p-1 gap-1">
         {options.map((opt) => (
           <button
@@ -57,10 +73,10 @@ export function SegmentedMulti({ label, options, value, onChange, className }: S
             type="button"
             onClick={() => onChange(opt.value)}
             className={cn(
-              "flex-1 min-w-[80px] rounded-lg px-4 py-2.5 text-sm font-medium transition-all",
+              'flex-1 min-w-[80px] rounded-lg px-4 py-2.5 text-sm font-medium transition-all',
               value === opt.value
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground',
             )}
           >
             {opt.label}

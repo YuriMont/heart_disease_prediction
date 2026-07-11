@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useNavigate } from '@tanstack/react-router';
 import {
   UserRound,
   HeartPulse,
@@ -14,21 +14,27 @@ import {
   ListChecks,
   CircleCheckBig,
   Circle,
-} from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Segmented } from "../ui/segmented";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+} from 'lucide-react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Segmented } from '../ui/segmented';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 import {
   useCreateEvaluationEvaluationsPost,
   useListPatientsPatientsGet,
-} from "../../generated/api/patients/patients";
-import { modelAtom } from "../../store/model";
-import { selectedPatientAtom } from "../../atoms/patient";
-import { useAtom } from "jotai";
-import { useListModelsModelsGet } from "../../generated/api/models/models";
-import { CreateEvaluationEvaluationsPostBody } from "../../generated/api/patients/patients.zod";
+} from '../../generated/api/patients/patients';
+import { modelAtom } from '../../store/model';
+import { selectedPatientAtom } from '../../atoms/patient';
+import { useAtom } from 'jotai';
+import { useListModelsModelsGet } from '../../generated/api/models/models';
+import { CreateEvaluationEvaluationsPostBody } from '../../generated/api/patients/patients.zod';
 
 type FormData = z.infer<typeof CreateEvaluationEvaluationsPostBody>;
 
@@ -70,9 +76,9 @@ export function EvaluationForm() {
 
   useEffect(() => {
     if (selectedPatient) {
-      setValue("paciente_id", selectedPatient.id)
-      setValue("age", selectedPatient.age);
-      setValue("sex", selectedPatient.sex);
+      setValue('paciente_id', selectedPatient.id);
+      setValue('age', selectedPatient.age);
+      setValue('sex', selectedPatient.sex);
     }
   }, [selectedPatient, setValue]);
 
@@ -87,7 +93,7 @@ export function EvaluationForm() {
       });
       navigate({ to: `/evaluation/${evaluation.id}` });
     } catch (error) {
-      console.error("Error creating evaluation:", error);
+      console.error('Error creating evaluation:', error);
     }
   };
 
@@ -140,9 +146,9 @@ export function EvaluationForm() {
                 Selecionar Paciente
               </Label>
               <Select
-                value={selectedPatient?.id ?? ""}
-                onValueChange={(value) => {
-                  const patient = patients.find(p => p.id === value);
+                value={selectedPatient?.id ?? ''}
+                onValueChange={(value: string) => {
+                  const patient = patients.find((p) => p.id === value);
                   if (patient) setSelectedPatient(patient);
                 }}
               >
@@ -151,9 +157,13 @@ export function EvaluationForm() {
                 </SelectTrigger>
                 <SelectContent className="rounded-[0.5rem]">
                   {patients.map((patient) => (
-                    <SelectItem className="rounded-[0.5rem]" key={patient.id} value={patient.id}>
-                      {patient.name ?? "Sem nome"} — {patient.age} anos (
-                      {patient.sex === 1 ? "M" : "F"})
+                    <SelectItem
+                      className="rounded-[0.5rem]"
+                      key={patient.id}
+                      value={patient.id}
+                    >
+                      {patient.name ?? 'Sem nome'} — {patient.age} anos (
+                      {patient.sex === 1 ? 'M' : 'F'})
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -187,9 +197,9 @@ export function EvaluationForm() {
                       type="number"
                       required
                       placeholder="Ex.: 120"
-                      value={values.trestbps || ""}
+                      value={values.trestbps || ''}
                       onChange={(e) =>
-                        setValue("trestbps", Number(e.target.value))
+                        setValue('trestbps', Number(e.target.value))
                       }
                       className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
@@ -207,9 +217,9 @@ export function EvaluationForm() {
                       type="number"
                       required
                       placeholder="Ex.: 150"
-                      value={values.thalach || ""}
+                      value={values.thalach || ''}
                       onChange={(e) =>
-                        setValue("thalach", Number(e.target.value))
+                        setValue('thalach', Number(e.target.value))
                       }
                       className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
@@ -229,8 +239,8 @@ export function EvaluationForm() {
                       type="number"
                       required
                       placeholder="Ex.: 200"
-                      value={values.chol || ""}
-                      onChange={(e) => setValue("chol", Number(e.target.value))}
+                      value={values.chol || ''}
+                      onChange={(e) => setValue('chol', Number(e.target.value))}
                       className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
                     <span className="text-[13px] text-muted-foreground">
@@ -263,25 +273,25 @@ export function EvaluationForm() {
                   <Segmented
                     label="Tipo de Dor Torácica"
                     options={[
-                      { label: "Típica", value: 1 },
-                      { label: "Atípica", value: 2 },
-                      { label: "Não anginosa", value: 3 },
-                      { label: "Assintomática", value: 4 },
+                      { label: 'Típica', value: 1 },
+                      { label: 'Atípica', value: 2 },
+                      { label: 'Não anginosa', value: 3 },
+                      { label: 'Assintomática', value: 4 },
                     ]}
                     value={values.cp}
-                    onChange={(v) => setValue("cp", v as number)}
+                    onChange={(v) => setValue('cp', v as number)}
                   />
                 </div>
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
                     label="ECG em Repouso"
                     options={[
-                      { label: "Normal", value: 0 },
-                      { label: "Anormal", value: 1 },
-                      { label: "Hipertrofia", value: 2 },
+                      { label: 'Normal', value: 0 },
+                      { label: 'Anormal', value: 1 },
+                      { label: 'Hipertrofia', value: 2 },
                     ]}
                     value={values.restecg}
-                    onChange={(v) => setValue("restecg", v as number)}
+                    onChange={(v) => setValue('restecg', v as number)}
                   />
                 </div>
               </div>
@@ -290,24 +300,24 @@ export function EvaluationForm() {
                   <Segmented
                     label="Inclinação do Segmento ST"
                     options={[
-                      { label: "Ascendente", value: 1 },
-                      { label: "Plano", value: 2 },
-                      { label: "Descendente", value: 3 },
+                      { label: 'Ascendente', value: 1 },
+                      { label: 'Plano', value: 2 },
+                      { label: 'Descendente', value: 3 },
                     ]}
                     value={values.slope}
-                    onChange={(v) => setValue("slope", v as number)}
+                    onChange={(v) => setValue('slope', v as number)}
                   />
                 </div>
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
                     label="Talassemia"
                     options={[
-                      { label: "Normal", value: 3 },
-                      { label: "Defeito fixo", value: 6 },
-                      { label: "Defeito reversível", value: 7 },
+                      { label: 'Normal', value: 3 },
+                      { label: 'Defeito fixo', value: 6 },
+                      { label: 'Defeito reversível', value: 7 },
                     ]}
                     value={values.thal}
-                    onChange={(v) => setValue("thal", v as number)}
+                    onChange={(v) => setValue('thal', v as number)}
                   />
                 </div>
               </div>
@@ -316,22 +326,22 @@ export function EvaluationForm() {
                   <Segmented
                     label="Glicemia em Jejum > 120 mg/dl"
                     options={[
-                      { label: "Sim", value: 1 },
-                      { label: "Não", value: 0 },
+                      { label: 'Sim', value: 1 },
+                      { label: 'Não', value: 0 },
                     ]}
                     value={values.fbs}
-                    onChange={(v) => setValue("fbs", v as number)}
+                    onChange={(v) => setValue('fbs', v as number)}
                   />
                 </div>
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
                     label="Angina Induzida por Exercício"
                     options={[
-                      { label: "Sim", value: 1 },
-                      { label: "Não", value: 0 },
+                      { label: 'Sim', value: 1 },
+                      { label: 'Não', value: 0 },
                     ]}
                     value={values.exang}
-                    onChange={(v) => setValue("exang", v as number)}
+                    onChange={(v) => setValue('exang', v as number)}
                   />
                 </div>
               </div>
@@ -346,9 +356,9 @@ export function EvaluationForm() {
                       step="0.1"
                       required
                       placeholder="Ex.: 1.5"
-                      value={values.oldpeak || ""}
+                      value={values.oldpeak || ''}
                       onChange={(e) =>
-                        setValue("oldpeak", Number(e.target.value))
+                        setValue('oldpeak', Number(e.target.value))
                       }
                       className="w-full border-0 bg-transparent p-0 text-sm font-medium text-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
@@ -361,13 +371,13 @@ export function EvaluationForm() {
                   <Segmented
                     label="Vasos Principais"
                     options={[
-                      { label: "0", value: 0 },
-                      { label: "1", value: 1 },
-                      { label: "2", value: 2 },
-                      { label: "3", value: 3 },
+                      { label: '0', value: 0 },
+                      { label: '1', value: 1 },
+                      { label: '2', value: 2 },
+                      { label: '3', value: 3 },
                     ]}
                     value={values.ca}
-                    onChange={(v) => setValue("ca", v as number)}
+                    onChange={(v) => setValue('ca', v as number)}
                   />
                 </div>
               </div>
@@ -420,8 +430,8 @@ export function EvaluationForm() {
                   onClick={() => setSelectedModel(model)}
                   className={`flex items-center gap-2.5 rounded-xl px-3 py-[11px] transition-all ${
                     selectedModel?.name === model.name
-                      ? "border border-primary bg-primary/10"
-                      : "border border-border bg-muted"
+                      ? 'border border-primary bg-primary/10'
+                      : 'border border-border bg-muted'
                   }`}
                 >
                   <div className="flex flex-1 flex-col items-start gap-[1px]">
@@ -452,8 +462,8 @@ export function EvaluationForm() {
             >
               <Sparkles className="h-[18px] w-[18px]" />
               {createEvaluation.isPending
-                ? "Processando..."
-                : "Executar Predição"}
+                ? 'Processando...'
+                : 'Executar Predição'}
             </button>
           </div>
 
@@ -479,23 +489,23 @@ export function EvaluationForm() {
               {[
                 {
                   icon: HeartPulse,
-                  title: "Tipo de Dor Torácica",
-                  desc: "Típica, atípica, não anginosa ou assintomática",
+                  title: 'Tipo de Dor Torácica',
+                  desc: 'Típica, atípica, não anginosa ou assintomática',
                 },
                 {
                   icon: HeartPulse,
-                  title: "Eletrocardiograma",
-                  desc: "Normal, ST-T ou hipertrofia",
+                  title: 'Eletrocardiograma',
+                  desc: 'Normal, ST-T ou hipertrofia',
                 },
                 {
                   icon: Activity,
-                  title: "Inclinação ST",
-                  desc: "Ascendente, plano ou descendente",
+                  title: 'Inclinação ST',
+                  desc: 'Ascendente, plano ou descendente',
                 },
                 {
                   icon: Activity,
-                  title: "Talassemia",
-                  desc: "Normal, defeito fixo ou reversível",
+                  title: 'Talassemia',
+                  desc: 'Normal, defeito fixo ou reversível',
                 },
               ].map((item) => (
                 <div key={item.title} className="flex gap-3">

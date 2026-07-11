@@ -44,7 +44,10 @@ cp .env.example .env
 | `dev` | Servidor dev (HMR) |
 | `build` | Compila TS + build produção |
 | `preview` | Preview da build |
-| `lint` | ESLint |
+| `lint` | ESLint (código) |
+| `typecheck` | TypeScript type check (sem emitir) |
+| `format` | Prettier — verifica formatação |
+| `format:fix` | Prettier — corrige formatação |
 | `generate:api` | Regenera client Orval do OpenAPI |
 
 ## Estrutura

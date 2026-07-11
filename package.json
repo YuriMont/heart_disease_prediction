@@ -11,10 +11,16 @@
     "db:downgrade": "cd apps/server && uv run alembic downgrade -1",
     "db:current": "cd apps/server && uv run alembic current",
     "db:history": "cd apps/server && uv run alembic history",
-    "lint": "cd apps/server && uv run ruff check",
-    "lint:fix": "cd apps/server && uv run ruff check --fix",
-    "format": "cd apps/server && uv run ruff format",
-    "typecheck": "cd apps/server && uv run pyright"
+    "lint:api": "cd apps/server && uv run ruff check",
+    "lint:web": "cd apps/web && npm run lint",
+    "lint": "npm run lint:api && npm run lint:web",
+    "format:api": "cd apps/server && uv run ruff format",
+    "format:web": "cd apps/web && npm run format",
+    "format:web:fix": "cd apps/web && npm run format:fix",
+    "format": "npm run format:api && npm run format:web",
+    "typecheck:api": "cd apps/server && uv run pyright",
+    "typecheck:web": "cd apps/web && npm run typecheck",
+    "typecheck": "npm run typecheck:api && npm run typecheck:web"
   },
   "workspaces": [
     "apps/*",

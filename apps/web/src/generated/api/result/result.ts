@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -16,16 +16,16 @@ import type {
   UndefinedInitialDataOptions,
   UseQueryOptions,
   UseQueryResult,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
 import type {
   ContributingFactor,
   FeatureImportance,
   HTTPValidationError,
-} from "../../models";
+} from '../../models';
 
-import { api } from "../../../lib/api";
-import type { ErrorType } from "../../../lib/api";
+import { api } from '../../../lib/api';
+import type { ErrorType } from '../../../lib/api';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -37,7 +37,7 @@ const withQueryKey = <T extends object, K>(
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
     // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
+    if (key === 'queryKey') continue;
     Object.defineProperty(result, key, {
       enumerable: true,
       configurable: true,
@@ -56,7 +56,7 @@ export const getFactorsEvaluationsEvaluationIdFactorsGet = (
   signal?: AbortSignal,
 ) => {
   return api<ContributingFactor[]>(
-    { url: `/evaluations/${evaluationId}/factors`, method: "GET", signal },
+    { url: `/evaluations/${evaluationId}/factors`, method: 'GET', signal },
     options,
   );
 };
@@ -144,7 +144,7 @@ export function useGetFactorsEvaluationsEvaluationIdFactorsGet<
             ReturnType<typeof getFactorsEvaluationsEvaluationIdFactorsGet>
           >
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -177,7 +177,7 @@ export function useGetFactorsEvaluationsEvaluationIdFactorsGet<
             ReturnType<typeof getFactorsEvaluationsEvaluationIdFactorsGet>
           >
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -254,7 +254,7 @@ export const getImportanceEvaluationsEvaluationIdImportanceGet = (
   signal?: AbortSignal,
 ) => {
   return api<FeatureImportance[]>(
-    { url: `/evaluations/${evaluationId}/importance`, method: "GET", signal },
+    { url: `/evaluations/${evaluationId}/importance`, method: 'GET', signal },
     options,
   );
 };
@@ -355,7 +355,7 @@ export function useGetImportanceEvaluationsEvaluationIdImportanceGet<
             ReturnType<typeof getImportanceEvaluationsEvaluationIdImportanceGet>
           >
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -390,7 +390,7 @@ export function useGetImportanceEvaluationsEvaluationIdImportanceGet<
             ReturnType<typeof getImportanceEvaluationsEvaluationIdImportanceGet>
           >
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },

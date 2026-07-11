@@ -1,13 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Download, Eye, FileText } from "lucide-react";
-import { Button } from "../../components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/card";
-import { Skeleton } from "../../components/ui/skeleton";
-import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "../../components/ui/empty";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
-import { useListReportsReportsGet } from "../../generated/api/reports/reports";
+import { createFileRoute } from '@tanstack/react-router';
+import { Download, Eye, FileText } from 'lucide-react';
+import { Button } from '../../components/ui/button';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from '../../components/ui/card';
+import { Skeleton } from '../../components/ui/skeleton';
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+} from '../../components/ui/empty';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '../../components/ui/table';
+import { useListReportsReportsGet } from '../../generated/api/reports/reports';
 
-export const Route = createFileRoute("/reports/")({
+export const Route = createFileRoute('/reports/')({
   component: ReportsPage,
 });
 
@@ -17,20 +35,28 @@ function ReportsPage() {
   const reportsEsteMes = reports.filter((r) => {
     const date = new Date(r.created_at);
     const now = new Date();
-    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    return (
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear()
+    );
   }).length;
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Relatórios</h1>
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+            Relatórios
+          </h1>
           <p className="text-sm text-muted-foreground">
             Histórico de relatórios gerados pelo sistema
           </p>
         </div>
         <div className="flex items-center gap-3.5">
-          <Button onClick={() => alert("função não implementada")} className="gap-2">
+          <Button
+            onClick={() => alert('função não implementada')}
+            className="gap-2"
+          >
             <Download className="h-4 w-4" />
             Exportar PDF
           </Button>
@@ -42,13 +68,17 @@ function ReportsPage() {
           <div className="font-mono text-[34px] font-bold tracking-tight text-foreground">
             {reports.length}
           </div>
-          <span className="text-sm text-muted-foreground">Relatórios gerados</span>
+          <span className="text-sm text-muted-foreground">
+            Relatórios gerados
+          </span>
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="font-mono text-[34px] font-bold tracking-tight text-foreground">
             {reportsEsteMes}
           </div>
-          <span className="text-sm text-muted-foreground">Relatórios este mês</span>
+          <span className="text-sm text-muted-foreground">
+            Relatórios este mês
+          </span>
         </div>
       </div>
 
@@ -76,7 +106,8 @@ function ReportsPage() {
                 </EmptyMedia>
                 <EmptyTitle>Nenhum relatório gerado</EmptyTitle>
                 <EmptyDescription>
-                  Os relatórios exportados aparecerão aqui. Realize uma avaliação e exporte o relatório para visualizá-lo.
+                  Os relatórios exportados aparecerão aqui. Realize uma
+                  avaliação e exporte o relatório para visualizá-lo.
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -94,9 +125,11 @@ function ReportsPage() {
                 {reports.map((report) => (
                   <TableRow key={report.id}>
                     <TableCell>{report.title}</TableCell>
-                    <TableCell className="text-muted-foreground">#{report.avaliacao_id}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {new Date(report.created_at).toLocaleDateString("pt-BR")}
+                      #{report.avaliacao_id}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {new Date(report.created_at).toLocaleDateString('pt-BR')}
                     </TableCell>
                     <TableCell>
                       <Button variant="ghost" size="icon" className="h-8 w-8">

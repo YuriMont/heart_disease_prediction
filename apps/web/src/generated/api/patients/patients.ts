@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -19,7 +19,7 @@ import type {
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
 import type {
   EvaluationCreate,
@@ -27,10 +27,10 @@ import type {
   HTTPValidationError,
   PatientCreate,
   PatientResponse,
-} from "../../models";
+} from '../../models';
 
-import { api } from "../../../lib/api";
-import type { ErrorType, BodyType } from "../../../lib/api";
+import { api } from '../../../lib/api';
+import type { ErrorType, BodyType } from '../../../lib/api';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -42,7 +42,7 @@ const withQueryKey = <T extends object, K>(
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
     // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
+    if (key === 'queryKey') continue;
     Object.defineProperty(result, key, {
       enumerable: true,
       configurable: true,
@@ -60,7 +60,7 @@ export const listPatientsPatientsGet = (
   signal?: AbortSignal,
 ) => {
   return api<PatientResponse[]>(
-    { url: `/patients`, method: "GET", signal },
+    { url: `/patients`, method: 'GET', signal },
     options,
   );
 };
@@ -121,7 +121,7 @@ export function useListPatientsPatientsGet<
           TError,
           Awaited<ReturnType<typeof listPatientsPatientsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -147,7 +147,7 @@ export function useListPatientsPatientsGet<
           TError,
           Awaited<ReturnType<typeof listPatientsPatientsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -216,8 +216,8 @@ export const createPatientPatientsPost = (
   return api<PatientResponse>(
     {
       url: `/patients`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       data: patientCreate,
       signal,
     },
@@ -242,10 +242,10 @@ export const getCreatePatientPatientsPostMutationOptions = <
   { data: BodyType<PatientCreate> },
   TContext
 > => {
-  const mutationKey = ["createPatientPatientsPost"];
+  const mutationKey = ['createPatientPatientsPost'];
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
-      "mutationKey" in options.mutation &&
+      'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
@@ -307,7 +307,7 @@ export const getPatientPatientsPatientIdGet = (
   signal?: AbortSignal,
 ) => {
   return api<PatientResponse>(
-    { url: `/patients/${patientId}`, method: "GET", signal },
+    { url: `/patients/${patientId}`, method: 'GET', signal },
     options,
   );
 };
@@ -382,7 +382,7 @@ export function useGetPatientPatientsPatientIdGet<
           TError,
           Awaited<ReturnType<typeof getPatientPatientsPatientIdGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -409,7 +409,7 @@ export function useGetPatientPatientsPatientIdGet<
           TError,
           Awaited<ReturnType<typeof getPatientPatientsPatientIdGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -480,7 +480,7 @@ export const listEvaluationsEvaluationsGet = (
   signal?: AbortSignal,
 ) => {
   return api<EvaluationResponse[]>(
-    { url: `/evaluations`, method: "GET", signal },
+    { url: `/evaluations`, method: 'GET', signal },
     options,
   );
 };
@@ -541,7 +541,7 @@ export function useListEvaluationsEvaluationsGet<
           TError,
           Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -567,7 +567,7 @@ export function useListEvaluationsEvaluationsGet<
           TError,
           Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -636,8 +636,8 @@ export const createEvaluationEvaluationsPost = (
   return api<EvaluationResponse>(
     {
       url: `/evaluations`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       data: evaluationCreate,
       signal,
     },
@@ -662,10 +662,10 @@ export const getCreateEvaluationEvaluationsPostMutationOptions = <
   { data: BodyType<EvaluationCreate> },
   TContext
 > => {
-  const mutationKey = ["createEvaluationEvaluationsPost"];
+  const mutationKey = ['createEvaluationEvaluationsPost'];
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
-      "mutationKey" in options.mutation &&
+      'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
@@ -728,7 +728,7 @@ export const getEvaluationEvaluationsEvaluationIdGet = (
   signal?: AbortSignal,
 ) => {
   return api<EvaluationResponse>(
-    { url: `/evaluations/${evaluationId}`, method: "GET", signal },
+    { url: `/evaluations/${evaluationId}`, method: 'GET', signal },
     options,
   );
 };
@@ -807,7 +807,7 @@ export function useGetEvaluationEvaluationsEvaluationIdGet<
           TError,
           Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -834,7 +834,7 @@ export function useGetEvaluationEvaluationsEvaluationIdGet<
           TError,
           Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },

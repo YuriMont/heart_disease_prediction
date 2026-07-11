@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -16,10 +16,10 @@ import type {
   UndefinedInitialDataOptions,
   UseQueryOptions,
   UseQueryResult,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
-import { api } from "../../../lib/api";
-import type { ErrorType } from "../../../lib/api";
+import { api } from '../../../lib/api';
+import type { ErrorType } from '../../../lib/api';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -31,7 +31,7 @@ const withQueryKey = <T extends object, K>(
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
     // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
+    if (key === 'queryKey') continue;
     Object.defineProperty(result, key, {
       enumerable: true,
       configurable: true,
@@ -48,7 +48,7 @@ export const homeGet = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<unknown>({ url: `/`, method: "GET", signal }, options);
+  return api<unknown>({ url: `/`, method: 'GET', signal }, options);
 };
 
 export const getHomeGetQueryKey = () => {
@@ -98,7 +98,7 @@ export function useHomeGet<
           TError,
           Awaited<ReturnType<typeof homeGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },
@@ -120,7 +120,7 @@ export function useHomeGet<
           TError,
           Awaited<ReturnType<typeof homeGet>>
         >,
-        "initialData"
+        'initialData'
       >;
     request?: SecondParameter<typeof api>;
   },

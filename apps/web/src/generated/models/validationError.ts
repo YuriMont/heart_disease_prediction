@@ -5,7 +5,7 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
-import type { ValidationErrorCtx } from "./validationErrorCtx";
+import type { ValidationErrorCtx } from './validationErrorCtx';
 
 export interface ValidationError {
   loc: (string | number)[];
