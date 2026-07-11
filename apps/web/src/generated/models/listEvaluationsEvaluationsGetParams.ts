@@ -23,7 +23,7 @@ export type ListEvaluationsEvaluationsGetParams = {
    */
   patient_name?: string | null;
   /**
-   * Filtrar por resultado (doença/saudável)
+   * Filtrar por resultado (true = doença, false = saudável)
    */
   has_disease?: boolean | null;
   /**

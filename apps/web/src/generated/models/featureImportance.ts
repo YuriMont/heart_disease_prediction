@@ -7,6 +7,8 @@
  */
 
 export interface FeatureImportance {
+  /** Nome da variável clínica */
   variable: string;
+  /** Peso da variável no modelo de ML (importância relativa) */
   weight: number;
 }

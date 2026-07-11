@@ -51,7 +51,8 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * @summary List Reports
+ * Retorna todos os relatórios exportados, ordenados do mais recente para o mais antigo.
+ * @summary Listar relatórios
  */
 export const listReportsReportsGet = (
   options?: SecondParameter<typeof api>,
@@ -171,7 +172,7 @@ export function useListReportsReportsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary List Reports
+ * @summary Listar relatórios
  */
 
 export function useListReportsReportsGet<
@@ -203,7 +204,8 @@ export function useListReportsReportsGet<
 }
 
 /**
- * @summary Get Report
+ * Retorna os dados de um relatório específico pelo seu identificador único.
+ * @summary Obter relatório por ID
  */
 export const getReportReportsReportIdGet = (
   reportId: string,
@@ -338,7 +340,7 @@ export function useGetReportReportsReportIdGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get Report
+ * @summary Obter relatório por ID
  */
 
 export function useGetReportReportsReportIdGet<
@@ -374,7 +376,8 @@ export function useGetReportReportsReportIdGet<
 }
 
 /**
- * @summary Export Report
+ * Gera e exporta um relatório textual com os resultados de uma avaliação de risco cardíaco. Se o relatório já existir, retorna o existente.
+ * @summary Exportar relatório de avaliação
  */
 export const exportReportReportsExportPost = (
   reportExport: BodyType<ReportExport>,
@@ -439,7 +442,7 @@ export type ExportReportReportsExportPostMutationError =
   ErrorType<HTTPValidationError>;
 
 /**
- * @summary Export Report
+ * @summary Exportar relatório de avaliação
  */
 export const useExportReportReportsExportPost = <
   TError = ErrorType<HTTPValidationError>,

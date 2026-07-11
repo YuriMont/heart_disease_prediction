@@ -22,11 +22,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
-  EvaluationCreate,
-  EvaluationListResponse,
-  EvaluationResponse,
   HTTPValidationError,
-  ListEvaluationsEvaluationsGetParams,
   ListPatientsPatientsGetParams,
   PatientCreate,
   PatientListResponse,
@@ -57,7 +53,8 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * @summary Create Patient
+ * Cria um novo paciente no sistema com nome, idade e sexo para posterior avaliação de risco cardíaco.
+ * @summary Cadastrar paciente
  */
 export const createPatientPatientsPost = (
   patientCreate: BodyType<PatientCreate>,
@@ -122,7 +119,7 @@ export type CreatePatientPatientsPostMutationError =
   ErrorType<HTTPValidationError>;
 
 /**
- * @summary Create Patient
+ * @summary Cadastrar paciente
  */
 export const useCreatePatientPatientsPost = <
   TError = ErrorType<HTTPValidationError>,
@@ -150,7 +147,8 @@ export const useCreatePatientPatientsPost = <
   );
 };
 /**
- * @summary List Patients
+ * Retorna a lista de pacientes cadastrados com paginação e filtros opcionais por nome e sexo.
+ * @summary Listar pacientes
  */
 export const listPatientsPatientsGet = (
   params?: ListPatientsPatientsGetParams,
@@ -280,7 +278,7 @@ export function useListPatientsPatientsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary List Patients
+ * @summary Listar pacientes
  */
 
 export function useListPatientsPatientsGet<
@@ -313,7 +311,8 @@ export function useListPatientsPatientsGet<
 }
 
 /**
- * @summary Get Patient
+ * Retorna os dados de um paciente específico pelo seu identificador único.
+ * @summary Obter paciente por ID
  */
 export const getPatientPatientsPatientIdGet = (
   patientId: string,
@@ -451,7 +450,7 @@ export function useGetPatientPatientsPatientIdGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get Patient
+ * @summary Obter paciente por ID
  */
 
 export function useGetPatientPatientsPatientIdGet<
@@ -475,446 +474,6 @@ export function useGetPatientPatientsPatientIdGet<
 } {
   const queryOptions = getGetPatientPatientsPatientIdGetQueryOptions(
     patientId,
-    options,
-  );
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-/**
- * @summary Create Evaluation
- */
-export const createEvaluationEvaluationsPost = (
-  evaluationCreate: BodyType<EvaluationCreate>,
-  options?: SecondParameter<typeof api>,
-  signal?: AbortSignal,
-) => {
-  return api<EvaluationResponse>(
-    {
-      url: `/evaluations`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: evaluationCreate,
-      signal,
-    },
-    options,
-  );
-};
-
-export const getCreateEvaluationEvaluationsPostMutationOptions = <
-  TError = ErrorType<HTTPValidationError>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createEvaluationEvaluationsPost>>,
-    TError,
-    { data: BodyType<EvaluationCreate> },
-    TContext
-  >;
-  request?: SecondParameter<typeof api>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof createEvaluationEvaluationsPost>>,
-  TError,
-  { data: BodyType<EvaluationCreate> },
-  TContext
-> => {
-  const mutationKey = ['createEvaluationEvaluationsPost'];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof createEvaluationEvaluationsPost>>,
-    { data: BodyType<EvaluationCreate> }
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return createEvaluationEvaluationsPost(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type CreateEvaluationEvaluationsPostMutationResult = NonNullable<
-  Awaited<ReturnType<typeof createEvaluationEvaluationsPost>>
->;
-export type CreateEvaluationEvaluationsPostMutationBody =
-  BodyType<EvaluationCreate>;
-export type CreateEvaluationEvaluationsPostMutationError =
-  ErrorType<HTTPValidationError>;
-
-/**
- * @summary Create Evaluation
- */
-export const useCreateEvaluationEvaluationsPost = <
-  TError = ErrorType<HTTPValidationError>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof createEvaluationEvaluationsPost>>,
-      TError,
-      { data: BodyType<EvaluationCreate> },
-      TContext
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof createEvaluationEvaluationsPost>>,
-  TError,
-  { data: BodyType<EvaluationCreate> },
-  TContext
-> => {
-  return useMutation(
-    getCreateEvaluationEvaluationsPostMutationOptions(options),
-    queryClient,
-  );
-};
-/**
- * @summary List Evaluations
- */
-export const listEvaluationsEvaluationsGet = (
-  params?: ListEvaluationsEvaluationsGetParams,
-  options?: SecondParameter<typeof api>,
-  signal?: AbortSignal,
-) => {
-  return api<EvaluationListResponse>(
-    { url: `/evaluations`, method: 'GET', params, signal },
-    options,
-  );
-};
-
-export const getListEvaluationsEvaluationsGetQueryKey = (
-  params?: ListEvaluationsEvaluationsGetParams,
-) => {
-  return [`/evaluations`, ...(params ? [params] : [])] as const;
-};
-
-export const getListEvaluationsEvaluationsGetQueryOptions = <
-  TData = Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  params?: ListEvaluationsEvaluationsGetParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
-
-  const queryKey =
-    queryOptions?.queryKey ?? getListEvaluationsEvaluationsGetQueryKey(params);
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>
-  > = ({ signal }) =>
-    listEvaluationsEvaluationsGet(params, requestOptions, signal);
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type ListEvaluationsEvaluationsGetQueryResult = NonNullable<
-  Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>
->;
-export type ListEvaluationsEvaluationsGetQueryError =
-  ErrorType<HTTPValidationError>;
-
-export function useListEvaluationsEvaluationsGet<
-  TData = Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  params: undefined | ListEvaluationsEvaluationsGetParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-          TError,
-          Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useListEvaluationsEvaluationsGet<
-  TData = Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  params?: ListEvaluationsEvaluationsGetParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-          TError,
-          Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useListEvaluationsEvaluationsGet<
-  TData = Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  params?: ListEvaluationsEvaluationsGetParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-/**
- * @summary List Evaluations
- */
-
-export function useListEvaluationsEvaluationsGet<
-  TData = Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  params?: ListEvaluationsEvaluationsGetParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listEvaluationsEvaluationsGet>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getListEvaluationsEvaluationsGetQueryOptions(
-    params,
-    options,
-  );
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-/**
- * @summary Get Evaluation
- */
-export const getEvaluationEvaluationsEvaluationIdGet = (
-  evaluationId: string,
-  options?: SecondParameter<typeof api>,
-  signal?: AbortSignal,
-) => {
-  return api<EvaluationResponse>(
-    { url: `/evaluations/${evaluationId}`, method: 'GET', signal },
-    options,
-  );
-};
-
-export const getGetEvaluationEvaluationsEvaluationIdGetQueryKey = (
-  evaluationId: string,
-) => {
-  return [`/evaluations/${evaluationId}`] as const;
-};
-
-export const getGetEvaluationEvaluationsEvaluationIdGetQueryOptions = <
-  TData = Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  evaluationId: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
-
-  const queryKey =
-    queryOptions?.queryKey ??
-    getGetEvaluationEvaluationsEvaluationIdGetQueryKey(evaluationId);
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>
-  > = ({ signal }) =>
-    getEvaluationEvaluationsEvaluationIdGet(
-      evaluationId,
-      requestOptions,
-      signal,
-    );
-
-  return {
-    queryKey,
-    queryFn,
-    enabled: evaluationId !== null && evaluationId !== undefined,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type GetEvaluationEvaluationsEvaluationIdGetQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>
->;
-export type GetEvaluationEvaluationsEvaluationIdGetQueryError =
-  ErrorType<HTTPValidationError>;
-
-export function useGetEvaluationEvaluationsEvaluationIdGet<
-  TData = Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  evaluationId: string,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-          TError,
-          Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetEvaluationEvaluationsEvaluationIdGet<
-  TData = Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  evaluationId: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-          TError,
-          Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>
-        >,
-        'initialData'
-      >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetEvaluationEvaluationsEvaluationIdGet<
-  TData = Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  evaluationId: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-/**
- * @summary Get Evaluation
- */
-
-export function useGetEvaluationEvaluationsEvaluationIdGet<
-  TData = Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-  TError = ErrorType<HTTPValidationError>,
->(
-  evaluationId: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getEvaluationEvaluationsEvaluationIdGet>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof api>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getGetEvaluationEvaluationsEvaluationIdGetQueryOptions(
-    evaluationId,
     options,
   );
 

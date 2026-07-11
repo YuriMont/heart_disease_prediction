@@ -7,7 +7,10 @@
  */
 
 export interface ModelUpdate {
+  /** Novo nome interno do modelo */
   name?: string | null;
+  /** Nova descrição legível do modelo */
   description?: string | null;
+  /** Ativar ou desativar o modelo para predição */
   active?: boolean | null;
 }

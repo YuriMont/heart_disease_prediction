@@ -8,45 +8,56 @@
 import * as zod from 'zod';
 
 /**
- * @summary List Reports
+ * Retorna todos os relatórios exportados, ordenados do mais recente para o mais antigo.
+ * @summary Listar relatórios
  */
 export const ListReportsReportsGetResponseItem = zod.object({
-  id: zod.uuid(),
-  avaliacao_id: zod.uuid(),
-  title: zod.string(),
-  content: zod.string(),
-  created_at: zod.iso.datetime({ offset: true }),
+  id: zod.uuid().describe('Identificador único do relatório'),
+  avaliacao_id: zod.uuid().describe('ID da avaliação associada'),
+  title: zod.string().describe('Título do relatório'),
+  content: zod.string().describe('Conteúdo textual do relatório'),
+  created_at: zod.iso
+    .datetime({ offset: true })
+    .describe('Data de criação do relatório'),
 });
 export const ListReportsReportsGetResponse = zod.array(
   ListReportsReportsGetResponseItem,
 );
 
 /**
- * @summary Get Report
+ * Retorna os dados de um relatório específico pelo seu identificador único.
+ * @summary Obter relatório por ID
  */
 export const GetReportReportsReportIdGetParams = zod.object({
   report_id: zod.uuid(),
 });
 
 export const GetReportReportsReportIdGetResponse = zod.object({
-  id: zod.uuid(),
-  avaliacao_id: zod.uuid(),
-  title: zod.string(),
-  content: zod.string(),
-  created_at: zod.iso.datetime({ offset: true }),
+  id: zod.uuid().describe('Identificador único do relatório'),
+  avaliacao_id: zod.uuid().describe('ID da avaliação associada'),
+  title: zod.string().describe('Título do relatório'),
+  content: zod.string().describe('Conteúdo textual do relatório'),
+  created_at: zod.iso
+    .datetime({ offset: true })
+    .describe('Data de criação do relatório'),
 });
 
 /**
- * @summary Export Report
+ * Gera e exporta um relatório textual com os resultados de uma avaliação de risco cardíaco. Se o relatório já existir, retorna o existente.
+ * @summary Exportar relatório de avaliação
  */
 export const ExportReportReportsExportPostBody = zod.object({
-  avaliacao_id: zod.uuid(),
+  avaliacao_id: zod
+    .uuid()
+    .describe('ID da avaliação para exportar o relatório'),
 });
 
 export const ExportReportReportsExportPostResponse = zod.object({
-  id: zod.uuid(),
-  avaliacao_id: zod.uuid(),
-  title: zod.string(),
-  content: zod.string(),
-  created_at: zod.iso.datetime({ offset: true }),
+  id: zod.uuid().describe('Identificador único do relatório'),
+  avaliacao_id: zod.uuid().describe('ID da avaliação associada'),
+  title: zod.string().describe('Título do relatório'),
+  content: zod.string().describe('Conteúdo textual do relatório'),
+  created_at: zod.iso
+    .datetime({ offset: true })
+    .describe('Data de criação do relatório'),
 });

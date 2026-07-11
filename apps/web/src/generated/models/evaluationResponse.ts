@@ -7,25 +7,46 @@
  */
 
 export interface EvaluationResponse {
+  /** Identificador único da avaliação */
   id: string;
+  /** ID do paciente avaliado */
   paciente_id: string;
-  patient_name: string | null;
+  /** Nome do paciente (se disponível) */
+  patient_name?: string | null;
+  /** Idade em anos */
   age: number;
+  /** Sexo: 1 = masculino, 0 = feminino */
   sex: number;
+  /** Tipo de dor no peito (1-4) */
   cp: number;
+  /** Pressão arterial em repouso (mm Hg) */
   trestbps: number;
+  /** Colesterol sérico (mg/dl) */
   chol: number;
+  /** Glicemia em jejum > 120 mg/dl (1 = sim) */
   fbs: number;
+  /** Eletrocardiograma em repouso (0 = normal, 1 = ST-T, 2 = hipertrofia) */
   restecg: number;
+  /** Frequência cardíaca máxima atingida */
   thalach: number;
+  /** Angina induzida por exercício (1 = sim, 0 = não) */
   exang: number;
+  /** Depressão do segmento ST no exercício (mm) */
   oldpeak: number;
+  /** Inclinação do segmento ST (1 = ascendente, 2 = plano, 3 = descendente) */
   slope: number;
+  /** Número de vasos principais coloridos (0-3) */
   ca: number;
+  /** Talassemia: 3 = normal, 6 = defeito fixo, 7 = defeito reversível */
   thal: number;
+  /** Nome do modelo de IA utilizado */
   model_used: string;
+  /** Se o modelo detectou probabilidade de doença cardíaca */
   has_disease: boolean;
+  /** Probabilidade de doença cardíaca (0.0 a 1.0) */
   disease_probability: number;
+  /** Texto explicativo do resultado */
   result_text: string;
+  /** Data e hora da avaliação */
   created_at: string;
 }

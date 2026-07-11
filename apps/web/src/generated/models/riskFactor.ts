@@ -7,7 +7,10 @@
  */
 
 export interface RiskFactor {
+  /** Nome completo do fator de risco */
   name: string;
+  /** Nome abreviado do fator de risco */
   short_name: string;
+  /** Peso/importância do fator no modelo */
   weight: number;
 }

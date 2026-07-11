@@ -7,8 +7,12 @@
  */
 
 export interface PaginationMeta {
+  /** Total de registros */
   total: number;
+  /** Página atual */
   page: number;
+  /** Itens por página */
   limit: number;
+  /** Total de páginas */
   total_pages: number;
 }

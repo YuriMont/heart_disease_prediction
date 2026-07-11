@@ -7,5 +7,6 @@
  */
 
 export interface ReportExport {
+  /** ID da avaliação para exportar o relatório */
   avaliacao_id: string;
 }

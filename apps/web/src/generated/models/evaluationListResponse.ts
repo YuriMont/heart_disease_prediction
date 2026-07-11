@@ -9,6 +9,8 @@ import type { EvaluationResponse } from './evaluationResponse';
 import type { PaginationMeta } from './paginationMeta';
 
 export interface EvaluationListResponse {
+  /** Lista de itens da página atual */
   data: EvaluationResponse[];
+  /** Metadados de paginação */
   meta: PaginationMeta;
 }

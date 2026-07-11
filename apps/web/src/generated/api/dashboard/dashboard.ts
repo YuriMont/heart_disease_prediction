@@ -50,7 +50,8 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * @summary Get Stats
+ * Retorna o total de avaliações realizadas e a distribuição por nível de risco (baixo, médio, alto).
+ * @summary Estatísticas do dashboard
  */
 export const getStatsDashboardStatsGet = (
   options?: SecondParameter<typeof api>,
@@ -171,7 +172,7 @@ export function useGetStatsDashboardStatsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get Stats
+ * @summary Estatísticas do dashboard
  */
 
 export function useGetStatsDashboardStatsGet<
@@ -203,7 +204,8 @@ export function useGetStatsDashboardStatsGet<
 }
 
 /**
- * @summary Get Risk Distribution
+ * Retorna a distribuição percentual dos pacientes por nível de risco (baixo, médio, alto). Cache de 5 minutos.
+ * @summary Distribuição de risco
  */
 export const getRiskDistributionDashboardRisksGet = (
   options?: SecondParameter<typeof api>,
@@ -325,7 +327,7 @@ export function useGetRiskDistributionDashboardRisksGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get Risk Distribution
+ * @summary Distribuição de risco
  */
 
 export function useGetRiskDistributionDashboardRisksGet<
@@ -358,7 +360,8 @@ export function useGetRiskDistributionDashboardRisksGet<
 }
 
 /**
- * @summary Get Risk Factors
+ * Retorna os fatores de risco mais relevantes calculados a partir de todas as avaliações. Se um model_id for informado, usa o modelo específico; caso contrário, usa o modelo ativo com maior acurácia. Cache de 5 minutos.
+ * @summary Fatores de risco agregados
  */
 export const getRiskFactorsDashboardFactorsGet = (
   params?: GetRiskFactorsDashboardFactorsGetParams,
@@ -491,7 +494,7 @@ export function useGetRiskFactorsDashboardFactorsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get Risk Factors
+ * @summary Fatores de risco agregados
  */
 
 export function useGetRiskFactorsDashboardFactorsGet<

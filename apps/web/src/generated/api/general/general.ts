@@ -42,7 +42,8 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * @summary Home
+ * Retorna o status da API CardioPredict, lista os modelos disponíveis e links para documentação.
+ * @summary Página inicial da API
  */
 export const homeGet = (
   options?: SecondParameter<typeof api>,
@@ -143,7 +144,7 @@ export function useHomeGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Home
+ * @summary Página inicial da API
  */
 
 export function useHomeGet<

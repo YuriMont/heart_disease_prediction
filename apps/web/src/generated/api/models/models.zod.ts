@@ -8,52 +8,64 @@
 import * as zod from 'zod';
 
 /**
- * @summary List Models
+ * Retorna todos os modelos de IA disponíveis que estão ativos para predição de risco cardíaco.
+ * @summary Listar modelos ativos
  */
 export const ListModelsModelsGetResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string(),
-  description: zod.string(),
-  active: zod.boolean(),
+  id: zod.string().describe('Identificador único do modelo'),
+  name: zod.string().describe('Nome interno do modelo'),
+  description: zod.string().describe('Descrição legível do modelo'),
+  active: zod.boolean().describe('Se o modelo está ativo para predição'),
 });
 export const ListModelsModelsGetResponse = zod.array(
   ListModelsModelsGetResponseItem,
 );
 
 /**
- * @summary Get Metrics
+ * Retorna as métricas de desempenho (acurácia, precisão, recall, F1-Score, AUC-ROC) de um modelo específico treinado.
+ * @summary Métricas de desempenho do modelo
  */
 export const GetMetricsModelsModelIdMetricsGetParams = zod.object({
   model_id: zod.string(),
 });
 
 export const GetMetricsModelsModelIdMetricsGetResponse = zod.object({
-  id: zod.string(),
-  name: zod.string(),
-  accuracy: zod.number(),
-  precision: zod.number(),
-  recall: zod.number(),
-  f1_score: zod.number(),
-  auc_roc: zod.number(),
-  updated_at: zod.string(),
+  id: zod.string().describe('Identificador único do modelo'),
+  name: zod.string().describe('Nome interno do modelo'),
+  accuracy: zod.number().describe('Acurácia do modelo'),
+  precision: zod.number().describe('Precisão do modelo'),
+  recall: zod.number().describe('Recall (sensibilidade) do modelo'),
+  f1_score: zod.number().describe('F1-Score do modelo'),
+  auc_roc: zod.number().describe('AUC-ROC do modelo'),
+  updated_at: zod.string().describe('Data da última atualização das métricas'),
 });
 
 /**
- * @summary Update Model
+ * Atualiza as configurações de um modelo existente: nome, descrição ou status ativo/inativo.
+ * @summary Atualizar modelo
  */
 export const UpdateModelModelsModelIdPatchParams = zod.object({
   model_id: zod.string(),
 });
 
 export const UpdateModelModelsModelIdPatchBody = zod.object({
-  name: zod.union([zod.string(), zod.null()]).optional(),
-  description: zod.union([zod.string(), zod.null()]).optional(),
-  active: zod.union([zod.boolean(), zod.null()]).optional(),
+  name: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Novo nome interno do modelo'),
+  description: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Nova descrição legível do modelo'),
+  active: zod
+    .union([zod.boolean(), zod.null()])
+    .optional()
+    .describe('Ativar ou desativar o modelo para predição'),
 });
 
 export const UpdateModelModelsModelIdPatchResponse = zod.object({
-  id: zod.string(),
-  name: zod.string(),
-  description: zod.string(),
-  active: zod.boolean(),
+  id: zod.string().describe('Identificador único do modelo'),
+  name: zod.string().describe('Nome interno do modelo'),
+  description: zod.string().describe('Descrição legível do modelo'),
+  active: zod.boolean().describe('Se o modelo está ativo para predição'),
 });

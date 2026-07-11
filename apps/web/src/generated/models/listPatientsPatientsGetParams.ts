@@ -19,11 +19,11 @@ export type ListPatientsPatientsGetParams = {
    */
   limit?: number;
   /**
-   * Filtrar por nome
+   * Filtrar por nome do paciente
    */
   name?: string | null;
   /**
-   * Filtrar por sexo
+   * Filtrar por sexo (1 = masculino, 0 = feminino)
    */
   sex?: number | null;
 };

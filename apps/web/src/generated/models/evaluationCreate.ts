@@ -10,58 +10,75 @@ export interface EvaluationCreate {
   /** ID do paciente */
   paciente_id: string;
   /**
+   * Idade em anos
    * @minimum 1
    * @maximum 120
    */
   age: number;
   /**
+   * Sexo: 1 = masculino, 0 = feminino
    * @minimum 0
    * @maximum 1
    */
   sex: number;
   /**
+   * Tipo de dor no peito (1 = angina típica, 2 = angina atípica, 3 = dor não anginosa, 4 = assintomático)
    * @minimum 1
    * @maximum 4
    */
   cp: number;
-  /** @exclusiveMinimum 0 */
+  /**
+   * Pressão arterial em repouso (mm Hg)
+   * @exclusiveMinimum 0
+   */
   trestbps: number;
-  /** @exclusiveMinimum 0 */
+  /**
+   * Colesterol sérico (mg/dl)
+   * @exclusiveMinimum 0
+   */
   chol: number;
   /**
+   * Glicemia em jejum > 120 mg/dl (1 = sim, 0 = não)
    * @minimum 0
    * @maximum 1
    */
   fbs: number;
   /**
+   * Resultados do eletrocardiograma em repouso (0 = normal, 1 = anormalidade ST-T, 2 = hipertrofia ventricular esquerda)
    * @minimum 0
    * @maximum 2
    */
   restecg: number;
-  /** @exclusiveMinimum 0 */
+  /**
+   * Frequência cardíaca máxima atingida
+   * @exclusiveMinimum 0
+   */
   thalach: number;
   /**
+   * Angina induzida por exercício (1 = sim, 0 = não)
    * @minimum 0
    * @maximum 1
    */
   exang: number;
-  /** @minimum 0 */
+  /**
+   * Depressão do segmento ST induzida por exercício em relação ao repouso (mm)
+   * @minimum 0
+   */
   oldpeak: number;
   /**
+   * Inclinação do segmento ST no pico do exercício (1 = ascendente, 2 = plano, 3 = descendente)
    * @minimum 1
    * @maximum 3
    */
   slope: number;
   /**
+   * Número de vasos principais coloridos por fluoroscopia (0-3)
    * @minimum 0
    * @maximum 3
    */
   ca: number;
-  /**
-   * @minimum 3
-   * @maximum 7
-   */
+  /** Talassemia: 3 = normal, 6 = defeito fixo, 7 = defeito reversível */
   thal: number;
-  /** ID do modelo de IA */
+  /** ID do modelo de IA para predição */
   model_id: string;
 }

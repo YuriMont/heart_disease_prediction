@@ -7,5 +7,8 @@
  */
 
 export type GetRiskFactorsDashboardFactorsGetParams = {
+  /**
+   * ID do modelo para calcular fatores (opcional)
+   */
   model_id?: string | null;
 };

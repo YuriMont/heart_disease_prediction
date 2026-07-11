@@ -8,7 +8,8 @@
 import * as zod from 'zod';
 
 /**
- * @summary Create Patient
+ * Cria um novo paciente no sistema com nome, idade e sexo para posterior avaliação de risco cardíaco.
+ * @summary Cadastrar paciente
  */
 export const createPatientPatientsPostBodyNameOneMax = 200;
 
@@ -38,15 +39,21 @@ export const CreatePatientPatientsPostBody = zod.object({
 });
 
 export const CreatePatientPatientsPostResponse = zod.object({
-  id: zod.uuid(),
-  name: zod.union([zod.string(), zod.null()]),
-  age: zod.number(),
-  sex: zod.number(),
-  created_at: zod.iso.datetime({ offset: true }),
+  id: zod.uuid().describe('Identificador único do paciente'),
+  name: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Nome do paciente'),
+  age: zod.number().describe('Idade em anos'),
+  sex: zod.number().describe('Sexo: 1 = masculino, 0 = feminino'),
+  created_at: zod.iso
+    .datetime({ offset: true })
+    .describe('Data de cadastro do paciente'),
 });
 
 /**
- * @summary List Patients
+ * Retorna a lista de pacientes cadastrados com paginação e filtros opcionais por nome e sexo.
+ * @summary Listar pacientes
  */
 export const listPatientsPatientsGetQueryPageDefault = 1;
 
@@ -71,7 +78,7 @@ export const ListPatientsPatientsGetQueryParams = zod.object({
   name: zod
     .union([zod.string(), zod.null()])
     .optional()
-    .describe('Filtrar por nome'),
+    .describe('Filtrar por nome do paciente'),
   sex: zod
     .union([
       zod
@@ -81,236 +88,53 @@ export const ListPatientsPatientsGetQueryParams = zod.object({
       zod.null(),
     ])
     .optional()
-    .describe('Filtrar por sexo'),
+    .describe('Filtrar por sexo (1 = masculino, 0 = feminino)'),
 });
 
 export const ListPatientsPatientsGetResponse = zod.object({
-  data: zod.array(
-    zod.object({
-      id: zod.uuid(),
-      name: zod.union([zod.string(), zod.null()]),
-      age: zod.number(),
-      sex: zod.number(),
-      created_at: zod.iso.datetime({ offset: true }),
-    }),
-  ),
-  meta: zod.object({
-    total: zod.number(),
-    page: zod.number(),
-    limit: zod.number(),
-    total_pages: zod.number(),
-  }),
+  data: zod
+    .array(
+      zod.object({
+        id: zod.uuid().describe('Identificador único do paciente'),
+        name: zod
+          .union([zod.string(), zod.null()])
+          .optional()
+          .describe('Nome do paciente'),
+        age: zod.number().describe('Idade em anos'),
+        sex: zod.number().describe('Sexo: 1 = masculino, 0 = feminino'),
+        created_at: zod.iso
+          .datetime({ offset: true })
+          .describe('Data de cadastro do paciente'),
+      }),
+    )
+    .describe('Lista de itens da página atual'),
+  meta: zod
+    .object({
+      total: zod.number().describe('Total de registros'),
+      page: zod.number().describe('Página atual'),
+      limit: zod.number().describe('Itens por página'),
+      total_pages: zod.number().describe('Total de páginas'),
+    })
+    .describe('Metadados de paginação'),
 });
 
 /**
- * @summary Get Patient
+ * Retorna os dados de um paciente específico pelo seu identificador único.
+ * @summary Obter paciente por ID
  */
 export const GetPatientPatientsPatientIdGetParams = zod.object({
   patient_id: zod.uuid(),
 });
 
 export const GetPatientPatientsPatientIdGetResponse = zod.object({
-  id: zod.uuid(),
-  name: zod.union([zod.string(), zod.null()]),
-  age: zod.number(),
-  sex: zod.number(),
-  created_at: zod.iso.datetime({ offset: true }),
-});
-
-/**
- * @summary Create Evaluation
- */
-export const createEvaluationEvaluationsPostBodyAgeMax = 120;
-
-export const createEvaluationEvaluationsPostBodySexMin = 0;
-export const createEvaluationEvaluationsPostBodySexMax = 1;
-
-export const createEvaluationEvaluationsPostBodyCpMax = 4;
-
-export const createEvaluationEvaluationsPostBodyTrestbpsExclusiveMin = 0;
-
-export const createEvaluationEvaluationsPostBodyCholExclusiveMin = 0;
-
-export const createEvaluationEvaluationsPostBodyFbsMin = 0;
-export const createEvaluationEvaluationsPostBodyFbsMax = 1;
-
-export const createEvaluationEvaluationsPostBodyRestecgMin = 0;
-export const createEvaluationEvaluationsPostBodyRestecgMax = 2;
-
-export const createEvaluationEvaluationsPostBodyThalachExclusiveMin = 0;
-
-export const createEvaluationEvaluationsPostBodyExangMin = 0;
-export const createEvaluationEvaluationsPostBodyExangMax = 1;
-
-export const createEvaluationEvaluationsPostBodyOldpeakMin = 0;
-
-export const createEvaluationEvaluationsPostBodySlopeMax = 3;
-
-export const createEvaluationEvaluationsPostBodyCaMin = 0;
-export const createEvaluationEvaluationsPostBodyCaMax = 3;
-
-export const createEvaluationEvaluationsPostBodyThalMin = 3;
-export const createEvaluationEvaluationsPostBodyThalMax = 7;
-
-export const CreateEvaluationEvaluationsPostBody = zod.object({
-  paciente_id: zod.uuid().describe('ID do paciente'),
-  age: zod.number().min(1).max(createEvaluationEvaluationsPostBodyAgeMax),
-  sex: zod
-    .number()
-    .min(createEvaluationEvaluationsPostBodySexMin)
-    .max(createEvaluationEvaluationsPostBodySexMax),
-  cp: zod.number().min(1).max(createEvaluationEvaluationsPostBodyCpMax),
-  trestbps: zod
-    .number()
-    .gt(createEvaluationEvaluationsPostBodyTrestbpsExclusiveMin),
-  chol: zod.number().gt(createEvaluationEvaluationsPostBodyCholExclusiveMin),
-  fbs: zod
-    .number()
-    .min(createEvaluationEvaluationsPostBodyFbsMin)
-    .max(createEvaluationEvaluationsPostBodyFbsMax),
-  restecg: zod
-    .number()
-    .min(createEvaluationEvaluationsPostBodyRestecgMin)
-    .max(createEvaluationEvaluationsPostBodyRestecgMax),
-  thalach: zod
-    .number()
-    .gt(createEvaluationEvaluationsPostBodyThalachExclusiveMin),
-  exang: zod
-    .number()
-    .min(createEvaluationEvaluationsPostBodyExangMin)
-    .max(createEvaluationEvaluationsPostBodyExangMax),
-  oldpeak: zod.number().min(createEvaluationEvaluationsPostBodyOldpeakMin),
-  slope: zod.number().min(1).max(createEvaluationEvaluationsPostBodySlopeMax),
-  ca: zod
-    .number()
-    .min(createEvaluationEvaluationsPostBodyCaMin)
-    .max(createEvaluationEvaluationsPostBodyCaMax),
-  thal: zod
-    .number()
-    .min(createEvaluationEvaluationsPostBodyThalMin)
-    .max(createEvaluationEvaluationsPostBodyThalMax),
-  model_id: zod.string().describe('ID do modelo de IA'),
-});
-
-export const CreateEvaluationEvaluationsPostResponse = zod.object({
-  id: zod.uuid(),
-  paciente_id: zod.uuid(),
-  patient_name: zod.union([zod.string(), zod.null()]),
-  age: zod.number(),
-  sex: zod.number(),
-  cp: zod.number(),
-  trestbps: zod.number(),
-  chol: zod.number(),
-  fbs: zod.number(),
-  restecg: zod.number(),
-  thalach: zod.number(),
-  exang: zod.number(),
-  oldpeak: zod.number(),
-  slope: zod.number(),
-  ca: zod.number(),
-  thal: zod.number(),
-  model_used: zod.string(),
-  has_disease: zod.boolean(),
-  disease_probability: zod.number(),
-  result_text: zod.string(),
-  created_at: zod.iso.datetime({ offset: true }),
-});
-
-/**
- * @summary List Evaluations
- */
-export const listEvaluationsEvaluationsGetQueryPageDefault = 1;
-
-export const listEvaluationsEvaluationsGetQueryLimitDefault = 20;
-export const listEvaluationsEvaluationsGetQueryLimitMax = 100;
-
-export const ListEvaluationsEvaluationsGetQueryParams = zod.object({
-  page: zod
-    .number()
-    .min(1)
-    .default(listEvaluationsEvaluationsGetQueryPageDefault)
-    .describe('Número da página'),
-  limit: zod
-    .number()
-    .min(1)
-    .max(listEvaluationsEvaluationsGetQueryLimitMax)
-    .default(listEvaluationsEvaluationsGetQueryLimitDefault)
-    .describe('Itens por página'),
-  patient_name: zod
+  id: zod.uuid().describe('Identificador único do paciente'),
+  name: zod
     .union([zod.string(), zod.null()])
     .optional()
-    .describe('Filtrar por nome do paciente'),
-  has_disease: zod
-    .union([zod.boolean(), zod.null()])
-    .optional()
-    .describe('Filtrar por resultado (doença\/saudável)'),
-  model_used: zod
-    .union([zod.string(), zod.null()])
-    .optional()
-    .describe('Filtrar por modelo utilizado'),
-});
-
-export const ListEvaluationsEvaluationsGetResponse = zod.object({
-  data: zod.array(
-    zod.object({
-      id: zod.uuid(),
-      paciente_id: zod.uuid(),
-      patient_name: zod.union([zod.string(), zod.null()]),
-      age: zod.number(),
-      sex: zod.number(),
-      cp: zod.number(),
-      trestbps: zod.number(),
-      chol: zod.number(),
-      fbs: zod.number(),
-      restecg: zod.number(),
-      thalach: zod.number(),
-      exang: zod.number(),
-      oldpeak: zod.number(),
-      slope: zod.number(),
-      ca: zod.number(),
-      thal: zod.number(),
-      model_used: zod.string(),
-      has_disease: zod.boolean(),
-      disease_probability: zod.number(),
-      result_text: zod.string(),
-      created_at: zod.iso.datetime({ offset: true }),
-    }),
-  ),
-  meta: zod.object({
-    total: zod.number(),
-    page: zod.number(),
-    limit: zod.number(),
-    total_pages: zod.number(),
-  }),
-});
-
-/**
- * @summary Get Evaluation
- */
-export const GetEvaluationEvaluationsEvaluationIdGetParams = zod.object({
-  evaluation_id: zod.uuid(),
-});
-
-export const GetEvaluationEvaluationsEvaluationIdGetResponse = zod.object({
-  id: zod.uuid(),
-  paciente_id: zod.uuid(),
-  patient_name: zod.union([zod.string(), zod.null()]),
-  age: zod.number(),
-  sex: zod.number(),
-  cp: zod.number(),
-  trestbps: zod.number(),
-  chol: zod.number(),
-  fbs: zod.number(),
-  restecg: zod.number(),
-  thalach: zod.number(),
-  exang: zod.number(),
-  oldpeak: zod.number(),
-  slope: zod.number(),
-  ca: zod.number(),
-  thal: zod.number(),
-  model_used: zod.string(),
-  has_disease: zod.boolean(),
-  disease_probability: zod.number(),
-  result_text: zod.string(),
-  created_at: zod.iso.datetime({ offset: true }),
+    .describe('Nome do paciente'),
+  age: zod.number().describe('Idade em anos'),
+  sex: zod.number().describe('Sexo: 1 = masculino, 0 = feminino'),
+  created_at: zod.iso
+    .datetime({ offset: true })
+    .describe('Data de cadastro do paciente'),
 });

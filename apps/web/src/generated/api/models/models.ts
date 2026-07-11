@@ -52,7 +52,8 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * @summary List Models
+ * Retorna todos os modelos de IA disponíveis que estão ativos para predição de risco cardíaco.
+ * @summary Listar modelos ativos
  */
 export const listModelsModelsGet = (
   options?: SecondParameter<typeof api>,
@@ -169,7 +170,7 @@ export function useListModelsModelsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary List Models
+ * @summary Listar modelos ativos
  */
 
 export function useListModelsModelsGet<
@@ -201,7 +202,8 @@ export function useListModelsModelsGet<
 }
 
 /**
- * @summary Get Metrics
+ * Retorna as métricas de desempenho (acurácia, precisão, recall, F1-Score, AUC-ROC) de um modelo específico treinado.
+ * @summary Métricas de desempenho do modelo
  */
 export const getMetricsModelsModelIdMetricsGet = (
   modelId: string,
@@ -339,7 +341,7 @@ export function useGetMetricsModelsModelIdMetricsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get Metrics
+ * @summary Métricas de desempenho do modelo
  */
 
 export function useGetMetricsModelsModelIdMetricsGet<
@@ -375,7 +377,8 @@ export function useGetMetricsModelsModelIdMetricsGet<
 }
 
 /**
- * @summary Update Model
+ * Atualiza as configurações de um modelo existente: nome, descrição ou status ativo/inativo.
+ * @summary Atualizar modelo
  */
 export const updateModelModelsModelIdPatch = (
   modelId: string,
@@ -441,7 +444,7 @@ export type UpdateModelModelsModelIdPatchMutationError =
   ErrorType<HTTPValidationError>;
 
 /**
- * @summary Update Model
+ * @summary Atualizar modelo
  */
 export const useUpdateModelModelsModelIdPatch = <
   TError = ErrorType<HTTPValidationError>,

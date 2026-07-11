@@ -40,7 +40,7 @@ import {
   TableHead,
   TableCell,
 } from '../../components/ui/table';
-import { useListEvaluationsEvaluationsGet } from '../../generated/api/patients/patients';
+import { useListEvaluationsEvaluationsGet } from '../../generated/api/evaluations/evaluations';
 import { useListModelsModelsGet } from '../../generated/api/models/models';
 import type { ListEvaluationsEvaluationsGetParams } from '../../generated/models/listEvaluationsEvaluationsGetParams';
 import type { EvaluationResponse } from '../../generated/models/evaluationResponse';

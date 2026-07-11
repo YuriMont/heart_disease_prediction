@@ -7,7 +7,7 @@ from fastapi_cache.backends.redis import RedisBackend
 from redis.asyncio import Redis
 
 from api.middleware.redirect import RedirectMiddleware
-from api.routes import dashboard, models, pages, patients, reports, result
+from api.routes import dashboard, evaluations, models, pages, patients, reports
 from database.connection import create_tables
 
 redis: Redis | None = None
@@ -54,6 +54,6 @@ app.add_middleware(RedirectMiddleware)
 app.include_router(pages.router)
 app.include_router(dashboard.router)
 app.include_router(patients.router)
-app.include_router(result.router)
+app.include_router(evaluations.router)
 app.include_router(models.router)
 app.include_router(reports.router)

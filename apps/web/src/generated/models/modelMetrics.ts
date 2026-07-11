@@ -7,12 +7,20 @@
  */
 
 export interface ModelMetrics {
+  /** Identificador único do modelo */
   id: string;
+  /** Nome interno do modelo */
   name: string;
+  /** Acurácia do modelo */
   accuracy: number;
+  /** Precisão do modelo */
   precision: number;
+  /** Recall (sensibilidade) do modelo */
   recall: number;
+  /** F1-Score do modelo */
   f1_score: number;
+  /** AUC-ROC do modelo */
   auc_roc: number;
+  /** Data da última atualização das métricas */
   updated_at: string;
 }

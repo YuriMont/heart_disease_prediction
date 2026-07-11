@@ -9,6 +9,8 @@ import type { PaginationMeta } from './paginationMeta';
 import type { PatientResponse } from './patientResponse';
 
 export interface PatientListResponse {
+  /** Lista de itens da página atual */
   data: PatientResponse[];
+  /** Metadados de paginação */
   meta: PaginationMeta;
 }

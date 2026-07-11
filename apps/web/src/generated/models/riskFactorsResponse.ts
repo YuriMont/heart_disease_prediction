@@ -8,7 +8,10 @@
 import type { RiskFactor } from './riskFactor';
 
 export interface RiskFactorsResponse {
+  /** Nome do modelo utilizado */
   model_name: string;
+  /** Descrição do modelo utilizado */
   model_description: string;
+  /** Lista de fatores de risco agregados */
   factors: RiskFactor[];
 }

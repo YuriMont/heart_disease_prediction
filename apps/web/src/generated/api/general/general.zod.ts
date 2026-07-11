@@ -8,6 +8,7 @@
 import * as zod from 'zod';
 
 /**
- * @summary Home
+ * Retorna o status da API CardioPredict, lista os modelos disponíveis e links para documentação.
+ * @summary Página inicial da API
  */
 export const HomeGetResponse = zod.unknown();

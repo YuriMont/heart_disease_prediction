@@ -7,8 +7,12 @@
  */
 
 export interface ModelInfo {
+  /** Identificador único do modelo */
   id: string;
+  /** Nome interno do modelo */
   name: string;
+  /** Descrição legível do modelo */
   description: string;
+  /** Se o modelo está ativo para predição */
   active: boolean;
 }

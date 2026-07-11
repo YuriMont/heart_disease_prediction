@@ -28,13 +28,13 @@ import {
 } from '../ui/select';
 import {
   useCreateEvaluationEvaluationsPost,
-  useListPatientsPatientsGet,
-} from '../../generated/api/patients/patients';
+} from '../../generated/api/evaluations/evaluations';
+import { useListPatientsPatientsGet } from '../../generated/api/patients/patients';
 import { modelAtom } from '../../store/model';
 import { selectedPatientAtom } from '../../atoms/patient';
 import { useAtom } from 'jotai';
 import { useListModelsModelsGet } from '../../generated/api/models/models';
-import { CreateEvaluationEvaluationsPostBody } from '../../generated/api/patients/patients.zod';
+import { CreateEvaluationEvaluationsPostBody } from '../../generated/api/evaluations/evaluations.zod';
 
 type FormData = z.infer<typeof CreateEvaluationEvaluationsPostBody>;
 

@@ -7,9 +7,14 @@
  */
 
 export interface ReportResponse {
+  /** Identificador único do relatório */
   id: string;
+  /** ID da avaliação associada */
   avaliacao_id: string;
+  /** Título do relatório */
   title: string;
+  /** Conteúdo textual do relatório */
   content: string;
+  /** Data de criação do relatório */
   created_at: string;
 }

@@ -7,7 +7,10 @@
  */
 
 export interface ContributingFactor {
+  /** Nome da variável clínica */
   variable: string;
+  /** Valor atual da variável no paciente */
   value: string;
+  /** Impacto da variável no resultado (positivo = aumenta risco, negativo = diminui risco) */
   impact: number;
 }

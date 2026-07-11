@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft, Download } from 'lucide-react';
-import { useGetEvaluationEvaluationsEvaluationIdGet } from '../../../generated/api/patients/patients';
 import {
+  useGetEvaluationEvaluationsEvaluationIdGet,
   useGetFactorsEvaluationsEvaluationIdFactorsGet,
   useGetImportanceEvaluationsEvaluationIdImportanceGet,
-} from '../../../generated/api/result/result';
+} from '../../../generated/api/evaluations/evaluations';
 import { useExportReportReportsExportPost } from '../../../generated/api/reports/reports';
 import { Button } from '../../../components/ui/button';
 import { Skeleton } from '../../../components/ui/skeleton';

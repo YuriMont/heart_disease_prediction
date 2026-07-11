@@ -7,8 +7,12 @@
  */
 
 export interface DashboardStats {
+  /** Total de avaliações realizadas */
   total_analyses: number;
+  /** Quantidade de pacientes com risco baixo */
   low_risk: number;
+  /** Quantidade de pacientes com risco médio */
   medium_risk: number;
+  /** Quantidade de pacientes com risco alto */
   high_risk: number;
 }

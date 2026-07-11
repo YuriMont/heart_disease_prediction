@@ -7,9 +7,14 @@
  */
 
 export interface PatientResponse {
+  /** Identificador único do paciente */
   id: string;
-  name: string | null;
+  /** Nome do paciente */
+  name?: string | null;
+  /** Idade em anos */
   age: number;
+  /** Sexo: 1 = masculino, 0 = feminino */
   sex: number;
+  /** Data de cadastro do paciente */
   created_at: string;
 }

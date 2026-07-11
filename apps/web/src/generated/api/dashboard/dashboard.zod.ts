@@ -8,42 +8,50 @@
 import * as zod from 'zod';
 
 /**
- * @summary Get Stats
+ * Retorna o total de avaliações realizadas e a distribuição por nível de risco (baixo, médio, alto).
+ * @summary Estatísticas do dashboard
  */
 export const GetStatsDashboardStatsGetResponse = zod.object({
-  total_analyses: zod.number(),
-  low_risk: zod.number(),
-  medium_risk: zod.number(),
-  high_risk: zod.number(),
+  total_analyses: zod.number().describe('Total de avaliações realizadas'),
+  low_risk: zod.number().describe('Quantidade de pacientes com risco baixo'),
+  medium_risk: zod.number().describe('Quantidade de pacientes com risco médio'),
+  high_risk: zod.number().describe('Quantidade de pacientes com risco alto'),
 });
 
 /**
- * @summary Get Risk Distribution
+ * Retorna a distribuição percentual dos pacientes por nível de risco (baixo, médio, alto). Cache de 5 minutos.
+ * @summary Distribuição de risco
  */
 export const GetRiskDistributionDashboardRisksGetResponseItem = zod.object({
-  risk: zod.string(),
-  quantity: zod.number(),
-  percentage: zod.number(),
+  risk: zod.string().describe('Nível de risco: low, medium ou high'),
+  quantity: zod.number().describe('Quantidade de pacientes nessa categoria'),
+  percentage: zod.number().describe('Percentual em relação ao total'),
 });
 export const GetRiskDistributionDashboardRisksGetResponse = zod.array(
   GetRiskDistributionDashboardRisksGetResponseItem,
 );
 
 /**
- * @summary Get Risk Factors
+ * Retorna os fatores de risco mais relevantes calculados a partir de todas as avaliações. Se um model_id for informado, usa o modelo específico; caso contrário, usa o modelo ativo com maior acurácia. Cache de 5 minutos.
+ * @summary Fatores de risco agregados
  */
 export const GetRiskFactorsDashboardFactorsGetQueryParams = zod.object({
-  model_id: zod.union([zod.string(), zod.null()]).optional(),
+  model_id: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('ID do modelo para calcular fatores (opcional)'),
 });
 
 export const GetRiskFactorsDashboardFactorsGetResponse = zod.object({
-  model_name: zod.string(),
-  model_description: zod.string(),
-  factors: zod.array(
-    zod.object({
-      name: zod.string(),
-      short_name: zod.string(),
-      weight: zod.number(),
-    }),
-  ),
+  model_name: zod.string().describe('Nome do modelo utilizado'),
+  model_description: zod.string().describe('Descrição do modelo utilizado'),
+  factors: zod
+    .array(
+      zod.object({
+        name: zod.string().describe('Nome completo do fator de risco'),
+        short_name: zod.string().describe('Nome abreviado do fator de risco'),
+        weight: zod.number().describe('Peso\/importância do fator no modelo'),
+      }),
+    )
+    .describe('Lista de fatores de risco agregados'),
 });

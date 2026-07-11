@@ -7,7 +7,10 @@
  */
 
 export interface RiskDistribution {
+  /** Nível de risco: low, medium ou high */
   risk: string;
+  /** Quantidade de pacientes nessa categoria */
   quantity: number;
+  /** Percentual em relação ao total */
   percentage: number;
 }
