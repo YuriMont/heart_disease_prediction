@@ -59,11 +59,11 @@ class PatientCreate(BaseModel):
 
 
 class PatientResponse(BaseModel):
-    id: UUID
-    name: str | None
-    age: int
-    sex: int
-    created_at: datetime
+    id: UUID = Field(..., description="Identificador único do paciente")
+    name: str | None = Field(None, description="Nome do paciente")
+    age: int = Field(..., description="Idade em anos")
+    sex: int = Field(..., description="Sexo: 1 = masculino, 0 = feminino")
+    created_at: datetime = Field(..., description="Data de cadastro do paciente")
 
     model_config = {"from_attributes": True}
 

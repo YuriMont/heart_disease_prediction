@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
@@ -39,15 +39,27 @@ def _generate_content(evaluation: Evaluation) -> str:
 
 
 class ReportExport(BaseModel):
-    avaliacao_id: UUID
+    avaliacao_id: UUID = Field(..., description="ID da avaliação para exportar o relatório")
 
 
-@router.get("", response_model=list[ReportResponse])
+@router.get(
+    "",
+    response_model=list[ReportResponse],
+    summary="Listar relatórios",
+    description="Retorna todos os relatórios exportados, ordenados do mais recente para o mais antigo.",
+    response_description="Lista de relatórios exportados",
+)
 def list_reports(db: Session = Depends(get_db)):
     return db.query(Report).order_by(Report.created_at.desc()).all()
 
 
-@router.get("/{report_id}", response_model=ReportResponse)
+@router.get(
+    "/{report_id}",
+    response_model=ReportResponse,
+    summary="Obter relatório por ID",
+    description="Retorna os dados de um relatório específico pelo seu identificador único.",
+    response_description="Dados do relatório encontrado",
+)
 def get_report(report_id: UUID, db: Session = Depends(get_db)):
     report = db.query(Report).get(report_id)
     if not report:
@@ -55,7 +67,13 @@ def get_report(report_id: UUID, db: Session = Depends(get_db)):
     return report
 
 
-@router.post("/export", response_model=ReportResponse)
+@router.post(
+    "/export",
+    response_model=ReportResponse,
+    summary="Exportar relatório de avaliação",
+    description="Gera e exporta um relatório textual com os resultados de uma avaliação de risco cardíaco. Se o relatório já existir, retorna o existente.",
+    response_description="Relatório exportado (novo ou já existente)",
+)
 def export_report(data: ReportExport, db: Session = Depends(get_db)):
     evaluation = db.query(Evaluation).get(data.avaliacao_id)
     if not evaluation:

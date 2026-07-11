@@ -24,7 +24,13 @@ def _classify_risk(prob: float) -> str:
     return "high"
 
 
-@router.get("/stats", response_model=DashboardStats)
+@router.get(
+    "/stats",
+    response_model=DashboardStats,
+    summary="Estatísticas do dashboard",
+    description="Retorna o total de avaliações realizadas e a distribuição por nível de risco (baixo, médio, alto).",
+    response_description="Total de avaliações e contagem por categoria de risco",
+)
 def get_stats(db: Session = Depends(get_db)):
     total = db.query(func.count(Evaluation.id)).scalar() or 0
     avaliacoes = db.query(Evaluation.disease_probability).all()
@@ -41,8 +47,14 @@ def get_stats(db: Session = Depends(get_db)):
     )
 
 
-@router.get("/risks", response_model=list[RiskDistribution])
-@cache(expire=300)  # 5 Minutos
+@router.get(
+    "/risks",
+    response_model=list[RiskDistribution],
+    summary="Distribuição de risco",
+    description="Retorna a distribuição percentual dos pacientes por nível de risco (baixo, médio, alto). Cache de 5 minutos.",
+    response_description="Lista com cada nível de risco, quantidade e percentual",
+)
+@cache(expire=300)
 async def get_risk_distribution(db: Session = Depends(get_db)):
     total = db.query(func.count(Evaluation.id)).scalar() or 0
     if total == 0:
@@ -64,10 +76,18 @@ async def get_risk_distribution(db: Session = Depends(get_db)):
     ]
 
 
-@router.get("/factors", response_model=RiskFactorsResponse)
-@cache(expire=300)  # 5 Minutos
+@router.get(
+    "/factors",
+    response_model=RiskFactorsResponse,
+    summary="Fatores de risco agregados",
+    description="Retorna os fatores de risco mais relevantes calculados a partir de todas as avaliações. Se um model_id for informado, usa o modelo específico; caso contrário, usa o modelo ativo com maior acurácia. Cache de 5 minutos.",
+    response_description="Nome e descrição do modelo com lista de fatores de risco agregados",
+)
+@cache(expire=300)
 async def get_risk_factors(
-    model_id: str | None = Query(None),
+    model_id: str | None = Query(
+        None, description="ID do modelo para calcular fatores (opcional)"
+    ),
     db: Session = Depends(get_db),
 ):
     if model_id:

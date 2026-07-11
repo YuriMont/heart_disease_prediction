@@ -9,7 +9,13 @@ from schemas.model import ModelUpdate
 router = APIRouter(prefix="/models", tags=["models"])
 
 
-@router.get("", response_model=list[ModelInfo])
+@router.get(
+    "",
+    response_model=list[ModelInfo],
+    summary="Listar modelos ativos",
+    description="Retorna todos os modelos de IA disponíveis que estão ativos para predição de risco cardíaco.",
+    response_description="Lista de modelos ativos com ID, nome, descrição e status",
+)
 def list_models(db: Session = Depends(get_db)):
     modelos = db.query(Model).filter(Model.active.is_(True)).all()
     return [
@@ -23,7 +29,13 @@ def list_models(db: Session = Depends(get_db)):
     ]
 
 
-@router.get("/{model_id}/metrics", response_model=ModelMetrics)
+@router.get(
+    "/{model_id}/metrics",
+    response_model=ModelMetrics,
+    summary="Métricas de desempenho do modelo",
+    description="Retorna as métricas de desempenho (acurácia, precisão, recall, F1-Score, AUC-ROC) de um modelo específico treinado.",
+    response_description="Métricas de desempenho do modelo solicitado",
+)
 def get_metrics(model_id: str, db: Session = Depends(get_db)):
     modelo_db = db.query(Model).filter(Model.id == model_id).first()
 
@@ -45,7 +57,13 @@ def get_metrics(model_id: str, db: Session = Depends(get_db)):
     )
 
 
-@router.patch("/{model_id}", response_model=ModelInfo)
+@router.patch(
+    "/{model_id}",
+    response_model=ModelInfo,
+    summary="Atualizar modelo",
+    description="Atualiza as configurações de um modelo existente: nome, descrição ou status ativo/inativo.",
+    response_description="Modelo atualizado com os novos valores",
+)
 def update_model(model_id: str, dados: ModelUpdate, db: Session = Depends(get_db)):
     modelo_db = db.query(Model).filter(Model.id == model_id).first()
 

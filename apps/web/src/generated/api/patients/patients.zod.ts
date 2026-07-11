@@ -118,36 +118,6 @@ export const GetPatientPatientsPatientIdGetResponse = zod.object({
 });
 
 /**
- * @summary List Evaluations
- */
-export const ListEvaluationsEvaluationsGetResponseItem = zod.object({
-  id: zod.uuid(),
-  paciente_id: zod.uuid(),
-  patient_name: zod.union([zod.string(), zod.null()]),
-  age: zod.number(),
-  sex: zod.number(),
-  cp: zod.number(),
-  trestbps: zod.number(),
-  chol: zod.number(),
-  fbs: zod.number(),
-  restecg: zod.number(),
-  thalach: zod.number(),
-  exang: zod.number(),
-  oldpeak: zod.number(),
-  slope: zod.number(),
-  ca: zod.number(),
-  thal: zod.number(),
-  model_used: zod.string(),
-  has_disease: zod.boolean(),
-  disease_probability: zod.number(),
-  result_text: zod.string(),
-  created_at: zod.iso.datetime({ offset: true }),
-});
-export const ListEvaluationsEvaluationsGetResponse = zod.array(
-  ListEvaluationsEvaluationsGetResponseItem,
-);
-
-/**
  * @summary Create Evaluation
  */
 export const createEvaluationEvaluationsPostBodyAgeMax = 120;
@@ -244,6 +214,74 @@ export const CreateEvaluationEvaluationsPostResponse = zod.object({
   disease_probability: zod.number(),
   result_text: zod.string(),
   created_at: zod.iso.datetime({ offset: true }),
+});
+
+/**
+ * @summary List Evaluations
+ */
+export const listEvaluationsEvaluationsGetQueryPageDefault = 1;
+
+export const listEvaluationsEvaluationsGetQueryLimitDefault = 20;
+export const listEvaluationsEvaluationsGetQueryLimitMax = 100;
+
+export const ListEvaluationsEvaluationsGetQueryParams = zod.object({
+  page: zod
+    .number()
+    .min(1)
+    .default(listEvaluationsEvaluationsGetQueryPageDefault)
+    .describe('Número da página'),
+  limit: zod
+    .number()
+    .min(1)
+    .max(listEvaluationsEvaluationsGetQueryLimitMax)
+    .default(listEvaluationsEvaluationsGetQueryLimitDefault)
+    .describe('Itens por página'),
+  patient_name: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Filtrar por nome do paciente'),
+  has_disease: zod
+    .union([zod.boolean(), zod.null()])
+    .optional()
+    .describe('Filtrar por resultado (doença\/saudável)'),
+  model_used: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Filtrar por modelo utilizado'),
+});
+
+export const ListEvaluationsEvaluationsGetResponse = zod.object({
+  data: zod.array(
+    zod.object({
+      id: zod.uuid(),
+      paciente_id: zod.uuid(),
+      patient_name: zod.union([zod.string(), zod.null()]),
+      age: zod.number(),
+      sex: zod.number(),
+      cp: zod.number(),
+      trestbps: zod.number(),
+      chol: zod.number(),
+      fbs: zod.number(),
+      restecg: zod.number(),
+      thalach: zod.number(),
+      exang: zod.number(),
+      oldpeak: zod.number(),
+      slope: zod.number(),
+      ca: zod.number(),
+      thal: zod.number(),
+      model_used: zod.string(),
+      has_disease: zod.boolean(),
+      disease_probability: zod.number(),
+      result_text: zod.string(),
+      created_at: zod.iso.datetime({ offset: true }),
+    }),
+  ),
+  meta: zod.object({
+    total: zod.number(),
+    page: zod.number(),
+    limit: zod.number(),
+    total_pages: zod.number(),
+  }),
 });
 
 /**

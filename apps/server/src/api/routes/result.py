@@ -16,9 +16,13 @@ router = APIRouter(tags=["result"])
 
 
 @router.get(
-    "/evaluations/{evaluation_id}/factors", response_model=list[ContributingFactor]
+    "/evaluations/{evaluation_id}/factors",
+    response_model=list[ContributingFactor],
+    summary="Fatores contribuintes da avaliação",
+    description="Retorna os fatores clínicos que mais contribuíram para o resultado de uma avaliação específica, com o impacto de cada variável. Cache de 5 minutos.",
+    response_description="Lista de fatores contribuintes com variável, valor e impacto",
 )
-@cache(expire=300)  # 5 Minutos
+@cache(expire=300)
 async def get_factors(evaluation_id: UUID, db: Session = Depends(get_db)):
     evaluation = db.query(Evaluation).get(evaluation_id)
     if not evaluation:
@@ -28,9 +32,13 @@ async def get_factors(evaluation_id: UUID, db: Session = Depends(get_db)):
 
 
 @router.get(
-    "/evaluations/{evaluation_id}/importance", response_model=list[FeatureImportance]
+    "/evaluations/{evaluation_id}/importance",
+    response_model=list[FeatureImportance],
+    summary="Importância das variáveis no modelo",
+    description="Retorna a importância relativa de cada variável clínica no modelo de ML utilizado por uma avaliação específica. Cache de 5 minutos.",
+    response_description="Lista de variáveis com seus pesos de importância no modelo",
 )
-@cache(expire=300)  # 5 Minutos
+@cache(expire=300)
 async def get_importance(evaluation_id: UUID, db: Session = Depends(get_db)):
     evaluation = db.query(Evaluation).get(evaluation_id)
     if not evaluation:

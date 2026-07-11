@@ -6,7 +6,12 @@ from services import prediction_service as servico
 router = APIRouter(tags=["general"])
 
 
-@router.get("/")
+@router.get(
+    "/",
+    summary="Página inicial da API",
+    description="Retorna o status da API CardioPredict, lista os modelos disponíveis e links para documentação.",
+    response_description="Mensagem de status com modelos disponíveis e links de documentação",
+)
 def home():
     return {
         "message": "CardioPredict heart disease prediction API is running!",
