@@ -166,6 +166,50 @@ SQLite em `apps/server/src/database/cardiopredict.db`
 
 ### Migrations (Alembic)
 
+Ao alterar um modelo ORM (adicinar/remover/renomear colunas ou tabelas), siga:
+
+1. Edite o modelo em `apps/server/src/database/models/<entidade>.py`
+2. Crie/atualize os schemas Pydantic em `apps/server/src/schemas/<entidade>.py`
+3. Adicione/atualize a rota em `apps/server/src/api/routes/<rota>.py`
+4. Gere a migration automática:
+   ```bash
+   npm run db:revision -- -m "descrição da mudança"
+   ```
+5. Revise o arquivo gerado em `apps/server/migrations/versions/`
+6. Aplique a migration:
+   ```bash
+   npm run db:migrate
+   ```
+
+**Exemplo** — adicionar `phone` ao Patient:
+
+<details>
+<summary>Ver exemplo completo</summary>
+
+**Modelo** (`database/models/patient.py`):
+```python
+phone: Mapped[str | None] = mapped_column(String(20), nullable=True)
+```
+
+**Schema** (`schemas/patient.py`):
+```python
+class PatientCreate(BaseModel):
+    phone: str | None = None
+
+class PatientResponse(BaseModel):
+    phone: str | None = None
+```
+
+**Migration**:
+```bash
+npm run db:revision -- -m "add phone to patients"
+npm run db:migrate
+```
+
+</details>
+
+### Comandos
+
 ```bash
 npm run db:revision -- -m "descrição"   # gerar migration
 npm run db:migrate                       # aplicar
@@ -182,6 +226,9 @@ npm run train            # treinar modelos
 npm run db:migrate       # aplicar migrations pendentes
 npm run db:revision      # gerar nova migration (passar -m "desc")
 npm run db:downgrade     # reverter última migration
+npm run lint             # ruff + ESLint
+npm run format           # ruff format + prettier --check
+npm run typecheck        # pyright + tsc -b --noEmit
 ```
 
 ### Frontend (`apps/web`)
@@ -190,6 +237,17 @@ npm run db:downgrade     # reverter última migration
 npm run generate:api     # regerar client Orval do OpenAPI
 npm run build            # build produção
 npm run lint             # ESLint
+npm run format           # Prettier — verifica formatação
+npm run format:fix       # Prettier — corrige formatação
+npm run typecheck        # tsc -b --noEmit
+```
+
+### Backend (`apps/server`)
+
+```bash
+npm run lint:api         # Ruff check
+npm run format:api       # Ruff format
+npm run typecheck:api    # Pyright
 ```
 
 ## Estrutura

@@ -73,13 +73,10 @@ uv run python run.py                      # http://127.0.0.1:8000
 # instalar dependências (incluindo dev)
 cd apps/server && uv sync --extra dev
 
-# Lint (ruff)
-npm run lint              # verificar lint
-npm run lint:fix          # corrigir automaticamente
-npm run format            # formatar código
-
-# Type check (pyright)
-npm run typecheck         # verificar tipos estáticos
+# Da raiz do monorepo:
+npm run lint:api           # Ruff check
+npm run format:api         # Ruff format
+npm run typecheck:api      # Pyright
 
 # Ou direto com uv:
 uv run ruff check
@@ -171,6 +168,50 @@ docker run -d --name cardiopredict-redis -p 6379:6379 redis:7-alpine
 Configure com variáveis de ambiente: `REDIS_HOST` (default `localhost`) e `REDIS_PORT` (default `6379`).
 
 ### Migrations (Alembic)
+
+Ao alterar um modelo ORM (adicinar/remover/renomear colunas ou tabelas), siga:
+
+1. Edite o modelo em `src/database/models/<entidade>.py`
+2. Crie/atualize os schemas Pydantic em `src/schemas/<entidade>.py`
+3. Adicione/atualize a rota em `src/api/routes/<rota>.py`
+4. Gere a migration automática:
+   ```bash
+   uv run alembic revision --autogenerate -m "descrição"
+   ```
+5. Revise o arquivo gerado em `migrations/versions/`
+6. Aplique a migration:
+   ```bash
+   uv run alembic upgrade head
+   ```
+
+**Exemplo** — adicionar `phone` ao Patient:
+
+<details>
+<summary>Ver exemplo completo</summary>
+
+**Modelo** (`database/models/patient.py`):
+```python
+phone: Mapped[str | None] = mapped_column(String(20), nullable=True)
+```
+
+**Schema** (`schemas/patient.py`):
+```python
+class PatientCreate(BaseModel):
+    phone: str | None = None
+
+class PatientResponse(BaseModel):
+    phone: str | None = None
+```
+
+**Migration**:
+```bash
+uv run alembic revision --autogenerate -m "add phone to patients"
+uv run alembic upgrade head
+```
+
+</details>
+
+### Comandos
 
 ```bash
 uv run alembic revision --autogenerate -m "desc"
