@@ -5,9 +5,10 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
+import type { RiskFactor } from './riskFactor';
 
-export interface RiskFactor {
-  name: string;
-  short_name: string;
-  weight: number;
+export interface RiskFactorsResponse {
+  model_name: string;
+  model_description: string;
+  factors: RiskFactor[];
 }

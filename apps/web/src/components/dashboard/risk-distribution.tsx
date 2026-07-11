@@ -44,7 +44,7 @@ export function RiskDistribution() {
           Classificação de {formatNumber(total)} pacientes
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex items-center gap-6 p-0">
+      <CardContent className="flex flex-1 items-center gap-6 p-0">
         <div className="relative h-[180px] w-[180px] shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

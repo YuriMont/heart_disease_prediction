@@ -1,10 +1,17 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi_cache.decorator import cache
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
 from database.models.evaluation import Evaluation
-from schemas.dashboard import DashboardStats, RiskDistribution, RiskFactor
+from database.models.model import Model
+from schemas.dashboard import (
+    DashboardStats,
+    RiskDistribution,
+    RiskFactorsResponse,
+)
+from services.feature_analysis import calculate_aggregated_factors
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
@@ -35,7 +42,8 @@ def get_stats(db: Session = Depends(get_db)):
 
 
 @router.get("/risks", response_model=list[RiskDistribution])
-def get_risk_distribution(db: Session = Depends(get_db)):
+@cache(expire=300)  # 5 Minutos
+async def get_risk_distribution(db: Session = Depends(get_db)):
     total = db.query(func.count(Evaluation.id)).scalar() or 0
     if total == 0:
         return []
@@ -56,26 +64,36 @@ def get_risk_distribution(db: Session = Depends(get_db)):
     ]
 
 
-@router.get("/factors", response_model=list[RiskFactor])
-def get_risk_factors(db: Session = Depends(get_db)):
+@router.get("/factors", response_model=RiskFactorsResponse)
+@cache(expire=300)  # 5 Minutos
+async def get_risk_factors(
+    model_id: str | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    if model_id:
+        model = db.query(Model).filter(Model.id == model_id).first()
+        if not model:
+            raise HTTPException(404, "Model not found")
+    else:
+        model = (
+            db.query(Model)
+            .filter(Model.active.is_(True))
+            .order_by(Model.accuracy.desc())
+            .first()
+        )
+        if not model:
+            return RiskFactorsResponse(model_name="", model_description="", factors=[])
+
+    model_name = model.name
+    model_description = model.description or model_name
+
     avaliacoes = db.query(Evaluation).all()
     if not avaliacoes:
-        return []
+        return RiskFactorsResponse(
+            model_name=model_name, model_description=model_description, factors=[]
+        )
 
-    total = len(avaliacoes)
-
-    fatores = [
-        (
-            "High blood pressure",
-            sum(1 for a in avaliacoes if a.trestbps > 140) / total * 100,
-        ),
-        ("High cholesterol", sum(1 for a in avaliacoes if a.chol > 240) / total * 100),
-        ("Chest pain (cp)", sum(1 for a in avaliacoes if a.cp in (1, 2)) / total * 100),
-        ("Exercise angina", sum(1 for a in avaliacoes if a.exang == 1) / total * 100),
-        ("High blood sugar", sum(1 for a in avaliacoes if a.fbs == 1) / total * 100),
-        ("Abnormal ECG", sum(1 for a in avaliacoes if a.restecg != 0) / total * 100),
-    ]
-
-    fatores.sort(key=lambda x: x[1], reverse=True)
-
-    return [RiskFactor(name=nome, prevalence=round(prev, 1)) for nome, prev in fatores]
+    factors = calculate_aggregated_factors(avaliacoes, model_name)
+    return RiskFactorsResponse(
+        model_name=model_name, model_description=model_description, factors=factors
+    )

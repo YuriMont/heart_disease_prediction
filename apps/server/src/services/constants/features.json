@@ -2,11 +2,13 @@
   "age": {
     "type": "continuous",
     "display_name": "Age",
+    "short_name_pt": "Idade",
     "unit": "years"
   },
   "sex": {
     "type": "categorical",
     "display_name": "Sex",
+    "short_name_pt": "Sexo",
     "categories": {
       "0": "Female",
       "1": "Male"
@@ -15,6 +17,7 @@
   "cp": {
     "type": "categorical",
     "display_name": "Chest pain type",
+    "short_name_pt": "Dor torácica",
     "categories": {
       "1": "Typical",
       "2": "Atypical",
@@ -25,16 +28,19 @@
   "trestbps": {
     "type": "continuous",
     "display_name": "Resting blood pressure",
+    "short_name_pt": "Pressão arterial",
     "unit": "mmHg"
   },
   "chol": {
     "type": "continuous",
     "display_name": "Cholesterol",
+    "short_name_pt": "Colesterol",
     "unit": "mg/dL"
   },
   "fbs": {
     "type": "categorical",
     "display_name": "Fasting blood sugar",
+    "short_name_pt": "Glicemia",
     "categories": {
       "0": "Normal",
       "1": "High"
@@ -43,6 +49,7 @@
   "restecg": {
     "type": "categorical",
     "display_name": "Resting ECG",
+    "short_name_pt": "ECG repouso",
     "categories": {
       "0": "Normal",
       "1": "ST-T abnormality",
@@ -52,11 +59,13 @@
   "thalach": {
     "type": "continuous",
     "display_name": "Max heart rate",
+    "short_name_pt": "FC máxima",
     "unit": "bpm"
   },
   "exang": {
     "type": "categorical",
     "display_name": "Exercise angina",
+    "short_name_pt": "Angina esforço",
     "categories": {
       "0": "No",
       "1": "Yes"
@@ -65,11 +74,13 @@
   "oldpeak": {
     "type": "continuous",
     "display_name": "ST depression",
+    "short_name_pt": "ST depressão",
     "unit": "mm"
   },
   "slope": {
     "type": "categorical",
     "display_name": "ST slope",
+    "short_name_pt": "ST inclinação",
     "categories": {
       "1": "Upsloping",
       "2": "Flat",
@@ -79,6 +90,7 @@
   "ca": {
     "type": "categorical",
     "display_name": "Colored vessels",
+    "short_name_pt": "Vasos afetados",
     "categories": {
       "0": "None",
       "1": "1 vessel",
@@ -89,6 +101,7 @@
   "thal": {
     "type": "categorical",
     "display_name": "Thalassemia",
+    "short_name_pt": "Talassemia",
     "categories": {
       "3": "Normal",
       "6": "Fixed defect",

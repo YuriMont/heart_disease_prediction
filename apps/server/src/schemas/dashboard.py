@@ -16,7 +16,14 @@ class RiskDistribution(BaseModel):
 
 class RiskFactor(BaseModel):
     name: str
-    prevalence: float
+    short_name: str
+    weight: float
+
+
+class RiskFactorsResponse(BaseModel):
+    model_name: str
+    model_description: str
+    factors: list[RiskFactor]
 
 
 class ModelInfo(BaseModel):

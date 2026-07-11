@@ -3,12 +3,14 @@ import shap
 
 from database.models.evaluation import Evaluation
 from machine_learning.data import CATEGORICAL_COLUMNS, CONTINUOUS_COLUMNS
+from schemas.dashboard import RiskFactor
 from schemas.result import ContributingFactor, FeatureImportance
 from services.constants import (
     get_categorical_keys,
     get_categories,
     get_continuous_keys,
     get_display_name,
+    get_short_name_pt,
     get_unit,
 )
 from services.prediction_service import (
@@ -94,10 +96,19 @@ def calculate_feature_importance(
     )
 
 
-def calculate_contributing_factors(evaluation: Evaluation) -> list[ContributingFactor]:
-    model_name = (
+def _resolve_model_name(evaluation: Evaluation, model_name: str | None) -> str:
+    if model_name and model_name in MODELOS:
+        return model_name
+    return (
         evaluation.model_used if evaluation.model_used in MODELOS else "random_forest"
     )
+
+
+def calculate_contributing_factors(
+    evaluation: Evaluation,
+    model_name: str | None = None,
+) -> list[ContributingFactor]:
+    model_name = _resolve_model_name(evaluation, model_name)
     grouped_importance, onehot_importance = _get_model_importance(model_name)
 
     scaler_means = dict(zip(FEATURE_NAMES, SCALER.mean_, strict=True))
@@ -179,4 +190,71 @@ def _add_category_factor(
             value=label,
             impact=round(impact, 2),
         )
+    )
+
+
+def _compute_impacts(
+    evaluation: Evaluation,
+    grouped_importance: dict[str, float],
+    onehot_importance: dict[str, float],
+) -> dict[str, float]:
+    scaler_means = dict(zip(FEATURE_NAMES, SCALER.mean_, strict=True))
+    scaler_stds = dict(zip(FEATURE_NAMES, SCALER.scale_, strict=True))
+    impacts: dict[str, float] = {}
+
+    for key in get_continuous_keys():
+        importance = grouped_importance.get(key, 0)
+        value = getattr(evaluation, key)
+        mean = scaler_means.get(key, 0)
+        std = scaler_stds.get(key, 1) or 1
+        z_score = (value - mean) / std
+        impacts[key] = round(importance * z_score, 2)
+
+    for key in get_categorical_keys():
+        val = getattr(evaluation, key)
+        impact = 0.0
+        for onehot_col, imp in onehot_importance.items():
+            if onehot_col.startswith(key.lower() + "_"):
+                try:
+                    suffix = float(onehot_col.rsplit("_", 1)[1])
+                    active = abs(val - suffix) < 0.001
+                except (ValueError, IndexError):
+                    active = str(val) == onehot_col.rsplit("_", 1)[-1]
+                if active:
+                    impact += imp
+        impacts[key] = round(impact, 2)
+
+    return impacts
+
+
+def calculate_aggregated_factors(
+    evaluations: list[Evaluation],
+    model_name: str,
+) -> list[RiskFactor]:
+    grouped_importance, onehot_importance = _get_model_importance(model_name)
+    if not grouped_importance:
+        return []
+
+    total = len(evaluations)
+    if total == 0:
+        return []
+
+    accum: dict[str, float] = {}
+
+    for ev in evaluations:
+        impacts = _compute_impacts(ev, grouped_importance, onehot_importance)
+        for var, imp in impacts.items():
+            accum[var] = accum.get(var, 0) + abs(imp)
+
+    return sorted(
+        [
+            RiskFactor(
+                name=get_display_name(k) or k,
+                short_name=get_short_name_pt(k) or get_display_name(k) or k,
+                weight=round(v / total, 4),
+            )
+            for k, v in accum.items()
+        ],
+        key=lambda x: x.weight,
+        reverse=True,
     )

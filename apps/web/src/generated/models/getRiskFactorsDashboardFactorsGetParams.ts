@@ -6,8 +6,6 @@
  * OpenAPI spec version: 2.0.0
  */
 
-export interface RiskFactor {
-  name: string;
-  short_name: string;
-  weight: number;
-}
+export type GetRiskFactorsDashboardFactorsGetParams = {
+  model_id?: string | null;
+};

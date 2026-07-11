@@ -32,10 +32,18 @@ export const GetRiskDistributionDashboardRisksGetResponse = zod.array(
 /**
  * @summary Get Risk Factors
  */
-export const GetRiskFactorsDashboardFactorsGetResponseItem = zod.object({
-  name: zod.string(),
-  prevalence: zod.number(),
+export const GetRiskFactorsDashboardFactorsGetQueryParams = zod.object({
+  model_id: zod.union([zod.string(), zod.null()]).optional(),
 });
-export const GetRiskFactorsDashboardFactorsGetResponse = zod.array(
-  GetRiskFactorsDashboardFactorsGetResponseItem,
-);
+
+export const GetRiskFactorsDashboardFactorsGetResponse = zod.object({
+  model_name: zod.string(),
+  model_description: zod.string(),
+  factors: zod.array(
+    zod.object({
+      name: zod.string(),
+      short_name: zod.string(),
+      weight: zod.number(),
+    }),
+  ),
+});

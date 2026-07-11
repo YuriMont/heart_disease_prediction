@@ -20,8 +20,10 @@ import type {
 
 import type {
   DashboardStats,
+  GetRiskFactorsDashboardFactorsGetParams,
+  HTTPValidationError,
   RiskDistribution,
-  RiskFactor,
+  RiskFactorsResponse,
 } from '../../models';
 
 import { api } from '../../../lib/api';
@@ -359,40 +361,48 @@ export function useGetRiskDistributionDashboardRisksGet<
  * @summary Get Risk Factors
  */
 export const getRiskFactorsDashboardFactorsGet = (
+  params?: GetRiskFactorsDashboardFactorsGetParams,
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<RiskFactor[]>(
-    { url: `/dashboard/factors`, method: 'GET', signal },
+  return api<RiskFactorsResponse>(
+    { url: `/dashboard/factors`, method: 'GET', params, signal },
     options,
   );
 };
 
-export const getGetRiskFactorsDashboardFactorsGetQueryKey = () => {
-  return [`/dashboard/factors`] as const;
+export const getGetRiskFactorsDashboardFactorsGetQueryKey = (
+  params?: GetRiskFactorsDashboardFactorsGetParams,
+) => {
+  return [`/dashboard/factors`, ...(params ? [params] : [])] as const;
 };
 
 export const getGetRiskFactorsDashboardFactorsGetQueryOptions = <
   TData = Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
-      TError,
-      TData
-    >
-  >;
-  request?: SecondParameter<typeof api>;
-}) => {
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: GetRiskFactorsDashboardFactorsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
-    queryOptions?.queryKey ?? getGetRiskFactorsDashboardFactorsGetQueryKey();
+    queryOptions?.queryKey ??
+    getGetRiskFactorsDashboardFactorsGetQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>
-  > = ({ signal }) => getRiskFactorsDashboardFactorsGet(requestOptions, signal);
+  > = ({ signal }) =>
+    getRiskFactorsDashboardFactorsGet(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
@@ -404,12 +414,14 @@ export const getGetRiskFactorsDashboardFactorsGetQueryOptions = <
 export type GetRiskFactorsDashboardFactorsGetQueryResult = NonNullable<
   Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>
 >;
-export type GetRiskFactorsDashboardFactorsGetQueryError = ErrorType<unknown>;
+export type GetRiskFactorsDashboardFactorsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
 export function useGetRiskFactorsDashboardFactorsGet<
   TData = Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<HTTPValidationError>,
 >(
+  params: undefined | GetRiskFactorsDashboardFactorsGetParams,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -434,8 +446,9 @@ export function useGetRiskFactorsDashboardFactorsGet<
 };
 export function useGetRiskFactorsDashboardFactorsGet<
   TData = Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<HTTPValidationError>,
 >(
+  params?: GetRiskFactorsDashboardFactorsGetParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -460,8 +473,9 @@ export function useGetRiskFactorsDashboardFactorsGet<
 };
 export function useGetRiskFactorsDashboardFactorsGet<
   TData = Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<HTTPValidationError>,
 >(
+  params?: GetRiskFactorsDashboardFactorsGetParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -482,8 +496,9 @@ export function useGetRiskFactorsDashboardFactorsGet<
 
 export function useGetRiskFactorsDashboardFactorsGet<
   TData = Awaited<ReturnType<typeof getRiskFactorsDashboardFactorsGet>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<HTTPValidationError>,
 >(
+  params?: GetRiskFactorsDashboardFactorsGetParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -498,8 +513,10 @@ export function useGetRiskFactorsDashboardFactorsGet<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions =
-    getGetRiskFactorsDashboardFactorsGetQueryOptions(options);
+  const queryOptions = getGetRiskFactorsDashboardFactorsGetQueryOptions(
+    params,
+    options,
+  );
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,
