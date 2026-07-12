@@ -18,10 +18,13 @@ export function MainLayout() {
   }, [selectedModel, models, setSelectedModel]);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-screen w-full bg-background">
       <Sidebar />
-      <ScrollArea className="flex-1 overflow-y-auto p-7">
-        <Outlet />
+
+      <ScrollArea className="flex-1">
+        <div className="p-7">
+          <Outlet />
+        </div>
       </ScrollArea>
     </div>
   );

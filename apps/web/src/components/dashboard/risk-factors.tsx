@@ -16,6 +16,7 @@ import {
   CardDescription,
   CardContent,
 } from '../ui/card';
+import { Skeleton } from '../ui/skeleton';
 import { useGetRiskFactorsDashboardFactorsGet } from '../../generated/api/dashboard/dashboard';
 
 function CustomTooltip({
@@ -38,7 +39,7 @@ function CustomTooltip({
 }
 
 export function RiskFactors() {
-  const { data } = useGetRiskFactorsDashboardFactorsGet();
+  const { data, isLoading } = useGetRiskFactorsDashboardFactorsGet();
   const factors = data?.factors ?? [];
 
   const sorted = [...factors].sort((a, b) => b.weight - a.weight);
@@ -56,15 +57,28 @@ export function RiskFactors() {
         <div className="flex flex-col gap-[3px]">
           <CardTitle>Fatores mais Impactantes</CardTitle>
           <CardDescription>
-            {isEmpty
-              ? 'Nenhum dado de avaliação disponível'
-              : `Importância média — modelo: ${modelLabel}`}
+            {isLoading ? (
+              <Skeleton className="h-4 w-52" />
+            ) : isEmpty ? (
+              'Nenhum dado de avaliação disponível'
+            ) : (
+              `Importância média — modelo: ${modelLabel}`
+            )}
           </CardDescription>
         </div>
         <BarChart3 className="h-5 w-5 shrink-0 text-muted-foreground/40" />
       </CardHeader>
       <CardContent className="flex min-h-0 flex-1 flex-col p-0">
-        {isEmpty ? (
+        {isLoading ? (
+          <div className="flex w-full flex-col gap-5 py-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <Skeleton className="h-3.5 w-16" />
+                <Skeleton className="h-5 flex-1 rounded-md" />
+              </div>
+            ))}
+          </div>
+        ) : isEmpty ? (
           <div className="flex flex-col items-center justify-center gap-2 py-8 my-auto">
             <Activity className="h-6 w-6 text-muted-foreground/50" />
             <span className="text-sm text-muted-foreground">

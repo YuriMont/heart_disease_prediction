@@ -22,7 +22,7 @@ export function ContributingFactors({
       <CardHeader className="p-0">
         <CardTitle>Principais Fatores Contribuintes</CardTitle>
       </CardHeader>
-      <ScrollArea className="max-h-[28rem] overflow-auto">
+      <ScrollArea className="h-[34rem]">
         <CardContent className="flex-1 flex flex-col gap-3 p-0">
           {isLoading && (
             <div className="flex flex-col gap-3">

@@ -203,7 +203,7 @@ function ResultadoPage() {
             temDoenca={evaluation.has_disease}
           />
 
-          <div className="grid grid-cols-2 gap-6 overflow-auto">
+          <div className="grid grid-cols-2 gap-6">
             <ContributingFactors
               factors={factors}
               isLoading={isLoadingFactors}
