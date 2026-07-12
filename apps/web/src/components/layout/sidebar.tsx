@@ -3,7 +3,6 @@ import {
   LayoutDashboard,
   Users,
   ClipboardList,
-  FileText,
   BrainCircuit,
   HeartPulse,
 } from 'lucide-react';
@@ -15,7 +14,6 @@ const navItems = [
   { label: 'Painel', icon: LayoutDashboard, to: '/' },
   { label: 'Pacientes', icon: Users, to: '/patients' },
   { label: 'Resultados', icon: ClipboardList, to: '/results' },
-  { label: 'Relatórios', icon: FileText, to: '/reports' },
   { label: 'Modelo de IA', icon: BrainCircuit, to: '/models' },
 ];
 

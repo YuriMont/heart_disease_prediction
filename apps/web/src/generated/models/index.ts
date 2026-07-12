@@ -17,6 +17,7 @@ export * from './hTTPValidationError';
 export * from './listEvaluationsEvaluationsGetParams';
 export * from './listPatientsPatientsGetParams';
 export * from './modelFeature';
+export * from './modelFeatureCategories';
 export * from './modelInfo';
 export * from './modelMetrics';
 export * from './modelUpdate';

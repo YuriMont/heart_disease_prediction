@@ -3,15 +3,15 @@
     "type": "continuous",
     "display_name": "Age",
     "short_name_pt": "Idade",
-    "unit": "years"
+    "unit": "anos"
   },
   "sex": {
     "type": "categorical",
     "display_name": "Sex",
     "short_name_pt": "Sexo",
     "categories": {
-      "0": "Female",
-      "1": "Male"
+      "0": "Feminino",
+      "1": "Masculino"
     }
   },
   "cp": {
@@ -19,10 +19,10 @@
     "display_name": "Chest pain type",
     "short_name_pt": "Dor torácica",
     "categories": {
-      "1": "Typical",
-      "2": "Atypical",
-      "3": "Non-anginal",
-      "4": "Asymptomatic"
+      "1": "Típica",
+      "2": "Atípica",
+      "3": "Não anginosa",
+      "4": "Assintomática"
     }
   },
   "trestbps": {
@@ -43,7 +43,7 @@
     "short_name_pt": "Glicemia",
     "categories": {
       "0": "Normal",
-      "1": "High"
+      "1": "Alta"
     }
   },
   "restecg": {
@@ -52,8 +52,8 @@
     "short_name_pt": "ECG repouso",
     "categories": {
       "0": "Normal",
-      "1": "ST-T abnormality",
-      "2": "LV hypertrophy"
+      "1": "Anormalidade ST-T",
+      "2": "Hipertrofia VE"
     }
   },
   "thalach": {
@@ -67,8 +67,8 @@
     "display_name": "Exercise angina",
     "short_name_pt": "Angina esforço",
     "categories": {
-      "0": "No",
-      "1": "Yes"
+      "0": "Não",
+      "1": "Sim"
     }
   },
   "oldpeak": {
@@ -82,9 +82,9 @@
     "display_name": "ST slope",
     "short_name_pt": "ST inclinação",
     "categories": {
-      "1": "Upsloping",
-      "2": "Flat",
-      "3": "Downsloping"
+      "1": "Ascendente",
+      "2": "Plano",
+      "3": "Descendente"
     }
   },
   "ca": {
@@ -92,10 +92,10 @@
     "display_name": "Colored vessels",
     "short_name_pt": "Vasos afetados",
     "categories": {
-      "0": "None",
-      "1": "1 vessel",
-      "2": "2 vessels",
-      "3": "3 vessels"
+      "0": "Nenhum",
+      "1": "1 vaso",
+      "2": "2 vasos",
+      "3": "3 vasos"
     }
   },
   "thal": {
@@ -104,8 +104,8 @@
     "short_name_pt": "Talassemia",
     "categories": {
       "3": "Normal",
-      "6": "Fixed defect",
-      "7": "Reversible defect"
+      "6": "Defeito fixo",
+      "7": "Defeito reversível"
     }
   }
 }

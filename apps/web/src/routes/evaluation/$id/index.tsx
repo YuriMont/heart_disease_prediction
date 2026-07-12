@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft, Download } from 'lucide-react';
+import { toast } from 'sonner';
 import {
   useGetEvaluationEvaluationsEvaluationIdGet,
   useGetFactorsEvaluationsEvaluationIdFactorsGet,
   useGetImportanceEvaluationsEvaluationIdImportanceGet,
+  useGetRecommendationsEvaluationsEvaluationIdRecommendationsGet,
+  useExportReportPdfEvaluationsEvaluationIdReportPdfPost,
 } from '../../../generated/api/evaluations/evaluations';
-import { useExportReportReportsExportPost } from '../../../generated/api/reports/reports';
 import { Button } from '../../../components/ui/button';
 import { Skeleton } from '../../../components/ui/skeleton';
 import { ResultHero } from '../../../components/result/result-hero';
@@ -50,7 +52,44 @@ function ResultadoPage() {
       },
     });
 
-  const exportarRelatorio = useExportReportReportsExportPost();
+  const { data: recommendations = [], isLoading: isLoadingRecs } =
+    useGetRecommendationsEvaluationsEvaluationIdRecommendationsGet(
+      evaluationId,
+      {
+        query: {
+          gcTime: 50 * 60 * 1000,
+          staleTime: 1 * 60 * 1000,
+        },
+      },
+    );
+
+  const { mutateAsync: exportPdf, isPending: isExporting } =
+    useExportReportPdfEvaluationsEvaluationIdReportPdfPost();
+
+  const handleExport = async () => {
+    toast.loading('Gerando relatório...');
+
+    try {
+      const blob = await exportPdf({
+        evaluationId,
+      });
+
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cardiopredict-relatorio-${evaluationId}.pdf`;
+      a.click();
+
+      URL.revokeObjectURL(url);
+
+      toast.dismiss();
+      toast.success('Relatório baixado!');
+    } catch {
+      toast.dismiss();
+      toast.error('Erro ao gerar relatório');
+    }
+  };
 
   if (isLoadingEvaluation) {
     return (
@@ -139,17 +178,6 @@ function ResultadoPage() {
     );
   }
 
-  const handleExport = async () => {
-    try {
-      await exportarRelatorio.mutateAsync({
-        data: { avaliacao_id: evaluationId },
-      });
-      alert('Relatório exportado com sucesso!');
-    } catch {
-      alert('Erro ao exportar relatório');
-    }
-  };
-
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -178,13 +206,11 @@ function ResultadoPage() {
           </Link>
           <Button
             onClick={handleExport}
-            disabled={exportarRelatorio.isPending}
+            disabled={isExporting}
             className="gap-2"
           >
             <Download className="h-4 w-4" />
-            {exportarRelatorio.isPending
-              ? 'Exportando...'
-              : 'Exportar Relatório'}
+            {isExporting ? 'Gerando...' : 'Exportar Relatório'}
           </Button>
         </div>
       </div>
@@ -271,7 +297,23 @@ function ResultadoPage() {
             </CardContent>
           </Card>
 
-          <Recommendations />
+          {isLoadingRecs ? (
+            <div className="rounded-2xl bg-primary p-6 flex-1">
+              <div className="flex items-center gap-2 mb-4">
+                <Skeleton className="h-5 w-5 rounded-full bg-primary-foreground/20" />
+                <Skeleton className="h-5 w-32 bg-primary-foreground/20" />
+              </div>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-start gap-2 mb-3">
+                  <Skeleton className="mt-1 h-1.5 w-1.5 rounded-full bg-primary-foreground/20" />
+                  <Skeleton className="h-4 flex-1 bg-primary-foreground/20" />
+                </div>
+              ))}
+              <Skeleton className="mt-5 h-12 w-full rounded-lg bg-primary-foreground/20" />
+            </div>
+          ) : (
+            <Recommendations recommendations={recommendations} />
+          )}
         </div>
       </div>
     </div>

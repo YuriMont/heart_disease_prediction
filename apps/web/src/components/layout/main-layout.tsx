@@ -28,7 +28,7 @@ export function MainLayout() {
         </div>
       </ScrollArea>
 
-      <Toaster />
+      <Toaster position="top-right" />
     </div>
   );
 }

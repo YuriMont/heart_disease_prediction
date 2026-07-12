@@ -203,14 +203,17 @@ export function useListModelsModelsGet<
 }
 
 /**
- * Retorna todas as variáveis clínicas utilizadas pelos modelos de predição.
+ * Retorna todas as variáveis clínicas utilizadas pelos modelos de predição, com tipo, nome, unidade e categorias.
  * @summary Listar variáveis de entrada
  */
 export const listFeaturesModelsFeaturesGet = (
   options?: SecondParameter<typeof api>,
   signal?: AbortSignal,
 ) => {
-  return api<ModelFeature[]>({ url: `/models/features`, method: 'GET', signal }, options);
+  return api<ModelFeature[]>(
+    { url: `/models/features`, method: 'GET', signal },
+    options,
+  );
 };
 
 export const getListFeaturesModelsFeaturesGetQueryKey = () => {
@@ -232,7 +235,8 @@ export const getListFeaturesModelsFeaturesGetQueryOptions = <
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getListFeaturesModelsFeaturesGetQueryKey();
+  const queryKey =
+    queryOptions?.queryKey ?? getListFeaturesModelsFeaturesGetQueryKey();
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>

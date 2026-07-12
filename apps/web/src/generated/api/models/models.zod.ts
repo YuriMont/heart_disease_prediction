@@ -22,6 +22,33 @@ export const ListModelsModelsGetResponse = zod.array(
 );
 
 /**
+ * Retorna todas as variáveis clínicas utilizadas pelos modelos de predição, com tipo, nome, unidade e categorias.
+ * @summary Listar variáveis de entrada
+ */
+export const ListFeaturesModelsFeaturesGetResponseItem = zod.object({
+  field: zod.string().describe('Nome interno do campo'),
+  type: zod.string().describe('Tipo do dado: continuous ou categorical'),
+  display_name: zod.string().describe('Nome de exibição em inglês'),
+  short_name_pt: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Nome curto em português'),
+  unit: zod
+    .union([zod.string(), zod.null()])
+    .optional()
+    .describe('Unidade de medida (para variáveis contínuas)'),
+  categories: zod
+    .union([zod.record(zod.string(), zod.string()), zod.null()])
+    .optional()
+    .describe(
+      'Mapeamento de valores para descrições (para variáveis categóricas)',
+    ),
+});
+export const ListFeaturesModelsFeaturesGetResponse = zod.array(
+  ListFeaturesModelsFeaturesGetResponseItem,
+);
+
+/**
  * Retorna as métricas de desempenho (acurácia, precisão, recall, F1-Score, AUC-ROC) de um modelo específico treinado.
  * @summary Métricas de desempenho do modelo
  */

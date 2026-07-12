@@ -913,3 +913,368 @@ export function useGetImportanceEvaluationsEvaluationIdImportanceGet<
 
   return withQueryKey(query, queryOptions.queryKey);
 }
+
+/**
+ * Retorna recomendações dinâmicas baseadas no nível de risco, fatores contribuintes e variáveis clínicas alteradas da avaliação.
+ * @summary Recomendações da avaliação
+ */
+export const getRecommendationsEvaluationsEvaluationIdRecommendationsGet = (
+  evaluationId: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<string[]>(
+    {
+      url: `/evaluations/${evaluationId}/recommendations`,
+      method: 'GET',
+      signal,
+    },
+    options,
+  );
+};
+
+export const getGetRecommendationsEvaluationsEvaluationIdRecommendationsGetQueryKey =
+  (evaluationId: string) => {
+    return [`/evaluations/${evaluationId}/recommendations`] as const;
+  };
+
+export const getGetRecommendationsEvaluationsEvaluationIdRecommendationsGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<
+        typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+      >
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
+    evaluationId: string,
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof api>;
+    },
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
+
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetRecommendationsEvaluationsEvaluationIdRecommendationsGetQueryKey(
+        evaluationId,
+      );
+
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+        >
+      >
+    > = ({ signal }) =>
+      getRecommendationsEvaluationsEvaluationIdRecommendationsGet(
+        evaluationId,
+        requestOptions,
+        signal,
+      );
+
+    return {
+      queryKey,
+      queryFn,
+      enabled: evaluationId !== null && evaluationId !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
+
+export type GetRecommendationsEvaluationsEvaluationIdRecommendationsGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+      >
+    >
+  >;
+export type GetRecommendationsEvaluationsEvaluationIdRecommendationsGetQueryError =
+  ErrorType<HTTPValidationError>;
+
+export function useGetRecommendationsEvaluationsEvaluationIdRecommendationsGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  evaluationId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<
+            ReturnType<
+              typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+            >
+          >,
+          TError,
+          Awaited<
+            ReturnType<
+              typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRecommendationsEvaluationsEvaluationIdRecommendationsGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  evaluationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<
+            ReturnType<
+              typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+            >
+          >,
+          TError,
+          Awaited<
+            ReturnType<
+              typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRecommendationsEvaluationsEvaluationIdRecommendationsGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  evaluationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Recomendações da avaliação
+ */
+
+export function useGetRecommendationsEvaluationsEvaluationIdRecommendationsGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  evaluationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRecommendationsEvaluationsEvaluationIdRecommendationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetRecommendationsEvaluationsEvaluationIdRecommendationsGetQueryOptions(
+      evaluationId,
+      options,
+    );
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+/**
+ * Gera e retorna um PDF formatado com os resultados da avaliação de risco cardíaco, dados clínicos, fatores contribuintes, importância das características e recomendações.
+ * @summary Exportar relatório em PDF
+ */
+export const exportReportPdfEvaluationsEvaluationIdReportPdfPost = (
+  evaluationId: string,
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<Blob>(
+    {
+      url: `/evaluations/${evaluationId}/report-pdf`,
+      method: 'POST',
+      responseType: 'blob',
+      signal,
+    },
+    options,
+  );
+};
+
+export const getExportReportPdfEvaluationsEvaluationIdReportPdfPostMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof exportReportPdfEvaluationsEvaluationIdReportPdfPost>
+      >,
+      TError,
+      { evaluationId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<typeof exportReportPdfEvaluationsEvaluationIdReportPdfPost>
+    >,
+    TError,
+    { evaluationId: string },
+    TContext
+  > => {
+    const mutationKey = ['exportReportPdfEvaluationsEvaluationIdReportPdfPost'];
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
+
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof exportReportPdfEvaluationsEvaluationIdReportPdfPost>
+      >,
+      { evaluationId: string }
+    > = (props) => {
+      const { evaluationId } = props ?? {};
+
+      return exportReportPdfEvaluationsEvaluationIdReportPdfPost(
+        evaluationId,
+        requestOptions,
+      );
+    };
+
+    return { mutationFn, ...mutationOptions };
+  };
+
+export type ExportReportPdfEvaluationsEvaluationIdReportPdfPostMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof exportReportPdfEvaluationsEvaluationIdReportPdfPost>
+    >
+  >;
+
+export type ExportReportPdfEvaluationsEvaluationIdReportPdfPostMutationError =
+  ErrorType<HTTPValidationError>;
+
+/**
+ * @summary Exportar relatório em PDF
+ */
+export const useExportReportPdfEvaluationsEvaluationIdReportPdfPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof exportReportPdfEvaluationsEvaluationIdReportPdfPost>
+      >,
+      TError,
+      { evaluationId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<
+    ReturnType<typeof exportReportPdfEvaluationsEvaluationIdReportPdfPost>
+  >,
+  TError,
+  { evaluationId: string },
+  TContext
+> => {
+  return useMutation(
+    getExportReportPdfEvaluationsEvaluationIdReportPdfPostMutationOptions(
+      options,
+    ),
+    queryClient,
+  );
+};

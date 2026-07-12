@@ -354,3 +354,31 @@ export const GetImportanceEvaluationsEvaluationIdImportanceGetResponseItem =
   });
 export const GetImportanceEvaluationsEvaluationIdImportanceGetResponse =
   zod.array(GetImportanceEvaluationsEvaluationIdImportanceGetResponseItem);
+
+/**
+ * Retorna recomendações dinâmicas baseadas no nível de risco, fatores contribuintes e variáveis clínicas alteradas da avaliação.
+ * @summary Recomendações da avaliação
+ */
+export const GetRecommendationsEvaluationsEvaluationIdRecommendationsGetParams =
+  zod.object({
+    evaluation_id: zod.uuid(),
+  });
+
+export const GetRecommendationsEvaluationsEvaluationIdRecommendationsGetResponseItem =
+  zod.string();
+export const GetRecommendationsEvaluationsEvaluationIdRecommendationsGetResponse =
+  zod.array(
+    GetRecommendationsEvaluationsEvaluationIdRecommendationsGetResponseItem,
+  );
+
+/**
+ * Gera e retorna um PDF formatado com os resultados da avaliação de risco cardíaco, dados clínicos, fatores contribuintes, importância das características e recomendações.
+ * @summary Exportar relatório em PDF
+ */
+export const ExportReportPdfEvaluationsEvaluationIdReportPdfPostParams =
+  zod.object({
+    evaluation_id: zod.uuid(),
+  });
+
+export const ExportReportPdfEvaluationsEvaluationIdReportPdfPostResponse =
+  zod.unknown();

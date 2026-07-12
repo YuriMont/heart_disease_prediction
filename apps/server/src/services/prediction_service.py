@@ -103,6 +103,6 @@ def predict(paciente: Patient, modelo_id: str, db: Session):
         "tem_doenca": bool(classe == 1),
         "probabilidade_doenca": round(probabilidade, 4),
         "resultado": (
-            "Possible heart disease" if classe == 1 else "No indication of disease"
+            "Possível doença cardíaca" if classe == 1 else "Nenhum indício de doença"
         ),
     }

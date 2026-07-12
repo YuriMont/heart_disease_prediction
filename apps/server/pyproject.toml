@@ -25,6 +25,7 @@ dependencies = [
     "fastapi-cache2>=0.2.2",
     "jinja2>=3.1.6",
     "redis>=8.0.1",
+    "fpdf2>=2.8.0",
 ]
 
 [project.optional-dependencies]

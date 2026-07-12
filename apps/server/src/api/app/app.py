@@ -19,6 +19,8 @@ async def lifespan(_: FastAPI):
 
     redis = Redis(host="localhost", port=6379, decode_responses=False)
 
+    await redis.flushdb()
+
     FastAPICache.init(
         RedisBackend(redis),
         prefix="api-cache",
