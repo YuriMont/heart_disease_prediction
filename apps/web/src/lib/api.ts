@@ -1,8 +1,21 @@
 import Axios, { AxiosError, type AxiosRequestConfig } from 'axios';
+import { toast } from 'sonner';
 
 export const AXIOS_INSTANCE = Axios.create({
   baseURL: import.meta.env.VITE_API_URL, // use your own URL or environment variable
 });
+
+// Response interceptor for error handling
+AXIOS_INSTANCE.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 500) {
+      // Toat error
+      toast.error('Ocorreu um erro interno servidor');
+    }
+    return Promise.reject(error);
+  },
+);
 
 // Add a second `options` argument to pass extra options to each query
 export const api = <T>(

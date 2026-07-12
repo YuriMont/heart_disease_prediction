@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { modelAtom } from '../../store/model';
 import { useEffect } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
+import { Toaster } from '../ui/sonner';
 
 export function MainLayout() {
   const { data: models = [] } = useListModelsModelsGet();
@@ -26,6 +27,8 @@ export function MainLayout() {
           <Outlet />
         </div>
       </ScrollArea>
+
+      <Toaster />
     </div>
   );
 }
