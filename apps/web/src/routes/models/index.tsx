@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Eye, MoreHorizontal, Rocket } from 'lucide-react';
 import {
   useListModelsModelsGet,
+  useListFeaturesModelsFeaturesGet,
   useGetMetricsModelsModelIdMetricsGet,
 } from '../../generated/api/models/models';
 import { Button } from '../../components/ui/button';
@@ -48,6 +49,9 @@ function ModelsPage() {
 
   const [selectedModel, setSelectedModel] = useAtom(modelAtom);
   const [isVariablesOpen, setIsVariablesOpen] = useState(false);
+
+  const { data: features, isLoading: isLoadingFeatures } =
+    useListFeaturesModelsFeaturesGet();
 
   const { data: metrics } = useGetMetricsModelsModelIdMetricsGet(
     selectedModel?.id ?? '',
@@ -237,74 +241,44 @@ function ModelsPage() {
                   cardíaca.
                 </DialogDescription>
               </DialogHeader>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Campo</TableHead>
-                    <TableHead>Descrição</TableHead>
-                    <TableHead>Valores</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[
-                    { field: 'age', label: 'Idade', range: '1-120' },
-                    { field: 'sex', label: 'Sexo', range: '0/1' },
-                    { field: 'cp', label: 'Dor torácica', range: '1-4' },
-                    {
-                      field: 'trestbps',
-                      label: 'Pressão em repouso',
-                      range: 'mmHg',
-                    },
-                    { field: 'chol', label: 'Colesterol', range: 'mg/dL' },
-                    {
-                      field: 'fbs',
-                      label: 'Glicemia em jejum',
-                      range: '0/1',
-                    },
-                    {
-                      field: 'restecg',
-                      label: 'ECG em repouso',
-                      range: '0-2',
-                    },
-                    {
-                      field: 'thalach',
-                      label: 'Freq. cardíaca máx.',
-                      range: 'bpm',
-                    },
-                    {
-                      field: 'exang',
-                      label: 'Angina por exercício',
-                      range: '0/1',
-                    },
-                    {
-                      field: 'oldpeak',
-                      label: 'Depressão ST',
-                      range: 'mm',
-                    },
-                    {
-                      field: 'slope',
-                      label: 'Inclinação ST',
-                      range: '1-3',
-                    },
-                    {
-                      field: 'ca',
-                      label: 'Vasos coloridos',
-                      range: '0-3',
-                    },
-                    { field: 'thal', label: 'Talassemia', range: '3/6/7' },
-                  ].map((f) => (
-                    <TableRow key={f.field}>
-                      <TableCell className="font-mono text-xs font-medium">
-                        {f.field}
-                      </TableCell>
-                      <TableCell>{f.label}</TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {f.range}
-                      </TableCell>
-                    </TableRow>
+              {isLoadingFeatures ? (
+                <div className="flex flex-col gap-3">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <Skeleton className="h-4 w-20" />
+                      <Skeleton className="h-4 flex-1" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
                   ))}
-                </TableBody>
-              </Table>
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Campo</TableHead>
+                      <TableHead>Descrição</TableHead>
+                      <TableHead>Valores</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {(features ?? []).map((f) => (
+                      <TableRow key={f.field}>
+                        <TableCell className="font-mono text-xs font-medium">
+                          {f.field}
+                        </TableCell>
+                        <TableCell>
+                          {f.short_name_pt ?? f.display_name}
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {f.categories
+                            ? Object.keys(f.categories).join(', ')
+                            : f.unit ?? '-'}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
             </DialogContent>
           </Dialog>
         </div>

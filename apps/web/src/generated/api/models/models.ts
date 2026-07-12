@@ -23,6 +23,7 @@ import type {
 
 import type {
   HTTPValidationError,
+  ModelFeature,
   ModelInfo,
   ModelMetrics,
   ModelUpdate,
@@ -192,6 +193,156 @@ export function useListModelsModelsGet<
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
   const queryOptions = getListModelsModelsGetQueryOptions(options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+/**
+ * Retorna todas as variáveis clínicas utilizadas pelos modelos de predição.
+ * @summary Listar variáveis de entrada
+ */
+export const listFeaturesModelsFeaturesGet = (
+  options?: SecondParameter<typeof api>,
+  signal?: AbortSignal,
+) => {
+  return api<ModelFeature[]>({ url: `/models/features`, method: 'GET', signal }, options);
+};
+
+export const getListFeaturesModelsFeaturesGetQueryKey = () => {
+  return [`/models/features`] as const;
+};
+
+export const getListFeaturesModelsFeaturesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof api>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getListFeaturesModelsFeaturesGetQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>
+  > = ({ signal }) => listFeaturesModelsFeaturesGet(requestOptions, signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type ListFeaturesModelsFeaturesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>
+>;
+export type ListFeaturesModelsFeaturesGetQueryError = ErrorType<unknown>;
+
+export function useListFeaturesModelsFeaturesGet<
+  TData = Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListFeaturesModelsFeaturesGet<
+  TData = Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListFeaturesModelsFeaturesGet<
+  TData = Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Listar variáveis de entrada
+ */
+
+export function useListFeaturesModelsFeaturesGet<
+  TData = Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listFeaturesModelsFeaturesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof api>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListFeaturesModelsFeaturesGetQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

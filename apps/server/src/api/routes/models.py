@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from database.connection import get_db
 from database.models.model import Model
 from schemas.dashboard import ModelInfo, ModelMetrics
-from schemas.model import ModelUpdate
+from schemas.model import ModelFeature, ModelUpdate
+from services.constants import _config
 
 router = APIRouter(prefix="/models", tags=["models"])
 
@@ -26,6 +27,27 @@ def list_models(db: Session = Depends(get_db)):
             active=m.active,
         )
         for m in modelos
+    ]
+
+
+@router.get(
+    "/features",
+    response_model=list[ModelFeature],
+    summary="Listar variáveis de entrada",
+    description="Retorna todas as variáveis clínicas utilizadas pelos modelos de predição, com tipo, nome, unidade e categorias.",
+    response_description="Lista de variáveis de entrada com suas definições",
+)
+def list_features():
+    return [
+        ModelFeature(
+            field=key,
+            type=feat.type,
+            display_name=feat.display_name,
+            short_name_pt=feat.short_name_pt,
+            unit=feat.unit,
+            categories=feat.categories,
+        )
+        for key, feat in _config.features.items()
     ]
 
 
