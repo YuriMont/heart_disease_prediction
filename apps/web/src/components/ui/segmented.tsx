@@ -25,14 +25,14 @@ export function Segmented({
       <label className="text-[13px] font-semibold text-muted-foreground">
         {label}
       </label>
-      <div className="flex rounded-lg border border-border bg-muted p-0.5">
+      <div className="flex rounded-lg border border-border bg-muted p-0.5 min-w-0 overflow-hidden">
         {options.map((opt) => (
           <button
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
             className={cn(
-              'flex-1 rounded-sm px-4 py-1.5 text-sm font-medium transition-all',
+              'flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm px-2 sm:px-4 py-1.5 text-sm font-medium transition-all',
               value === opt.value
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground',

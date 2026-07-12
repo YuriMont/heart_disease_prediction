@@ -3,14 +3,17 @@ import { Sidebar } from './sidebar';
 import { useListModelsModelsGet } from '../../generated/api/models/models';
 import { useAtom } from 'jotai';
 import { modelAtom } from '../../store/model';
+import { sidebarOpenAtom } from '../../atoms/sidebar';
 import { useEffect } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
 import { Toaster } from '../ui/sonner';
+import { HeartPulse, Menu } from 'lucide-react';
 
 export function MainLayout() {
   const { data: models = [] } = useListModelsModelsGet();
 
   const [selectedModel, setSelectedModel] = useAtom(modelAtom);
+  const [, setSidebarOpen] = useAtom(sidebarOpenAtom);
 
   useEffect(() => {
     if (selectedModel === null && models.length > 0) {
@@ -23,7 +26,21 @@ export function MainLayout() {
       <Sidebar />
 
       <ScrollArea className="flex-1">
-        <div className="p-7">
+        {/* Mobile header bar */}
+        <div className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background px-4 py-3 lg:hidden">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="rounded-lg p-1.5 text-foreground/60 hover:bg-muted hover:text-foreground"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <HeartPulse className="h-5 w-5 text-primary" />
+          <span className="font-heading text-base font-bold text-foreground">
+            CardioPredict
+          </span>
+        </div>
+
+        <div className="p-7 max-sm:p-4">
           <Outlet />
         </div>
       </ScrollArea>

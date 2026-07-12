@@ -27,7 +27,7 @@ export function PatientFilters({
   onClear,
 }: PatientFiltersProps) {
   return (
-    <div className="flex items-end gap-3 rounded-xl border border-border bg-card p-3">
+    <div className="flex flex-col sm:flex-row items-end gap-3 rounded-xl border border-border bg-card p-3">
       <div className="flex flex-col gap-1 w-full">
         <label className="text-xs text-muted-foreground ml-1">
           Paciente
@@ -43,10 +43,10 @@ export function PatientFilters({
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 w-full sm:w-auto">
         <label className="text-xs text-muted-foreground ml-1">Sexo</label>
         <Select value={filterSex} onValueChange={onFilterSexChange}>
-          <SelectTrigger className="w-36 rounded-xl">
+          <SelectTrigger className="w-full sm:w-36 rounded-xl">
             <SelectValue placeholder="Sexo" />
           </SelectTrigger>
           <SelectContent className="rounded-xl">
@@ -63,18 +63,20 @@ export function PatientFilters({
         </Select>
       </div>
 
-      <Button onClick={onSearch} className="gap-2 shrink-0 rounded-xl">
-        <Search className="h-4 w-4" />
-        Buscar
-      </Button>
-      <Button
-        variant="outline"
-        onClick={onClear}
-        className="gap-2 shrink-0 rounded-xl"
-      >
-        <X className="h-4 w-4" />
-        Limpar
-      </Button>
+      <div className="flex w-full sm:w-auto gap-3">
+        <Button onClick={onSearch} className="gap-2 flex-1 sm:flex-none rounded-xl">
+          <Search className="h-4 w-4" />
+          Buscar
+        </Button>
+        <Button
+          variant="outline"
+          onClick={onClear}
+          className="gap-2 flex-1 sm:flex-none rounded-xl"
+        >
+          <X className="h-4 w-4" />
+          Limpar
+        </Button>
+      </div>
     </div>
   );
 }

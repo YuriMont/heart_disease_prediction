@@ -94,7 +94,7 @@ function ResultadoPage() {
   if (isLoadingEvaluation) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2">
             <Skeleton className="h-4 w-48" />
             <Skeleton className="h-8 w-64" />
@@ -104,20 +104,20 @@ function ResultadoPage() {
             <Skeleton className="h-9 w-44 rounded-xl" />
           </div>
         </div>
-        <div className="grid grid-cols-[1fr_360px] gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-6 rounded-2xl border border-border bg-card p-8">
               <Skeleton className="h-[200px] w-[200px] rounded-full" />
               <Skeleton className="h-6 w-28 rounded-full" />
               <Skeleton className="h-8 w-72" />
               <Skeleton className="h-4 w-96" />
-              <div className="flex gap-3">
+              <div className="flex flex-wrap justify-center gap-3">
                 <Skeleton className="h-8 w-32 rounded-full" />
                 <Skeleton className="h-8 w-28 rounded-full" />
                 <Skeleton className="h-8 w-28 rounded-full" />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
                 <Skeleton className="h-5 w-52" />
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -172,7 +172,7 @@ function ResultadoPage() {
 
   if (!evaluation) {
     return (
-      <div className="flex h-full items-center justify-center">
+      <div className="flex h-full min-h-[300px] items-center justify-center">
         <span className="text-muted-foreground">Avaliação não encontrada</span>
       </div>
     );
@@ -181,7 +181,7 @@ function ResultadoPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link
@@ -193,7 +193,7 @@ function ResultadoPage() {
             <span>/</span>
             <span className="text-foreground">Resultado da Predição</span>
           </div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
             Resultado da Predição
           </h1>
         </div>
@@ -201,7 +201,7 @@ function ResultadoPage() {
           <Link to="/">
             <Button variant="outline" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Voltar ao Painel
+              Voltar
             </Button>
           </Link>
           <Button
@@ -210,13 +210,13 @@ function ResultadoPage() {
             className="gap-2"
           >
             <Download className="h-4 w-4" />
-            {isExporting ? 'Gerando...' : 'Exportar Relatório'}
+            {isExporting ? 'Gerando...' : 'Exportar'}
           </Button>
         </div>
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-[1fr_360px] gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
         {/* Main Column */}
         <div className="flex flex-col gap-6">
           <ResultHero
@@ -229,7 +229,7 @@ function ResultadoPage() {
             temDoenca={evaluation.has_disease}
           />
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <ContributingFactors
               factors={factors}
               isLoading={isLoadingFactors}

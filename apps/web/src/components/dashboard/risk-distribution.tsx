@@ -50,7 +50,7 @@ export function RiskDistribution() {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-1 items-center gap-6 p-0">
+      <CardContent className="flex flex-1 flex-col sm:flex-row items-center gap-6 p-0">
         {isLoading ? (
           <div className="flex w-full items-center gap-6">
             <Skeleton className="h-[180px] w-[180px] rounded-full" />

@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import type { ColumnDef } from '@tanstack/react-table';
-import { ClipboardList, Eye, Search, X } from 'lucide-react';
+import { ClipboardList, Eye, Search, X, Calendar, Cpu } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import {
   Card,
@@ -89,9 +89,12 @@ function ResultsPage() {
       {
         header: 'Paciente',
         accessorKey: 'patient_name',
-        cell: ({ row }) =>
-          row.original.patient_name ??
-          `#${row.original.paciente_id.slice(0, 8)}`,
+        cell: ({ row }) => (
+          <span className="inline-block truncate max-w-[160px] lg:max-w-[240px]">
+            {row.original.patient_name ??
+            `#${row.original.paciente_id.slice(0, 8)}`}
+          </span>
+        ),
       },
       {
         header: 'Resultado',
@@ -114,7 +117,7 @@ function ResultsPage() {
         header: 'Modelo',
         accessorKey: 'model_used',
         cell: ({ row }) => (
-          <span className="text-muted-foreground">
+          <span className="inline-block truncate max-w-[120px] text-muted-foreground">
             {row.original.model_used}
           </span>
         ),
@@ -178,7 +181,7 @@ function ResultsPage() {
     <div className="flex flex-col gap-6">
       <Header />
 
-      <div className="flex items-end gap-3 rounded-xl border border-border bg-card p-3">
+      <div className="flex flex-col sm:flex-row items-end gap-3 rounded-xl border border-border bg-card p-3">
         <div className="flex flex-col gap-1 w-full">
           <Label className="text-xs text-muted-foreground ml-1">
             Paciente
@@ -194,12 +197,12 @@ function ResultsPage() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-full sm:w-auto">
           <Label className="text-xs text-muted-foreground ml-1">
             Resultado
           </Label>
           <Select value={filterResult} onValueChange={setFilterResult}>
-            <SelectTrigger className="w-36 rounded-xl">
+            <SelectTrigger className="w-full sm:w-36 rounded-xl">
               <SelectValue placeholder="Resultado" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
@@ -215,10 +218,10 @@ function ResultsPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-full sm:w-auto">
           <Label className="text-xs text-muted-foreground ml-1">Modelo</Label>
           <Select value={filterModel} onValueChange={setFilterModel}>
-            <SelectTrigger className="w-36 rounded-xl">
+            <SelectTrigger className="w-full sm:w-36 rounded-xl">
               <SelectValue placeholder="Modelo" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
@@ -237,18 +240,20 @@ function ResultsPage() {
             </SelectContent>
           </Select>
         </div>
-        <Button
-          variant="outline"
-          onClick={handleClear}
-          className="gap-2 shrink-0 rounded-xl"
-        >
-          <X className="h-4 w-4" />
-          Limpar
-        </Button>
-        <Button onClick={handleSearch} className="gap-2 shrink-0 rounded-xl">
-          <Search className="h-4 w-4" />
-          Buscar
-        </Button>
+        <div className="flex w-full sm:w-auto gap-3">
+          <Button
+            variant="outline"
+            onClick={handleClear}
+            className="gap-2 flex-1 sm:flex-none rounded-xl"
+          >
+            <X className="h-4 w-4" />
+            Limpar
+          </Button>
+          <Button onClick={handleSearch} className="gap-2 flex-1 sm:flex-none rounded-xl">
+            <Search className="h-4 w-4" />
+            Buscar
+          </Button>
+        </div>
       </div>
 
       <Card className="p-6">
@@ -273,45 +278,96 @@ function ResultsPage() {
             </Empty>
           ) : (
             <>
-              <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map((hg) => (
-                    <TableRow key={hg.id}>
-                      {hg.headers.map((header) => (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              {/* Desktop: tabela */}
+              <div className="hidden sm:block">
+                <Table>
+                  <TableHeader>
+                    {table.getHeaderGroups().map((hg) => (
+                      <TableRow key={hg.id}>
+                        {hg.headers.map((header) => (
+                          <TableHead key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext(),
+                                )}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableHeader>
+                  <TableBody>
+                    {table.getRowModel().rows.map((row) => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
 
-              <div className="flex items-center justify-between pt-2">
+              {/* Mobile: cards */}
+              <div className="flex flex-col gap-3 sm:hidden">
+                {evaluations.map((ev) => (
+                  <div
+                    key={ev.id}
+                    className="rounded-2xl border border-border bg-card p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <span className="font-heading text-base font-bold text-foreground break-words">
+                          {ev.patient_name ?? `#${ev.paciente_id.slice(0, 8)}`}
+                        </span>
+                      </div>
+                      <Badge
+                        variant={ev.has_disease ? 'destructive' : 'secondary'}
+                        className="shrink-0"
+                      >
+                        {ev.has_disease ? 'Doença' : 'Saudável'}
+                      </Badge>
+                    </div>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted-foreground">
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="font-mono text-base font-bold text-foreground">
+                          {Math.round(ev.disease_probability * 100)}%
+                        </span>
+                        <span className="text-xs">probabilidade</span>
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Cpu className="h-3.5 w-3.5" />
+                        {ev.model_used}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5" />
+                        {new Date(ev.created_at).toLocaleDateString('pt-BR')}
+                      </span>
+                    </div>
+                    <div className="mt-3">
+                      <Link to={`/evaluation/${ev.id}/`} className="block">
+                        <Button variant="outline" size="sm" className="gap-1.5 rounded-lg w-full">
+                          <Eye className="h-3.5 w-3.5" />
+                          Visualizar
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pt-2">
                 <span className="text-xs text-muted-foreground">
                   Mostrando {showStart}–{showEnd} de {meta?.total ?? 0}
                 </span>
                 {(meta?.total_pages ?? 1) > 1 && (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
@@ -320,7 +376,7 @@ function ResultsPage() {
                       className="gap-1 rounded-lg"
                     >
                       <ChevronLeft className="h-3.5 w-3.5" />
-                      Anterior
+                      <span className="hidden sm:inline">Anterior</span>
                     </Button>
                     <span className="text-xs text-muted-foreground tabular-nums">
                       {table.getState().pagination.pageIndex + 1} /{' '}
@@ -333,7 +389,7 @@ function ResultsPage() {
                       disabled={!table.getCanNextPage()}
                       className="gap-1 rounded-lg"
                     >
-                      Próximo
+                      <span className="hidden sm:inline">Próximo</span>
                       <ChevronRight className="h-3.5 w-3.5" />
                     </Button>
                   </div>
@@ -349,9 +405,9 @@ function ResultsPage() {
 
 function Header() {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col gap-1">
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
           Resultados
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -360,7 +416,7 @@ function Header() {
       </div>
       <div className="flex items-center gap-3.5">
         <Link to="/evaluation">
-          <Button className="gap-2">
+          <Button className="gap-2 w-full sm:w-auto">
             <ClipboardList className="h-4 w-4" />
             Nova Avaliação
           </Button>
@@ -372,17 +428,37 @@ function Header() {
 
 function LoadingSkeleton() {
   return (
-    <div className="flex flex-col gap-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className="flex items-center gap-4">
-          <Skeleton className="h-5 flex-1" />
-          <Skeleton className="h-5 w-20" />
-          <Skeleton className="h-5 w-16" />
-          <Skeleton className="h-5 w-24" />
-          <Skeleton className="h-5 w-28" />
-          <Skeleton className="h-8 w-8 rounded-lg" />
-        </div>
-      ))}
-    </div>
+    <>
+      {/* Desktop skeleton */}
+      <div className="hidden sm:flex flex-col gap-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="flex items-center gap-4">
+            <Skeleton className="h-5 flex-1" />
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-5 w-24" />
+            <Skeleton className="h-5 w-28" />
+            <Skeleton className="h-8 w-8 rounded-lg" />
+          </div>
+        ))}
+      </div>
+      {/* Mobile skeleton */}
+      <div className="flex flex-col gap-3 sm:hidden">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <Skeleton className="h-5 flex-1" />
+              <Skeleton className="h-5 w-16 rounded-full" />
+            </div>
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+            <Skeleton className="mt-3 h-9 w-full rounded-lg" />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

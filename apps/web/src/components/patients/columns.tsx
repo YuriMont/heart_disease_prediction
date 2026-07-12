@@ -37,7 +37,7 @@ export function usePatientColumns(
       accessorKey: 'name',
       header: ({ column }) => <SortHeader label="Nome" column={column} />,
       cell: ({ getValue }) => (
-        <span className="font-medium text-foreground">
+        <span className="inline-block truncate max-w-[180px] lg:max-w-[280px] font-medium text-foreground">
           {String(getValue() ?? 'Sem nome')}
         </span>
       ),

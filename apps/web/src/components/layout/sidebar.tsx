@@ -5,10 +5,12 @@ import {
   ClipboardList,
   BrainCircuit,
   HeartPulse,
+  X,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAtom } from 'jotai';
 import { modelAtom } from '../../store/model';
+import { sidebarOpenAtom } from '../../atoms/sidebar';
 
 const navItems = [
   { label: 'Painel', icon: LayoutDashboard, to: '/' },
@@ -41,6 +43,7 @@ function EcgAmbient() {
 
 export function Sidebar() {
   const location = useLocation();
+  const [open, setOpen] = useAtom(sidebarOpenAtom);
 
   const isActive = (to: string) => {
     if (to === '/') return location.pathname === '/';
@@ -49,24 +52,50 @@ export function Sidebar() {
 
   const [selectedModel] = useAtom(modelAtom);
 
-  return (
-    <aside className="relative flex h-full w-[264px] flex-col gap-2 bg-sidebar p-7 overflow-hidden">
-      <EcgAmbient />
+  const close = () => setOpen(false);
 
-      {/* Logo */}
-      <div className="flex items-center gap-3 pb-7">
-        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-primary shadow-sm">
-          <HeartPulse className="h-6 w-6 text-primary-foreground" />
+  return (
+    <>
+      {/* Backdrop — mobile only */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={close}
+        />
+      )}
+
+      <aside
+        className={cn(
+          'fixed inset-y-0 left-0 z-50 flex w-[264px] flex-col gap-2 overflow-hidden bg-sidebar p-7',
+          'transition-transform duration-300 ease-in-out',
+          open ? 'translate-x-0' : '-translate-x-full',
+          'lg:relative lg:translate-x-0 lg:transition-none lg:h-full',
+        )}
+      >
+        {/* Close button — mobile only */}
+        <button
+          onClick={close}
+          className="absolute right-4 top-4 z-10 rounded-lg p-1 text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground lg:hidden"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        <EcgAmbient />
+
+        {/* Logo */}
+        <div className="flex items-center gap-3 pb-7">
+          <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-primary shadow-sm">
+            <HeartPulse className="h-6 w-6 text-primary-foreground" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-heading text-[17px] font-bold text-sidebar-foreground">
+              CardioPredict
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-[1.5px] text-sidebar-accent-foreground/60">
+              IA · Cardiologia
+            </span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <span className="font-heading text-[17px] font-bold text-sidebar-foreground">
-            CardioPredict
-          </span>
-          <span className="text-xs font-semibold uppercase tracking-[1.5px] text-sidebar-accent-foreground/60">
-            IA · Cardiologia
-          </span>
-        </div>
-      </div>
 
       {/* Nav Label */}
       <span className="text-xs font-semibold uppercase tracking-wider text-sidebar-accent-foreground/50">
@@ -123,5 +152,6 @@ export function Sidebar() {
         </div>
       )}
     </aside>
+    </>
   );
 }

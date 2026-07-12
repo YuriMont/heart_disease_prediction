@@ -42,7 +42,7 @@ export function PatientForm() {
   };
 
   return (
-    <div className="flex gap-[22px]">
+    <div className="flex flex-col xl:flex-row gap-[22px]">
       <div className="flex flex-1 flex-col gap-5 max-w-[600px]">
         <div className="flex flex-col gap-[18px] rounded-2xl border border-border bg-card p-6">
           <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export function PatientForm() {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex flex-1 flex-col gap-1">
                 <Label className="text-[13px] font-semibold text-muted-foreground">
                   Idade

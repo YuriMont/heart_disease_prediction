@@ -8,7 +8,7 @@ export const Route = createFileRoute('/patients/new')({
 function NewPatientPage() {
   return (
     <div className="flex flex-col gap-[22px]">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-[5px]">
           <div className="flex items-center gap-[7px]">
             <span className="text-xs font-medium text-muted-foreground">
@@ -19,7 +19,7 @@ function NewPatientPage() {
               Novo Paciente
             </span>
           </div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold text-foreground">
             Cadastro de Paciente
           </h1>
         </div>

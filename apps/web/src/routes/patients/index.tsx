@@ -7,7 +7,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import type { SortingState } from '@tanstack/react-table';
-import { Users, Plus } from 'lucide-react';
+import { Users, Plus, Stethoscope, Calendar, BadgeInfo } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import {
   Card,
@@ -38,6 +38,7 @@ import { selectedPatientAtom } from '../../atoms/patient';
 import { usePatientColumns } from '../../components/patients/columns';
 import { PatientFilters } from '../../components/patients/patient-filters';
 import { PatientTablePagination } from '../../components/patients/patient-table-pagination';
+import { Badge } from '../../components/ui/badge';
 
 export const Route = createFileRoute('/patients/')({
   component: PatientsPage,
@@ -141,38 +142,86 @@ function PatientsPage() {
             <EmptyState hasFilters={!!params.name || params.sex !== undefined} />
           ) : (
             <>
-              <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map((hg) => (
-                    <TableRow key={hg.id}>
-                      {hg.headers.map((header) => (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              {/* Desktop: tabela */}
+              <div className="hidden sm:block">
+                <Table>
+                  <TableHeader>
+                    {table.getHeaderGroups().map((hg) => (
+                      <TableRow key={hg.id}>
+                        {hg.headers.map((header) => (
+                          <TableHead key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext(),
+                                )}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableHeader>
+                  <TableBody>
+                    {table.getRowModel().rows.map((row) => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile: cards */}
+              <div className="flex flex-col gap-3 sm:hidden">
+                {patients.map((patient) => (
+                  <div
+                    key={patient.id}
+                    className="rounded-2xl border border-border bg-card p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <span className="font-heading text-base font-bold text-foreground break-words">
+                          {patient.name ?? 'Sem nome'}
+                        </span>
+                      </div>
+                      <Badge
+                        variant={patient.sex === 1 ? 'default' : 'secondary'}
+                        className="shrink-0"
+                      >
+                        {patient.sex === 1 ? 'M' : 'F'}
+                      </Badge>
+                    </div>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                      <span className="inline-flex items-center gap-1.5">
+                        <BadgeInfo className="h-3.5 w-3.5" />
+                        {patient.age} anos
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5" />
+                        {new Date(patient.created_at).toLocaleDateString('pt-BR')}
+                      </span>
+                    </div>
+                    <div className="mt-3 flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleEvaluate(patient)}
+                        className="gap-1.5 rounded-lg w-full"
+                      >
+                        <Stethoscope className="h-3.5 w-3.5" />
+                        Avaliar
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
               <PatientTablePagination
                 table={table}
@@ -191,9 +240,9 @@ function PatientsPage() {
 
 function Header() {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col gap-1">
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
           Pacientes
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -201,7 +250,7 @@ function Header() {
         </p>
       </div>
       <Link to="/patients/new">
-        <Button className="gap-2">
+        <Button className="gap-2 w-full sm:w-auto">
           <Plus className="h-4 w-4" />
           Novo Paciente
         </Button>
@@ -212,7 +261,7 @@ function Header() {
 
 function StatCard({ total }: { total: number }) {
   return (
-    <div className="grid grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <div className="rounded-2xl border border-border bg-card p-5 flex items-center gap-4 shadow-sm">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
           <Users className="h-[22px] w-[22px] text-primary" />
@@ -232,17 +281,36 @@ function StatCard({ total }: { total: number }) {
 
 function LoadingSkeleton() {
   return (
-    <div className="flex flex-col gap-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className="flex items-center gap-4">
-          <Skeleton className="h-5 flex-1" />
-          <Skeleton className="h-5 w-16" />
-          <Skeleton className="h-5 w-12" />
-          <Skeleton className="h-5 w-28" />
-          <Skeleton className="h-8 w-20 rounded-lg" />
-        </div>
-      ))}
-    </div>
+    <>
+      {/* Desktop skeleton */}
+      <div className="hidden sm:flex flex-col gap-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="flex items-center gap-4">
+            <Skeleton className="h-5 flex-1" />
+            <Skeleton className="h-5 w-12" />
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-5 w-28" />
+            <Skeleton className="h-8 w-20 rounded-lg" />
+          </div>
+        ))}
+      </div>
+      {/* Mobile skeleton */}
+      <div className="flex flex-col gap-3 sm:hidden">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <Skeleton className="h-5 flex-1" />
+              <Skeleton className="h-5 w-10 rounded-full" />
+            </div>
+            <div className="mt-3 flex gap-4">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-28" />
+            </div>
+            <Skeleton className="mt-3 h-9 w-full rounded-lg" />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 

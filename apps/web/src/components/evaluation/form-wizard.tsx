@@ -26,9 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import {
-  useCreateEvaluationEvaluationsPost,
-} from '../../generated/api/evaluations/evaluations';
+import { useCreateEvaluationEvaluationsPost } from '../../generated/api/evaluations/evaluations';
 import { useListPatientsPatientsGet } from '../../generated/api/patients/patients';
 import { modelAtom } from '../../store/model';
 import { selectedPatientAtom } from '../../atoms/patient';
@@ -103,30 +101,30 @@ export function EvaluationForm() {
   };
 
   return (
-    <div className="flex flex-col gap-[22px]">
+    <div className="flex flex-col gap-[22px] max-w-full overflow-x-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-[5px]">
           <div className="flex items-center gap-[7px] text-xs">
             <span className="text-muted-foreground">Painel</span>
             <span className="text-muted-foreground">/</span>
             <span className="font-semibold text-primary">Nova Avaliação</span>
           </div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
             Avaliação de Risco Cardiovascular
           </h1>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-[9px]">
+        <div className="flex items-center gap-2 rounded-full bg-primary/10 self-start sm:self-auto px-4 py-[9px]">
           <Activity className="h-[15px] w-[15px] text-primary" />
-          <span className="text-[13px] font-semibold text-primary">
+          <span className="text-[13px] font-semibold text-primary whitespace-nowrap">
             Entrada de dados clínicos
           </span>
         </div>
       </div>
 
-      <div className="flex gap-[22px]">
+      <div className="flex flex-col xl:flex-row gap-[22px] max-w-full overflow-x-hidden">
         {/* Form Column */}
-        <div className="flex flex-1 flex-col gap-5">
+        <div className="flex min-w-0 flex-1 flex-col gap-5">
           {/* Patient Select */}
           <div className="flex flex-col gap-[18px] rounded-2xl border border-border bg-card p-6">
             <div className="flex items-center gap-3">
@@ -146,29 +144,37 @@ export function EvaluationForm() {
               <Label className="text-[13px] font-semibold text-muted-foreground">
                 Selecionar Paciente
               </Label>
-              <Select
-                value={selectedPatient?.id ?? ''}
-                onValueChange={(value: string) => {
-                  const patient = patients.find((p) => p.id === value);
-                  if (patient) setSelectedPatient(patient);
-                }}
-              >
-                <SelectTrigger className="w-full rounded-[0.5rem]">
-                  <SelectValue placeholder="Selecione um paciente..." />
-                </SelectTrigger>
-                <SelectContent className="rounded-[0.5rem]">
-                  {patients.map((patient) => (
-                    <SelectItem
-                      className="rounded-[0.5rem]"
-                      key={patient.id}
-                      value={patient.id}
-                    >
-                      {patient.name ?? 'Sem nome'} — {patient.age} anos (
-                      {patient.sex === 1 ? 'M' : 'F'})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="">
+                <Select
+                  value={selectedPatient?.id ?? ''}
+                  onValueChange={(value: string) => {
+                    const patient = patients.find((p) => p.id === value);
+                    if (patient) setSelectedPatient(patient);
+                  }}
+                >
+                  <SelectTrigger className="w-full rounded-[0.5rem] [&>[data-slot=select-value]>span]:truncate">
+                    <SelectValue placeholder="Selecione um paciente...">
+                      <span className="block truncate">
+                        {selectedPatient?.name ?? ''}
+                      </span>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="rounded-[0.5rem] overflow-hidden">
+                    {patients.map((patient) => (
+                      <SelectItem
+                        className="rounded-[0.5rem] min-w-0"
+                        key={patient.id}
+                        value={patient.id}
+                      >
+                        <span className="truncate block min-w-0 max-md:max-w-75">
+                          {patient.name ?? 'Sem nome'} — {patient.age} anos (
+                          {patient.sex === 1 ? 'M' : 'F'})
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
 
@@ -188,7 +194,7 @@ export function EvaluationForm() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Pressão Arterial em Repouso
@@ -230,7 +236,7 @@ export function EvaluationForm() {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Colesterol Total
@@ -269,7 +275,7 @@ export function EvaluationForm() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
                     label="Tipo de Dor Torácica"
@@ -296,7 +302,7 @@ export function EvaluationForm() {
                   />
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
                     label="Inclinação do Segmento ST"
@@ -322,7 +328,7 @@ export function EvaluationForm() {
                   />
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-1 flex-col gap-2">
                   <Segmented
                     label="Glicemia em Jejum > 120 mg/dl"
@@ -346,7 +352,7 @@ export function EvaluationForm() {
                   />
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[13px] font-semibold text-muted-foreground">
                     Depressão do Segmento ST
@@ -386,9 +392,9 @@ export function EvaluationForm() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-between px-1 pt-1">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-1 pt-1">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="h-[15px] w-[15px] text-muted-foreground" />
+              <ShieldCheck className="h-[15px] w-[15px] shrink-0 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
                 Dados protegidos · processados conforme LGPD
               </span>
@@ -405,7 +411,7 @@ export function EvaluationForm() {
         </div>
 
         {/* Info Column */}
-        <div className="flex w-[330px] flex-col gap-4">
+        <div className="flex w-full xl:w-[330px] flex-col gap-4">
           {/* ControlPanel */}
           <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-[22px]">
             <div className="flex items-center gap-[11px]">

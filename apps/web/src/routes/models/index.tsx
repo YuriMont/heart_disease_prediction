@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Eye, MoreHorizontal, Rocket } from 'lucide-react';
+import { Eye, MoreHorizontal, Rocket, Info } from 'lucide-react';
+import { cn } from '../../lib/utils';
 import {
   useListModelsModelsGet,
   useListFeaturesModelsFeaturesGet,
@@ -39,6 +40,7 @@ import {
 import { modelAtom } from '../../store/model';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const Route = createFileRoute('/models/')({
   component: ModelsPage,
@@ -91,91 +93,176 @@ function ModelsPage() {
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
-                <div className="flex flex-col gap-3">
-                  {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <Skeleton className="h-5 w-28" />
-                      <Skeleton className="h-5 flex-1" />
-                      <Skeleton className="h-5 w-16" />
-                      <Skeleton className="h-8 w-8 rounded-lg" />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Modelo</TableHead>
-                      <TableHead>Descrição</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="w-[50px]">Ações</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {models.map((model) => (
-                      <TableRow
-                        key={model.name}
-                        className={
-                          selectedModel?.name == model.name
-                            ? 'bg-primary/5 transition-colors'
-                            : ''
-                        }
+                <>
+                  {/* Desktop skeleton */}
+                  <div className="hidden sm:flex flex-col gap-3">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <Skeleton className="h-5 w-28" />
+                        <Skeleton className="h-5 flex-1" />
+                        <Skeleton className="h-5 w-16" />
+                        <Skeleton className="h-8 w-8 rounded-lg" />
+                      </div>
+                    ))}
+                  </div>
+                  {/* Mobile skeleton */}
+                  <div className="flex flex-col gap-3 sm:hidden">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="rounded-2xl border border-border bg-card p-4"
                       >
-                        <TableCell className="font-medium">
-                          {model.name}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {model.description}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              selectedModel?.name === model.name
-                                ? 'default'
-                                : 'secondary'
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1">
+                            <Skeleton className="h-5 w-32" />
+                            <Skeleton className="mt-1 h-4 w-full" />
+                          </div>
+                          <Skeleton className="h-5 w-16 rounded-full shrink-0" />
+                        </div>
+                        <div className="mt-3 flex gap-2">
+                          <Skeleton className="h-9 flex-1 rounded-lg" />
+                          <Skeleton className="h-9 flex-1 rounded-lg" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Desktop: tabela */}
+                  <div className="hidden sm:block">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Modelo</TableHead>
+                          <TableHead>Descrição</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead className="w-[50px]">Ações</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {models.map((model) => (
+                          <TableRow
+                            key={model.name}
+                            className={
+                              selectedModel?.name == model.name
+                                ? 'bg-primary/5 transition-colors'
+                                : ''
                             }
                           >
-                            {selectedModel?.name === model.name
-                              ? 'Ativo'
-                              : 'Disponível'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
+                            <TableCell className="font-medium truncate max-w-[140px]">
+                              {model.name}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground truncate max-w-[220px]">
+                              {model.description}
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant={
+                                  selectedModel?.name === model.name
+                                    ? 'default'
+                                    : 'secondary'
+                                }
                               >
-                                <MoreHorizontal className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                              className="bg-card"
-                              align="end"
-                            >
-                              <DropdownMenuItem
-                                onClick={() => setIsVariablesOpen(true)}
-                              >
-                                <Eye className="h-4 w-4" />
-                                Variáveis de entrada
-                              </DropdownMenuItem>
-                              {model.name != selectedModel?.name && (
-                                <DropdownMenuItem
-                                  onClick={() => setSelectedModel(model)}
+                                {selectedModel?.name === model.name
+                                  ? 'Ativo'
+                                  : 'Disponível'}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8"
+                                  >
+                                    <MoreHorizontal className="h-4 w-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent
+                                  className="bg-card"
+                                  align="end"
                                 >
-                                  <Rocket className="h-4 w-4" />
-                                  Selecionar modelo
-                                </DropdownMenuItem>
-                              )}
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                                  <DropdownMenuItem
+                                    onClick={() => setIsVariablesOpen(true)}
+                                  >
+                                    <Eye className="h-4 w-4" />
+                                    Variáveis de entrada
+                                  </DropdownMenuItem>
+                                  {model.name != selectedModel?.name && (
+                                    <DropdownMenuItem
+                                      onClick={() => setSelectedModel(model)}
+                                    >
+                                      <Rocket className="h-4 w-4" />
+                                      Selecionar modelo
+                                    </DropdownMenuItem>
+                                  )}
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {/* Mobile: cards */}
+                  <div className="flex flex-col gap-3 sm:hidden">
+                    {models.map((model) => {
+                      const isActive = selectedModel?.name === model.name;
+                      return (
+                        <div
+                          key={model.name}
+                          className={cn(
+                            'rounded-2xl border p-4',
+                            isActive
+                              ? 'border-primary bg-primary/5'
+                              : 'border-border bg-card',
+                          )}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                              <span className="font-heading text-base font-bold text-foreground break-words">
+                                {model.name}
+                              </span>
+                              <p className="mt-0.5 text-sm text-muted-foreground break-words">
+                                {model.description}
+                              </p>
+                            </div>
+                            <Badge
+                              variant={isActive ? 'default' : 'secondary'}
+                              className="shrink-0"
+                            >
+                              {isActive ? 'Ativo' : 'Disponível'}
+                            </Badge>
+                          </div>
+                          <div className="mt-3 flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setIsVariablesOpen(true)}
+                              className="gap-1.5 rounded-lg flex-1"
+                            >
+                              <Info className="h-3.5 w-3.5" />
+                              Variáveis
+                            </Button>
+                            {!isActive && (
+                              <Button
+                                size="sm"
+                                onClick={() => setSelectedModel(model)}
+                                className="gap-1.5 rounded-lg flex-1"
+                              >
+                                <Rocket className="h-3.5 w-3.5" />
+                                Selecionar
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
               )}
             </CardContent>
           </Card>
@@ -234,51 +321,57 @@ function ModelsPage() {
 
           <Dialog open={isVariablesOpen} onOpenChange={setIsVariablesOpen}>
             <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>Variáveis de Entrada</DialogTitle>
-                <DialogDescription>
-                  Variáveis utilizadas pelo modelo para predição de doença
-                  cardíaca.
-                </DialogDescription>
-              </DialogHeader>
-              {isLoadingFeatures ? (
-                <div className="flex flex-col gap-3">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <Skeleton className="h-4 w-20" />
-                      <Skeleton className="h-4 flex-1" />
-                      <Skeleton className="h-4 w-24" />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Campo</TableHead>
-                      <TableHead>Descrição</TableHead>
-                      <TableHead>Valores</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {(features ?? []).map((f) => (
-                      <TableRow key={f.field}>
-                        <TableCell className="font-mono text-xs font-medium">
-                          {f.field}
-                        </TableCell>
-                        <TableCell>
-                          {f.short_name_pt ?? f.display_name}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {f.categories
-                            ? Object.keys(f.categories).join(', ')
-                            : f.unit ?? '-'}
-                        </TableCell>
-                      </TableRow>
+              <ScrollArea className="max-h-[85dvh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Variáveis de Entrada</DialogTitle>
+                  <DialogDescription>
+                    Variáveis utilizadas pelo modelo para predição de doença
+                    cardíaca.
+                  </DialogDescription>
+                </DialogHeader>
+                {isLoadingFeatures ? (
+                  <div className="flex flex-col gap-3">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <Skeleton className="h-4 w-20" />
+                        <Skeleton className="h-4 flex-1" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
                     ))}
-                  </TableBody>
-                </Table>
-              )}
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Campo</TableHead>
+                        <TableHead className="hidden sm:table-cell">
+                          Descrição
+                        </TableHead>
+                        <TableHead>Valores</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {(features ?? []).map((f) => (
+                        <TableRow key={f.field}>
+                          <TableCell className="font-mono text-xs font-medium truncate max-w-[120px]">
+                            {f.field}
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell truncate max-w-[180px]">
+                            <span className="inline-block truncate max-w-[180px]">
+                              {f.short_name_pt ?? f.display_name}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-muted-foreground truncate max-w-[150px]">
+                            {f.categories
+                              ? Object.keys(f.categories).join(', ')
+                              : (f.unit ?? '-')}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </ScrollArea>
             </DialogContent>
           </Dialog>
         </div>

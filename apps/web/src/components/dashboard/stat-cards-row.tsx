@@ -16,7 +16,7 @@ export function StatCardsRow() {
   const highPct = total > 0 ? Math.round((high / total) * 100) : 0;
 
   return (
-    <div className="grid grid-cols-4 gap-5">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
       <StatCard
         icon={ClipboardList}
         iconBg="bg-primary/10"
