@@ -160,7 +160,7 @@ function ResultadoPage() {
               to="/evaluation"
               className="hover:text-foreground transition-colors"
             >
-              Nova Avaliação
+              Avaliação
             </Link>
             <span>/</span>
             <span className="text-foreground">Resultado da Predição</span>
