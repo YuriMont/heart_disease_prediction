@@ -27,26 +27,24 @@ export function PatientFilters({
   onClear,
 }: PatientFiltersProps) {
   return (
-    <div className="flex flex-col sm:flex-row items-end gap-3 rounded-xl border border-border bg-card p-3">
-      <div className="flex flex-col gap-1 w-full">
-        <label className="text-xs text-muted-foreground ml-1">
-          Paciente
-        </label>
+    <div className="border-border bg-card flex flex-col items-end gap-3 rounded-xl border p-3 sm:flex-row">
+      <div className="flex w-full flex-col gap-1">
+        <label className="text-muted-foreground ml-1 text-xs">Paciente</label>
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Buscar por nome do paciente..."
             value={searchName}
             onChange={(e) => onSearchNameChange(e.target.value)}
-            className="pl-9 rounded-xl"
+            className="rounded-xl pl-9"
           />
         </div>
       </div>
 
-      <div className="flex flex-col gap-1 w-full sm:w-auto">
-        <label className="text-xs text-muted-foreground ml-1">Sexo</label>
+      <div className="flex w-full flex-col gap-1 sm:w-auto">
+        <label className="text-muted-foreground ml-1 text-xs">Sexo</label>
         <Select value={filterSex} onValueChange={onFilterSexChange}>
-          <SelectTrigger className="w-full sm:w-36 rounded-xl">
+          <SelectTrigger className="w-full rounded-xl sm:w-36">
             <SelectValue placeholder="Sexo" />
           </SelectTrigger>
           <SelectContent className="rounded-xl">
@@ -63,15 +61,18 @@ export function PatientFilters({
         </Select>
       </div>
 
-      <div className="flex w-full sm:w-auto gap-3">
-        <Button onClick={onSearch} className="gap-2 flex-1 sm:flex-none rounded-xl">
+      <div className="flex w-full gap-3 sm:w-auto">
+        <Button
+          onClick={onSearch}
+          className="flex-1 gap-2 rounded-xl sm:flex-none"
+        >
           <Search className="h-4 w-4" />
           Buscar
         </Button>
         <Button
           variant="outline"
           onClick={onClear}
-          className="gap-2 flex-1 sm:flex-none rounded-xl"
+          className="flex-1 gap-2 rounded-xl sm:flex-none"
         >
           <X className="h-4 w-4" />
           Limpar

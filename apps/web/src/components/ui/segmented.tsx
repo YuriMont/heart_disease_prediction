@@ -22,17 +22,17 @@ export function Segmented({
 }: SegmentedProps) {
   return (
     <div className={cn('flex w-full flex-col gap-1', className)}>
-      <label className="text-[13px] font-semibold text-muted-foreground">
+      <label className="text-muted-foreground text-[0.8125rem] font-semibold">
         {label}
       </label>
-      <div className="flex rounded-lg border border-border bg-muted p-0.5 min-w-0 overflow-hidden">
+      <div className="border-border bg-muted flex min-w-0 overflow-hidden rounded-lg border p-0.5">
         {options.map((opt) => (
           <button
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
             className={cn(
-              'flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap rounded-sm px-2 sm:px-4 py-1.5 text-sm font-medium transition-all',
+              'min-w-0 flex-1 overflow-hidden rounded-sm px-2 py-1.5 text-sm font-medium text-ellipsis whitespace-nowrap transition-all sm:px-4',
               value === opt.value
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground',
@@ -63,17 +63,17 @@ export function SegmentedMulti({
 }: SegmentedMultiProps) {
   return (
     <div className={cn('flex w-full flex-col gap-2', className)}>
-      <label className="text-[13px] font-semibold text-muted-foreground">
+      <label className="text-muted-foreground text-[0.8125rem] font-semibold">
         {label}
       </label>
-      <div className="flex flex-wrap rounded-xl border border-border bg-muted p-1 gap-1">
+      <div className="border-border bg-muted flex flex-wrap gap-1 rounded-xl border p-1">
         {options.map((opt) => (
           <button
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
             className={cn(
-              'flex-1 min-w-[80px] rounded-lg px-4 py-2.5 text-sm font-medium transition-all',
+              'min-w-[5rem] flex-1 rounded-lg px-4 py-2.5 text-sm font-medium transition-all',
               value === opt.value
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground',

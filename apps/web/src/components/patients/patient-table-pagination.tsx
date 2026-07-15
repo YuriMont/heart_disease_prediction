@@ -19,8 +19,8 @@ export function PatientTablePagination({
   totalPages,
 }: PatientTablePaginationProps) {
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pt-2">
-      <span className="text-xs text-muted-foreground">
+    <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:items-center sm:justify-between">
+      <span className="text-muted-foreground text-xs">
         Mostrando {start}–{end} de {total}
       </span>
       {totalPages > 1 && (
@@ -35,7 +35,7 @@ export function PatientTablePagination({
             <ChevronLeft className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Anterior</span>
           </Button>
-          <span className="text-xs text-muted-foreground tabular-nums">
+          <span className="text-muted-foreground text-xs tabular-nums">
             {table.getState().pagination.pageIndex + 1} / {totalPages}
           </span>
           <Button

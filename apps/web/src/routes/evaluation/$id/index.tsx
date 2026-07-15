@@ -104,9 +104,9 @@ function ResultadoPage() {
             <Skeleton className="h-9 w-44 rounded-xl" />
           </div>
         </div>
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_360px]">
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-center gap-6 rounded-2xl border border-border bg-card p-8">
+            <div className="border-border bg-card flex flex-col items-center gap-6 rounded-2xl border p-8">
               <Skeleton className="h-[200px] w-[200px] rounded-full" />
               <Skeleton className="h-6 w-28 rounded-full" />
               <Skeleton className="h-8 w-72" />
@@ -117,8 +117,8 @@ function ResultadoPage() {
                 <Skeleton className="h-8 w-28 rounded-full" />
               </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <div className="border-border bg-card flex flex-col gap-4 rounded-2xl border p-6">
                 <Skeleton className="h-5 w-52" />
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex items-center justify-between">
@@ -130,7 +130,7 @@ function ResultadoPage() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
+              <div className="border-border bg-card flex flex-col gap-4 rounded-2xl border p-6">
                 <Skeleton className="h-5 w-48" />
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="flex items-center gap-3">
@@ -142,7 +142,7 @@ function ResultadoPage() {
             </div>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
+            <div className="border-border bg-card flex flex-col gap-4 rounded-2xl border p-6">
               <Skeleton className="h-5 w-36" />
               {Array.from({ length: 13 }).map((_, i) => (
                 <div key={i} className="flex items-center justify-between">
@@ -151,18 +151,18 @@ function ResultadoPage() {
                 </div>
               ))}
             </div>
-            <div className="rounded-2xl bg-primary p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Skeleton className="h-5 w-5 rounded-full bg-primary-foreground/20" />
-                <Skeleton className="h-5 w-32 bg-primary-foreground/20" />
+            <div className="bg-primary rounded-2xl p-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="bg-primary-foreground/20 h-5 w-5 rounded-full" />
+                <Skeleton className="bg-primary-foreground/20 h-5 w-32" />
               </div>
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="flex items-start gap-2 mb-3">
-                  <Skeleton className="mt-1 h-1.5 w-1.5 rounded-full bg-primary-foreground/20" />
-                  <Skeleton className="h-4 flex-1 bg-primary-foreground/20" />
+                <div key={i} className="mb-3 flex items-start gap-2">
+                  <Skeleton className="bg-primary-foreground/20 mt-1 h-1.5 w-1.5 rounded-full" />
+                  <Skeleton className="bg-primary-foreground/20 h-4 flex-1" />
                 </div>
               ))}
-              <Skeleton className="mt-5 h-12 w-full rounded-lg bg-primary-foreground/20" />
+              <Skeleton className="bg-primary-foreground/20 mt-5 h-12 w-full rounded-lg" />
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ function ResultadoPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2 text-sm">
             <Link
               to="/evaluation"
               className="hover:text-foreground transition-colors"
@@ -193,7 +193,7 @@ function ResultadoPage() {
             <span>/</span>
             <span className="text-foreground">Resultado da Predição</span>
           </div>
-          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="font-heading text-foreground text-xl font-bold tracking-tight sm:text-2xl">
             Resultado da Predição
           </h1>
         </div>
@@ -216,7 +216,7 @@ function ResultadoPage() {
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_360px]">
         {/* Main Column */}
         <div className="flex flex-col gap-6">
           <ResultHero
@@ -229,7 +229,7 @@ function ResultadoPage() {
             temDoenca={evaluation.has_disease}
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <ContributingFactors
               factors={factors}
               isLoading={isLoadingFactors}
@@ -242,10 +242,10 @@ function ResultadoPage() {
         </div>
 
         {/* Side Column */}
-        <div className="flex flex-col gap-6 h-full">
+        <div className="flex h-full flex-col gap-6">
           {/* Data Summary */}
           <Card className="p-6">
-            <CardHeader className="p-0 mb-4">
+            <CardHeader className="p-0">
               <CardTitle>Dados da Avaliação</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3 p-0">
@@ -284,12 +284,12 @@ function ResultadoPage() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-center justify-between py-1 border-b border-border last:border-0"
+                  className="border-border flex items-center justify-between border-b py-1 last:border-0"
                 >
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {item.label}
                   </span>
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-foreground text-sm font-medium">
                     {item.value}
                   </span>
                 </div>
@@ -298,18 +298,18 @@ function ResultadoPage() {
           </Card>
 
           {isLoadingRecs ? (
-            <div className="rounded-2xl bg-primary p-6 flex-1">
-              <div className="flex items-center gap-2 mb-4">
-                <Skeleton className="h-5 w-5 rounded-full bg-primary-foreground/20" />
-                <Skeleton className="h-5 w-32 bg-primary-foreground/20" />
+            <div className="bg-primary flex-1 rounded-2xl p-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="bg-primary-foreground/20 h-5 w-5 rounded-full" />
+                <Skeleton className="bg-primary-foreground/20 h-5 w-32" />
               </div>
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="flex items-start gap-2 mb-3">
-                  <Skeleton className="mt-1 h-1.5 w-1.5 rounded-full bg-primary-foreground/20" />
-                  <Skeleton className="h-4 flex-1 bg-primary-foreground/20" />
+                <div key={i} className="mb-3 flex items-start gap-2">
+                  <Skeleton className="bg-primary-foreground/20 mt-1 h-1.5 w-1.5 rounded-full" />
+                  <Skeleton className="bg-primary-foreground/20 h-4 flex-1" />
                 </div>
               ))}
-              <Skeleton className="mt-5 h-12 w-full rounded-lg bg-primary-foreground/20" />
+              <Skeleton className="bg-primary-foreground/20 mt-5 h-12 w-full rounded-lg" />
             </div>
           ) : (
             <Recommendations recommendations={recommendations} />

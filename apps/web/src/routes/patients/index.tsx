@@ -132,14 +132,16 @@ function PatientsPage() {
       />
 
       <Card className="p-6">
-        <CardHeader className="p-0 mb-4">
+        <CardHeader className="p-0">
           <CardTitle>Lista de Pacientes</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 p-0">
           {isLoading ? (
             <LoadingSkeleton />
           ) : patients.length === 0 ? (
-            <EmptyState hasFilters={!!params.name || params.sex !== undefined} />
+            <EmptyState
+              hasFilters={!!params.name || params.sex !== undefined}
+            />
           ) : (
             <>
               {/* Desktop: tabela */}
@@ -183,11 +185,11 @@ function PatientsPage() {
                 {patients.map((patient) => (
                   <div
                     key={patient.id}
-                    className="rounded-2xl border border-border bg-card p-4"
+                    className="border-border bg-card rounded-2xl border p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <span className="font-heading text-base font-bold text-foreground break-words">
+                      <div className="min-w-0 flex-1">
+                        <span className="font-heading text-foreground text-base font-bold break-words">
                           {patient.name ?? 'Sem nome'}
                         </span>
                       </div>
@@ -198,14 +200,16 @@ function PatientsPage() {
                         {patient.sex === 1 ? 'M' : 'F'}
                       </Badge>
                     </div>
-                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                       <span className="inline-flex items-center gap-1.5">
                         <BadgeInfo className="h-3.5 w-3.5" />
                         {patient.age} anos
                       </span>
                       <span className="inline-flex items-center gap-1.5">
                         <Calendar className="h-3.5 w-3.5" />
-                        {new Date(patient.created_at).toLocaleDateString('pt-BR')}
+                        {new Date(patient.created_at).toLocaleDateString(
+                          'pt-BR',
+                        )}
                       </span>
                     </div>
                     <div className="mt-3 flex gap-2">
@@ -213,7 +217,7 @@ function PatientsPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => handleEvaluate(patient)}
-                        className="gap-1.5 rounded-lg w-full"
+                        className="w-full gap-1.5 rounded-lg"
                       >
                         <Stethoscope className="h-3.5 w-3.5" />
                         Avaliar
@@ -242,15 +246,15 @@ function Header() {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col gap-1">
-        <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="font-heading text-foreground text-xl font-bold tracking-tight sm:text-2xl">
           Pacientes
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Gerenciamento de pacientes cadastrados
         </p>
       </div>
       <Link to="/patients/new">
-        <Button className="gap-2 w-full sm:w-auto">
+        <Button className="w-full gap-2 sm:w-auto">
           <Plus className="h-4 w-4" />
           Novo Paciente
         </Button>
@@ -261,16 +265,16 @@ function Header() {
 
 function StatCard({ total }: { total: number }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-      <div className="rounded-2xl border border-border bg-card p-5 flex items-center gap-4 shadow-sm">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-          <Users className="h-[22px] w-[22px] text-primary" />
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div className="border-border bg-card flex items-center gap-4 rounded-2xl border p-5 shadow-sm">
+        <div className="bg-primary/10 flex h-11 w-11 items-center justify-center rounded-xl">
+          <Users className="text-primary h-[1.375rem] w-[1.375rem]" />
         </div>
         <div>
-          <div className="font-mono text-[34px] font-bold tracking-tight text-foreground">
+          <div className="text-foreground font-mono text-[2.125rem] font-bold tracking-tight">
             {total}
           </div>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             Total de pacientes
           </span>
         </div>
@@ -283,7 +287,7 @@ function LoadingSkeleton() {
   return (
     <>
       {/* Desktop skeleton */}
-      <div className="hidden sm:flex flex-col gap-3">
+      <div className="hidden flex-col gap-3 sm:flex">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="flex items-center gap-4">
             <Skeleton className="h-5 flex-1" />
@@ -297,7 +301,7 @@ function LoadingSkeleton() {
       {/* Mobile skeleton */}
       <div className="flex flex-col gap-3 sm:hidden">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-2xl border border-border bg-card p-4">
+          <div key={i} className="border-border bg-card rounded-2xl border p-4">
             <div className="flex items-start justify-between gap-3">
               <Skeleton className="h-5 flex-1" />
               <Skeleton className="h-5 w-10 rounded-full" />

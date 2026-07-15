@@ -29,10 +29,13 @@ function CustomTooltip({
   if (!active || !payload?.length) return null;
   const { name, weight } = payload[0].payload;
   return (
-    <div className="rounded-md border border-border/50 bg-popover px-3 py-1.5 text-xs shadow-md">
-      <p className="font-medium text-popover-foreground">{name}</p>
+    <div className="border-border/50 bg-popover rounded-md border px-3 py-1.5 text-xs shadow-md">
+      <p className="text-popover-foreground font-medium">{name}</p>
       <p className="text-muted-foreground">
-        importância: <span className="font-mono font-semibold text-popover-foreground">{weight.toFixed(4)}</span>
+        importância:{' '}
+        <span className="text-popover-foreground font-mono font-semibold">
+          {weight.toFixed(4)}
+        </span>
       </p>
     </div>
   );
@@ -54,7 +57,7 @@ export function RiskFactors() {
   return (
     <Card className="flex flex-col gap-4 p-6">
       <CardHeader className="flex flex-row items-center justify-between p-0">
-        <div className="flex flex-col gap-[3px]">
+        <div className="flex flex-col gap-[0.1875rem]">
           <CardTitle>Fatores mais Impactantes</CardTitle>
           <CardDescription>
             {isLoading ? (
@@ -66,7 +69,7 @@ export function RiskFactors() {
             )}
           </CardDescription>
         </div>
-        <BarChart3 className="h-5 w-5 shrink-0 text-muted-foreground/40" />
+        <BarChart3 className="text-muted-foreground/40 h-5 w-5 shrink-0" />
       </CardHeader>
       <CardContent className="flex min-h-0 flex-1 flex-col p-0">
         {isLoading ? (
@@ -79,9 +82,9 @@ export function RiskFactors() {
             ))}
           </div>
         ) : isEmpty ? (
-          <div className="flex flex-col items-center justify-center gap-2 py-8 my-auto">
-            <Activity className="h-6 w-6 text-muted-foreground/50" />
-            <span className="text-sm text-muted-foreground">
+          <div className="my-auto flex flex-col items-center justify-center gap-2 py-8">
+            <Activity className="text-muted-foreground/50 h-6 w-6" />
+            <span className="text-muted-foreground text-sm">
               Nenhum dado de avaliação disponível
             </span>
           </div>
@@ -109,7 +112,9 @@ export function RiskFactors() {
                   <LabelList
                     dataKey="weight"
                     position="top"
-                    formatter={(v) => (typeof v === 'number' ? v.toFixed(2) : String(v ?? ''))}
+                    formatter={(v) =>
+                      typeof v === 'number' ? v.toFixed(2) : String(v ?? '')
+                    }
                     style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}
                     fill="var(--color-muted-foreground)"
                   />

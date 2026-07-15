@@ -15,7 +15,7 @@ function SortHeader<T>({
   return (
     <button
       onClick={() => column.toggleSorting(sorted === 'asc')}
-      className="flex items-center gap-1.5 cursor-pointer select-none hover:text-foreground transition-colors"
+      className="hover:text-foreground flex cursor-pointer items-center gap-1.5 transition-colors select-none"
     >
       {label}
       {sorted === 'asc' ? (
@@ -23,7 +23,7 @@ function SortHeader<T>({
       ) : sorted === 'desc' ? (
         <ArrowDown className="h-3.5 w-3.5" />
       ) : (
-        <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground/50" />
+        <ArrowUpDown className="text-muted-foreground/50 h-3.5 w-3.5" />
       )}
     </button>
   );
@@ -37,7 +37,7 @@ export function usePatientColumns(
       accessorKey: 'name',
       header: ({ column }) => <SortHeader label="Nome" column={column} />,
       cell: ({ getValue }) => (
-        <span className="inline-block truncate max-w-[180px] lg:max-w-[280px] font-medium text-foreground">
+        <span className="text-foreground inline-block max-w-[11.25rem] truncate font-medium lg:max-w-[17.5rem]">
           {String(getValue() ?? 'Sem nome')}
         </span>
       ),
@@ -46,9 +46,7 @@ export function usePatientColumns(
       accessorKey: 'age',
       header: ({ column }) => <SortHeader label="Idade" column={column} />,
       cell: ({ getValue }) => (
-        <span className="text-muted-foreground">
-          {String(getValue())} anos
-        </span>
+        <span className="text-muted-foreground">{String(getValue())} anos</span>
       ),
     },
     {
@@ -65,9 +63,7 @@ export function usePatientColumns(
     },
     {
       accessorKey: 'created_at',
-      header: ({ column }) => (
-        <SortHeader label="Cadastrado" column={column} />
-      ),
+      header: ({ column }) => <SortHeader label="Cadastrado" column={column} />,
       cell: ({ getValue }) => (
         <span className="text-muted-foreground">
           {new Date(String(getValue())).toLocaleDateString('pt-BR')}

@@ -17,6 +17,7 @@
     "format:api": "cd apps/server && uv run ruff format",
     "format:web": "cd apps/web && npm run format",
     "format:web:fix": "cd apps/web && npm run format:fix",
+    "install:all": "npm install && cd apps/web && npm install && cd ../server && uv sync",
     "format": "npm run format:api && npm run format:web",
     "typecheck:api": "cd apps/server && uv run pyright",
     "typecheck:web": "cd apps/web && npm run typecheck",

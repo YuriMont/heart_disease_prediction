@@ -7,19 +7,19 @@ export const Route = createFileRoute('/patients/new')({
 
 function NewPatientPage() {
   return (
-    <div className="flex flex-col gap-[22px]">
+    <div className="flex flex-col gap-[1.375rem]">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-[5px]">
-          <div className="flex items-center gap-[7px]">
-            <span className="text-xs font-medium text-muted-foreground">
+        <div className="flex flex-col gap-[0.3125rem]">
+          <div className="flex items-center gap-[0.4375rem]">
+            <span className="text-muted-foreground text-xs font-medium">
               Pacientes
             </span>
             <span className="text-muted-foreground">/</span>
-            <span className="text-xs font-semibold text-primary">
+            <span className="text-primary text-xs font-semibold">
               Novo Paciente
             </span>
           </div>
-          <h1 className="font-heading text-xl sm:text-2xl font-bold text-foreground">
+          <h1 className="font-heading text-foreground text-xl font-bold sm:text-2xl">
             Cadastro de Paciente
           </h1>
         </div>

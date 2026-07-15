@@ -7,11 +7,11 @@ interface RecommendationsProps {
 
 export function Recommendations({ recommendations }: RecommendationsProps) {
   return (
-    <Card className="flex flex-col bg-primary justify-between p-6 flex-1">
+    <Card className="bg-primary flex flex-1 flex-col justify-between p-6">
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="h-5 w-5 text-primary-foreground" />
-          <h3 className="font-heading text-base font-bold text-primary-foreground">
+        <div className="flex items-center gap-2">
+          <Sparkles className="text-primary-foreground h-5 w-5" />
+          <h3 className="font-heading text-primary-foreground text-base font-bold">
             Recomendações
           </h3>
         </div>
@@ -19,16 +19,16 @@ export function Recommendations({ recommendations }: RecommendationsProps) {
           {recommendations.map((rec, index) => (
             <li
               key={index}
-              className="flex items-start gap-2 text-sm text-primary-foreground/70"
+              className="text-primary-foreground/70 flex items-start gap-2 text-sm"
             >
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-foreground/40" />
+              <span className="bg-primary-foreground/40 mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" />
               {rec}
             </li>
           ))}
         </ul>
       </div>
-      <div className="mt-5 rounded-lg bg-primary-foreground/10 p-3">
-        <p className="text-xs text-primary-foreground/60">
+      <div className="bg-primary-foreground/10 mt-5 rounded-lg p-3">
+        <p className="text-primary-foreground/60 text-xs">
           Resultado gerado por IA para suporte à decisão clínica. Não substitui
           a avaliação médica profissional.
         </p>

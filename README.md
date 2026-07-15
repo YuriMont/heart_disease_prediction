@@ -56,15 +56,14 @@ O **código** (variáveis, funções, rotas, banco de dados) usa nomes em **ingl
 ```bash
 git clone <url>
 cd <repo>
-npm install                     # dependências do monorepo
-cd apps/server && uv sync && cd ../..
+npm run install:all                 # dependências (root + web + server)
 cp apps/web/.env.example apps/web/.env
 ```
 
 ### Redis (via Docker)
 
 ```bash
-docker run -d --name cardiopredict-redis -p 6379:6379 redis:7-alpine
+docker run -d --name cardiopredict-redis -p 6379:6379 redis:8-alpine
 ```
 
 A API conecta em `localhost:6379` por padrão. Para configurar host/porta customizados, defina as variáveis `REDIS_HOST` e `REDIS_PORT` no ambiente do servidor.

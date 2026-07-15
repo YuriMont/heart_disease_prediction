@@ -57,6 +57,9 @@ pibic/
 ## Comandos Essenciais
 
 ```bash
+# Instalação
+npm run install:all      # instalar dependências (root + web + server)
+
 # Desenvolvimento
 npm run dev              # front + back
 npm run dev:web          # só front

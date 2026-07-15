@@ -23,7 +23,7 @@ export function StatCard({
   trendColor = 'text-risk-low',
 }: StatCardProps) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-[22px] shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-[2px]">
+    <div className="border-border bg-card flex flex-col gap-4 rounded-2xl border p-[1.375rem] shadow-sm transition-all duration-200 hover:-translate-y-[0.125rem] hover:shadow-md">
       <div className="flex items-center justify-between">
         <div
           className={cn(
@@ -31,7 +31,7 @@ export function StatCard({
             iconBg,
           )}
         >
-          <Icon className={cn('h-[22px] w-[22px]', iconColor)} />
+          <Icon className={cn('h-[1.375rem] w-[1.375rem]', iconColor)} />
         </div>
         {trend && (
           <div
@@ -47,10 +47,10 @@ export function StatCard({
         )}
       </div>
       <div>
-        <div className="font-mono text-[34px] font-bold leading-tight tracking-tight text-foreground">
+        <div className="text-foreground font-mono text-[2.125rem] leading-tight font-bold tracking-tight">
           {value}
         </div>
-        <div className="mt-1 text-[13px] font-medium text-muted-foreground">
+        <div className="text-muted-foreground mt-1 text-[0.8125rem] font-medium">
           {label}
         </div>
       </div>

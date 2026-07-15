@@ -23,13 +23,13 @@ export function ContributingFactors({
         <CardTitle>Principais Fatores Contribuintes</CardTitle>
       </CardHeader>
       <ScrollArea className="h-[34rem]">
-        <CardContent className="flex-1 flex flex-col gap-3 p-0">
+        <CardContent className="flex flex-1 flex-col gap-3 p-0">
           {isLoading && (
             <div className="flex flex-col gap-3">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3"
+                  className="bg-muted/50 flex items-center justify-between rounded-xl px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
                     <Skeleton className="h-7 w-7 rounded-full" />
@@ -46,7 +46,7 @@ export function ContributingFactors({
               return (
                 <div
                   key={index}
-                  className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3"
+                  className="bg-muted/50 flex items-center justify-between rounded-xl px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -55,13 +55,13 @@ export function ContributingFactors({
                       }`}
                     >
                       {isPositive ? (
-                        <ArrowUp className="h-3.5 w-3.5 text-risk-high" />
+                        <ArrowUp className="text-risk-high h-3.5 w-3.5" />
                       ) : (
-                        <ArrowDown className="h-3.5 w-3.5 text-risk-low" />
+                        <ArrowDown className="text-risk-low h-3.5 w-3.5" />
                       )}
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[13px] font-medium text-foreground">
+                      <span className="text-foreground text-[0.8125rem] font-medium">
                         {factor.variable} {factor.value}
                       </span>
                     </div>

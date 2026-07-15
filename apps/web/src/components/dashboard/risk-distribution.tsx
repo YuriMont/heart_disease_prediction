@@ -50,14 +50,14 @@ export function RiskDistribution() {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col sm:flex-row items-center gap-6 p-0">
+      <CardContent className="flex flex-1 flex-col items-center gap-6 p-0 sm:flex-row">
         {isLoading ? (
           <div className="flex w-full items-center gap-6">
-            <Skeleton className="h-[180px] w-[180px] rounded-full" />
+            <Skeleton className="h-[11.25rem] w-[11.25rem] rounded-full" />
             <div className="flex flex-1 flex-col gap-4">
               {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="flex items-center gap-2.5">
-                  <Skeleton className="h-[11px] w-[11px] rounded-full" />
+                  <Skeleton className="h-[0.6875rem] w-[0.6875rem] rounded-full" />
                   <div className="flex flex-1 flex-col gap-1">
                     <Skeleton className="h-3.5 w-24" />
                     <Skeleton className="h-3 w-16" />
@@ -69,7 +69,7 @@ export function RiskDistribution() {
           </div>
         ) : (
           <>
-            <div className="relative h-[180px] w-[180px] shrink-0">
+            <div className="relative h-[11.25rem] w-[11.25rem] shrink-0">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -96,17 +96,17 @@ export function RiskDistribution() {
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 {isEmpty ? (
                   <>
-                    <Activity className="h-6 w-6 text-muted-foreground/50 mb-1" />
-                    <span className="text-xs font-medium text-muted-foreground">
+                    <Activity className="text-muted-foreground/50 mb-1 h-6 w-6" />
+                    <span className="text-muted-foreground text-xs font-medium">
                       Sem dados
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="font-mono text-[30px] font-bold tracking-tight text-foreground">
+                    <span className="text-foreground font-mono text-[1.875rem] font-bold tracking-tight">
                       {formatNumber(total)}
                     </span>
-                    <span className="text-xs font-medium text-muted-foreground">
+                    <span className="text-muted-foreground text-xs font-medium">
                       pacientes
                     </span>
                   </>
@@ -115,7 +115,7 @@ export function RiskDistribution() {
             </div>
             {isEmpty ? (
               <div className="flex flex-1 items-center justify-center">
-                <span className="text-sm text-muted-foreground">
+                <span className="text-muted-foreground text-sm">
                   Nenhuma avaliação realizada ainda
                 </span>
               </div>
@@ -124,14 +124,14 @@ export function RiskDistribution() {
                 {chartData.map((entry) => (
                   <div key={entry.risk} className="flex items-center gap-2.5">
                     <div
-                      className="h-[11px] w-[11px] shrink-0 rounded-full"
+                      className="h-[0.6875rem] w-[0.6875rem] shrink-0 rounded-full"
                       style={{ backgroundColor: entry.color }}
                     />
                     <div className="flex flex-1 flex-col">
-                      <span className="text-[13px] font-semibold text-foreground">
+                      <span className="text-foreground text-[0.8125rem] font-semibold">
                         {entry.name}
                       </span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-muted-foreground text-xs">
                         {formatNumber(entry.value)} pacientes
                       </span>
                     </div>

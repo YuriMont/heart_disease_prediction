@@ -22,20 +22,20 @@ export function MainLayout() {
   }, [selectedModel, models, setSelectedModel]);
 
   return (
-    <div className="flex h-screen w-full bg-background">
+    <div className="bg-background flex h-screen w-full">
       <Sidebar />
 
       <ScrollArea className="flex-1">
         {/* Mobile header bar */}
-        <div className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background px-4 py-3 lg:hidden">
+        <div className="border-border bg-background sticky top-0 z-30 flex items-center gap-3 border-b px-4 py-3 lg:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-lg p-1.5 text-foreground/60 hover:bg-muted hover:text-foreground"
+            className="text-foreground/60 hover:bg-muted hover:text-foreground rounded-lg p-1.5"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <HeartPulse className="h-5 w-5 text-primary" />
-          <span className="font-heading text-base font-bold text-foreground">
+          <HeartPulse className="text-primary h-5 w-5" />
+          <span className="font-heading text-foreground text-base font-bold">
             CardioPredict
           </span>
         </div>

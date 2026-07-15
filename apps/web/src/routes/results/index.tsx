@@ -70,9 +70,7 @@ function ResultsPage() {
       limit: 20,
       patient_name: searchName || undefined,
       has_disease:
-        filterResult === 'all'
-          ? undefined
-          : filterResult === 'disease',
+        filterResult === 'all' ? undefined : filterResult === 'disease',
       model_used: filterModel === 'all' ? undefined : filterModel,
     });
   };
@@ -90,9 +88,9 @@ function ResultsPage() {
         header: 'Paciente',
         accessorKey: 'patient_name',
         cell: ({ row }) => (
-          <span className="inline-block truncate max-w-[160px] lg:max-w-[240px]">
+          <span className="inline-block max-w-[10rem] truncate lg:max-w-[15rem]">
             {row.original.patient_name ??
-            `#${row.original.paciente_id.slice(0, 8)}`}
+              `#${row.original.paciente_id.slice(0, 8)}`}
           </span>
         ),
       },
@@ -117,7 +115,7 @@ function ResultsPage() {
         header: 'Modelo',
         accessorKey: 'model_used',
         cell: ({ row }) => (
-          <span className="inline-block truncate max-w-[120px] text-muted-foreground">
+          <span className="text-muted-foreground inline-block max-w-[7.5rem] truncate">
             {row.original.model_used}
           </span>
         ),
@@ -181,28 +179,26 @@ function ResultsPage() {
     <div className="flex flex-col gap-6">
       <Header />
 
-      <div className="flex flex-col sm:flex-row items-end gap-3 rounded-xl border border-border bg-card p-3">
-        <div className="flex flex-col gap-1 w-full">
-          <Label className="text-xs text-muted-foreground ml-1">
-            Paciente
-          </Label>
+      <div className="border-border bg-card flex flex-col items-end gap-3 rounded-xl border p-3 sm:flex-row">
+        <div className="flex w-full flex-col gap-1">
+          <Label className="text-muted-foreground ml-1 text-xs">Paciente</Label>
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="Buscar por nome do paciente..."
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
-              className="pl-9 rounded-xl"
+              className="rounded-xl pl-9"
             />
           </div>
         </div>
 
-        <div className="flex flex-col gap-1 w-full sm:w-auto">
-          <Label className="text-xs text-muted-foreground ml-1">
+        <div className="flex w-full flex-col gap-1 sm:w-auto">
+          <Label className="text-muted-foreground ml-1 text-xs">
             Resultado
           </Label>
           <Select value={filterResult} onValueChange={setFilterResult}>
-            <SelectTrigger className="w-full sm:w-36 rounded-xl">
+            <SelectTrigger className="w-full rounded-xl sm:w-36">
               <SelectValue placeholder="Resultado" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
@@ -218,10 +214,10 @@ function ResultsPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex flex-col gap-1 w-full sm:w-auto">
-          <Label className="text-xs text-muted-foreground ml-1">Modelo</Label>
+        <div className="flex w-full flex-col gap-1 sm:w-auto">
+          <Label className="text-muted-foreground ml-1 text-xs">Modelo</Label>
           <Select value={filterModel} onValueChange={setFilterModel}>
-            <SelectTrigger className="w-full sm:w-36 rounded-xl">
+            <SelectTrigger className="w-full rounded-xl sm:w-36">
               <SelectValue placeholder="Modelo" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
@@ -240,16 +236,19 @@ function ResultsPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-full sm:w-auto gap-3">
+        <div className="flex w-full gap-3 sm:w-auto">
           <Button
             variant="outline"
             onClick={handleClear}
-            className="gap-2 flex-1 sm:flex-none rounded-xl"
+            className="flex-1 gap-2 rounded-xl sm:flex-none"
           >
             <X className="h-4 w-4" />
             Limpar
           </Button>
-          <Button onClick={handleSearch} className="gap-2 flex-1 sm:flex-none rounded-xl">
+          <Button
+            onClick={handleSearch}
+            className="flex-1 gap-2 rounded-xl sm:flex-none"
+          >
             <Search className="h-4 w-4" />
             Buscar
           </Button>
@@ -257,7 +256,7 @@ function ResultsPage() {
       </div>
 
       <Card className="p-6">
-        <CardHeader className="p-0 mb-4">
+        <CardHeader className="p-0">
           <CardTitle>Avaliações Concluídas</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 p-0">
@@ -319,11 +318,11 @@ function ResultsPage() {
                 {evaluations.map((ev) => (
                   <div
                     key={ev.id}
-                    className="rounded-2xl border border-border bg-card p-4"
+                    className="border-border bg-card rounded-2xl border p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <span className="font-heading text-base font-bold text-foreground break-words">
+                      <div className="min-w-0 flex-1">
+                        <span className="font-heading text-foreground text-base font-bold break-words">
                           {ev.patient_name ?? `#${ev.paciente_id.slice(0, 8)}`}
                         </span>
                       </div>
@@ -334,9 +333,9 @@ function ResultsPage() {
                         {ev.has_disease ? 'Doença' : 'Saudável'}
                       </Badge>
                     </div>
-                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
                       <span className="inline-flex items-center gap-1.5">
-                        <span className="font-mono text-base font-bold text-foreground">
+                        <span className="text-foreground font-mono text-base font-bold">
                           {Math.round(ev.disease_probability * 100)}%
                         </span>
                         <span className="text-xs">probabilidade</span>
@@ -352,7 +351,11 @@ function ResultsPage() {
                     </div>
                     <div className="mt-3">
                       <Link to={`/evaluation/${ev.id}/`} className="block">
-                        <Button variant="outline" size="sm" className="gap-1.5 rounded-lg w-full">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full gap-1.5 rounded-lg"
+                        >
                           <Eye className="h-3.5 w-3.5" />
                           Visualizar
                         </Button>
@@ -362,8 +365,8 @@ function ResultsPage() {
                 ))}
               </div>
 
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pt-2">
-                <span className="text-xs text-muted-foreground">
+              <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                <span className="text-muted-foreground text-xs">
                   Mostrando {showStart}–{showEnd} de {meta?.total ?? 0}
                 </span>
                 {(meta?.total_pages ?? 1) > 1 && (
@@ -378,7 +381,7 @@ function ResultsPage() {
                       <ChevronLeft className="h-3.5 w-3.5" />
                       <span className="hidden sm:inline">Anterior</span>
                     </Button>
-                    <span className="text-xs text-muted-foreground tabular-nums">
+                    <span className="text-muted-foreground text-xs tabular-nums">
                       {table.getState().pagination.pageIndex + 1} /{' '}
                       {meta?.total_pages ?? 1}
                     </span>
@@ -407,16 +410,16 @@ function Header() {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col gap-1">
-        <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="font-heading text-foreground text-xl font-bold tracking-tight sm:text-2xl">
           Resultados
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Histórico de avaliação e predição
         </p>
       </div>
       <div className="flex items-center gap-3.5">
         <Link to="/evaluation">
-          <Button className="gap-2 w-full sm:w-auto">
+          <Button className="w-full gap-2 sm:w-auto">
             <ClipboardList className="h-4 w-4" />
             Nova Avaliação
           </Button>
@@ -430,7 +433,7 @@ function LoadingSkeleton() {
   return (
     <>
       {/* Desktop skeleton */}
-      <div className="hidden sm:flex flex-col gap-3">
+      <div className="hidden flex-col gap-3 sm:flex">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="flex items-center gap-4">
             <Skeleton className="h-5 flex-1" />
@@ -445,7 +448,7 @@ function LoadingSkeleton() {
       {/* Mobile skeleton */}
       <div className="flex flex-col gap-3 sm:hidden">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-2xl border border-border bg-card p-4">
+          <div key={i} className="border-border bg-card rounded-2xl border p-4">
             <div className="flex items-start justify-between gap-3">
               <Skeleton className="h-5 flex-1" />
               <Skeleton className="h-5 w-16 rounded-full" />

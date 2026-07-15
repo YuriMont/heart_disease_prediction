@@ -21,10 +21,10 @@ const navItems = [
 
 function EcgAmbient() {
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden opacity-[0.04]">
+    <div className="absolute right-0 bottom-0 left-0 h-32 overflow-hidden opacity-[0.04]">
       <svg
         viewBox="0 0 600 120"
-        className="h-full w-[600px] animate-ecg"
+        className="animate-ecg h-full w-[37.5rem]"
         preserveAspectRatio="none"
       >
         <path
@@ -66,16 +66,16 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex w-[264px] flex-col gap-2 overflow-hidden bg-sidebar p-7',
+          'bg-sidebar fixed inset-y-0 left-0 z-50 flex w-[16.5rem] flex-col gap-2 overflow-hidden p-7',
           'transition-transform duration-300 ease-in-out',
           open ? 'translate-x-0' : '-translate-x-full',
-          'lg:relative lg:translate-x-0 lg:transition-none lg:h-full',
+          'lg:relative lg:h-full lg:translate-x-0 lg:transition-none',
         )}
       >
         {/* Close button — mobile only */}
         <button
           onClick={close}
-          className="absolute right-4 top-4 z-10 rounded-lg p-1 text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground lg:hidden"
+          className="text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground absolute top-4 right-4 z-10 rounded-lg p-1 lg:hidden"
         >
           <X className="h-5 w-5" />
         </button>
@@ -84,74 +84,74 @@ export function Sidebar() {
 
         {/* Logo */}
         <div className="flex items-center gap-3 pb-7">
-          <div className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-primary shadow-sm">
-            <HeartPulse className="h-6 w-6 text-primary-foreground" />
+          <div className="bg-primary flex h-[2.625rem] w-[2.625rem] items-center justify-center rounded-xl shadow-sm">
+            <HeartPulse className="text-primary-foreground h-6 w-6" />
           </div>
           <div className="flex flex-col">
-            <span className="font-heading text-[17px] font-bold text-sidebar-foreground">
+            <span className="font-heading text-sidebar-foreground text-[1.0625rem] font-bold">
               CardioPredict
             </span>
-            <span className="text-xs font-semibold uppercase tracking-[1.5px] text-sidebar-accent-foreground/60">
+            <span className="text-sidebar-accent-foreground/60 text-xs font-semibold tracking-[0.09375rem] uppercase">
               IA · Cardiologia
             </span>
           </div>
         </div>
 
-      {/* Nav Label */}
-      <span className="text-xs font-semibold uppercase tracking-wider text-sidebar-accent-foreground/50">
-        Menu
-      </span>
+        {/* Nav Label */}
+        <span className="text-sidebar-accent-foreground/50 text-xs font-semibold tracking-wider uppercase">
+          Menu
+        </span>
 
-      {/* Nav Items */}
-      <nav className="flex flex-col gap-1">
-        {navItems.map((item) => {
-          const active = isActive(item.to);
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(
-                'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200',
-                active
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground',
-              )}
-            >
-              <item.icon
+        {/* Nav Items */}
+        <nav className="flex flex-col gap-1">
+          {navItems.map((item) => {
+            const active = isActive(item.to);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
                 className={cn(
-                  'h-5 w-5 shrink-0',
+                  'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200',
                   active
-                    ? 'text-primary-foreground'
-                    : 'text-sidebar-foreground/40',
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground',
                 )}
-              />
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+              >
+                <item.icon
+                  className={cn(
+                    'h-5 w-5 shrink-0',
+                    active
+                      ? 'text-primary-foreground'
+                      : 'text-sidebar-foreground/40',
+                  )}
+                />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-      {/* Spacer */}
-      <div className="flex-1" />
+        {/* Spacer */}
+        <div className="flex-1" />
 
-      {/* Model Status */}
-      {selectedModel && (
-        <div className="rounded-2xl border border-sidebar-border bg-sidebar-accent/50 p-4 backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <div className="h-2 w-2 rounded-full bg-risk-low" />
-              <div className="absolute inset-0 h-2 w-2 animate-pulse-ring rounded-full bg-risk-low/30" />
+        {/* Model Status */}
+        {selectedModel && (
+          <div className="border-sidebar-border bg-sidebar-accent/50 rounded-2xl border p-4 backdrop-blur-sm">
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <div className="bg-risk-low h-2 w-2 rounded-full" />
+                <div className="animate-pulse-ring bg-risk-low/30 absolute inset-0 h-2 w-2 rounded-full" />
+              </div>
+              <span className="text-sidebar-foreground text-xs font-semibold">
+                Modelo Ativo
+              </span>
             </div>
-            <span className="text-xs font-semibold text-sidebar-foreground">
-              Modelo Ativo
-            </span>
+            <p className="text-sidebar-foreground/50 mt-2 text-xs leading-relaxed">
+              {selectedModel?.name} — {selectedModel.description}
+            </p>
           </div>
-          <p className="mt-2 text-xs text-sidebar-foreground/50 leading-relaxed">
-            {selectedModel?.name} — {selectedModel.description}
-          </p>
-        </div>
-      )}
-    </aside>
+        )}
+      </aside>
     </>
   );
 }

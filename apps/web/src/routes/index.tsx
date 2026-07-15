@@ -14,7 +14,7 @@ function Dashboard() {
     <div className="flex flex-col gap-6">
       <DashboardHeader />
       <StatCardsRow />
-      <div className="grid grid-cols-1 xl:grid-cols-[420px_1fr] gap-5">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[26.25rem_1fr]">
         <RiskDistribution />
         <RiskFactors />
       </div>

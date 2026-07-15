@@ -69,12 +69,12 @@ function ModelsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2 text-sm">
             <span>Painel</span>
             <span>/</span>
             <span className="text-foreground">Modelos de IA</span>
           </div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="font-heading text-foreground text-2xl font-bold tracking-tight">
             Modelos de Inteligência Artificial
           </h1>
         </div>
@@ -88,14 +88,14 @@ function ModelsPage() {
 
           {/* Models Table */}
           <Card className="p-6">
-            <CardHeader className="p-0 mb-4">
+            <CardHeader className="p-0">
               <CardTitle>Modelos Disponíveis</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               {isLoading ? (
                 <>
                   {/* Desktop skeleton */}
-                  <div className="hidden sm:flex flex-col gap-3">
+                  <div className="hidden flex-col gap-3 sm:flex">
                     {Array.from({ length: 4 }).map((_, i) => (
                       <div key={i} className="flex items-center gap-4">
                         <Skeleton className="h-5 w-28" />
@@ -110,14 +110,14 @@ function ModelsPage() {
                     {Array.from({ length: 3 }).map((_, i) => (
                       <div
                         key={i}
-                        className="rounded-2xl border border-border bg-card p-4"
+                        className="border-border bg-card rounded-2xl border p-4"
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1">
                             <Skeleton className="h-5 w-32" />
                             <Skeleton className="mt-1 h-4 w-full" />
                           </div>
-                          <Skeleton className="h-5 w-16 rounded-full shrink-0" />
+                          <Skeleton className="h-5 w-16 shrink-0 rounded-full" />
                         </div>
                         <div className="mt-3 flex gap-2">
                           <Skeleton className="h-9 flex-1 rounded-lg" />
@@ -137,7 +137,7 @@ function ModelsPage() {
                           <TableHead>Modelo</TableHead>
                           <TableHead>Descrição</TableHead>
                           <TableHead>Status</TableHead>
-                          <TableHead className="w-[50px]">Ações</TableHead>
+                          <TableHead className="w-[3.125rem]">Ações</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -150,10 +150,10 @@ function ModelsPage() {
                                 : ''
                             }
                           >
-                            <TableCell className="font-medium truncate max-w-[140px]">
+                            <TableCell className="max-w-[8.75rem] truncate font-medium">
                               {model.name}
                             </TableCell>
-                            <TableCell className="text-muted-foreground truncate max-w-[220px]">
+                            <TableCell className="text-muted-foreground max-w-[13.75rem] truncate">
                               {model.description}
                             </TableCell>
                             <TableCell>
@@ -222,11 +222,11 @@ function ModelsPage() {
                           )}
                         >
                           <div className="flex items-start justify-between gap-3">
-                            <div className="flex-1 min-w-0">
-                              <span className="font-heading text-base font-bold text-foreground break-words">
+                            <div className="min-w-0 flex-1">
+                              <span className="font-heading text-foreground text-base font-bold break-words">
                                 {model.name}
                               </span>
-                              <p className="mt-0.5 text-sm text-muted-foreground break-words">
+                              <p className="text-muted-foreground mt-0.5 text-sm break-words">
                                 {model.description}
                               </p>
                             </div>
@@ -242,7 +242,7 @@ function ModelsPage() {
                               variant="outline"
                               size="sm"
                               onClick={() => setIsVariablesOpen(true)}
-                              className="gap-1.5 rounded-lg flex-1"
+                              className="flex-1 gap-1.5 rounded-lg"
                             >
                               <Info className="h-3.5 w-3.5" />
                               Variáveis
@@ -251,7 +251,7 @@ function ModelsPage() {
                               <Button
                                 size="sm"
                                 onClick={() => setSelectedModel(model)}
-                                className="gap-1.5 rounded-lg flex-1"
+                                className="flex-1 gap-1.5 rounded-lg"
                               >
                                 <Rocket className="h-3.5 w-3.5" />
                                 Selecionar
@@ -272,44 +272,44 @@ function ModelsPage() {
         <div className="flex flex-col gap-6">
           {/* Performance */}
           <Card className="p-6">
-            <CardHeader className="p-0 mb-4">
+            <CardHeader className="p-0">
               <CardTitle>Desempenho</CardTitle>
             </CardHeader>
-            <CardContent className="p-0 flex flex-col gap-5 *:border-b *:border-border *:pb-5 [&>*:last-child]:border-b-0 [&>*:last-child]:pb-0">
+            <CardContent className="*:border-border flex flex-col gap-5 p-0 *:border-b *:pb-5 [&>*:last-child]:border-b-0 [&>*:last-child]:pb-0">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Acurácia
                   </span>
-                  <span className="font-mono text-sm font-bold text-foreground">
+                  <span className="text-foreground font-mono text-sm font-bold">
                     {((metrics?.accuracy ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Recall</span>
-                  <span className="font-mono text-sm font-bold text-foreground">
+                  <span className="text-muted-foreground text-sm">Recall</span>
+                  <span className="text-foreground font-mono text-sm font-bold">
                     {((metrics?.recall ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Precisão
                   </span>
-                  <span className="font-mono text-sm font-bold text-foreground">
+                  <span className="text-foreground font-mono text-sm font-bold">
                     {((metrics?.precision ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     F1 Score
                   </span>
-                  <span className="font-mono text-sm font-bold text-foreground">
+                  <span className="text-foreground font-mono text-sm font-bold">
                     {((metrics?.f1_score ?? 0) * 100).toFixed(2)}%
                   </span>
                 </div>
@@ -353,15 +353,15 @@ function ModelsPage() {
                     <TableBody>
                       {(features ?? []).map((f) => (
                         <TableRow key={f.field}>
-                          <TableCell className="font-mono text-xs font-medium truncate max-w-[120px]">
+                          <TableCell className="max-w-[7.5rem] truncate font-mono text-xs font-medium">
                             {f.field}
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell truncate max-w-[180px]">
-                            <span className="inline-block truncate max-w-[180px]">
+                          <TableCell className="hidden max-w-[11.25rem] truncate sm:table-cell">
+                            <span className="inline-block max-w-[11.25rem] truncate">
                               {f.short_name_pt ?? f.display_name}
                             </span>
                           </TableCell>
-                          <TableCell className="text-muted-foreground truncate max-w-[150px]">
+                          <TableCell className="text-muted-foreground max-w-[9.375rem] truncate">
                             {f.categories
                               ? Object.keys(f.categories).join(', ')
                               : (f.unit ?? '-')}

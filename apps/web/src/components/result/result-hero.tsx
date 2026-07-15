@@ -39,7 +39,7 @@ export function ResultHero({
 
   return (
     <Card className="flex flex-col items-center gap-6 p-8">
-      <div className="relative h-[200px] w-[200px]">
+      <div className="relative h-[12.5rem] w-[12.5rem]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -60,7 +60,7 @@ export function ResultHero({
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
-            className="font-mono text-[46px] font-bold tracking-tight"
+            className="font-mono text-[2.875rem] font-bold tracking-tight"
             style={{ color: riskColor }}
           >
             {(probability * 100).toFixed(1)}%
@@ -77,10 +77,10 @@ export function ResultHero({
       </Badge>
 
       <div className="text-center">
-        <h2 className="font-heading text-[28px] font-bold tracking-tight text-foreground">
+        <h2 className="font-heading text-foreground text-[1.75rem] font-bold tracking-tight">
           {riskLabel}
         </h2>
-        <p className="mt-2 max-w-md text-sm text-muted-foreground">
+        <p className="text-muted-foreground mt-2 max-w-md text-sm">
           {temDoenca
             ? `O modelo ${modelName} identificou uma probabilidade de ${(probability * 100).toFixed(1)}% de doença cardíaca.`
             : 'O modelo identificou um baixo risco de doença cardíaca com base nos dados fornecidos.'}
@@ -88,21 +88,21 @@ export function ResultHero({
       </div>
 
       <div className="flex flex-wrap justify-center gap-3">
-        <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
-          <span className="text-xs text-muted-foreground">Resultado:</span>
-          <span className="text-xs font-semibold text-foreground">
+        <div className="bg-muted flex items-center gap-2 rounded-full px-4 py-2">
+          <span className="text-muted-foreground text-xs">Resultado:</span>
+          <span className="text-foreground text-xs font-semibold">
             {temDoenca ? 'Possível doença' : 'Sem doença'}
           </span>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
-          <span className="text-xs text-muted-foreground">Confiança:</span>
-          <span className="text-xs font-semibold text-foreground">
+        <div className="bg-muted flex items-center gap-2 rounded-full px-4 py-2">
+          <span className="text-muted-foreground text-xs">Confiança:</span>
+          <span className="text-foreground text-xs font-semibold">
             Alta ({confidence}%)
           </span>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
-          <span className="text-xs text-muted-foreground">Modelo:</span>
-          <span className="text-xs font-semibold text-foreground">
+        <div className="bg-muted flex items-center gap-2 rounded-full px-4 py-2">
+          <span className="text-muted-foreground text-xs">Modelo:</span>
+          <span className="text-foreground text-xs font-semibold">
             {modelName}
           </span>
         </div>
