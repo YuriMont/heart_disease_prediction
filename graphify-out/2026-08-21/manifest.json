@@ -165,8 +165,8 @@
     "semantic_hash": ""
   },
   "apps/server/src/machine_learning/data.py": {
-    "mtime": 1787006858.2231345,
-    "ast_hash": "4af25b46db6a703c9bf2ccb0423a5347",
+    "mtime": 1783726975.3646464,
+    "ast_hash": "a02fd4050da9f9aa06e7a64d44504454",
     "semantic_hash": ""
   },
   "apps/server/src/machine_learning/evaluation.py": {
@@ -1127,16 +1127,6 @@
   "apps/web/src/assets/vite.svg": {
     "mtime": 1782164291.2290256,
     "ast_hash": "9960a24288958394ac50e57ff638b036",
-    "semantic_hash": ""
-  },
-  ".claude/settings.json": {
-    "mtime": 1787338347.7168615,
-    "ast_hash": "1b07938b487b37130a88321a4d58c9a4",
-    "semantic_hash": ""
-  },
-  "CLAUDE.md": {
-    "mtime": 1787338682.7833068,
-    "ast_hash": "50aca075adcead33d9012436bd3d3db7",
     "semantic_hash": ""
   }
 }
