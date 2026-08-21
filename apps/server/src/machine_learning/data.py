@@ -31,8 +31,8 @@ def load_data():
 
 def fill_missing(X):
     X = X.copy()
-    X["ca"] = X["ca"].fillna(X["ca"].median())
-    X["thal"] = X["thal"].fillna(X["thal"].median())
+    X["ca"] = X["ca"].fillna(X["ca"].mode())
+    X["thal"] = X["thal"].fillna(X["thal"].mode())
     return X
 
 
