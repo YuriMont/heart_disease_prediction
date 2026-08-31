@@ -37,6 +37,12 @@
       "skillPath": "skills/productivity/grill-me/SKILL.md",
       "computedHash": "f321507f77702a54af1db66549ec1685fc625390d06c57d7949cdcda8eb1b5c7"
     },
+    "web-search": {
+      "source": "skills-101/superpowers",
+      "sourceType": "github",
+      "skillPath": "tools/llm/web-search/SKILL.md",
+      "computedHash": "3eef0d8ed249bc1ac663edc3d3b3b821b4eb35cae5b53cd943747f0d8dd9550b"
+    },
     "writing-plans": {
       "source": "obra/superpowers",
       "sourceType": "github",

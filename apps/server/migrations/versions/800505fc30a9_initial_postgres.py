@@ -1,8 +1,8 @@
-"""schema inicial
+"""initial_postgres
 
-Revision ID: 2fea789095e6
+Revision ID: 800505fc30a9
 Revises: 
-Create Date: 2026-06-25 09:53:22.814191
+Create Date: 2026-08-31 18:52:20.908011
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '2fea789095e6'
+revision: str = '800505fc30a9'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -34,7 +34,7 @@ def upgrade() -> None:
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name', name='uq_modelo_nome')
+    sa.UniqueConstraint('name', name='uq_model_name')
     )
     op.create_table('pacientes',
     sa.Column('id', sa.Uuid(), nullable=False),

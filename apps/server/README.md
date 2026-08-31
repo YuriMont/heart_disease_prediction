@@ -22,7 +22,7 @@ server/
 │   │       └── result.py          # /evaluations/{id}/factors, /importance
 │   │
 │   ├── database/
-│   │   ├── connection.py          # SQLAlchemy + SQLite + get_db
+│   │   ├── connection.py          # SQLAlchemy + PostgreSQL + get_db
 │   │   └── models/               # ORM
 │   │       ├── evaluation.py      # tabela evaluations
 │   │       ├── model.py           # tabela model_metrics
@@ -148,7 +148,7 @@ Rotas antigas (português) redirecionam com 308 para as novas.
 
 ## Banco de Dados
 
-SQLite em `src/database/cardiopredict.db`
+PostgreSQL configurado via `.env`
 
 | Tabela | Descrição |
 |--------|-----------|

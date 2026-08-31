@@ -11,3 +11,5 @@ wheels/
 
 # Banco de dados local (SQLite) — schema é versionado via migrations
 *.db
+
+.env

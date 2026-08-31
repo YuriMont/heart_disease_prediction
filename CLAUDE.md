@@ -11,7 +11,7 @@ Este projeto é um sistema de predição de risco de doença cardíaca utilizand
 ### Backend (`apps/server`)
 - **Framework:** FastAPI
 - **ML:** scikit-learn, imbalanced-learn
-- **Banco de Dados:** SQLite + SQLAlchemy + Alembic
+- **Banco de Dados:** PostgreSQL + SQLAlchemy + Alembic
 - **Cache:** Redis + fastapi-cache2
 - **Validação:** Pydantic
 - **Execução:** Uvicorn / uv

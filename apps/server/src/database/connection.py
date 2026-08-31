@@ -1,16 +1,19 @@
-from pathlib import Path
+import os
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from database.base import Base
 
-BASE_DIR = Path(__file__).parent
-DB_PATH = BASE_DIR / "cardiopredict.db"
+load_dotenv()
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/cardiopredict"
+)
 
 engine = create_engine(
-    f"sqlite:///{DB_PATH}",
-    connect_args={"check_same_thread": False},
+    DATABASE_URL,
     echo=False,
 )
 
