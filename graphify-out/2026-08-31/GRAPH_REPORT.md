@@ -1,16 +1,16 @@
-# Graph Report - pibic  (2026-08-31)
+# Graph Report - pibic  (2026-08-21)
 
 ## Corpus Check
-- 214 files · ~88,325 words
+- 214 files · ~88,003 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1506 nodes · 2249 edges · 173 communities (116 shown, 57 thin omitted)
+- 1492 nodes · 2234 edges · 167 communities (113 shown, 54 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 78 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c87d6368`
+- Built from commit: `b3f8350a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,7 @@
 - evaluations.ts
 - evaluations.zod.ts
 - routeTree.gen.ts
-- $id/index.tsx
+- dashboard.ts
 - scripts
 - CardioPredict — Guia de Desenvolvimento
 - form-wizard.tsx
@@ -30,15 +30,15 @@
 - compilerOptions
 - patients.ts
 - reports.ts
-- PaginatedResponse
-- dashboard.ts
+- patients.py
+- patient-form.tsx
 - CardioPredict — Predição de Doença Cardíaca
 - components.json
 - compilerOptions
 - Requirements
 - Visual Companion Guide
 - ADDED Requirements
-- results/index.tsx
+- patients/index.tsx
 - ADDED Requirements
 - cn
 - Requirement: Replace custom UI components with shadcn equivalents
@@ -48,7 +48,7 @@
 - CardioPredict — Manual do Agente
 - Find Skills
 - Server — API de Predição de Doença Cardíaca
-- index.ts
+- results/index.tsx
 - api
 - Requirement: Constants module provides typed accessors
 - Writing Plans
@@ -63,7 +63,7 @@
 - Web — Frontend de Avaliação de Risco Cardíaco
 - .claude/skills/openspec-explore/SKILL.md
 - .opencode/skills/openspec-explore/SKILL.md
-- connection.py
+- FastAPI
 - models.zod.ts
 - explore.md
 - opsx-explore.md
@@ -73,7 +73,7 @@
 - Brainstorming Ideas Into Designs
 - FastAPI Project Templates
 - base.py
-- main
+- connection.py
 - scripts
 - ADDED Requirements
 - Implementation Patterns
@@ -96,14 +96,10 @@
 - web/package.json
 - 2026-07-09-extract-feature-config/design.md
 - 2026-07-09-require-patient-for-evaluation/design.md
-- utils.ts
 - opencode.json
 - 2026-07-09-extract-feature-config/tasks.md
 - 2026-07-09-integrate-shadcn-ui/tasks.md
 - start-server.sh
-- Web Search & Extraction
-- PatientResponse
-- HTTPValidationError
 - graphify.js
 - spec-document-reviewer-prompt.md
 - plan-document-reviewer-prompt.md
@@ -135,7 +131,6 @@
 - tailwindcss-animate
 - @tailwindcss/vite
 - @tanstack/react-query
-- modelFeature.ts
 - @tanstack/react-router-devtools
 - @tanstack/react-table
 - tw-animate-css
@@ -155,9 +150,7 @@
 - @types/react-dom
 - @vitejs/plugin-react
 - general.zod.ts
-- riskFactorsResponse.ts
 - server
-- schemas/report.py
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 84 edges
@@ -172,33 +165,33 @@
 10. `generate_pdf_report()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `main()` --calls--> `create_tables()`  [INFERRED]
-  apps/server/src/services/train_models.py → apps/server/src/database/connection.py
 - `main()` --calls--> `prepare_data()`  [INFERRED]
   apps/server/src/services/train_models.py → apps/server/src/machine_learning/data.py
+- `lifespan()` --calls--> `create_tables()`  [INFERRED]
+  apps/server/src/api/app/app.py → apps/server/src/database/connection.py
 - `get_risk_factors()` --calls--> `calculate_aggregated_factors()`  [INFERRED]
   apps/server/src/api/routes/dashboard.py → apps/server/src/services/feature_analysis.py
-- `create_evaluation()` --calls--> `EvaluationResponse`  [INFERRED]
-  apps/server/src/api/routes/evaluations.py → apps/server/src/schemas/evaluation.py
-- `list_evaluations()` --calls--> `PaginationMeta`  [INFERRED]
-  apps/server/src/api/routes/evaluations.py → apps/server/src/schemas/common.py
+- `list_patients()` --calls--> `PaginationMeta`  [INFERRED]
+  apps/server/src/api/routes/patients.py → apps/server/src/schemas/common.py
+- `list_patients()` --calls--> `PatientListResponse`  [INFERRED]
+  apps/server/src/api/routes/patients.py → apps/server/src/schemas/patient.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (173 total, 57 thin omitted)
+## Communities (167 total, 54 thin omitted)
 
 ### Community 0 - "ReportPDF"
-Cohesion: 0.07
-Nodes (49): create_evaluation(), export_report_pdf(), get_evaluation(), get_factors(), get_importance(), get_recommendations(), list_evaluations(), get (+41 more)
+Cohesion: 0.06
+Nodes (61): create_evaluation(), export_report_pdf(), get_evaluation(), get_factors(), get_importance(), get_recommendations(), list_evaluations(), get (+53 more)
 
 ### Community 1 - "server.cjs"
 Cohesion: 0.06
 Nodes (55): bootstrapPage(), brandMarkup(), broadcast(), browserLauncherForPlatform(), chmodOwnerOnly(), clients, companionUrl(), computeAcceptKey() (+47 more)
 
 ### Community 2 - "models/index.tsx"
-Cohesion: 0.10
-Nodes (23): sidebarOpenAtom, ModelInfo(), MainLayout(), navItems, Sidebar(), Dialog(), DialogContent(), DialogDescription() (+15 more)
+Cohesion: 0.13
+Nodes (17): Dialog(), DialogContent(), DialogDescription(), DialogFooter(), DialogHeader(), DialogOverlay(), DialogTitle(), DropdownMenu() (+9 more)
 
 ### Community 3 - "evaluations.ts"
 Cohesion: 0.08
@@ -210,11 +203,11 @@ Nodes (37): CreateEvaluationEvaluationsPostBody, createEvaluationEvaluationsPost
 
 ### Community 5 - "routeTree.gen.ts"
 Cohesion: 0.08
-Nodes (28): selectedPatientAtom, RequirePatientGuard(), RequirePatientGuardProps, queryClient, router, Route, Route, Route (+20 more)
+Nodes (27): RequirePatientGuard(), RequirePatientGuardProps, queryClient, router, Route, Route, Route, Route (+19 more)
 
-### Community 6 - "$id/index.tsx"
-Cohesion: 0.16
-Nodes (19): COLORS, LABELS, ContributingFactors(), ContributingFactorsProps, COLORS, FeatureImportance(), FeatureImportanceProps, Recommendations() (+11 more)
+### Community 6 - "dashboard.ts"
+Cohesion: 0.06
+Nodes (50): DashboardHeader(), ModelInfo(), COLORS, LABELS, RiskDistribution(), RiskFactors(), StatCardsRow(), ContributingFactors() (+42 more)
 
 ### Community 7 - "scripts"
 Cohesion: 0.06
@@ -225,36 +218,36 @@ Cohesion: 0.14
 Nodes (13): Backend (`apps/server`), Banco de Dados (Migrations), CardioPredict — Guia de Desenvolvimento, Convenções de Código, 📂 Estrutura do Projeto, Execução, ⚙️ Fluxo de Trabalho, Frontend (`apps/web`) (+5 more)
 
 ### Community 9 - "form-wizard.tsx"
-Cohesion: 0.11
-Nodes (26): DEFAULT_VALUES_FORM, EvaluationForm(), FormData, PatientFilters(), PatientFiltersProps, PatientFormData, Button(), buttonVariants (+18 more)
+Cohesion: 0.15
+Nodes (18): selectedPatientAtom, DEFAULT_VALUES_FORM, EvaluationForm(), FormData, PatientFiltersProps, Input(), Select(), SelectContent() (+10 more)
 
 ### Community 10 - "schemas/dashboard.py"
 Cohesion: 0.13
 Nodes (24): _classify_risk(), get_risk_distribution(), get_risk_factors(), get_stats(), get, Session, get_metrics(), list_features() (+16 more)
 
 ### Community 11 - "models.ts"
-Cohesion: 0.09
-Nodes (25): getGetMetricsModelsModelIdMetricsGetQueryKey(), getGetMetricsModelsModelIdMetricsGetQueryOptions(), getListFeaturesModelsFeaturesGetQueryKey(), getListFeaturesModelsFeaturesGetQueryOptions(), getListModelsModelsGetQueryKey(), getListModelsModelsGetQueryOptions(), getMetricsModelsModelIdMetricsGet(), GetMetricsModelsModelIdMetricsGetQueryError (+17 more)
+Cohesion: 0.08
+Nodes (34): sidebarOpenAtom, MainLayout(), navItems, Sidebar(), Toaster(), getGetMetricsModelsModelIdMetricsGetQueryKey(), getGetMetricsModelsModelIdMetricsGetQueryOptions(), getListFeaturesModelsFeaturesGetQueryKey() (+26 more)
 
 ### Community 12 - "compilerOptions"
 Cohesion: 0.08
 Nodes (25): compilerOptions, allowImportingTsExtensions, baseUrl, erasableSyntaxOnly, ignoreDeprecations, jsx, lib, module (+17 more)
 
 ### Community 13 - "patients.ts"
-Cohesion: 0.12
-Nodes (21): PatientForm(), createPatientPatientsPost(), CreatePatientPatientsPostMutationBody, CreatePatientPatientsPostMutationError, CreatePatientPatientsPostMutationResult, getCreatePatientPatientsPostMutationOptions(), getGetPatientPatientsPatientIdGetQueryKey(), getGetPatientPatientsPatientIdGetQueryOptions() (+13 more)
+Cohesion: 0.06
+Nodes (37): PatientForm(), PatientTablePaginationProps, createPatientPatientsPost(), CreatePatientPatientsPostMutationBody, CreatePatientPatientsPostMutationError, CreatePatientPatientsPostMutationResult, getCreatePatientPatientsPostMutationOptions(), getGetPatientPatientsPatientIdGetQueryKey() (+29 more)
 
 ### Community 14 - "reports.ts"
 Cohesion: 0.11
 Nodes (22): exportReportReportsExportPost(), ExportReportReportsExportPostMutationBody, ExportReportReportsExportPostMutationError, ExportReportReportsExportPostMutationResult, getExportReportReportsExportPostMutationOptions(), getGetReportReportsReportIdGetQueryKey(), getGetReportReportsReportIdGetQueryOptions(), getListReportsReportsGetQueryKey() (+14 more)
 
-### Community 15 - "PaginatedResponse"
-Cohesion: 0.15
-Nodes (20): create_patient(), get_patient(), list_patients(), get, post, Session, UUID, PaginatedResponse (+12 more)
+### Community 15 - "patients.py"
+Cohesion: 0.33
+Nodes (8): create_patient(), get_patient(), list_patients(), get, post, Session, UUID, PatientCreate
 
-### Community 16 - "dashboard.ts"
-Cohesion: 0.15
-Nodes (20): getGetRiskDistributionDashboardRisksGetQueryKey(), getGetRiskDistributionDashboardRisksGetQueryOptions(), getGetRiskFactorsDashboardFactorsGetQueryKey(), getGetRiskFactorsDashboardFactorsGetQueryOptions(), getGetStatsDashboardStatsGetQueryKey(), getGetStatsDashboardStatsGetQueryOptions(), getRiskDistributionDashboardRisksGet(), GetRiskDistributionDashboardRisksGetQueryError (+12 more)
+### Community 16 - "patient-form.tsx"
+Cohesion: 0.24
+Nodes (7): PatientFormData, Label(), Segmented(), SegmentedMulti(), SegmentedMultiProps, SegmentedOption, SegmentedProps
 
 ### Community 17 - "CardioPredict — Predição de Doença Cardíaca"
 Cohesion: 0.09
@@ -280,17 +273,17 @@ Nodes (19): Browser Events Format, Cards (visual designs), Cleaning Up, CSS Clas
 Cohesion: 0.11
 Nodes (18): ADDED Requirements, Requirement: Botão "Exportar Relatório" com fetch + blob e feedback visual, Requirement: Conteúdo do PDF é intuitivo, Requirement: Endpoint GET /evaluations/{evaluation_id}/report-pdf, Requirement: PDF segue identidade visual do frontend, Requirement: Página /reports é removida, Requirement: Recomendações geradas dinamicamente (sem hardcoded), Scenario: Avaliação não encontrada (+10 more)
 
-### Community 23 - "results/index.tsx"
-Cohesion: 0.14
-Nodes (17): usePatientColumns(), Badge(), badgeVariants, Empty(), EmptyDescription(), EmptyHeader(), EmptyMedia(), emptyMediaVariants (+9 more)
+### Community 23 - "patients/index.tsx"
+Cohesion: 0.17
+Nodes (9): usePatientColumns(), PatientFilters(), PatientTablePagination(), Badge(), badgeVariants, Button(), buttonVariants, ListPatientsPatientsGetParams (+1 more)
 
 ### Community 24 - "ADDED Requirements"
 Cohesion: 0.11
 Nodes (17): ADDED Requirements, Requirement: Avaliação usa paciente pré-cadastrado, Requirement: Ação "Nova Avaliação" na listagem de pacientes, Requirement: Estado de paciente selecionado na sessão, Requirement: Select de paciente na tela de avaliação, Requirement: Seleção de paciente como pré-condição para avaliação, Requirement: Unificação do endpoint de predição, Scenario: Acesso com paciente selecionado (+9 more)
 
 ### Community 25 - "cn"
-Cohesion: 0.10
-Nodes (22): CardAction(), CardFooter(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+14 more)
+Cohesion: 0.09
+Nodes (22): DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator(), DropdownMenuShortcut(), DropdownMenuSubContent() (+14 more)
 
 ### Community 26 - "Requirement: Replace custom UI components with shadcn equivalents"
 Cohesion: 0.12
@@ -320,9 +313,9 @@ Nodes (13): Common Skill Categories, Find Skills, How to Help Users Find Skills,
 Cohesion: 0.14
 Nodes (13): Aviso, Banco de Dados, Comandos, Como Rodar, Documentação, Endpoints, Estrutura, Exemplo via curl (+5 more)
 
-### Community 33 - "index.ts"
-Cohesion: 0.14
-Nodes (9): DashboardStats, EvaluationCreate, EvaluationListResponse, EvaluationResponse, GetRiskFactorsDashboardFactorsGetParams, ListEvaluationsEvaluationsGetParams, ListPatientsPatientsGetParams, PaginationMeta (+1 more)
+### Community 33 - "results/index.tsx"
+Cohesion: 0.24
+Nodes (8): Empty(), EmptyContent(), EmptyDescription(), EmptyHeader(), EmptyMedia(), emptyMediaVariants, EmptyTitle(), ListEvaluationsEvaluationsGetParams
 
 ### Community 34 - "api"
 Cohesion: 0.23
@@ -341,8 +334,8 @@ Cohesion: 0.17
 Nodes (10): caveman, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Intensity (+2 more)
 
 ### Community 39 - "reports.py"
-Cohesion: 0.29
-Nodes (11): export_report(), _generate_content(), get_report(), list_reports(), BaseModel, get, post, Session (+3 more)
+Cohesion: 0.21
+Nodes (13): export_report(), _generate_content(), get_report(), list_reports(), BaseModel, get, post, Session (+5 more)
 
 ### Community 40 - "2026-06-29-refactor-clean-code/tasks.md"
 Cohesion: 0.17
@@ -376,9 +369,9 @@ Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different 
 Cohesion: 0.18
 Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different Entry Points, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do (+2 more)
 
-### Community 48 - "connection.py"
-Cohesion: 0.27
-Nodes (6): lifespan(), documentation_scalar(), home(), get, create_tables(), FastAPI
+### Community 48 - "FastAPI"
+Cohesion: 0.38
+Nodes (5): lifespan(), documentation_scalar(), home(), get, FastAPI
 
 ### Community 49 - "models.zod.ts"
 Cohesion: 0.20
@@ -416,9 +409,9 @@ Nodes (8): 1. Project Structure, 2. Dependency Injection, 3. Async Patterns, Cor
 Cohesion: 0.28
 Nodes (4): Base, Model, Patient, DeclarativeBase
 
-### Community 58 - "main"
-Cohesion: 0.28
-Nodes (3): evaluate(), train_model(), main()
+### Community 58 - "connection.py"
+Cohesion: 0.21
+Nodes (4): create_tables(), evaluate(), train_model(), main()
 
 ### Community 59 - "scripts"
 Cohesion: 0.22
@@ -486,7 +479,7 @@ Nodes (5): 1. Backend — Modificar `POST /predict` para exigir paciente e persi
 
 ### Community 75 - "env.py"
 Cohesion: 0.40
-Nodes (4): Run migrations in 'offline' mode. This configures the context with just a URL…, Run migrations in 'online' mode. In this scenario we use the engine already…, run_migrations_offline(), run_migrations_online()
+Nodes (4): Run migrations in 'offline' mode. This configures the context with just a URL…, Run migrations in 'online' mode. In this scenario we need to create an Engine…, run_migrations_offline(), run_migrations_online()
 
 ### Community 76 - "RedirectMiddleware"
 Cohesion: 0.40
@@ -504,10 +497,6 @@ Nodes (4): Context, Decisions, Goals / Non-Goals, Risks / Trade-offs
 Cohesion: 0.40
 Nodes (4): Context, Decisions, Goals / Non-Goals, Risks / Trade-offs
 
-### Community 81 - "utils.ts"
-Cohesion: 0.15
-Nodes (8): DashboardHeader(), RiskDistribution(), RiskFactors(), StatCardsRow(), StatCard(), StatCardProps, TooltipContent(), formatNumber()
-
 ### Community 82 - "opencode.json"
 Cohesion: 0.50
 Nodes (3): plugin, $schema, .opencode/plugins/graphify.js
@@ -520,37 +509,25 @@ Nodes (3): 1. Create config file, 2. Create constants module, 3. Refactor featur
 Cohesion: 0.50
 Nodes (3): 1. Setup & Initialization, 2. Component Replacement, 3. Cleanup & Verification
 
-### Community 86 - "Web Search & Extraction"
-Cohesion: 0.12
-Nodes (16): Available Apps, Documentation, Exa, Exa Answer, Exa Extract, Exa Search, Examples, Quick Start (+8 more)
-
-### Community 87 - "PatientResponse"
-Cohesion: 0.48
-Nodes (4): PatientTablePagination(), PatientTablePaginationProps, PatientListResponse, PatientResponse
-
-### Community 88 - "HTTPValidationError"
-Cohesion: 0.60
-Nodes (3): HTTPValidationError, ValidationError, ValidationErrorCtx
-
 ## Knowledge Gaps
-- **655 isolated node(s):** `Quick Start`, `Tavily`, `Exa`, `Tavily Search`, `Tavily Extract` (+650 more)
+- **643 isolated node(s):** `📌 Visão Geral`, `Backend (`apps/server`)`, `Frontend (`apps/web`)`, `Execução`, `Machine Learning` (+638 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **57 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **54 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `cn()` connect `cn` to `results/index.tsx`, `models/index.tsx`, `dashboard.ts`, `form-wizard.tsx`, `models.ts`, `patient-form.tsx`, `patients/index.tsx`?**
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+- **Why does `api()` connect `api` to `evaluations.ts`, `dashboard.ts`, `models.ts`, `patients.ts`, `reports.ts`, `useListEvaluationsEvaluationsGet`?**
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `devDependencies` to `eslint-plugin-prettier`, `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `globals`, `orval`, `prettier`, `prettier-plugin-tailwindcss`, `@types/node`, `@types/react`, `@types/react-dom`, `@vitejs/plugin-react`, `web/package.json`, `eslint`, `eslint-config-prettier`, `@eslint/js`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `dotenv` connect `devDependencies` to `connection.py`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `ReportPDF` (e.g. with `Evaluation` and `ContributingFactor`) actually correct?**
   _`ReportPDF` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Quick Start`, `Tavily`, `Exa` to the rest of the system?**
-  _655 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `📌 Visão Geral`, `Backend (`apps/server`)`, `Frontend (`apps/web`)` to the rest of the system?**
+  _643 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `ReportPDF` be split into smaller, more focused modules?**
-  _Cohesion score 0.07042253521126761 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05640203154236835 - nodes in this community are weakly interconnected._
 - **Should `server.cjs` be split into smaller, more focused modules?**
   _Cohesion score 0.05868118572292801 - nodes in this community are weakly interconnected._
-- **Should `models/index.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.0990990990990991 - nodes in this community are weakly interconnected._

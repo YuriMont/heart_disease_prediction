@@ -35,13 +35,23 @@
     "semantic_hash": ""
   },
   "apps/server/migrations/env.py": {
-    "mtime": 1788213132.4927702,
-    "ast_hash": "3d78714d7d1b0cf49d86571aba6a07dc",
+    "mtime": 1783715449.4281454,
+    "ast_hash": "2dd99786fe68df0248cda99d22693659",
+    "semantic_hash": ""
+  },
+  "apps/server/migrations/versions/2fea789095e6_initial_schema.py": {
+    "mtime": 1782726749.059925,
+    "ast_hash": "241de200fc2be2dc585d4d3b4be3dcf9",
+    "semantic_hash": ""
+  },
+  "apps/server/migrations/versions/d4f8a2c1b3e7_rename_columns_to_english.py": {
+    "mtime": 1782726811.6087492,
+    "ast_hash": "348ddba2ae55239fac156aa8b28a91df",
     "semantic_hash": ""
   },
   "apps/server/pyproject.toml": {
-    "mtime": 1788211778.0869305,
-    "ast_hash": "8cd854d26dc2894b5c39151378afa272",
+    "mtime": 1783880528.0144682,
+    "ast_hash": "e12fe3c182e4afed8866365bcf0257bc",
     "semantic_hash": ""
   },
   "apps/server/run.py": {
@@ -120,8 +130,8 @@
     "semantic_hash": ""
   },
   "apps/server/src/database/connection.py": {
-    "mtime": 1788213012.9031484,
-    "ast_hash": "2bbb8ff530c7f471b22aafc37cb6368a",
+    "mtime": 1783726833.5594227,
+    "ast_hash": "f91161ecd84e70a7a401aa757fd4da9b",
     "semantic_hash": ""
   },
   "apps/server/src/database/models/__init__.py": {
@@ -755,8 +765,8 @@
     "semantic_hash": ""
   },
   "skills-lock.json": {
-    "mtime": 1788211230.3556936,
-    "ast_hash": "3b8871e6bdc6e2e6609d51c7de322f8f",
+    "mtime": 1783674666.298051,
+    "ast_hash": "1b206f4260283c03a41a26ccd533cd64",
     "semantic_hash": ""
   },
   ".agents/skills/brainstorming/SKILL.md": {
@@ -940,8 +950,8 @@
     "semantic_hash": ""
   },
   "apps/server/README.md": {
-    "mtime": 1788213358.9300306,
-    "ast_hash": "da794d1a94f438e4b191f42ef6bbf5a4",
+    "mtime": 1783728815.0165226,
+    "ast_hash": "cf77fa53be9580f671ebb24f48312b63",
     "semantic_hash": ""
   },
   "apps/web/README.md": {
@@ -1125,18 +1135,8 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1788213346.8544154,
-    "ast_hash": "ce9059ffc8c25036173419e277ee9eb2",
-    "semantic_hash": ""
-  },
-  "apps/server/migrations/versions/800505fc30a9_initial_postgres.py": {
-    "mtime": 1788213140.9113734,
-    "ast_hash": "fa27b9ffe6d7b457de6fdeff5eed56a9",
-    "semantic_hash": ""
-  },
-  ".agents/skills/web-search/SKILL.md": {
-    "mtime": 1788211230.3543048,
-    "ast_hash": "906726d6578840b28bbc628072458bf6",
+    "mtime": 1787338682.7833068,
+    "ast_hash": "50aca075adcead33d9012436bd3d3db7",
     "semantic_hash": ""
   }
 }
