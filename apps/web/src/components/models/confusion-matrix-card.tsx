@@ -10,17 +10,20 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 interface ConfusionMatrixCardProps {
   data?: ConfusionMatrixData | null;
+  matrix?: ConfusionMatrixData | null;
   isLoading?: boolean;
 }
 
 export function ConfusionMatrixCard({
   data,
+  matrix,
   isLoading = false,
 }: ConfusionMatrixCardProps) {
-  const tn = data?.tn ?? 0;
-  const fp = data?.fp ?? 0;
-  const fn = data?.fn ?? 0;
-  const tp = data?.tp ?? 0;
+  const matrixData = data ?? matrix;
+  const tn = matrixData?.tn ?? 0;
+  const fp = matrixData?.fp ?? 0;
+  const fn = matrixData?.fn ?? 0;
+  const tp = matrixData?.tp ?? 0;
 
   const total = tn + fp + fn + tp;
 

@@ -37,6 +37,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu';
+import { ConfusionMatrixCard } from '../../components/models/confusion-matrix-card';
+import { RocCurveCard } from '../../components/models/roc-curve-card';
 import { modelAtom } from '../../store/model';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
@@ -55,14 +57,12 @@ function ModelsPage() {
   const { data: features, isLoading: isLoadingFeatures } =
     useListFeaturesModelsFeaturesGet();
 
-  const { data: metrics } = useGetMetricsModelsModelIdMetricsGet(
-    selectedModel?.id ?? '',
-    {
+  const { data: metrics, isLoading: isLoadingMetrics } =
+    useGetMetricsModelsModelIdMetricsGet(selectedModel?.id ?? '', {
       query: {
         enabled: !!selectedModel?.id,
       },
-    },
-  );
+    });
 
   return (
     <div className="flex flex-col gap-6">
@@ -316,6 +316,19 @@ function ModelsPage() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Matriz de Confusão */}
+          <ConfusionMatrixCard
+            matrix={metrics?.confusion_matrix}
+            isLoading={isLoadingMetrics}
+          />
+
+          {/* Curva ROC */}
+          <RocCurveCard
+            rocCurve={metrics?.roc_curve}
+            aucRoc={metrics?.auc_roc}
+            isLoading={isLoadingMetrics}
+          />
 
           {/* Features */}
 
