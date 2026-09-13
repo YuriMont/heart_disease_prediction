@@ -317,7 +317,7 @@ function ModelsPage() {
             </CardContent>
           </Card>
 
-          <div className="flex flex-1 gap-6 max-md:flex-col">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Matriz de Confusão */}
             <ConfusionMatrixCard
               matrix={metrics?.confusion_matrix}
