@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from database.connection import get_db
 from database.models.model import Model
-from schemas.dashboard import ModelInfo, ModelMetrics
+from schemas.dashboard import ConfusionMatrixData, ModelInfo, ModelMetrics, RocPoint
 from schemas.model import ModelFeature, ModelUpdate
 from services.constants import _config
 
@@ -67,6 +67,17 @@ def get_metrics(model_id: str, db: Session = Depends(get_db)):
             detail=f"Metrics for model '{model_id}' not available. Run training first.",
         )
 
+    confusion_matrix = (
+        ConfusionMatrixData(**modelo_db.confusion_matrix)
+        if modelo_db.confusion_matrix
+        else None
+    )
+    roc_curve = (
+        [RocPoint(**p) for p in modelo_db.roc_curve]
+        if modelo_db.roc_curve
+        else None
+    )
+
     return ModelMetrics(
         id=modelo_db.id,
         name=modelo_db.name,
@@ -75,6 +86,8 @@ def get_metrics(model_id: str, db: Session = Depends(get_db)):
         recall=modelo_db.recall,
         f1_score=modelo_db.f1_score,
         auc_roc=modelo_db.auc_roc,
+        confusion_matrix=confusion_matrix,
+        roc_curve=roc_curve,
         updated_at=modelo_db.updated_at.strftime("%d/%m/%Y %H:%M"),
     )
 

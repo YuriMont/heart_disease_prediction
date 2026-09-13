@@ -4,9 +4,7 @@ from pydantic import BaseModel, Field
 class DashboardStats(BaseModel):
     total_analyses: int = Field(..., description="Total de avaliações realizadas")
     low_risk: int = Field(..., description="Quantidade de pacientes com risco baixo")
-    medium_risk: int = Field(
-        ..., description="Quantidade de pacientes com risco médio"
-    )
+    medium_risk: int = Field(..., description="Quantidade de pacientes com risco médio")
     high_risk: int = Field(..., description="Quantidade de pacientes com risco alto")
 
 
@@ -37,6 +35,18 @@ class ModelInfo(BaseModel):
     active: bool = Field(..., description="Se o modelo está ativo para predição")
 
 
+class ConfusionMatrixData(BaseModel):
+    tn: int = Field(..., description="Verdadeiros Negativos")
+    fp: int = Field(..., description="Falsos Positivos")
+    fn: int = Field(..., description="Falsos Negativos")
+    tp: int = Field(..., description="Verdadeiros Positivos")
+
+
+class RocPoint(BaseModel):
+    fpr: float = Field(..., description="False Positive Rate")
+    tpr: float = Field(..., description="True Positive Rate")
+
+
 class ModelMetrics(BaseModel):
     id: str = Field(..., description="Identificador único do modelo")
     name: str = Field(..., description="Nome interno do modelo")
@@ -45,6 +55,6 @@ class ModelMetrics(BaseModel):
     recall: float = Field(..., description="Recall (sensibilidade) do modelo")
     f1_score: float = Field(..., description="F1-Score do modelo")
     auc_roc: float = Field(..., description="AUC-ROC do modelo")
-    updated_at: str = Field(
-        ..., description="Data da última atualização das métricas"
-    )
+    confusion_matrix: ConfusionMatrixData | None = None
+    roc_curve: list[RocPoint] | None = None
+    updated_at: str = Field(..., description="Data da última atualização das métricas")
