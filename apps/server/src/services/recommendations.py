@@ -18,11 +18,17 @@ def generate_recommendations(
     # MEDIUM → acompanhamento programado
     # LOW → manutenção preventiva
     if prob >= 0.65:
-        recs.append("Buscar atendimento médico especializado com urgência para avaliação cardiológica completa")
+        recs.append(
+            "Buscar atendimento médico especializado com urgência para avaliação cardiológica completa"
+        )
     elif prob >= 0.35:
-        recs.append("Agendar consulta com cardiologista para acompanhamento e exames complementares")
+        recs.append(
+            "Agendar consulta com cardiologista para acompanhamento e exames complementares"
+        )
     else:
-        recs.append("Manter acompanhamento cardiológico regular com exames periódicos de rotina")
+        recs.append(
+            "Manter acompanhamento cardiológico regular com exames periódicos de rotina"
+        )
 
     # --- Recomendações baseadas em fatores contribuintes ---
     # Cada variável clínica com alto impacto gera recomendação específica.
@@ -36,24 +42,36 @@ def generate_recommendations(
             factor_vars[key_by_display] = f
 
     if "trestbps" in factor_vars and evaluation.trestbps > 140:
-        recs.append("Controlar rigorosamente a pressão arterial com medicação conforme orientação médica")
+        recs.append(
+            "Controlar rigorosamente a pressão arterial com medicação conforme orientação médica"
+        )
     if "chol" in factor_vars and evaluation.chol > 240:
-        recs.append("Reduzir os níveis de colesterol com dieta específica e medicação se necessário")
+        recs.append(
+            "Reduzir os níveis de colesterol com dieta específica e medicação se necessário"
+        )
     if "oldpeak" in factor_vars and evaluation.oldpeak > 2:
-        recs.append("Avaliar isquemia miocárdica com teste ergométrico ou cintilografia")
+        recs.append(
+            "Avaliar isquemia miocárdica com teste ergométrico ou cintilografia"
+        )
     if "thalach" in factor_vars and evaluation.thalach < 100:
         recs.append("Investigar causa da baixa frequência cardíaca máxima ao esforço")
 
     # --- Recomendações baseadas em variáveis clínicas alteradas ---
     # Variáveis binárias ou categóricas que indicam condições específicas.
     if evaluation.fbs == 1:
-        recs.append("Avaliar quadro de diabetes mellitus e controlar rigorosamente a glicemia")
+        recs.append(
+            "Avaliar quadro de diabetes mellitus e controlar rigorosamente a glicemia"
+        )
     if evaluation.exang == 1:
         recs.append("Avaliar angina aos esforços com teste provocativo de isquemia")
     if evaluation.cp in (3, 4):
-        recs.append("Investigar quadro de dor torácica com avaliação cardiológica detalhada")
+        recs.append(
+            "Investigar quadro de dor torácica com avaliação cardiológica detalhada"
+        )
     if evaluation.ca > 0:
-        recs.append("Avaliar necessidade de cineangiocoronariografia para estratificação anatômica")
+        recs.append(
+            "Avaliar necessidade de cineangiocoronariografia para estratificação anatômica"
+        )
     if evaluation.thal in (6, 7):
         recs.append("Avaliar talassemia e sua contribuição para o risco cardiovascular")
     if evaluation.slope == 3:
@@ -63,6 +81,8 @@ def generate_recommendations(
 
     # --- Recomendação geral de estilo de vida ---
     # Válida para qualquer paciente, independente do nível de risco.
-    recs.append("Manter dieta equilibrada, praticar atividade física regular e evitar tabagismo")
+    recs.append(
+        "Manter dieta equilibrada, praticar atividade física regular e evitar tabagismo"
+    )
 
     return recs

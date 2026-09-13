@@ -9,13 +9,16 @@ from schemas.common import PaginatedResponse
 class EvaluationCreate(BaseModel):
     paciente_id: UUID = Field(..., description="ID do paciente")
     age: int = Field(..., ge=1, le=120, description="Idade em anos")
-    sex: int = Field(
-        ..., ge=0, le=1, description="Sexo: 1 = masculino, 0 = feminino"
-    )
+    sex: int = Field(..., ge=0, le=1, description="Sexo: 1 = masculino, 0 = feminino")
     cp: int = Field(
-        ..., ge=1, le=4, description="Tipo de dor no peito (1 = angina típica, 2 = angina atípica, 3 = dor não anginosa, 4 = assintomático)"
+        ...,
+        ge=1,
+        le=4,
+        description="Tipo de dor no peito (1 = angina típica, 2 = angina atípica, 3 = dor não anginosa, 4 = assintomático)",
     )
-    trestbps: float = Field(..., gt=0, description="Pressão arterial em repouso (mm Hg)")
+    trestbps: float = Field(
+        ..., gt=0, description="Pressão arterial em repouso (mm Hg)"
+    )
     chol: float = Field(..., gt=0, description="Colesterol sérico (mg/dl)")
     fbs: int = Field(
         ..., ge=0, le=1, description="Glicemia em jejum > 120 mg/dl (1 = sim, 0 = não)"
@@ -26,9 +29,7 @@ class EvaluationCreate(BaseModel):
         le=2,
         description="Resultados do eletrocardiograma em repouso (0 = normal, 1 = anormalidade ST-T, 2 = hipertrofia ventricular esquerda)",
     )
-    thalach: float = Field(
-        ..., gt=0, description="Frequência cardíaca máxima atingida"
-    )
+    thalach: float = Field(..., gt=0, description="Frequência cardíaca máxima atingida")
     exang: int = Field(
         ...,
         ge=0,
@@ -72,7 +73,8 @@ class EvaluationResponse(BaseModel):
     chol: float = Field(..., description="Colesterol sérico (mg/dl)")
     fbs: int = Field(..., description="Glicemia em jejum > 120 mg/dl (1 = sim)")
     restecg: int = Field(
-        ..., description="Eletrocardiograma em repouso (0 = normal, 1 = ST-T, 2 = hipertrofia)"
+        ...,
+        description="Eletrocardiograma em repouso (0 = normal, 1 = ST-T, 2 = hipertrofia)",
     )
     thalach: float = Field(..., description="Frequência cardíaca máxima atingida")
     exang: int = Field(
@@ -82,13 +84,13 @@ class EvaluationResponse(BaseModel):
         ..., description="Depressão do segmento ST no exercício (mm)"
     )
     slope: int = Field(
-        ..., description="Inclinação do segmento ST (1 = ascendente, 2 = plano, 3 = descendente)"
+        ...,
+        description="Inclinação do segmento ST (1 = ascendente, 2 = plano, 3 = descendente)",
     )
-    ca: float = Field(
-        ..., description="Número de vasos principais coloridos (0-3)"
-    )
+    ca: float = Field(..., description="Número de vasos principais coloridos (0-3)")
     thal: float = Field(
-        ..., description="Talassemia: 3 = normal, 6 = defeito fixo, 7 = defeito reversível"
+        ...,
+        description="Talassemia: 3 = normal, 6 = defeito fixo, 7 = defeito reversível",
     )
     model_used: str = Field(..., description="Nome do modelo de IA utilizado")
     has_disease: bool = Field(

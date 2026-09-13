@@ -39,7 +39,9 @@ def _generate_content(evaluation: Evaluation) -> str:
 
 
 class ReportExport(BaseModel):
-    avaliacao_id: UUID = Field(..., description="ID da avaliação para exportar o relatório")
+    avaliacao_id: UUID = Field(
+        ..., description="ID da avaliação para exportar o relatório"
+    )
 
 
 @router.get(

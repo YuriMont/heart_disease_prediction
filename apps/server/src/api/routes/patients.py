@@ -37,7 +37,9 @@ def list_patients(
     page: int = Query(1, ge=1, description="Número da página"),
     limit: int = Query(20, ge=1, le=100, description="Itens por página"),
     name: str | None = Query(None, description="Filtrar por nome do paciente"),
-    sex: int | None = Query(None, ge=0, le=1, description="Filtrar por sexo (1 = masculino, 0 = feminino)"),
+    sex: int | None = Query(
+        None, ge=0, le=1, description="Filtrar por sexo (1 = masculino, 0 = feminino)"
+    ),
     db: Session = Depends(get_db),
 ):
     query = db.query(Patient)

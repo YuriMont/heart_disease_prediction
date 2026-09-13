@@ -15,17 +15,17 @@ from services.constants import (
 from services.recommendations import generate_recommendations
 
 # --- Palette (RGB) ---
-PRIMARY = (190, 30, 45)
-SUCCESS = (5, 150, 105)
-WARNING = (217, 119, 6)
+PRIMARY = (2, 62, 138)
+SUCCESS = (22, 163, 74)
+WARNING = (255, 193, 7)
 DANGER = (220, 38, 38)
-SURFACE = (248, 250, 252)
+SURFACE = (241, 245, 249)
 WHITE = (255, 255, 255)
-TEXT_PRIMARY = (30, 41, 59)
-TEXT_SECONDARY = (100, 116, 139)
+TEXT_PRIMARY = (15, 23, 42)
+TEXT_SECONDARY = (71, 85, 105)
 TEXT_MUTED = (148, 163, 184)
-BORDER = (226, 232, 240)
-HEADER_BG = (190, 30, 45)
+BORDER = (203, 213, 225)
+HEADER_BG = (2, 62, 138)
 
 # --- Spacing (mm) ---
 SPACE_XS = 2
@@ -105,9 +105,7 @@ class ReportPDF(FPDF):
         self.ln(3)
         self.set_font(*SMALL_FONT)
         self.set_text_color(*TEXT_MUTED)
-        self.cell(
-            0, 4, f"CardioPredict  -  P\u00e1gina {self.page_no()}", align="C"
-        )
+        self.cell(0, 4, f"CardioPredict  -  P\u00e1gina {self.page_no()}", align="C")
 
     # ------------------------------------------------------------------
     #  Helpers
@@ -168,30 +166,62 @@ class ReportPDF(FPDF):
 
     def draw_header(self, evaluation: Evaluation) -> None:
         self.set_fill_color(*HEADER_BG)
-        self.rect(self.l_margin, self.get_y(), self.content_width(), 24, style="F")
+        self.rect(self.l_margin, self.get_y(), self.content_width(), 28, style="F")
         self.set_font(*TITLE_FONT)
         self.set_text_color(*WHITE)
-        self.set_xy(self.l_margin + 6, self.get_y() + 3)
-        self.cell(0, 8, "CardioPredict", new_x="LMARGIN", new_y="NEXT")
-        self.set_xy(self.l_margin + 6, self.get_y())
+        self.set_xy(self.l_margin + 8, self.get_y() + 5)
+        self.cell(0, 10, "CardioPredict", new_x="LMARGIN", new_y="NEXT")
+        self.set_xy(self.l_margin + 8, self.get_y())
         self.set_font(*SMALL_FONT)
-        self.set_text_color(255, 255, 255)
+        self.set_text_color(230, 230, 230)
         self.cell(0, 5, "Relat\u00f3rio de Avalia\u00e7\u00e3o Cardiovascular")
-        self.set_y(self.get_y() + 24 + SPACE_SM)
+        self.set_y(self.get_y() + 28 + SPACE_MD)
 
+        # Patient Info Grid
         self.set_font(*BODY_FONT)
-        self.set_text_color(*TEXT_SECONDARY)
         utc_dt = evaluation.created_at.replace(tzinfo=ZoneInfo("UTC"))
         brt_dt = utc_dt.astimezone(ZoneInfo("America/Sao_Paulo"))
-        info_lines = [
-            f"Paciente: {evaluation.patient_name or 'N/A'}",
-            f"Modelo: {evaluation.model_used}",
-            f"Data: {brt_dt.strftime('%d/%m/%Y %H:%M')}",
-            f"ID: {evaluation.id}",
-        ]
-        for line in info_lines:
-            self.cell(0, 5, line, new_x="LMARGIN", new_y="NEXT")
-        self.ln(SPACE_SM)
+
+        # Two columns for info
+        col_w = self.content_width() / 2
+
+        # Row 1
+        self.set_text_color(*TEXT_MUTED)
+        self.cell(col_w / 2, 6, "Paciente:", new_x="RIGHT", new_y="TOP")
+        self.set_text_color(*TEXT_PRIMARY)
+        self.cell(
+            col_w / 2,
+            6,
+            evaluation.patient_name or "N/A",
+            new_x="LMARGIN",
+            new_y="NEXT",
+        )
+
+        self.set_text_color(*TEXT_MUTED)
+        self.cell(col_w / 2, 6, "Modelo:", new_x="RIGHT", new_y="TOP")
+        self.set_text_color(*TEXT_PRIMARY)
+        self.cell(col_w / 2, 6, evaluation.model_used, new_x="LMARGIN", new_y="NEXT")
+
+        # Row 2
+        self.set_text_color(*TEXT_MUTED)
+        self.cell(col_w / 2, 6, "Data:", new_x="RIGHT", new_y="TOP")
+        self.set_text_color(*TEXT_PRIMARY)
+        self.cell(
+            col_w / 2,
+            6,
+            brt_dt.strftime("%d/%m/%Y %H:%M"),
+            new_x="LMARGIN",
+            new_y="NEXT",
+        )
+
+        self.set_text_color(*TEXT_MUTED)
+        self.cell(
+            col_w / 2, 6, "ID da Avalia\u00e7\u00e3o:", new_x="RIGHT", new_y="TOP"
+        )
+        self.set_text_color(*TEXT_PRIMARY)
+        self.cell(col_w / 2, 6, str(evaluation.id), new_x="LMARGIN", new_y="NEXT")
+
+        self.ln(SPACE_LG)
         self.draw_horizontal_rule()
 
     # ------------------------------------------------------------------
@@ -213,17 +243,17 @@ class ReportPDF(FPDF):
         self.set_font(*BADGE_FONT)
         self.set_text_color(*WHITE)
         self.set_fill_color(*color)
-        bw = self.get_string_width(label) + 8
-        self.cell(bw, 7, label, fill=True, align="C")
+        bw = self.get_string_width(label) + 10
+        self.cell(bw, 8, label, fill=True, align="C")
 
         # Probability
-        self.set_xy(cx, cy + 10)
+        self.set_xy(cx, cy + 12)
         self.set_font(*MEGA_FONT)
         self.set_text_color(*TEXT_PRIMARY)
-        self.cell(0, 10, f"{prob * 100:.1f}%")
+        self.cell(0, 12, f"{prob * 100:.1f}%")
 
         # Progress bar
-        bar_y = cy + 24
+        bar_y = cy + 28
         bar_full = self.content_width() - SPACE_MD * 2
         self.set_xy(cx, bar_y)
         self.set_fill_color(*BORDER)
@@ -254,16 +284,34 @@ class ReportPDF(FPDF):
             value = _format_value(evaluation, key)
             rows.append((label, value))
 
-        col_w = self.content_width() / 2 - 4
+        # Table header
+        self.set_fill_color(*SURFACE)
+        self.set_font("Helvetica", "B", 9)
+        self.set_text_color(*TEXT_PRIMARY)
+        self.cell(
+            self.content_width() / 2, 8, "Vari\u00e1vel", border=1, align="L", fill=True
+        )
+        self.cell(self.content_width() / 2, 8, "Valor", border=1, align="R", fill=True)
+        self.ln(8)
+
         self.set_font(*BODY_FONT)
-        for i in range(0, len(rows), 2):
-            pair = rows[i : i + 2]
+        for i, (label, value) in enumerate(rows):
             self.ensure_space(6)
-            for label, value in pair:
-                self.set_text_color(*TEXT_SECONDARY)
-                self.cell(col_w - 30, 6, label)
-                self.set_text_color(*TEXT_PRIMARY)
-                self.cell(30, 6, value)
+
+            # Zebra striping
+            if i % 2 == 0:
+                self.set_fill_color(*WHITE)
+            else:
+                self.set_fill_color(248, 249, 250)
+
+            self.set_text_color(*TEXT_SECONDARY)
+            self.cell(
+                self.content_width() / 2, 6, f" {label}", border=1, align="L", fill=True
+            )
+            self.set_text_color(*TEXT_PRIMARY)
+            self.cell(
+                self.content_width() / 2, 6, f"{value} ", border=1, align="R", fill=True
+            )
             self.ln(6)
         self.ln(SPACE_SM)
 
@@ -378,7 +426,7 @@ class ReportPDF(FPDF):
 
             x0 = self.get_x()
             y0 = self.get_y()
-            self.set_fill_color(252, 252, 253)
+            self.set_fill_color(*SURFACE)
             self.set_draw_color(*BORDER)
             self.rect(x0, y0, self.content_width(), est, style="DF")
 
@@ -405,7 +453,7 @@ class ReportPDF(FPDF):
         x0 = self.get_x()
         y0 = self.get_y()
         box_h = 20
-        self.set_fill_color(249, 250, 251)
+        self.set_fill_color(*SURFACE)
         self.set_draw_color(*BORDER)
         self.rect(x0, y0, self.content_width(), box_h, style="DF")
 
