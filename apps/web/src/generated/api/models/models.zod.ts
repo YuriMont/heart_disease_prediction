@@ -64,6 +64,28 @@ export const GetMetricsModelsModelIdMetricsGetResponse = zod.object({
   recall: zod.number().describe('Recall (sensibilidade) do modelo'),
   f1_score: zod.number().describe('F1-Score do modelo'),
   auc_roc: zod.number().describe('AUC-ROC do modelo'),
+  confusion_matrix: zod
+    .union([
+      zod.object({
+        tn: zod.number().describe('Verdadeiros Negativos'),
+        fp: zod.number().describe('Falsos Positivos'),
+        fn: zod.number().describe('Falsos Negativos'),
+        tp: zod.number().describe('Verdadeiros Positivos'),
+      }),
+      zod.null(),
+    ])
+    .optional(),
+  roc_curve: zod
+    .union([
+      zod.array(
+        zod.object({
+          fpr: zod.number().describe('False Positive Rate'),
+          tpr: zod.number().describe('True Positive Rate'),
+        }),
+      ),
+      zod.null(),
+    ])
+    .optional(),
   updated_at: zod.string().describe('Data da última atualização das métricas'),
 });
 

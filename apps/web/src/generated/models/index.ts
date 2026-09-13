@@ -6,6 +6,7 @@
  * OpenAPI spec version: 2.0.0
  */
 
+export * from './confusionMatrixData';
 export * from './contributingFactor';
 export * from './dashboardStats';
 export * from './evaluationCreate';
@@ -30,5 +31,6 @@ export * from './reportResponse';
 export * from './riskDistribution';
 export * from './riskFactor';
 export * from './riskFactorsResponse';
+export * from './rocPoint';
 export * from './validationError';
 export * from './validationErrorCtx';

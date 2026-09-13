@@ -5,6 +5,8 @@
  * Accepts patient clinical data and predicts heart disease risk.
  * OpenAPI spec version: 2.0.0
  */
+import type { ConfusionMatrixData } from './confusionMatrixData';
+import type { RocPoint } from './rocPoint';
 
 export interface ModelMetrics {
   /** Identificador único do modelo */
@@ -21,6 +23,8 @@ export interface ModelMetrics {
   f1_score: number;
   /** AUC-ROC do modelo */
   auc_roc: number;
+  confusion_matrix?: ConfusionMatrixData | null;
+  roc_curve?: RocPoint[] | null;
   /** Data da última atualização das métricas */
   updated_at: string;
 }
