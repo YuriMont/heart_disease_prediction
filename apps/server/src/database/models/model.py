@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import Boolean, DateTime, Float, String, UniqueConstraint
+from sqlalchemy import JSON, Boolean, DateTime, Float, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database.base import Base
@@ -37,6 +37,8 @@ class Model(Base):
     recall: Mapped[float] = mapped_column(Float, nullable=False)
     f1_score: Mapped[float] = mapped_column(Float, nullable=False)
     auc_roc: Mapped[float] = mapped_column(Float, nullable=False)
+    confusion_matrix: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    roc_curve: Mapped[list | None] = mapped_column(JSON, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
