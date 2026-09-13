@@ -75,6 +75,8 @@ def main():
                 model_db.recall = metrics["recall"]
                 model_db.f1_score = metrics["f1_score"]
                 model_db.auc_roc = metrics["auc_roc"]
+                model_db.confusion_matrix = metrics.get("confusion_matrix")
+                model_db.roc_curve = metrics.get("roc_curve")
                 model_db.updated_at = datetime.now()
                 print(f"   Metrics updated in database for: {model_config['name']}")
             else:
@@ -89,6 +91,8 @@ def main():
                     recall=metrics["recall"],
                     f1_score=metrics["f1_score"],
                     auc_roc=metrics["auc_roc"],
+                    confusion_matrix=metrics.get("confusion_matrix"),
+                    roc_curve=metrics.get("roc_curve"),
                 )
                 db.add(new_metrics)
                 print(f"   Metrics saved to database for: {model_config['name']}")

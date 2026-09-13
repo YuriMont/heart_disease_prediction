@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from sklearn.metrics import (
     ConfusionMatrixDisplay,
     accuracy_score,
@@ -16,21 +17,40 @@ def evaluate(y_true, y_pred, y_probability=None, name="Model"):
     print(f"\n--- Evaluation: {name} ---")
     print(classification_report(y_true, y_pred))
 
+    cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
+    tn, fp, fn, tp = map(int, cm.ravel())
+
     metrics = {
         "accuracy": float(accuracy_score(y_true, y_pred)),
         "recall": float(recall_score(y_true, y_pred)),
         "precision": float(precision_score(y_true, y_pred)),
         "f1_score": float(f1_score(y_true, y_pred)),
+        "confusion_matrix": {"tn": tn, "fp": fp, "fn": fn, "tp": tp},
     }
 
     if y_probability is not None:
         fpr, tpr, _ = roc_curve(y_true, y_probability)
         metrics["auc_roc"] = float(auc(fpr, tpr))
+        if len(fpr) > 30:
+            indices = np.linspace(0, len(fpr) - 1, 30, dtype=int)
+            fpr_sampled = fpr[indices]
+            tpr_sampled = tpr[indices]
+        else:
+            fpr_sampled = fpr
+            tpr_sampled = tpr
+        metrics["roc_curve"] = [
+            {"fpr": round(float(f), 4), "tpr": round(float(t), 4)}
+            for f, t in zip(fpr_sampled, tpr_sampled, strict=False)
+        ]
     else:
         metrics["auc_roc"] = 0.0
+        metrics["roc_curve"] = None
 
     for name_metric, value in metrics.items():
-        print(f"  {name_metric:10s}: {value:.4f}")
+        if isinstance(value, float):
+            print(f"  {name_metric:10s}: {value:.4f}")
+        else:
+            print(f"  {name_metric:10s}: {value}")
 
     return metrics
 
