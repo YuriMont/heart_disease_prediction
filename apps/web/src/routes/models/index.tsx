@@ -317,18 +317,20 @@ function ModelsPage() {
             </CardContent>
           </Card>
 
-          {/* Matriz de Confusão */}
-          <ConfusionMatrixCard
-            matrix={metrics?.confusion_matrix}
-            isLoading={isLoadingMetrics}
-          />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* Matriz de Confusão */}
+            <ConfusionMatrixCard
+              matrix={metrics?.confusion_matrix}
+              isLoading={isLoadingMetrics}
+            />
 
-          {/* Curva ROC */}
-          <RocCurveCard
-            rocCurve={metrics?.roc_curve}
-            aucRoc={metrics?.auc_roc}
-            isLoading={isLoadingMetrics}
-          />
+            {/* Curva ROC */}
+            <RocCurveCard
+              rocCurve={metrics?.roc_curve}
+              aucRoc={metrics?.auc_roc}
+              isLoading={isLoadingMetrics}
+            />
+          </div>
 
           {/* Features */}
 
