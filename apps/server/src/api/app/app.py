@@ -1,8 +1,11 @@
+import os
 from contextlib import asynccontextmanager
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
+from fastapi_cache.backends.inmemory import InMemoryBackend
 from fastapi_cache.backends.redis import RedisBackend
 from redis.asyncio import Redis
 
@@ -10,25 +13,32 @@ from api.middleware.redirect import RedirectMiddleware
 from api.routes import dashboard, evaluations, models, pages, patients, reports
 from database.connection import create_tables
 
-redis: Redis | None = None
+load_dotenv()
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     create_tables()
 
-    redis = Redis(host="localhost", port=6379, decode_responses=False)
+    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+    redis_client: Redis | None = None
 
-    await redis.flushdb()
-
-    FastAPICache.init(
-        RedisBackend(redis),
-        prefix="api-cache",
-    )
+    try:
+        redis_client = Redis.from_url(redis_url, decode_responses=False)
+        await redis_client.ping()
+        await redis_client.flushdb()
+        FastAPICache.init(
+            RedisBackend(redis_client),
+            prefix="api-cache",
+        )
+    except Exception as e:
+        print(f"Warning: Could not connect to Redis at '{redis_url}': {e}. Using in-memory cache.")
+        FastAPICache.init(InMemoryBackend(), prefix="api-cache")
 
     yield
 
-    await redis.close()
+    if redis_client:
+        await redis_client.close()
 
 
 app = FastAPI(
@@ -42,6 +52,13 @@ origins = [
     "http://localhost:5173",
     "http://localhost:3000",
 ]
+
+cors_origins_env = os.getenv("CORS_ORIGINS", "")
+if cors_origins_env:
+    for origin in cors_origins_env.split(","):
+        trimmed = origin.strip()
+        if trimmed and trimmed not in origins:
+            origins.append(trimmed)
 
 app.add_middleware(
     CORSMiddleware,
