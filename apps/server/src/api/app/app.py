@@ -32,7 +32,9 @@ async def lifespan(_: FastAPI):
             prefix="api-cache",
         )
     except Exception as e:
-        print(f"Warning: Could not connect to Redis at '{redis_url}': {e}. Using in-memory cache.")
+        print(
+            f"Warning: Could not connect to Redis at '{redis_url}': {e}. Using in-memory cache."
+        )
         FastAPICache.init(InMemoryBackend(), prefix="api-cache")
 
     yield
@@ -48,12 +50,10 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-]
+origins = []
 
 cors_origins_env = os.getenv("CORS_ORIGINS", "")
+
 if cors_origins_env:
     for origin in cors_origins_env.split(","):
         trimmed = origin.strip()
