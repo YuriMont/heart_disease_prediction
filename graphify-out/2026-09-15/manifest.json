@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "apps/server/src/api/app/app.py": {
-    "mtime": 1783881991.035989,
-    "ast_hash": "b1c8f2214d388fbe63fb646787e96bbf",
+    "mtime": 1789513823.0100036,
+    "ast_hash": "6580d71c6f756d17c8dac8ed64c8fd23",
     "semantic_hash": ""
   },
   "apps/server/src/api/middleware/redirect.py": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "apps/server/src/database/connection.py": {
-    "mtime": 1788213012.9031484,
-    "ast_hash": "2bbb8ff530c7f471b22aafc37cb6368a",
+    "mtime": 1789512723.4009006,
+    "ast_hash": "2cdd6962805d2eb822bc6b9582dd65d5",
     "semantic_hash": ""
   },
   "apps/server/src/database/models/__init__.py": {
@@ -675,7 +675,7 @@
     "semantic_hash": ""
   },
   "apps/web/src/main.tsx": {
-    "mtime": 1783727966.2562683,
+    "mtime": 1789310667.6637583,
     "ast_hash": "84d04b762c75b230a3193a99045fbfdd",
     "semantic_hash": ""
   },
@@ -1212,6 +1212,11 @@
   "apps/web/src/generated/models/rocPoint.ts": {
     "mtime": 1789309286.5888333,
     "ast_hash": "bd9688782f3a513cdc16f718c94783a4",
+    "semantic_hash": ""
+  },
+  "apps/web/vercel.json": {
+    "mtime": 1789512752.9057863,
+    "ast_hash": "61bd31a2b0ac08f10f13c932b32d6ca1",
     "semantic_hash": ""
   }
 }
