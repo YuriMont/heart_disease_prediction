@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "apps/server/src/api/app/app.py": {
-    "mtime": 1789513823.0100036,
-    "ast_hash": "6580d71c6f756d17c8dac8ed64c8fd23",
+    "mtime": 1789514147.136238,
+    "ast_hash": "55c8e83d97b418da57c4f29f391d07e9",
     "semantic_hash": ""
   },
   "apps/server/src/api/middleware/redirect.py": {
