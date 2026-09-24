@@ -1,16 +1,16 @@
-# Graph Report - pibic  (2026-09-24)
+# Graph Report - pibic  (2026-09-15)
 
 ## Corpus Check
-- 230 files · ~101,317 words
+- 230 files · ~100,856 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1590 nodes · 2358 edges · 189 communities (128 shown, 61 thin omitted)
+- 1588 nodes · 2356 edges · 188 communities (128 shown, 60 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 79 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `70f8c9ee`
+- Built from commit: `ba90db1a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,7 +25,7 @@
 - scripts
 - CardioPredict — Guia de Desenvolvimento
 - form-wizard.tsx
-- schemas/dashboard.py
+- routes/models.py
 - models.ts
 - compilerOptions
 - PatientResponse
@@ -63,7 +63,7 @@
 - Web — Frontend de Avaliação de Risco Cardíaco
 - .claude/skills/openspec-explore/SKILL.md
 - .opencode/skills/openspec-explore/SKILL.md
-- main
+- pages.py
 - models.zod.ts
 - explore.md
 - opsx-explore.md
@@ -77,7 +77,7 @@
 - scripts
 - ADDED Requirements
 - Implementation Patterns
-- prediction_service.py
+- schemas/dashboard.py
 - 2026-07-12-export-report-pdf/tasks.md
 - stop-server.sh
 - Frontend Design
@@ -142,9 +142,9 @@
 - zod
 - @tanstack/router-plugin
 - constants/__init__.py
-- env.py
+- listPatientsPatientsGetParams.ts
 - eslint-plugin-prettier
-- modelFeature.ts
+- routes/dashboard.py
 - riskFactorsResponse.ts
 - globals
 - orval
@@ -172,7 +172,6 @@
 - .claude/CLAUDE.md
 - extraction-spec.md
 - eslint-config-prettier
-- schemas/report.py
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 84 edges
@@ -183,25 +182,25 @@
 6. `compilerOptions` - 20 edges
 7. `compilerOptions` - 16 edges
 8. `calculate_contributing_factors()` - 15 edges
-9. `CardioPredict — Predição de Doença Cardíaca` - 14 edges
-10. `handleRequest()` - 14 edges
+9. `handleRequest()` - 14 edges
+10. `generate_pdf_report()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `get_stats()` --calls--> `DashboardStats`  [INFERRED]
+  apps/server/src/api/routes/dashboard.py → apps/server/src/schemas/dashboard.py
+- `get_risk_distribution()` --calls--> `RiskDistribution`  [INFERRED]
+  apps/server/src/api/routes/dashboard.py → apps/server/src/schemas/dashboard.py
+- `get_risk_factors()` --calls--> `RiskFactorsResponse`  [INFERRED]
+  apps/server/src/api/routes/dashboard.py → apps/server/src/schemas/dashboard.py
 - `get_risk_factors()` --calls--> `calculate_aggregated_factors()`  [INFERRED]
   apps/server/src/api/routes/dashboard.py → apps/server/src/services/feature_analysis.py
 - `create_evaluation()` --calls--> `Evaluation`  [INFERRED]
   apps/server/src/api/routes/evaluations.py → apps/server/src/database/models/evaluation.py
-- `create_evaluation()` --calls--> `EvaluationResponse`  [INFERRED]
-  apps/server/src/api/routes/evaluations.py → apps/server/src/schemas/evaluation.py
-- `list_evaluations()` --calls--> `PaginationMeta`  [INFERRED]
-  apps/server/src/api/routes/evaluations.py → apps/server/src/schemas/common.py
-- `list_evaluations()` --calls--> `EvaluationListResponse`  [INFERRED]
-  apps/server/src/api/routes/evaluations.py → apps/server/src/schemas/evaluation.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (189 total, 61 thin omitted)
+## Communities (188 total, 60 thin omitted)
 
 ### Community 0 - "ReportPDF"
 Cohesion: 0.25
@@ -243,9 +242,9 @@ Nodes (14): Backend (`apps/server`), Banco de Dados (Migrations), CardioPredict 
 Cohesion: 0.11
 Nodes (25): selectedPatientAtom, DEFAULT_VALUES_FORM, FormData, PatientFilters(), PatientFiltersProps, PatientFormData, Button(), buttonVariants (+17 more)
 
-### Community 10 - "schemas/dashboard.py"
-Cohesion: 0.13
-Nodes (26): _classify_risk(), get_risk_distribution(), get_risk_factors(), get_stats(), get, Session, get_metrics(), list_features() (+18 more)
+### Community 10 - "routes/models.py"
+Cohesion: 0.23
+Nodes (10): list_features(), list_models(), get, Session, update_model(), ModelFeature, ModelUpdate, BaseModel (+2 more)
 
 ### Community 11 - "models.ts"
 Cohesion: 0.07
@@ -264,16 +263,16 @@ Cohesion: 0.11
 Nodes (22): exportReportReportsExportPost(), ExportReportReportsExportPostMutationBody, ExportReportReportsExportPostMutationError, ExportReportReportsExportPostMutationResult, getExportReportReportsExportPostMutationOptions(), getGetReportReportsReportIdGetQueryKey(), getGetReportReportsReportIdGetQueryOptions(), getListReportsReportsGetQueryKey() (+14 more)
 
 ### Community 15 - "base.py"
-Cohesion: 0.28
-Nodes (4): Base, Model, Patient, DeclarativeBase
+Cohesion: 0.18
+Nodes (7): Run migrations in 'offline' mode. This configures the context with just a URL…, Run migrations in 'online' mode. In this scenario we use the engine already…, run_migrations_offline(), run_migrations_online(), Base, Patient, DeclarativeBase
 
 ### Community 16 - "dashboard.ts"
 Cohesion: 0.09
 Nodes (29): DashboardHeader(), RiskDistribution(), RiskFactors(), StatCardsRow(), StatCard(), StatCardProps, getGetRiskDistributionDashboardRisksGetQueryKey(), getGetRiskDistributionDashboardRisksGetQueryOptions() (+21 more)
 
 ### Community 17 - "CardioPredict — Predição de Doença Cardíaca"
-Cohesion: 0.08
-Nodes (24): Aviso, Backend (`apps/server`), Backend (`apps/server`), Banco de Dados, Campos do Paciente (entrada da predição), CardioPredict — Predição de Doença Cardíaca, Comandos, Comandos Úteis (+16 more)
+Cohesion: 0.09
+Nodes (22): Aviso, Backend (`apps/server`), Backend (`apps/server`), Banco de Dados, Campos do Paciente (entrada da predição), CardioPredict — Predição de Doença Cardíaca, Comandos, Comandos Úteis (+14 more)
 
 ### Community 18 - "components.json"
 Cohesion: 0.09
@@ -360,8 +359,8 @@ Cohesion: 0.17
 Nodes (10): caveman, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Intensity (+2 more)
 
 ### Community 39 - "reports.py"
-Cohesion: 0.29
-Nodes (11): export_report(), _generate_content(), get_report(), list_reports(), BaseModel, get, post, Session (+3 more)
+Cohesion: 0.21
+Nodes (13): export_report(), _generate_content(), get_report(), list_reports(), BaseModel, get, post, Session (+5 more)
 
 ### Community 40 - "2026-06-29-refactor-clean-code/tasks.md"
 Cohesion: 0.17
@@ -372,8 +371,8 @@ Cohesion: 0.17
 Nodes (11): 1. Endpoint único: GET /evaluations/{id}/report-pdf, 2. Geração de PDF com fpdf2, 3. Fluxo frontend: fetch + blob + toast + loading state, 4. Identidade Visual do PDF, 5. Recomendações baseadas nos dados da avaliação (sem hardcoded), 6. Cache do endpoint com Redis, 6. Dependência fpdf2, Context (+3 more)
 
 ### Community 42 - "data.py"
-Cohesion: 0.33
-Nodes (9): balance_smote(), binarize_target(), encode_categorical(), fill_missing(), limit_outliers(), load_data(), prepare_data(), PreparedData (+1 more)
+Cohesion: 0.11
+Nodes (21): create_tables(), Model, balance_smote(), binarize_target(), encode_categorical(), fill_missing(), limit_outliers(), load_data() (+13 more)
 
 ### Community 43 - "dependencies"
 Cohesion: 0.18
@@ -391,9 +390,9 @@ Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different 
 Cohesion: 0.18
 Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different Entry Points, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do (+2 more)
 
-### Community 48 - "main"
-Cohesion: 0.24
-Nodes (4): create_tables(), evaluate(), train_model(), main()
+### Community 48 - "pages.py"
+Cohesion: 0.67
+Nodes (3): documentation_scalar(), home(), get
 
 ### Community 49 - "models.zod.ts"
 Cohesion: 0.20
@@ -447,9 +446,9 @@ Nodes (8): ADDED Requirements, Requirement: Botão "Novo Paciente" funcional, Re
 Cohesion: 0.25
 Nodes (7): fastapi-templates — detailed worked examples, Implementation Patterns, Pattern 1: Complete FastAPI Application, Pattern 2: CRUD Repository Pattern, Pattern 3: Service Layer, Pattern 4: API Endpoints with Dependencies, Pattern 5: Authentication & Authorization
 
-### Community 62 - "prediction_service.py"
-Cohesion: 0.50
-Nodes (7): assemble_features(), _available_models(), get_default_model_id(), _get_model_by_id(), predict(), Session, Patient
+### Community 62 - "schemas/dashboard.py"
+Cohesion: 0.35
+Nodes (10): get_metrics(), ConfusionMatrixData, DashboardStats, ModelInfo, ModelMetrics, BaseModel, RiskDistribution, RiskFactor (+2 more)
 
 ### Community 63 - "2026-07-12-export-report-pdf/tasks.md"
 Cohesion: 0.25
@@ -544,8 +543,8 @@ Cohesion: 0.67
 Nodes (3): react, RocCurveCard(), react
 
 ### Community 115 - "connection.py"
-Cohesion: 0.24
-Nodes (7): lifespan(), documentation_scalar(), home(), get, dotenv, dotenv, FastAPI
+Cohesion: 0.38
+Nodes (4): lifespan(), dotenv, dotenv, FastAPI
 
 ### Community 119 - "report_pdf.py"
 Cohesion: 0.22
@@ -561,15 +560,15 @@ Nodes (5): ConfusionMatrixCardProps, RocCurveCardProps, ConfusionMatrixData, Mod
 
 ### Community 123 - "index.ts"
 Cohesion: 0.16
-Nodes (8): DashboardStats, EvaluationCreate, HTTPValidationError, ListEvaluationsEvaluationsGetParams, ListPatientsPatientsGetParams, RiskDistribution, ValidationError, ValidationErrorCtx
+Nodes (9): DashboardStats, EvaluationCreate, GetRiskFactorsDashboardFactorsGetParams, HTTPValidationError, ListEvaluationsEvaluationsGetParams, ModelFeature, ModelFeatureCategories, ValidationError (+1 more)
 
 ### Community 126 - "constants/__init__.py"
 Cohesion: 0.36
 Nodes (7): FeatureConfig, FeaturesConfig, get_categories(), get_unit(), _parse_key(), BaseModel, _format_value()
 
-### Community 127 - "env.py"
-Cohesion: 0.40
-Nodes (4): Run migrations in 'offline' mode. This configures the context with just a URL…, Run migrations in 'online' mode. In this scenario we use the engine already…, run_migrations_offline(), run_migrations_online()
+### Community 129 - "routes/dashboard.py"
+Cohesion: 0.57
+Nodes (6): _classify_risk(), get_risk_distribution(), get_risk_factors(), get_stats(), get, Session
 
 ### Community 173 - "graphify reference: extra exports and benchmark"
 Cohesion: 0.22
@@ -592,23 +591,23 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ## Knowledge Gaps
-- **701 isolated node(s):** `Funcionalidades`, `🔍 Passo a Passo em Linguagem Simples:`, `Backend (`apps/server`)`, `Frontend (`apps/web`)`, `Pré-requisitos` (+696 more)
+- **700 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+695 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **61 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **60 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `dependencies` to `@hookform/resolvers`, `@tanstack/react-router`, `clsx`, `@tanstack/react-table`, `web/package.json`, `sonner`, `class-variance-authority`, `@fontsource-variable/dm-sans`, `@fontsource-variable/inter`, `@fontsource-variable/jetbrains-mono`, `jotai`, `lucide-react`, `next-themes`, `radix-ui`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-label`, `@radix-ui/react-progress`, `@radix-ui/react-select`, `@radix-ui/react-separator`, `@radix-ui/react-slot`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `react`, `react-dom`, `react-hook-form`, `recharts`, `shadcn`, `tailwind-merge`, `tailwindcss-animate`, `@tailwindcss/vite`, `@tanstack/react-router-devtools`, `zod`?**
-  _High betweenness centrality (0.138) - this node is a cross-community bridge._
-- **Why does `devDependencies` connect `devDependencies` to `eslint-plugin-prettier`, `globals`, `orval`, `prettier-plugin-tailwindcss`, `typescript`, `@types/react-dom`, `@vitejs/plugin-react`, `typescript-eslint`, `web/package.json`, `vite`, `connection.py`, `eslint-plugin-react-hooks`, `@eslint/js`, `eslint-config-prettier`, `@tanstack/router-plugin`?**
-  _High betweenness centrality (0.123) - this node is a cross-community bridge._
+  _High betweenness centrality (0.141) - this node is a cross-community bridge._
 - **Why does `react` connect `react` to `dependencies`?**
-  _High betweenness centrality (0.121) - this node is a cross-community bridge._
+  _High betweenness centrality (0.125) - this node is a cross-community bridge._
+- **Why does `RocCurveCard()` connect `react` to `cn`, `$id/index.tsx`?**
+  _High betweenness centrality (0.125) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `ReportPDF` (e.g. with `Evaluation` and `ContributingFactor`) actually correct?**
   _`ReportPDF` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Funcionalidades`, `🔍 Passo a Passo em Linguagem Simples:`, `Backend (`apps/server`)` to the rest of the system?**
-  _701 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `crypto`, `http`, `fs` to the rest of the system?**
+  _700 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `server.cjs` be split into smaller, more focused modules?**
   _Cohesion score 0.05868118572292801 - nodes in this community are weakly interconnected._
 - **Should `evaluations.ts` be split into smaller, more focused modules?**
